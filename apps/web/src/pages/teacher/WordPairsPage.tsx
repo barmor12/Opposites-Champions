@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ChevronLeft, ChevronRight, Image as ImageIcon, Pencil, Plus, Search, Trash2, X } from 'lucide-react';
 import {
@@ -14,7 +14,7 @@ import { Button, Card, EmptyState, Input, Modal, Spinner, toast } from '@/compon
 import { cn } from '@/lib/cn';
 import { teacherApi, type CategoryInfo, type MediaItem, type WordPairInput } from '@/services/teacherApi';
 import { BLANK, EMPTY_FORM, validateWordPair, type WordPairFormErrors as FormErrors } from './wordPairForm';
-import { ConfirmModal, MultiChips, PageHeader, SegmentedTabs, SingleChips, Toggle, TonePill } from './components';
+import { BUTTON_FOCUS_RING, ConfirmModal, HIT_AREA, MultiChips, PageHeader, SegmentedTabs, SingleChips, Toggle, TonePill, useFocusTrap } from './components';
 import { friendlyError, teacherPath } from './labels';
 
 const PAGE_SIZE = 20;
@@ -125,7 +125,7 @@ export function WordPairsPage() {
   const hasFilters = Boolean(debouncedSearch || category || difficulty);
 
   const pagination = total > PAGE_SIZE && (
-    <div className="flex items-center justify-between gap-3 border-t border-slate-100 px-4 py-3 text-sm text-slate-600">
+    <nav aria-label="עמודים" className="flex items-center justify-between gap-3 border-t border-slate-100 px-4 py-3 text-sm text-slate-600">
       <span className="tabular-nums">
         {from}–{to} מתוך {total.toLocaleString('he-IL')}
       </span>
@@ -135,7 +135,7 @@ export function WordPairsPage() {
           onClick={() => setPage((p) => Math.max(1, p - 1))}
           disabled={page <= 1 || loading}
           aria-label="עמוד קודם"
-          className="grid size-10 min-h-0 place-items-center rounded-xl bg-white text-brand-navy ring-1 ring-slate-200 transition-colors hover:bg-violet-50 disabled:opacity-40"
+          className={cn('grid size-10 min-h-0 place-items-center rounded-xl bg-white text-brand-navy ring-1 ring-slate-200 transition-colors hover:bg-violet-50 disabled:opacity-40', HIT_AREA.lg)}
         >
           <ChevronRight className="size-4" aria-hidden />
         </button>
@@ -147,16 +147,16 @@ export function WordPairsPage() {
           onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
           disabled={page >= pageCount || loading}
           aria-label="עמוד הבא"
-          className="grid size-10 min-h-0 place-items-center rounded-xl bg-white text-brand-navy ring-1 ring-slate-200 transition-colors hover:bg-violet-50 disabled:opacity-40"
+          className={cn('grid size-10 min-h-0 place-items-center rounded-xl bg-white text-brand-navy ring-1 ring-slate-200 transition-colors hover:bg-violet-50 disabled:opacity-40', HIT_AREA.lg)}
         >
           <ChevronLeft className="size-4" aria-hidden />
         </button>
       </div>
-    </div>
+    </nav>
   );
 
   return (
-    <div>
+    <div className={BUTTON_FOCUS_RING}>
       <PageHeader
         eyebrow="תוכן"
         title="מאגר ההפכים"
@@ -183,7 +183,7 @@ export function WordPairsPage() {
               className="min-h-12 w-full rounded-2xl border border-slate-200 bg-white/90 py-2 pe-10 ps-11 text-sm font-medium shadow-sm transition-[border-color,box-shadow] placeholder:text-slate-500 focus:border-brand-violet focus:outline-none focus:ring-4 focus:ring-brand-violet/20"
             />
             {search && (
-              <button type="button" onClick={() => setSearch('')} aria-label="ניקוי החיפוש" className="absolute end-2 top-1/2 grid size-8 min-h-0 -translate-y-1/2 place-items-center rounded-lg text-slate-500 hover:bg-slate-100">
+              <button type="button" onClick={() => setSearch('')} aria-label="ניקוי החיפוש" className={cn('absolute end-2 top-1/2 grid size-8 min-h-0 -translate-y-1/2 place-items-center rounded-lg text-slate-500 hover:bg-slate-100', HIT_AREA.sm)}>
                 <X className="size-4" aria-hidden />
               </button>
             )}
@@ -208,6 +208,10 @@ export function WordPairsPage() {
           </div>
         </div>
       </Card>
+
+      <p className="sr-only" role="status" aria-live="polite">
+        {loading ? 'טוען…' : `${total.toLocaleString('he-IL')} זוגות נמצאו`}
+      </p>
 
       <Card variant="glass" padding="none" className="overflow-hidden p-0">
         {loading && items.length === 0 ? (
@@ -242,20 +246,20 @@ export function WordPairsPage() {
             />
           </div>
         ) : (
-          <div className={cn('transition-opacity', loading && 'opacity-60')}>
+          <div className={cn('transition-opacity', loading && 'opacity-60')} aria-busy={loading || undefined}>
             {/* טבלה – טאבלט ומעלה */}
-            <div className="hidden max-h-[70vh] overflow-auto md:block">
+            <div className="hidden max-h-[70vh] overflow-auto md:block" tabIndex={0} role="region" aria-label="טבלת זוגות המילים">
               <table className="w-full text-sm">
                 <thead className="sticky top-0 z-10 bg-slate-50/95 text-xs font-bold text-slate-600 shadow-[0_1px_0_rgba(226,232,240,1)] backdrop-blur">
                   <tr>
-                    <th className="px-5 py-3 text-start">מילה</th>
-                    <th className="px-4 py-3 text-start">הפך</th>
-                    <th className="px-4 py-3 text-start">קטגוריה</th>
-                    <th className="px-4 py-3 text-start">קושי</th>
-                    <th className="px-4 py-3 text-start">סוגי שאלות</th>
-                    <th className="px-4 py-3 text-start">תמונה</th>
-                    <th className="px-4 py-3 text-start">פעיל</th>
-                    <th className="px-4 py-3 text-start">
+                    <th scope="col" className="px-5 py-3 text-start">מילה</th>
+                    <th scope="col" className="px-4 py-3 text-start">הפך</th>
+                    <th scope="col" className="px-4 py-3 text-start">קטגוריה</th>
+                    <th scope="col" className="px-4 py-3 text-start">קושי</th>
+                    <th scope="col" className="px-4 py-3 text-start">סוגי שאלות</th>
+                    <th scope="col" className="px-4 py-3 text-start">תמונה</th>
+                    <th scope="col" className="px-4 py-3 text-start">פעיל</th>
+                    <th scope="col" className="px-4 py-3 text-start">
                       <span className="sr-only">פעולות</span>
                     </th>
                   </tr>
@@ -371,8 +375,9 @@ function FilterPill({ active, onClick, count, children }: { active: boolean; onC
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        'inline-flex min-h-0 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-bold transition-[background-color,color,box-shadow] duration-200',
+        'inline-flex min-h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-bold transition-[background-color,color,box-shadow] duration-200',
         'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
+        HIT_AREA.y6,
         active
           ? 'bg-linear-to-b from-violet-600 to-violet-700 text-white shadow-[0_6px_14px_-6px_rgba(139,92,246,.8),inset_0_1px_0_rgba(255,255,255,.35)]'
           : 'bg-white text-slate-600 ring-1 ring-slate-200/90 hover:text-violet-700 hover:ring-violet-300',
@@ -411,6 +416,8 @@ function ActiveSwitch({ pair, busy, onToggle, withLabel }: { pair: WordPairConte
         onClick={onToggle}
         className={cn(
           'relative inline-flex h-6 w-11 min-h-0 shrink-0 items-center rounded-full p-0.5 shadow-[inset_0_2px_4px_rgba(30,41,59,.18)] transition-colors disabled:opacity-50',
+          'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
+          HIT_AREA.y10,
           pair.active ? 'bg-linear-to-b from-emerald-400 to-green-500' : 'bg-slate-300',
         )}
       >
@@ -424,10 +431,10 @@ function ActiveSwitch({ pair, busy, onToggle, withLabel }: { pair: WordPairConte
 function RowActions({ pair, onEdit, onDelete }: { pair: WordPairContent; onEdit: () => void; onDelete: () => void }) {
   return (
     <div className="flex justify-end gap-1">
-      <button type="button" onClick={onEdit} className="grid size-9 min-h-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-violet-100 hover:text-violet-700" aria-label={`עריכת ${pair.word}`} title="עריכה">
+      <button type="button" onClick={onEdit} className={cn('grid size-9 min-h-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-violet-100 hover:text-violet-700', HIT_AREA.md)} aria-label={`עריכת ${pair.word}`} title="עריכה">
         <Pencil className="size-4" aria-hidden />
       </button>
-      <button type="button" onClick={onDelete} className="grid size-9 min-h-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-600" aria-label={`מחיקת ${pair.word}`} title="מחיקה">
+      <button type="button" onClick={onDelete} className={cn('grid size-9 min-h-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-600', HIT_AREA.md)} aria-label={`מחיקת ${pair.word}`} title="מחיקה">
         <Trash2 className="size-4" aria-hidden />
       </button>
     </div>
@@ -469,6 +476,10 @@ function WordPairModal({ pair, media, onClose, onSaved }: { pair: WordPairConten
   const [errors, setErrors] = useState<FormErrors>({});
   const [saving, setSaving] = useState(false);
   const isNew = pair === null;
+  const formRef = useRef<HTMLFormElement>(null);
+  const ids = useId();
+  // ה־Modal המשותף מטפל בפוקוס ראשוני/Esc/החזרה; כאן לוכדים Tab בתוך הדיאלוג
+  useFocusTrap(formRef, true, { initialFocus: false, returnFocus: false, containerSelector: '[role="dialog"]' });
 
   const patch = <K extends keyof WordPairInput>(key: K, value: WordPairInput[K]) => setForm((f) => ({ ...f, [key]: value }));
 
@@ -504,7 +515,7 @@ function WordPairModal({ pair, media, onClose, onSaved }: { pair: WordPairConten
 
   return (
     <Modal open size="lg" dismissible={!saving} onClose={onClose} title={isNew ? 'זוג חדש' : `עריכה: ${pair.word} / ${pair.opposite}`}>
-      <form onSubmit={handleSubmit} noValidate className="-mx-1 flex max-h-[72vh] flex-col gap-4 overflow-y-auto px-1 pb-1 text-base" aria-label="טופס זוג מילים">
+      <form ref={formRef} onSubmit={handleSubmit} noValidate className={cn('-mx-1 flex max-h-[72vh] flex-col gap-4 overflow-y-auto px-1 pb-1 text-base', BUTTON_FOCUS_RING)} aria-label="טופס זוג מילים">
         <div className="grid gap-4 sm:grid-cols-2">
           <Input label="מילה" name="word" size="md" value={form.word} onChange={(e) => patch('word', e.target.value)} error={errors.word} required />
           <Input label="ההפך" name="opposite" size="md" value={form.opposite} onChange={(e) => patch('opposite', e.target.value)} error={errors.opposite} required />
@@ -523,7 +534,9 @@ function WordPairModal({ pair, media, onClose, onSaved }: { pair: WordPairConten
               </select>
             </label>
             <div className="flex flex-col gap-1.5 text-sm">
-              <span className="font-bold text-brand-navy">רמת קושי</span>
+              <span className="font-bold text-brand-navy" aria-hidden>
+                רמת קושי
+              </span>
               <SingleChips name="רמת קושי" size="sm" options={ALL_DIFFICULTIES.map((d) => ({ value: d, label: DIFFICULTY_LABELS[d] }))} value={form.difficulty} onChange={(v) => patch('difficulty', v)} />
             </div>
           </div>
@@ -534,9 +547,18 @@ function WordPairModal({ pair, media, onClose, onSaved }: { pair: WordPairConten
             <label htmlFor="wp-sentence" className="font-bold text-brand-navy">
               משפט <span className="font-normal text-slate-500">(עם {BLANK} במקום המילה החסרה)</span>
             </label>
-            <textarea id="wp-sentence" rows={2} value={form.sentence} onChange={(e) => patch('sentence', e.target.value)} className={fieldClass} placeholder={`לדוגמה: הפיל ${BLANK} והעכבר קטן.`} />
+            <textarea
+              id="wp-sentence"
+              rows={2}
+              value={form.sentence}
+              onChange={(e) => patch('sentence', e.target.value)}
+              className={fieldClass}
+              placeholder={`לדוגמה: הפיל ${BLANK} והעכבר קטן.`}
+              aria-invalid={errors.sentence ? true : undefined}
+              aria-describedby={errors.sentence ? `${ids}-sentence-error` : undefined}
+            />
             {errors.sentence && (
-              <p role="alert" className="text-xs font-semibold text-rose-600">
+              <p id={`${ids}-sentence-error`} role="alert" className="text-xs font-semibold text-rose-600">
                 {errors.sentence}
               </p>
             )}
@@ -566,9 +588,17 @@ function WordPairModal({ pair, media, onClose, onSaved }: { pair: WordPairConten
         <FormGroup title="שימוש במשחק">
           <div className="flex flex-col gap-1.5 text-sm">
             <span className="font-bold text-brand-navy">סוגי שאלות נתמכים</span>
-            <MultiChips name="סוגי שאלות" size="sm" options={ALL_TYPES.map((t) => ({ value: t, label: QUESTION_TYPE_LABELS[t] }))} value={form.supportedTypes} onChange={(v) => patch('supportedTypes', v)} />
+            <MultiChips
+              name="סוגי שאלות נתמכים"
+              size="sm"
+              options={ALL_TYPES.map((t) => ({ value: t, label: QUESTION_TYPE_LABELS[t] }))}
+              value={form.supportedTypes}
+              onChange={(v) => patch('supportedTypes', v)}
+              describedBy={errors.supportedTypes ? `${ids}-types-error` : undefined}
+              invalid={Boolean(errors.supportedTypes)}
+            />
             {errors.supportedTypes && (
-              <p role="alert" className="text-xs font-semibold text-rose-600">
+              <p id={`${ids}-types-error`} role="alert" className="text-xs font-semibold text-rose-600">
                 {errors.supportedTypes}
               </p>
             )}

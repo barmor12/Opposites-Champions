@@ -73,8 +73,8 @@ export function useFocusTrap(ref: RefObject<HTMLElement | null>, active: boolean
         container.focus();
         return;
       }
-      const first = list[0];
-      const last = list[list.length - 1];
+      const first = list[0]!;
+      const last = list[list.length - 1]!;
       const current = document.activeElement as HTMLElement | null;
       const inside = current ? container.contains(current) : false;
       if (e.shiftKey && (current === first || !inside)) {
@@ -113,6 +113,7 @@ export function radioGroupKeyDown(e: KeyboardEvent<HTMLElement>, itemSelector = 
   else next = (idx + (forward ? 1 : -1) + items.length) % items.length;
   e.preventDefault();
   const target = items[next];
+  if (!target) return;
   target.focus();
   target.click();
 }

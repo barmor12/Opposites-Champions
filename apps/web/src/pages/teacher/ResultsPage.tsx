@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router';
+import { useEffect, useId, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Check, ChevronDown, Download, FileSpreadsheet, FileText, Flame, ListChecks, Medal as MedalIcon, Target, Trophy, Users, X } from 'lucide-react';
 import {
@@ -16,7 +16,7 @@ import { Leaderboard } from '@/components/Leaderboard';
 import { cn } from '@/lib/cn';
 import { teacherApi, type ExportFormat } from '@/services/teacherApi';
 import { useTeacherStore } from '@/stores/teacherStore';
-import { PageHeader, Panel, StatCard, StateBadge } from './components';
+import { BUTTON_FOCUS_RING, PageHeader, Panel, StatCard, StateBadge } from './components';
 import { formatDateTime, formatNumber, formatPercent, friendlyError, teacherPath } from './labels';
 
 const percent = (n: number) => `${Math.round(n)}%`;
@@ -24,6 +24,7 @@ const percent = (n: number) => `${Math.round(n)}%`;
 /** מזהה סבב = מזהה GameSession. ה־API מחזיר רק את הסבב הנוכחי/אחרון כברירת מחדל. */
 export function ResultsPage() {
   const { id = '' } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const games = useTeacherStore((s) => s.games);
   const loadGames = useTeacherStore((s) => s.loadGames);
 
@@ -93,7 +94,7 @@ export function ResultsPage() {
   const className = results?.className ?? summary?.className ?? 'חדר';
 
   return (
-    <div>
+    <div className={BUTTON_FOCUS_RING}>
       <PageHeader
         eyebrow="תוצאות"
         title={
@@ -106,11 +107,9 @@ export function ResultsPage() {
         crumbs={[{ label: 'לוח בקרה', to: teacherPath() }, { label: summary?.className ?? 'חדר', to: teacherPath(`rooms/${id}`) }, { label: 'תוצאות' }]}
         actions={
           <>
-            <Link to={teacherPath(`rooms/${id}`)} className="rounded-2xl">
-              <Button variant="ghost" size="md" tabIndex={-1}>
-                <ArrowRight className="size-4" aria-hidden /> לחדר
-              </Button>
-            </Link>
+            <Button variant="ghost" size="md" onClick={() => navigate(teacherPath(`rooms/${id}`))}>
+              <ArrowRight className="size-4" aria-hidden /> לחדר
+            </Button>
             <Button variant="secondary" size="md" onClick={() => void handleExport('csv')} loading={exporting === 'csv'} disabled={exporting !== null || !results}>
               <FileText className="size-4" aria-hidden /> CSV
             </Button>
@@ -143,7 +142,7 @@ export function ResultsPage() {
           </select>
           <ChevronDown className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" aria-hidden />
         </div>
-        {sessionCount > 1 && <span className="text-xs text-slate-500">בחדר זה התקיימו {sessionCount} סבבים · מוצג הסבב האחרון כברירת מחדל</span>}
+        {sessionCount > 1 && <span className="text-xs text-slate-600">בחדר זה התקיימו {sessionCount} סבבים · מוצג הסבב האחרון כברירת מחדל</span>}
       </div>
 
       {error && (
@@ -159,7 +158,7 @@ export function ResultsPage() {
       )}
 
       {results && (
-        <div className={cn('transition-opacity', loading && 'opacity-60')}>
+        <div className={cn('transition-opacity', loading && 'opacity-60')} aria-busy={loading || undefined}>
           <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4" aria-label="סיכום">
             <StatCard label="ממוצע כיתתי" value={Math.round(results.classAverage)} hint="נקודות לתלמיד" icon={Trophy} tone="yellow" delay={0} />
             <StatCard label="דיוק כיתתי" value={results.classAccuracy} format={percent} icon={Target} tone="green" delay={0.06} />
@@ -185,16 +184,19 @@ export function ResultsPage() {
 
                 <Panel title="כל התלמידים" description={`${results.leaderboard.length} תלמידים · ממוינים לפי ניקוד`} icon={<Users className="size-5" aria-hidden />} flush>
                   {/* טבלה – טאבלט ומעלה */}
-                  <div className="hidden overflow-x-auto md:block">
+                  <div className="hidden overflow-x-auto md:block" tabIndex={0} role="region" aria-label="טבלת כל התלמידים">
                     <table className="w-full text-sm">
                       <thead className="bg-slate-50/80 text-xs font-bold text-slate-600">
                         <tr>
-                          <th className="px-5 py-3 text-start">#</th>
-                          <th className="px-4 py-3 text-start">תלמיד/ה</th>
-                          <th className="px-4 py-3 text-start">ניקוד</th>
-                          <th className="px-4 py-3 text-start">נכונות</th>
-                          <th className="px-4 py-3 text-start">דיוק</th>
-                          <th className="px-4 py-3 text-start">הישגים</th>
+                          <th scope="col" className="px-5 py-3 text-start">
+                            <span aria-hidden>#</span>
+                            <span className="sr-only">מקום</span>
+                          </th>
+                          <th scope="col" className="px-4 py-3 text-start">תלמיד/ה</th>
+                          <th scope="col" className="px-4 py-3 text-start">ניקוד</th>
+                          <th scope="col" className="px-4 py-3 text-start">נכונות</th>
+                          <th scope="col" className="px-4 py-3 text-start">דיוק</th>
+                          <th scope="col" className="px-4 py-3 text-start">הישגים</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -226,7 +228,7 @@ export function ResultsPage() {
                           </span>
                           <span className={cn('shrink-0 text-base font-black tabular-nums', q.accuracy < 50 ? 'text-rose-600' : 'text-amber-700')}>{formatPercent(q.accuracy)}</span>
                         </div>
-                        <AccuracyBar value={q.accuracy} />
+                        <AccuracyBar value={q.accuracy} label={`דיוק בשאלה ${q.index + 1}`} />
                         <div className="text-xs text-slate-600">
                           תשובה נכונה: <b className="text-brand-navy">{q.correctAnswerText}</b> · ענו נכון {q.correct} מתוך {q.answered}
                         </div>
@@ -260,7 +262,7 @@ export function ResultsPage() {
   );
 }
 
-function AccuracyBar({ value, tone, className }: { value: number; tone?: 'auto' | 'correct' | 'wrong'; className?: string }) {
+function AccuracyBar({ value, tone, className, label = 'דיוק' }: { value: number; tone?: 'auto' | 'correct' | 'wrong'; className?: string; label?: string }) {
   const reduce = useReducedMotion();
   const pct = Math.max(0, Math.min(100, value));
   const color =
@@ -274,8 +276,8 @@ function AccuracyBar({ value, tone, className }: { value: number; tone?: 'auto' 
             ? 'from-amber-300 to-orange-400'
             : 'from-emerald-400 to-green-500';
   return (
-    <div className={cn('h-2 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner', className)} role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100}>
-      <motion.div className={cn('h-full rounded-full bg-linear-to-l', color)} initial={reduce ? false : { width: 0 }} animate={{ width: `${pct}%` }} transition={{ type: 'spring', stiffness: 120, damping: 22 }} />
+    <div className={cn('h-2 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner', className)} role="progressbar" aria-label={label} aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`${Math.round(pct)}%`}>
+      <motion.div className={cn('h-full rounded-full bg-linear-to-l', color)} initial={reduce ? false : { width: 0 }} animate={{ width: `${pct}%` }} transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 120, damping: 22 }} />
     </div>
   );
 }
@@ -322,7 +324,7 @@ function StudentRow({ entry, achievements, questionCount }: { entry: Leaderboard
       </td>
       <td className="px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <AccuracyBar value={entry.accuracy} className="w-20" />
+          <AccuracyBar value={entry.accuracy} className="w-20" label={`דיוק של ${entry.displayName}`} />
           <span className="w-10 text-xs font-bold tabular-nums text-slate-700">{formatPercent(entry.accuracy)}</span>
         </div>
       </td>
@@ -346,7 +348,7 @@ function StudentCard({ entry, achievements, questionCount }: { entry: Leaderboar
         <span className="shrink-0 tabular-nums">
           {entry.correctAnswers}/{questionCount} נכונות
         </span>
-        <AccuracyBar value={entry.accuracy} className="flex-1" />
+        <AccuracyBar value={entry.accuracy} className="flex-1" label={`דיוק של ${entry.displayName}`} />
         <span className="w-9 shrink-0 text-end font-bold tabular-nums">{formatPercent(entry.accuracy)}</span>
       </div>
       {achievements.length > 0 && <AchievementChips achievements={achievements} compact />}
@@ -357,18 +359,19 @@ function StudentCard({ entry, achievements, questionCount }: { entry: Leaderboar
 function QuestionAccordion({ stat }: { stat: QuestionStat }) {
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
+  const panelId = useId();
   const total = Math.max(stat.answered, 1);
   const toneText = stat.accuracy < 50 ? 'text-rose-600' : stat.accuracy < 75 ? 'text-amber-700' : 'text-emerald-700';
   return (
     <div className={cn('overflow-hidden rounded-2xl border bg-white/70 transition-colors', open ? 'border-violet-200 shadow-[0_12px_28px_-20px_rgba(139,92,246,.6)]' : 'border-slate-200/80 hover:border-violet-200')}>
-      <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} className="flex min-h-0 w-full items-center gap-3 px-3 py-3 text-start sm:px-4">
+      <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-controls={panelId} className="flex min-h-0 w-full items-center gap-3 px-3 py-3 text-start sm:px-4">
         <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-slate-100 text-xs font-black text-slate-600 tabular-nums">{stat.index + 1}</span>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-bold text-brand-navy">{stat.prompt}</span>
           <span className="block text-xs text-slate-500">{QUESTION_TYPE_LABELS[stat.type]}</span>
         </span>
         <span className="hidden w-24 sm:block">
-          <AccuracyBar value={stat.accuracy} />
+          <AccuracyBar value={stat.accuracy} label={`דיוק בשאלה ${stat.index + 1}`} />
         </span>
         <span className={cn('w-12 shrink-0 text-end text-sm font-black tabular-nums', toneText)}>{formatPercent(stat.accuracy)}</span>
         <ChevronDown className={cn('size-4 shrink-0 text-slate-500 transition-transform', open && 'rotate-180')} aria-hidden />
@@ -377,6 +380,7 @@ function QuestionAccordion({ stat }: { stat: QuestionStat }) {
         {open && (
           <motion.div
             key="body"
+            id={panelId}
             initial={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
             animate={reduce ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
             exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
@@ -394,7 +398,7 @@ function QuestionAccordion({ stat }: { stat: QuestionStat }) {
                       {d.isCorrect ? <Check className="size-3" strokeWidth={3} /> : <X className="size-3" />}
                     </span>
                     <span className={cn('w-28 min-w-0 truncate sm:w-48', d.isCorrect ? 'font-bold text-brand-navy' : 'text-slate-700')}>{d.text}</span>
-                    <AccuracyBar value={(d.count / total) * 100} tone={d.isCorrect ? 'correct' : 'wrong'} className="flex-1" />
+                    <AccuracyBar value={(d.count / total) * 100} tone={d.isCorrect ? 'correct' : 'wrong'} className="flex-1" label={`שיעור הבוחרים ב־${d.text}`} />
                     <span className="w-8 shrink-0 text-end text-xs font-bold tabular-nums text-slate-600">{d.count}</span>
                   </li>
                 ))}
