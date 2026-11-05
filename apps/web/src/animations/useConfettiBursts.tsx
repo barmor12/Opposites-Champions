@@ -1,20 +1,13 @@
 // Adapted from 21st.dev — Confetti by motion.dev. Particle explosion with randomised physics using motion's `animate` on DOM nodes (no canvas).
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { animate, useReducedMotion } from 'motion/react';
+import { useCallback, useRef, useState } from 'react';
+import { useReducedMotion } from 'motion/react';
+import { ParticleDot, type Particle } from './ConfettiParticle';
 
 const COLORS = ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff', '#facc15'];
 const SHAPES = ['circle', 'rect', 'rect', 'strip', 'strip', 'star'] as const;
 const KEYFRAME_COUNT = 40;
 const POP_WINDOW = 0.08;
 
-type ParticleShape = (typeof SHAPES)[number];
-interface Particle {
-  keyframes: { transform: string[]; opacity: number[] };
-  duration: number;
-  size: number;
-  color: string;
-  shape: ParticleShape;
-}
 interface Burst {
   id: number;
   particles: Particle[];
@@ -56,30 +49,6 @@ function buildKeyframes(p: {
     opacities.push(opacity);
   }
   return { transform: transforms, opacity: opacities };
-}
-
-function ParticleDot({ particle }: { particle: Particle }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { keyframes, duration, size, color, shape } = particle;
-  const width = shape === 'strip' ? size * 0.35 : shape === 'rect' ? size * 0.75 : size;
-  const height = shape === 'strip' ? size * 2 : size;
-  const radius = shape === 'circle' ? '50%' : shape === 'strip' ? size * 0.12 : 2;
-  useEffect(() => {
-    if (!ref.current) return;
-    const controls = animate(ref.current, keyframes, { duration, ease: 'linear' });
-    return () => controls.cancel();
-  }, [keyframes, duration]);
-  const style: React.CSSProperties = {
-    position: 'absolute',
-    width,
-    height,
-    borderRadius: radius,
-    backgroundColor: color,
-    willChange: 'transform, opacity',
-    pointerEvents: 'none',
-    clipPath: shape === 'star' ? 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' : undefined,
-  };
-  return <div ref={ref} style={style} />;
 }
 
 export interface ConfettiBurstOptions {

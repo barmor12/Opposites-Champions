@@ -11,13 +11,24 @@ import { GameEventsService } from '../websocket/game-events.service';
 import { GameError } from '../games/game-error';
 import { settingsToJson } from '../games/settings';
 import { toParticipantView, toRoomPublicView } from './room-views';
+import { isRoomStale, nextRoomExpiry, TERMINAL_ROOM_STATES } from './room-expiry';
 
 export interface RoomSnapshot {
   room: RoomPublicView;
   participants: ParticipantView[];
 }
 
+export interface ExpiredRooms {
+  roomIds: string[];
+  sessionIds: string[];
+}
+
 const CODE_MAX_ATTEMPTS = 12;
+/** מצבי סבב שאינם סופיים – הופכים ל־EXPIRED יחד עם החדר */
+const NON_FINAL_SESSION_STATES: GameState[] = [
+  GameState.CREATED, GameState.WAITING_FOR_PLAYERS, GameState.COUNTDOWN, GameState.QUESTION_ACTIVE,
+  GameState.QUESTION_RESULTS, GameState.NEXT_QUESTION, GameState.FINAL_RESULTS, GameState.PAUSED,
+];
 
 /** האם קוד "רציף" או "משעמם" מדי (123456, 654321, 111111, 000000) */
 export function isWeakCode(code: string): boolean {
