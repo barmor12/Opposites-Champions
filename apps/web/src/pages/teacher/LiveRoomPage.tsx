@@ -22,7 +22,7 @@ import {
   Wifi,
   WifiOff,
 } from 'lucide-react';
-import { GameMode, GameState, type ParticipantView, type TeacherRoomLive } from '@oc/shared';
+import { GameMode, GameState, type ParticipantView } from '@oc/shared';
 import { Avatar, Button, Card, EmptyState, ProgressBar, Spinner, toast } from '@/components/ui';
 import { Leaderboard } from '@/components/Leaderboard';
 import { useTeacherStore, type LiveEvent, type RoomAction } from '@/stores/teacherStore';
@@ -185,7 +185,7 @@ export function LiveRoomPage() {
             <StateBadge state={state} size="md" />
           </span>
         }
-        subtitle={`${MODE_LABELS[room.mode].label} · ${questionCount} שאלות · סבב ${formatNumber(live.gameSessionId ? undefined : undefined) === '—' ? '' : ''}`.replace(' · סבב ', '')}
+        subtitle={`${MODE_LABELS[room.mode].label} · ${questionCount} שאלות`}
         crumbs={[{ label: 'לוח בקרה', to: teacherPath() }, { label: room.className }]}
         actions={
           <>

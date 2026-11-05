@@ -25,6 +25,7 @@ function loadDotEnv(): void {
   }
 }
 
+loadDotEnv();
 const prisma = new PrismaClient();
 
 async function seedAchievements(): Promise<number> {
@@ -102,7 +103,6 @@ async function seedTeacher(): Promise<'created' | 'exists' | 'skipped'> {
 }
 
 async function main(): Promise<void> {
-  loadDotEnv();
   const achievements = await seedAchievements();
   const media = await seedMedia(ASSET_MANIFEST as AssetManifestEntry[]);
   const pairs = await seedWordPairs(WORD_PAIRS, media);

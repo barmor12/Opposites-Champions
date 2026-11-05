@@ -1,0 +1,60 @@
+# =====================================================================
+# אלופי ההפכים – קונפיגורציית HTTP בלבד ("bootstrap") – לפני שקיימת תעודת TLS
+# Opposites Champions – HTTP-only bootstrap config (before the TLS cert exists)
+#
+# משמש את scripts/init-letsencrypt.sh בהרצה הראשונה:
+#   NGINX_TEMPLATE=app.http-only.conf.template docker compose ... up -d nginx
+# nginx עולה ללא תעודה, certbot מאמת דרך /.well-known/acme-challenge/, ואז
+# הסקריפט מחליף ל-app.conf.template (HTTPS). האפליקציה מוגשת כאן גם ב-HTTP
+# כדי שניתן יהיה לבדוק שהניתוב עובד לפני TLS – אך לא להשאיר כך בפרודקשן.
+# =====================================================================
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${DOMAIN};
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        default_type "text/plain";
+        try_files $uri =404;
+    }
+
+    location = /nginx-health {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+
+    set $upstream_server http://server:3000;
+    set $upstream_web    http://web:80;
+
+    location = /api/rooms/join {
+        limit_req zone=oc_join burst=40 nodelay;
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_pass $upstream_server;
+    }
+
+    location = /api/auth/login {
+        limit_req zone=oc_login burst=5 nodelay;
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_pass $upstream_server;
+    }
+
+    location /api/ {
+        limit_req zone=oc_api burst=100 nodelay;
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_pass $upstream_server;
+    }
+
+    location /socket.io/ {
+        include /etc/nginx/snippets/proxy-params.conf;
+        include /etc/nginx/snippets/websocket-params.conf;
+        proxy_pass $upstream_server;
+    }
+
+    location / {
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_pass $upstream_web;
+    }
+}

@@ -1,0 +1,100 @@
+# =====================================================================
+# אלופי ההפכים – server blocks לפרודקשן (HTTP → HTTPS, HTTPS עם Let's Encrypt)
+# Opposites Champions – production server blocks
+#
+# זהו template: ${DOMAIN} מוחלף ע"י ה-entrypoint של אימג' nginx (envsubst) בזמן העלייה.
+# רק משתני סביבה שמוגדרים בקונטיינר מוחלפים – משתני nginx ($host, $uri...) נשארים.
+# דורש תעודה ב-/etc/letsencrypt/live/${DOMAIN}/ – לפני שיש תעודה השתמשו ב-
+# app.http-only.conf.template (scripts/init-letsencrypt.sh עושה זאת אוטומטית).
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# HTTP: אימות ACME (certbot) + הפניה קבועה ל-HTTPS
+# ---------------------------------------------------------------------
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${DOMAIN};
+
+    # Let's Encrypt webroot challenge (certbot כותב ל-volume המשותף)
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        default_type "text/plain";
+        try_files $uri =404;
+    }
+
+    # בדיקת חיות פנימית (HEALTHCHECK של docker) – לא מופנית
+    location = /nginx-health {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# ---------------------------------------------------------------------
+# HTTPS: האפליקציה
+# ---------------------------------------------------------------------
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name ${DOMAIN};
+
+    ssl_certificate     /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
+    include /etc/nginx/snippets/ssl-params.conf;
+
+    # HSTS – שנה, כולל תתי-דומיינים. (preload רק אם בטוחים שכל תתי-הדומיינים ב-HTTPS)
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    # הערה: אין להוסיף כאן add_header נוספים ב-location-ים – אחרת ה-HSTS לא יורש אליהם.
+    # כותרות אבטחה נוספות מגיעות מ-helmet (API) ומ-nginx של ה-web (SPA).
+
+    # upstreams כמשתנים – נפתרים דרך DNS של Docker בזמן ריצה (restart של server לא דורש reload)
+    set $upstream_server http://server:3000;
+    set $upstream_web    http://web:80;
+
+    # ---- הצטרפות תלמיד לחדר – rate limit (ראו הערה על NAT כיתתי ב-nginx.conf) ----
+    location = /api/rooms/join {
+        limit_req zone=oc_join burst=40 nodelay;
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_pass $upstream_server;
+    }
+
+    # ---- התחברות מורה – rate limit הדוק נגד brute-force ----
+    location = /api/auth/login {
+        limit_req zone=oc_login burst=5 nodelay;
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_pass $upstream_server;
+    }
+
+    # ---- API ----
+    location /api/ {
+        limit_req zone=oc_api burst=100 nodelay;
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_pass $upstream_server;
+    }
+
+    # ---- Socket.IO (WebSocket + polling fallback) ----
+    location /socket.io/ {
+        include /etc/nginx/snippets/proxy-params.conf;
+        include /etc/nginx/snippets/websocket-params.conf;
+        proxy_pass $upstream_server;
+    }
+
+    # ---- ACME גם ב-HTTPS (חידוש כשכבר יש הפניה) ----
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        default_type "text/plain";
+        try_files $uri =404;
+    }
+
+    # ---- SPA (קונטיינר web) ----
+    location / {
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_pass $upstream_web;
+    }
+}
