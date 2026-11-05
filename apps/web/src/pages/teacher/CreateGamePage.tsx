@@ -1,21 +1,25 @@
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 import { motion, useReducedMotion } from 'motion/react';
-import { BookOpenText, CheckCircle2, Gem, Info, ListOrdered, Rocket, Settings2, SlidersHorizontal, Timer, Trophy, Users, Volume2 } from 'lucide-react';
+import { BookOpenText, CheckCircle2, Gem, Images, Info, ListOrdered, Rocket, Settings2, SlidersHorizontal, Timer, Trophy, Users, Volume2 } from 'lucide-react';
 import {
   CATEGORY_LABELS,
   DIFFICULTY_LABELS,
+  EASY_PICTURE_PRESET,
+  EASY_PICTURE_PRESET_LABEL,
   GameMode,
   QUESTION_COUNT_OPTIONS,
+  QUESTION_TYPE_DESCRIPTIONS,
   QUESTION_TYPE_LABELS,
   QuestionType,
   TIME_PER_QUESTION_OPTIONS,
+  isPictureOnlySettings,
   type GameSettings,
 } from '@oc/shared';
 import { Button, Input, toast } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import { useTeacherStore } from '@/stores/teacherStore';
-import { MultiChips, PageHeader, Panel, SingleChips, Stepper, Toggle, radioGroupKeyDown, type StepperStep } from './components';
+import { MultiChips, PageHeader, Panel, SingleChips, Stepper, Toggle, TonePill, radioGroupKeyDown, type StepperStep } from './components';
 import { MODE_LABELS, friendlyError, teacherPath, timeLabel } from './labels';
 import { ALL_CATEGORIES, DEFAULT_SETTINGS, DIFFICULTIES, REGULAR_TYPES, validateSettings, type GameSettingsErrors as Errors } from './gameSettingsForm';
 
@@ -68,7 +72,19 @@ export function CreateGamePage() {
   const patch = <K extends keyof GameSettings>(key: K, value: GameSettings[K]) => setSettings((prev) => ({ ...prev, [key]: value }));
 
   const categoryOptions = useMemo(() => ALL_CATEGORIES.map((c) => ({ value: c, label: CATEGORY_LABELS[c] })), []);
-  const typeOptions = useMemo(() => REGULAR_TYPES.map((t) => ({ value: t, label: QUESTION_TYPE_LABELS[t] })), []);
+  // hint = תיאור הסוג (מוצג כ־tooltip על הצ׳יפ; לסוג "תמונה מול תמונה" גם כטקסט עזר גלוי)
+  const typeOptions = useMemo(() => REGULAR_TYPES.map((t) => ({ value: t, label: QUESTION_TYPE_LABELS[t], hint: QUESTION_TYPE_DESCRIPTIONS[t] })), []);
+
+  const pictureOnly = isPictureOnlySettings(settings);
+  const presetActive = (Object.keys(EASY_PICTURE_PRESET) as Array<keyof GameSettings>).every((k) => {
+    const v = EASY_PICTURE_PRESET[k];
+    return Array.isArray(v) ? pictureOnly : settings[k] === v;
+  });
+  const applyPreset = () => {
+    setSettings((prev) => ({ ...prev, ...EASY_PICTURE_PRESET }));
+    setErrors((prev) => ({ ...prev, questionTypes: undefined }));
+    toast.success(`הוחל: ${EASY_PICTURE_PRESET_LABEL}`);
+  };
 
   // מעקב אחרי הקטע הנראה – מעדכן את ה־Stepper
   useEffect(() => {
@@ -246,6 +262,7 @@ export function CreateGamePage() {
             description="מאילו קטגוריות ובאילו סוגי שאלות ישחקו."
           >
             <div className="flex flex-col gap-6">
+              <PresetCard active={presetActive} onApply={applyPreset} />
               <Field title="קטגוריות" description="השאלות ייבחרו מתוך הקטגוריות המסומנות." error={errors.categories}>
                 {(a) => <MultiChips name="קטגוריות" allLabel="בחירת הכול" options={categoryOptions} value={settings.categories} onChange={(v) => patch('categories', v)} {...a} />}
               </Field>
@@ -253,6 +270,14 @@ export function CreateGamePage() {
                 {(a) => (
                 <>
                 <MultiChips name="סוגי שאלות" options={typeOptions} value={settings.questionTypes} onChange={(v) => patch('questionTypes', v)} {...a} />
+                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-5 text-slate-600">
+                  <TonePill tone="pink" icon={<Images className="size-3" aria-hidden />}>
+                    ללא קריאה
+                  </TonePill>
+                  <span>
+                    <b className="font-bold text-brand-navy">{QUESTION_TYPE_LABELS[QuestionType.PICTURE_TO_PICTURE]}</b> – {QUESTION_TYPE_DESCRIPTIONS[QuestionType.PICTURE_TO_PICTURE]}
+                  </span>
+                </p>
                 <div className="mt-1">
                   <Toggle
                     name="treasureChallenge"
@@ -328,6 +353,7 @@ export function CreateGamePage() {
               <div className="min-w-0 flex-1 xl:hidden">
                 <div className="truncate text-sm font-extrabold text-brand-navy">{settings.className.trim() || 'כיתה ללא שם'}</div>
                 <div className="truncate text-xs text-slate-600">
+                  {pictureOnly && 'ללא קריאה · '}
                   {settings.questionCount} שאלות · {DIFFICULTY_LABELS[settings.difficulty]} · {timeLabel(settings.timePerQuestionSec)} · {categoriesLabel}
                 </div>
               </div>
@@ -362,6 +388,11 @@ export function CreateGamePage() {
                   )}
                 </dl>
                 <div className="mt-4 flex flex-wrap gap-1.5">
+                  {pictureOnly && (
+                    <TonePill tone="pink" icon={<Images className="size-3" aria-hidden />}>
+                      ללא קריאה
+                    </TonePill>
+                  )}
                   {settings.competitionEnabled && <Tag>תחרות</Tag>}
                   {settings.showLeaderboard && <Tag>דירוג</Tag>}
                   {settings.showCorrectAnswers && <Tag>תשובות נכונות</Tag>}
@@ -383,6 +414,46 @@ export function CreateGamePage() {
         </aside>
       </form>
     </div>
+  );
+}
+
+/** פריסט "רמה קלה – תמונות בלבד": כפתור־כרטיס בולט שמחיל את EASY_PICTURE_PRESET על הטופס. */
+function PresetCard({ active, onApply }: { active: boolean; onApply: () => void }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.button
+      type="button"
+      onClick={onApply}
+      aria-pressed={active}
+      whileTap={reduce ? undefined : { scale: 0.99 }}
+      className={cn(
+        'group relative flex min-h-0 w-full items-center gap-3 overflow-hidden rounded-2xl border p-3 text-start transition-[border-color,box-shadow] duration-200 sm:gap-4 sm:p-4',
+        'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
+        active
+          ? 'border-pink-300 bg-linear-to-l from-pink-50 via-white to-amber-50 shadow-[0_18px_30px_-18px_rgba(236,72,153,.55),0_0_0_3px_rgba(236,72,153,.15)]'
+          : 'border-slate-200/90 bg-white/80 hover:border-pink-300 hover:shadow-[0_12px_24px_-16px_rgba(30,41,59,.35)]',
+      )}
+    >
+      <span className="relative grid size-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br from-pink-400 to-rose-500 text-white shadow-[0_8px_18px_-8px_rgba(236,72,153,.9)] sm:size-14">
+        <Images className="size-6" aria-hidden />
+      </span>
+      <span className="relative min-w-0 flex-1">
+        <span className="flex flex-wrap items-center gap-2">
+          <span className="font-extrabold text-brand-navy">{EASY_PICTURE_PRESET_LABEL}</span>
+          <TonePill tone="pink">ללא קריאה</TonePill>
+          {active && <TonePill tone="green">פעיל</TonePill>}
+        </span>
+        <span className="mt-1 block text-xs leading-5 text-slate-600">
+          {QUESTION_TYPE_DESCRIPTIONS[QuestionType.PICTURE_TO_PICTURE]}. רמת קושי קלה, ללא הגבלת זמן, עם הצגת התשובה הנכונה.
+        </span>
+      </span>
+      <span
+        className={cn('relative grid size-6 shrink-0 place-items-center self-start rounded-full transition-colors', active ? 'bg-brand-pink-shade text-white' : 'bg-slate-100 text-transparent')}
+        aria-hidden
+      >
+        <CheckCircle2 className="size-4" />
+      </span>
+    </motion.button>
   );
 }
 

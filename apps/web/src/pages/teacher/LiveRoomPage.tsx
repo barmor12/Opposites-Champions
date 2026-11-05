@@ -14,6 +14,7 @@ import {
   DoorOpen,
   Flag,
   Hourglass,
+  Images,
   Link2,
   Minus,
   Pause,
@@ -28,11 +29,11 @@ import {
   Wifi,
   WifiOff,
 } from 'lucide-react';
-import { GameMode, GameState, type LeaderboardEntry, type ParticipantView } from '@oc/shared';
+import { GameMode, GameState, isPictureOnlySettings, type LeaderboardEntry, type ParticipantView } from '@oc/shared';
 import { Avatar, Button, Card, EmptyState, Medal, ProgressBar, Spinner, medalForRank, toast } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import { useTeacherStore, type LiveEvent, type RoomAction } from '@/stores/teacherStore';
-import { ConfirmModal, CountUp, HIT_AREA, MagicButton, PageHeader, Panel, StateBadge, Stepper, type StepperStep } from './components';
+import { ConfirmModal, CountUp, HIT_AREA, MagicButton, PageHeader, Panel, StateBadge, Stepper, TonePill, type StepperStep } from './components';
 import { MODE_LABELS, STATE_LABELS, formatNumber, friendlyError, teacherPath } from './labels';
 
 /** אחרי כמות זו של הודעות על תלמידים – משתיקים כדי לא להציף. */
@@ -86,6 +87,15 @@ export function LiveRoomPage() {
   const setJoinOpen = useTeacherStore((s) => s.setJoinOpen);
   const newRound = useTeacherStore((s) => s.newRound);
   const removeParticipant = useTeacherStore((s) => s.removeParticipant);
+  // סיכום החדר (מלוח הבקרה) – מכיל את הגדרות המשחק המלאות (סוגי שאלות), שלא נשלחות בתצוגה החיה
+  const games = useTeacherStore((s) => s.games);
+  const loadGames = useTeacherStore((s) => s.loadGames);
+  const summary = games.find((g) => g.roomId === id);
+  const pictureOnly = summary ? isPictureOnlySettings(summary.settings) : false;
+
+  useEffect(() => {
+    if (games.length === 0) void loadGames();
+  }, [games.length, loadGames]);
 
   const [confirm, setConfirm] = useState<Confirm>(null);
   const [copied, setCopied] = useState<'code' | 'link' | null>(null);
@@ -233,6 +243,11 @@ export function LiveRoomPage() {
           <span className="inline-flex flex-wrap items-center gap-3">
             {room.className}
             <StateBadge state={state} size="md" />
+            {pictureOnly && (
+              <TonePill tone="pink" icon={<Images className="size-3.5" aria-hidden />} className="px-3 py-1 text-sm">
+                ללא קריאה
+              </TonePill>
+            )}
           </span>
         }
         subtitle={`${MODE_LABELS[room.mode].label} · ${questionCount} שאלות · קוד ${room.code}`}

@@ -1,7 +1,8 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { GameMode, type GameSettings } from '@oc/shared';
+import { EASY_PICTURE_PRESET, EASY_PICTURE_PRESET_LABEL, GameMode, isPictureOnlySettings, type GameSettings } from '@oc/shared';
 import { CreateGamePage } from '../CreateGamePage';
+import { DEFAULT_SETTINGS } from '../gameSettingsForm';
 import { teacherApi } from '@/services/teacherApi';
 import { PROFILE, makeSummary, renderAt, resetStore } from './testUtils';
 
@@ -61,7 +62,7 @@ describe('CreateGamePage', () => {
         'CHALLENGING',
       ],
       timePerQuestionSec: 0,
-      questionTypes: ['CHOOSE_OPPOSITE', 'MATCH_PAIRS', 'COMPLETE_SENTENCE'],
+      questionTypes: ['CHOOSE_OPPOSITE', 'MATCH_PAIRS', 'COMPLETE_SENTENCE', 'PICTURE_TO_PICTURE'],
       mode: GameMode.TEACHER_PACED,
       competitionEnabled: true,
       showLeaderboard: true,
@@ -69,6 +70,41 @@ describe('CreateGamePage', () => {
       soundsEnabled: false,
       treasureChallenge: true,
     });
+    await waitFor(() => expect(screen.getByTestId('marker-room')).toBeTruthy());
+  });
+
+  it('פריסט "רמה קלה – תמונות בלבד" מחיל את EASY_PICTURE_PRESET על הטופס', async () => {
+    api.games.create.mockResolvedValue(makeSummary({ roomId: 'room-pic' }));
+    renderAt('new', <CreateGamePage />);
+
+    fireEvent.change(screen.getByLabelText('שם הכיתה'), { target: { value: 'כיתה א׳1' } });
+    // משנים הגדרות שהפריסט אמור לדרוס
+    fireEvent.click(screen.getByRole('radio', { name: 'קשה' }));
+    fireEvent.click(screen.getByRole('radio', { name: '20 שניות' }));
+    fireEvent.click(screen.getByRole('switch', { name: /אתגר האוצר/ }));
+    fireEvent.click(screen.getByRole('switch', { name: 'הצגת התשובה הנכונה' }));
+
+    const preset = screen.getByRole('button', { name: new RegExp(EASY_PICTURE_PRESET_LABEL) });
+    expect(preset.getAttribute('aria-pressed')).toBe('false');
+    fireEvent.click(preset);
+    expect(preset.getAttribute('aria-pressed')).toBe('true');
+    expect(screen.getByRole('checkbox', { name: 'תמונה מול תמונה (ללא קריאה)' }).getAttribute('aria-checked')).toBe('true');
+    expect(screen.getByRole('checkbox', { name: 'בחירת ההפך' }).getAttribute('aria-checked')).toBe('false');
+
+    fireEvent.click(screen.getByRole('button', { name: /יצירת חדר/ }));
+    await waitFor(() => expect(api.games.create).toHaveBeenCalledTimes(1));
+    const payload = api.games.create.mock.calls[0]?.[0] as GameSettings;
+    expect(payload).toEqual({
+      ...DEFAULT_SETTINGS,
+      className: 'כיתה א׳1',
+      ...EASY_PICTURE_PRESET,
+    });
+    expect(payload.questionTypes).toEqual(['PICTURE_TO_PICTURE']);
+    expect(payload.difficulty).toBe('EASY');
+    expect(payload.timePerQuestionSec).toBe(0);
+    expect(payload.showCorrectAnswers).toBe(true);
+    expect(payload.treasureChallenge).toBe(false);
+    expect(isPictureOnlySettings(payload)).toBe(true);
     await waitFor(() => expect(screen.getByTestId('marker-room')).toBeTruthy());
   });
 
