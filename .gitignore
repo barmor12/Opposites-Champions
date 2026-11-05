@@ -13,3 +13,4 @@ tests/e2e/playwright-report/
 infrastructure/certbot/
 *.tsbuildinfo
 .pnpm-store/
+backups/
