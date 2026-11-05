@@ -5,7 +5,8 @@ import { LogIn, ShieldCheck, Sparkles } from 'lucide-react';
 import { Button, Input } from '@/components/ui';
 import { useTeacherStore } from '@/stores/teacherStore';
 import { friendlyError, teacherPath } from './labels';
-import { FloatingBlobs } from './components';
+import { BUTTON_FOCUS_RING, FloatingBlobs } from './components';
+import { cn } from '@/lib/cn';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -58,7 +59,7 @@ export function LoginPage() {
   };
 
   return (
-    <div dir="rtl" className="relative flex min-h-dvh items-center justify-center overflow-hidden px-4 py-10 sm:px-6">
+    <main dir="rtl" className={cn('relative flex min-h-dvh items-center justify-center overflow-hidden px-4 py-10 sm:px-6', BUTTON_FOCUS_RING)}>
       <FloatingBlobs />
       <div className="grid w-full max-w-5xl items-center gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
         {/* צד שמאל – ברכה */}
@@ -74,10 +75,11 @@ export function LoginPage() {
             </span>
             <span className="text-sm font-bold uppercase tracking-[0.2em] text-violet-700">ממשק המורה</span>
           </div>
-          <h1 className="text-4xl font-black leading-[1.15] tracking-tight text-brand-navy xl:text-5xl">
+          {/* לוגו־מילולי (לא כותרת) – ה־h1 היחיד של העמוד הוא בכרטיס, ונראה בכל רוחב מסך */}
+          <p className="text-4xl font-black leading-[1.15] tracking-tight text-brand-navy xl:text-5xl">
             אלופי ההפכים
             <span className="mt-2 block bg-linear-to-l from-violet-600 to-sky-500 bg-clip-text text-2xl font-extrabold text-transparent xl:text-3xl">משחק כיתתי בלחיצה אחת</span>
-          </h1>
+          </p>
           <p className="max-w-md text-base leading-7 text-slate-600">יוצרים חדר, מציגים את הקוד על הלוח, והכיתה משחקת מהטאבלטים. עוקבים אחרי ההתקדמות בזמן אמת ומקבלים תוצאות מפורטות בסוף.</p>
           <ul className="grid gap-2 text-sm text-slate-600">
             {['קוד חדר ו־QR להצטרפות מיידית', 'מעקב חי אחרי כל תלמיד', 'דוחות ויצוא ל־Excel'].map((t) => (
@@ -110,7 +112,7 @@ export function LoginPage() {
             <div className="mb-6 flex flex-col items-center gap-3 text-center lg:items-start lg:text-start">
               <img src="/images/ui/logo.svg" alt="אלופי ההפכים" className="size-16 drop-shadow-md lg:hidden" />
               <div>
-                <h2 className="text-2xl font-black tracking-tight text-brand-navy">ברוכים השבים</h2>
+                <h1 className="text-2xl font-black tracking-tight text-brand-navy">ברוכים השבים</h1>
                 <p className="mt-1 text-sm text-slate-600">התחברו כדי לנהל משחקים ולצפות בתוצאות הכיתה.</p>
               </div>
             </div>
@@ -158,7 +160,7 @@ export function LoginPage() {
           </div>
         </motion.div>
       </div>
-    </div>
+    </main>
   );
 }
 

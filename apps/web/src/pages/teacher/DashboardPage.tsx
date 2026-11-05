@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { motion, useReducedMotion } from 'motion/react';
 import {
   Activity,
@@ -102,12 +102,10 @@ export function DashboardPage() {
               <RefreshCw className={cn('size-4', gamesLoading && 'animate-spin')} aria-hidden />
               <span className="hidden sm:inline">רענון</span>
             </Button>
-            <Link to={teacherPath('content')} className="rounded-2xl">
-              <Button variant="secondary" size="md" tabIndex={-1}>
-                <BookOpenText className="size-4" aria-hidden />
-                מאגר ההפכים
-              </Button>
-            </Link>
+            <Button variant="secondary" size="md" onClick={() => navigate(teacherPath('content'))}>
+              <BookOpenText className="size-4" aria-hidden />
+              מאגר ההפכים
+            </Button>
           </>
         }
       />
@@ -129,8 +127,8 @@ export function DashboardPage() {
       >
         <div className="relative overflow-hidden rounded-[1.75rem] bg-linear-to-l from-violet-600 via-violet-700 to-brand-navy p-6 text-white shadow-[0_30px_60px_-28px_rgba(88,28,135,.8)] ring-1 ring-white/10 sm:p-8">
           <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:18px_18px] opacity-40" aria-hidden />
-          <div className="pointer-events-none absolute -left-10 -top-16 size-64 rounded-full bg-brand-yellow/25 blur-3xl" aria-hidden />
-          <div className="pointer-events-none absolute -bottom-24 right-1/3 size-56 rounded-full bg-brand-pink/30 blur-3xl" aria-hidden />
+          <div className="pointer-events-none absolute -left-10 -top-16 size-64 rounded-full bg-brand-yellow/15 blur-3xl" aria-hidden />
+          <div className="pointer-events-none absolute -bottom-24 right-1/3 size-56 rounded-full bg-brand-pink/15 blur-3xl" aria-hidden />
           <div className="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-4 sm:items-center">
               <motion.img
@@ -143,7 +141,7 @@ export function DashboardPage() {
               <div>
                 <div className="text-xs font-bold uppercase tracking-[0.18em] text-yellow-200">מתחילים?</div>
                 <h2 className="mt-1 text-2xl font-black tracking-tight sm:text-3xl">משחק חדש לכיתה</h2>
-                <p className="mt-1.5 max-w-xl text-sm leading-6 text-white/80">בוחרים קטגוריות, רמת קושי וסוגי שאלות – ותוך דקה הכיתה מצטרפת עם קוד בן 6 ספרות או סריקת QR.</p>
+                <p className="mt-1.5 max-w-xl text-sm leading-6 text-white/90">בוחרים קטגוריות, רמת קושי וסוגי שאלות – ותוך דקה הכיתה מצטרפת עם קוד בן 6 ספרות או סריקת QR.</p>
               </div>
             </div>
             <MagicButton tone="yellow" size="xl" glow fullWidth className="sm:w-auto" icon={<PlusCircle className="size-6" aria-hidden />} onClick={() => navigate(teacherPath('new'))}>
@@ -234,6 +232,7 @@ export function DashboardPage() {
 
 function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }) {
   const reduce = useReducedMotion();
+  const navigate = useNavigate();
   const isLive = ACTIVE_STATES.includes(game.state) || game.state === GameState.WAITING_FOR_PLAYERS;
   const hasResults = game.sessionCount > 0 && game.state !== GameState.WAITING_FOR_PLAYERS && game.state !== GameState.CREATED;
   return (
@@ -248,7 +247,7 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
         {...spotlightHandlers()}
       >
         <SpotlightOverlay />
-        {isLive && <span className="absolute inset-y-0 right-0 w-1 bg-linear-to-b from-violet-500 to-fuchsia-500" aria-hidden />}
+        {isLive && <span className="absolute inset-y-0 start-0 w-1 bg-linear-to-b from-violet-500 to-fuchsia-500" aria-hidden />}
         <div className="relative flex min-w-0 items-center gap-4">
           <div
             dir="ltr"
@@ -268,7 +267,7 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
             <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600">
               <span className="inline-flex items-center gap-1">
                 <Users className="size-3.5" aria-hidden />
-                {formatNumber(game.participantCount)} משתתפים
+                {formatNumber(game.participantCount)} תלמידים
               </span>
               <span className="inline-flex items-center gap-1">
                 <Repeat className="size-3.5" aria-hidden />
@@ -276,7 +275,7 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
               </span>
               <span className="inline-flex items-center gap-1">
                 <ListChecks className="size-3.5" aria-hidden />
-                {game.settings.questionCount} שאלות · {game.sessionCount} {game.sessionCount === 1 ? 'סבב' : 'סבבים'}
+                {game.settings.questionCount} שאלות · {game.sessionCount === 1 ? 'סבב אחד' : `${game.sessionCount} סבבים`}
               </span>
               <span className="hidden items-center gap-1 sm:inline-flex">
                 <CalendarClock className="size-3.5" aria-hidden />
@@ -286,19 +285,15 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
           </div>
         </div>
         <div className="relative flex items-center gap-2 sm:shrink-0 sm:justify-end">
-          <Link to={teacherPath(`rooms/${game.roomId}`)} className="flex-1 rounded-2xl sm:flex-none">
-            <Button variant={isLive ? 'primary' : 'secondary'} size="md" fullWidth tabIndex={-1}>
-              <Eye className="size-4" aria-hidden />
-              {isLive ? 'חדר חי' : 'פתיחה'}
-            </Button>
-          </Link>
+          <Button variant={isLive ? 'primary' : 'secondary'} size="md" className="flex-1 sm:flex-none" onClick={() => navigate(teacherPath(`rooms/${game.roomId}`))} aria-label={`${isLive ? 'חדר חי' : 'פתיחה'}: ${game.className}`}>
+            <Eye className="size-4" aria-hidden />
+            {isLive ? 'חדר חי' : 'פתיחה'}
+          </Button>
           {hasResults && (
-            <Link to={teacherPath(`rooms/${game.roomId}/results`)} className="rounded-2xl">
-              <Button variant="ghost" size="md" tabIndex={-1}>
-                <BarChart3 className="size-4" aria-hidden />
-                תוצאות
-              </Button>
-            </Link>
+            <Button variant="ghost" size="md" onClick={() => navigate(teacherPath(`rooms/${game.roomId}/results`))} aria-label={`תוצאות: ${game.className}`}>
+              <BarChart3 className="size-4" aria-hidden />
+              תוצאות
+            </Button>
           )}
           <button
             type="button"

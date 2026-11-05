@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Navigate, Outlet, useLocation } from 'react-router';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { BookOpenText, ChevronLeft, LayoutDashboard, LogOut, Menu, PlusCircle, Sparkles, X, type LucideIcon } from 'lucide-react';
@@ -6,7 +6,7 @@ import { Spinner, toast } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import { useTeacherStore } from '@/stores/teacherStore';
 import { teacherPath } from './labels';
-import { FloatingBlobs, TeacherChromeContext, type Crumb } from './components';
+import { BUTTON_FOCUS_RING, FloatingBlobs, HIT_AREA, TeacherChromeContext, useFocusTrap, type Crumb } from './components';
 
 const NAV: ReadonlyArray<{ to: string; label: string; short: string; icon: LucideIcon; end: boolean }> = [
   { to: teacherPath(), label: 'לוח בקרה', short: 'לוח', icon: LayoutDashboard, end: true },
@@ -55,7 +55,7 @@ function SidebarNav({ onNavigate, layoutId }: { onNavigate?: () => void; layoutI
                 <motion.span
                   layoutId={layoutId}
                   transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 32 }}
-                  className="absolute inset-0 rounded-2xl bg-linear-to-l from-violet-500 to-fuchsia-500 shadow-[0_10px_22px_-10px_rgba(139,92,246,.9)] ring-1 ring-white/30"
+                  className="absolute inset-0 rounded-2xl bg-linear-to-l from-violet-600 to-fuchsia-600 shadow-[0_10px_22px_-10px_rgba(139,92,246,.9)] ring-1 ring-white/30"
                   aria-hidden
                 />
               )}
@@ -76,8 +76,13 @@ function TeacherChip({ name, email, onLogout, loggingOut, compact }: { name?: st
   const initial = (name ?? '?').trim().charAt(0) || '?';
   return (
     <div className={cn('flex items-center gap-3 rounded-2xl', compact ? '' : 'bg-white/70 p-2.5 ring-1 ring-white/80 shadow-[0_6px_18px_-12px_rgba(30,41,59,.4)]')}>
-      <span className="relative grid size-10 shrink-0 place-items-center rounded-full bg-linear-to-br from-yellow-300 to-amber-400 text-sm font-black text-brand-navy shadow-[0_6px_14px_-6px_rgba(245,158,11,.8)] ring-2 ring-white">
-        {initial}
+      <span
+        className="relative grid size-10 shrink-0 place-items-center rounded-full bg-linear-to-br from-yellow-300 to-amber-400 text-sm font-black text-brand-navy shadow-[0_6px_14px_-6px_rgba(245,158,11,.8)] ring-2 ring-white"
+        role={compact ? 'img' : undefined}
+        aria-label={compact ? `מחובר/ת: ${name ?? ''}` : undefined}
+        title={compact ? name : undefined}
+      >
+        <span aria-hidden={compact || undefined}>{initial}</span>
         <span className="absolute -bottom-0.5 -end-0.5 size-3 rounded-full bg-emerald-500 ring-2 ring-white" aria-hidden />
       </span>
       {!compact && (
@@ -93,7 +98,7 @@ function TeacherChip({ name, email, onLogout, loggingOut, compact }: { name?: st
           type="button"
           onClick={onLogout}
           disabled={loggingOut}
-          className="grid size-9 min-h-0 shrink-0 place-items-center rounded-xl text-slate-600 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
+          className={cn('grid size-9 min-h-0 shrink-0 place-items-center rounded-xl text-slate-600 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50', HIT_AREA.md)}
           aria-label="התנתקות"
           title="התנתקות"
         >
@@ -114,7 +119,7 @@ function Breadcrumbs({ crumbs }: { crumbs: Crumb[] }) {
           return (
             <li key={`${c.label}-${i}`} className="flex min-w-0 items-center gap-1.5">
               {c.to && !last ? (
-                <Link to={c.to} className="truncate rounded-md font-semibold text-slate-600 transition-colors hover:text-violet-700">
+                <Link to={c.to} className="-my-3 truncate rounded-md py-3 font-semibold text-slate-600 transition-colors hover:text-violet-700">
                   {c.label}
                 </Link>
               ) : (
@@ -122,7 +127,7 @@ function Breadcrumbs({ crumbs }: { crumbs: Crumb[] }) {
                   {c.label}
                 </span>
               )}
-              {!last && <ChevronLeft className="size-3.5 shrink-0 text-slate-500" aria-hidden />}
+              {!last && <ChevronLeft className="size-3.5 shrink-0 text-slate-400" aria-hidden />}
             </li>
           );
         })}
@@ -179,6 +184,9 @@ export function TeacherLayout() {
   const [loggingOut, setLoggingOut] = useState(false);
   const [crumbs, setCrumbsState] = useState<Crumb[]>([]);
   const setCrumbs = useCallback((next: Crumb[]) => setCrumbsState(next), []);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  // לכידת פוקוס במגירה + החזרתו לכפתור התפריט בסגירה
+  useFocusTrap(drawerRef, menuOpen);
 
   useEffect(() => {
     if (authStatus === 'checking') void checkAuth();
@@ -225,12 +233,18 @@ export function TeacherLayout() {
 
   return (
     <TeacherChromeContext.Provider value={{ setCrumbs }}>
-      <div dir="rtl" className="relative min-h-dvh text-slate-800">
+      <div dir="rtl" className={cn('relative min-h-dvh text-slate-800', BUTTON_FOCUS_RING)}>
+        <a
+          href="#teacher-main"
+          className="sr-only z-[60] rounded-2xl bg-white px-4 py-3 text-sm font-bold text-brand-navy shadow-lg ring-2 ring-brand-violet focus:not-sr-only focus:fixed focus:start-4 focus:top-4"
+        >
+          דילוג לתוכן הראשי
+        </a>
         <FloatingBlobs />
 
         <div className="lg:flex">
           {/* סרגל צד – מסכים גדולים */}
-          <aside className="sticky top-0 hidden h-dvh w-[272px] shrink-0 flex-col border-l border-white/70 bg-white/60 p-4 shadow-[8px_0_40px_-30px_rgba(30,41,59,.35)] backdrop-blur-xl lg:flex">
+          <aside className="sticky top-0 hidden h-dvh w-[272px] shrink-0 flex-col border-e border-white/70 bg-white/60 p-4 shadow-[8px_0_40px_-30px_rgba(30,41,59,.35)] backdrop-blur-xl lg:flex">
             <div className="px-1 py-2">
               <Logo />
             </div>
@@ -283,7 +297,7 @@ export function TeacherLayout() {
               </div>
             </header>
 
-            <main className="flex-1 px-4 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-5 sm:px-6 sm:pt-6 lg:px-10 lg:pb-12 lg:pt-8">
+            <main id="teacher-main" tabIndex={-1} className="flex-1 px-4 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-5 outline-none sm:px-6 sm:pt-6 lg:px-10 lg:pb-12 lg:pt-8">
               <div className="mx-auto w-full max-w-7xl">
                 <Outlet />
               </div>
@@ -306,15 +320,16 @@ export function TeacherLayout() {
               />
               <motion.div
                 key="drawer"
+                ref={drawerRef}
                 id="teacher-drawer"
                 role="dialog"
                 aria-modal="true"
                 aria-label="תפריט"
-                className="fixed inset-y-0 right-0 z-50 flex w-[min(86vw,20rem)] flex-col bg-white/90 p-4 shadow-2xl backdrop-blur-xl lg:hidden"
+                className="fixed inset-y-0 end-0 z-50 flex w-[min(86vw,20rem)] flex-col bg-white/90 p-4 shadow-2xl backdrop-blur-xl lg:hidden"
                 initial={reduce ? { opacity: 0 } : { x: '100%' }}
                 animate={reduce ? { opacity: 1 } : { x: 0 }}
                 exit={reduce ? { opacity: 0 } : { x: '100%' }}
-                transition={{ type: 'spring', stiffness: 380, damping: 36 }}
+                transition={reduce ? { duration: 0.15 } : { type: 'spring', stiffness: 380, damping: 36 }}
               >
                 <div className="flex items-center justify-between">
                   <Logo onClick={() => setMenuOpen(false)} />
