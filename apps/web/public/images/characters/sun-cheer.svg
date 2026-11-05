@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">שמש חוגגת</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M100 4L116 40.1L148 16.9L143.8 56.2L183.1 52L159.9 84L196 100L159.9 116L183.1 148L143.8 143.8L148 183.1L116 159.9L100 196L84 159.9L52 183.1L56.2 143.8L16.9 148L40.1 116L4 100L40.1 84L16.9 52L56.2 56.2L52 16.9L84 40.1Z" fill="#FDBA74"/>
+<circle cx="100" cy="100" r="58" fill="#FDE047"/>
+<path d="M62 70Q80 50 108 52" fill="none" stroke="#FEF9C3" stroke-width="7"/>
+<circle cx="70" cy="112" r="9" fill="#F9A8D4" stroke="none"/><circle cx="130" cy="112" r="9" fill="#F9A8D4" stroke="none"/>
+<path d="M74 114Q100 118 126 114Q124 146 100 146Q76 146 74 114Z" fill="#2D3748"/>
+<path d="M80 118Q100 122 120 118Q116 128 100 128Q84 128 80 118Z" fill="#fff" stroke="none"/>
+<path d="M84 140Q100 130 116 140Q110 146 100 146Q90 146 84 140Z" fill="#F87171" stroke="none"/>
+<path d="M70 92Q82 78 94 92M106 92Q118 78 130 92" fill="none" stroke-width="6"/>
+<path d="M52 122Q24 110 20 70" fill="none" stroke-width="12"/><path d="M148 122Q176 110 180 70" fill="none" stroke-width="12"/>
+<path d="M52 122Q24 110 20 70" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M148 122Q176 110 180 70" fill="none" stroke="#FDE047" stroke-width="5"/>
+<path d="M30 72Q10 70 10 56Q10 46 20 48L14 36Q14 28 22 30L30 40L34 28Q40 24 42 32L40 48Q44 60 30 72Z" fill="#FDE047"/>
+<path d="M170 72Q190 70 190 56Q190 46 180 48L186 36Q186 28 178 30L170 40L166 28Q160 24 158 32L160 48Q156 60 170 72Z" fill="#FDE047"/>
+<path d="M40 14L43 22L51 25L43 28L40 36L37 28L29 25L37 22Z" fill="#F9A8D4" stroke-width="3"/>
+<path d="M160 10L163 18L171 21L163 24L160 32L157 24L149 21L157 18Z" fill="#7DD3FC" stroke-width="3"/>
+</g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="צר"><title>צר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#DCFCE7"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 100 C40 76 60 124 100 100 C140 76 160 124 196 100" fill="none" stroke-width="28"/>
+<path d="M4 100 C40 76 60 124 100 100 C140 76 160 124 196 100" fill="none" stroke="#E9C98A" stroke-width="18"/>
+<circle cx="30" cy="150" r="16" fill="#86EFAC"/>
+<circle cx="170" cy="46" r="18" fill="#86EFAC"/>
+<circle cx="150" cy="160" r="12" fill="#86EFAC"/>
+<g stroke-width="3">
+<circle cx="60" cy="40" r="5" fill="#F9A8D4"/><circle cx="60" cy="56" r="5" fill="#F9A8D4"/><circle cx="52" cy="48" r="5" fill="#F9A8D4"/><circle cx="68" cy="48" r="5" fill="#F9A8D4"/><circle cx="60" cy="48" r="5" fill="#FDE047"/>
+<circle cx="110" cy="150" r="5" fill="#F9A8D4"/><circle cx="110" cy="166" r="5" fill="#F9A8D4"/><circle cx="102" cy="158" r="5" fill="#F9A8D4"/><circle cx="118" cy="158" r="5" fill="#F9A8D4"/><circle cx="110" cy="158" r="5" fill="#FDE047"/>
+<circle cx="110" cy="46" r="5" fill="#A78BFA"/><circle cx="110" cy="62" r="5" fill="#A78BFA"/><circle cx="102" cy="54" r="5" fill="#A78BFA"/><circle cx="118" cy="54" r="5" fill="#A78BFA"/><circle cx="110" cy="54" r="5" fill="#FDE047"/>
+</g>
+</g></svg>

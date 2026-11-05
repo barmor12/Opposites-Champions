@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">ירח חייכן</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M150 70L153 78L161 81L153 84L150 92L147 84L139 81L147 78Z" fill="#FDE047" stroke-width="3"/>
+<path d="M172 118L174 124L180 126L174 128L172 134L170 128L164 126L170 124Z" fill="#F9A8D4" stroke-width="3"/>
+<circle cx="150" cy="150" r="5" fill="#7DD3FC" stroke-width="3"/>
+<path d="M125 28A76 76 0 1 0 125 172A80 80 0 0 1 125 28Z" fill="#FDE047"/>
+<path d="M44 74Q36 96 44 122" fill="none" stroke="#FEF9C3" stroke-width="7"/>
+<circle cx="40" cy="110" r="8" fill="#F9A8D4" stroke="none"/><circle cx="76" cy="114" r="8" fill="#F9A8D4" stroke="none"/>
+<path d="M46 122Q60 134 72 122" fill="none"/>
+<circle cx="48" cy="92" r="7" fill="#2D3748" stroke="none"/><circle cx="70" cy="92" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="51" cy="89" r="2.5" fill="#fff" stroke="none"/><circle cx="73" cy="89" r="2.5" fill="#fff" stroke="none"/>
+<path d="M40 80Q48 74 56 78M62 78Q70 74 78 80" fill="none" stroke-width="4"/>
+<path d="M86 48Q108 6 156 22Q150 34 160 44Q138 30 128 52Z" fill="#A78BFA"/>
+<path d="M84 50Q106 34 130 54Q110 48 90 64Z" fill="#fff"/>
+<circle cx="160" cy="30" r="11" fill="#F9A8D4"/>
+</g>
+</svg>

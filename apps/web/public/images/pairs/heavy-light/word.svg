@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="כבד"><title>כבד</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F1F5F9"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M14 160 H186" stroke-width="4"/>
+<path d="M28 162 L22 174 L32 186 M172 162 L178 174 L168 186 M100 162 L96 172" stroke-width="3"/>
+<rect x="56" y="102" width="88" height="12" rx="4" fill="#CBD5E1"/>
+<rect x="40" y="74" width="18" height="86" rx="4" fill="#64748B"/>
+<rect x="142" y="74" width="18" height="86" rx="4" fill="#64748B"/>
+<rect x="14" y="54" width="28" height="106" rx="6" fill="#475569"/>
+<rect x="158" y="54" width="28" height="106" rx="6" fill="#475569"/>
+<path d="M100 40 L100 72 M88 62 L100 74 L112 62" stroke-width="5"/>
+<path d="M70 44 L72 68 M130 44 L128 68" stroke-width="4"/>
+</g></svg>

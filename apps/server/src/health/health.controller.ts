@@ -1,5 +1,6 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
+import type { Response } from 'express';
 import { PrismaService } from '../prisma/prisma.service';
 
 export interface HealthResponse {
@@ -14,15 +15,14 @@ export class HealthController {
   constructor(private readonly prisma: PrismaService) {}
 
   @Get()
-  async check(): Promise<HealthResponse> {
+  async check(@Res({ passthrough: true }) res: Response): Promise<HealthResponse> {
     let db: HealthResponse['db'] = 'ok';
     try {
       await this.prisma.$queryRaw`SELECT 1`;
     } catch {
       db = 'error';
     }
-    const body: HealthResponse = { status: db === 'ok' ? 'ok' : 'error', db, uptime: Math.round(process.uptime()) };
-    if (db !== 'ok') throw new HttpException(body, HttpStatus.SERVICE_UNAVAILABLE);
-    return body;
+    if (db !== 'ok') res.status(HttpStatus.SERVICE_UNAVAILABLE);
+    return { status: db === 'ok' ? 'ok' : 'error', db, uptime: Math.round(process.uptime()) };
   }
 }

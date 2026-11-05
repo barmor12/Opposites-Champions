@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="רחב"><title>רחב</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#DCFCE7"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="4" y="36" width="192" height="128" fill="#94A3B8"/>
+<path d="M4 48 H196 M4 152 H196" stroke="#fff" stroke-width="4"/>
+<path d="M4 100 H196" stroke="#FDE047" stroke-width="7" stroke-dasharray="22 16"/>
+<circle cx="150" cy="134" r="8" fill="#2D3748"/>
+<circle cx="178" cy="134" r="8" fill="#2D3748"/>
+<path d="M138 132 L142 118 L152 110 L176 110 L186 118 L192 132 Z" fill="#F87171"/>
+<path d="M154 113 L158 119 L176 119 L174 113 Z" fill="#BAE6FD" stroke-width="3"/>
+<circle cx="150" cy="134" r="3" fill="#CBD5E1" stroke="none"/>
+<circle cx="178" cy="134" r="3" fill="#CBD5E1" stroke="none"/>
+<circle cx="40" cy="22" r="8" fill="#86EFAC" stroke-width="3"/>
+<circle cx="160" cy="180" r="8" fill="#86EFAC" stroke-width="3"/>
+</g></svg>

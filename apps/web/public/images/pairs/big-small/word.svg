@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="גדול"><title>גדול</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="120" cy="186" rx="68" ry="6" fill="#CBD5E1" stroke="none"/>
+<rect x="62" y="140" width="28" height="48" rx="10" fill="#CBD5E1"/>
+<rect x="102" y="140" width="28" height="48" rx="10" fill="#CBD5E1"/>
+<rect x="146" y="140" width="28" height="48" rx="10" fill="#CBD5E1"/>
+<path d="M178 108 Q200 118 188 142" fill="none"/>
+<ellipse cx="118" cy="118" rx="74" ry="54" fill="#CBD5E1"/>
+<circle cx="102" cy="80" r="36" fill="#CBD5E1"/>
+<circle cx="102" cy="80" r="24" fill="#F9A8D4"/>
+<path d="M38 92 C8 110 4 150 20 174 C26 182 44 180 42 170 C40 162 28 158 28 148 C28 130 42 120 56 114 Z" fill="#CBD5E1"/>
+<circle cx="62" cy="84" r="42" fill="#CBD5E1"/>
+<path d="M46 120 Q30 128 36 138 Q48 134 54 124 Z" fill="#fff"/>
+<circle cx="74" cy="78" r="8" fill="#fff"/><circle cx="74" cy="78" r="4" fill="#2D3748" stroke="none"/><circle cx="72" cy="76" r="1.6" fill="#fff" stroke="none"/>
+<path d="M58 106 Q68 114 78 108" fill="none"/>
+</g></svg>

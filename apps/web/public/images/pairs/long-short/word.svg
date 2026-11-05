@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ארוך"><title>ארוך</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="12" y="86" width="22" height="28" rx="7" fill="#F9A8D4"/>
+<rect x="32" y="86" width="14" height="28" fill="#CBD5E1"/>
+<rect x="44" y="86" width="104" height="28" fill="#FDE047"/>
+<path d="M44 100 H148" stroke="#EAB308" stroke-width="3"/>
+<path d="M148 86 L148 114 L188 100 Z" fill="#FCD9B6"/>
+<path d="M176 95.8 L176 104.2 L188 100 Z" fill="#2D3748"/>
+<path d="M24 130 Q100 150 176 130" fill="none" stroke="#2D3748" stroke-width="4" stroke-dasharray="6 8" opacity="0.35"/>
+</g></svg>

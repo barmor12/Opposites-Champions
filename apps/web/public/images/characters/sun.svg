@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">שמש שמחה</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M100 4L116 40.1L148 16.9L143.8 56.2L183.1 52L159.9 84L196 100L159.9 116L183.1 148L143.8 143.8L148 183.1L116 159.9L100 196L84 159.9L52 183.1L56.2 143.8L16.9 148L40.1 116L4 100L40.1 84L16.9 52L56.2 56.2L52 16.9L84 40.1Z" fill="#FDBA74"/>
+<circle cx="100" cy="100" r="58" fill="#FDE047"/>
+<path d="M62 70Q80 50 108 52" fill="none" stroke="#FEF9C3" stroke-width="7"/>
+<circle cx="70" cy="110" r="9" fill="#F9A8D4" stroke="none"/><circle cx="130" cy="110" r="9" fill="#F9A8D4" stroke="none"/>
+<path d="M76 118Q100 142 124 118" fill="#F87171"/>
+<path d="M76 118Q100 128 124 118" fill="none"/>
+<circle cx="82" cy="92" r="8" fill="#2D3748" stroke="none"/><circle cx="118" cy="92" r="8" fill="#2D3748" stroke="none"/>
+<circle cx="85" cy="89" r="3" fill="#fff" stroke="none"/><circle cx="121" cy="89" r="3" fill="#fff" stroke="none"/>
+<path d="M70 80Q82 72 92 78M108 78Q118 72 130 80" fill="none" stroke-width="4"/>
+<path d="M150 122Q172 118 178 92" fill="none" stroke-width="12"/>
+<path d="M150 122Q172 118 178 92" fill="none" stroke="#FDE047" stroke-width="5"/>
+<path d="M166 92Q160 72 172 66Q178 64 180 72L182 60Q186 54 192 60L194 76Q196 80 198 72L200 94Q196 102 184 102Q170 102 166 92Z" fill="#FDE047"/>
+</g>
+</svg>
