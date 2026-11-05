@@ -68,9 +68,9 @@ export async function joinAsStudent(browser: Browser, code: string, name: string
 export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise<void> {
   for (let i = 0; i < maxQuestions; i++) {
     const finished = page.getByText(/סיימת|תוצאות|מקום/).first();
-    const option = page.getByTestId('answer-option').first();
-    const matchCheck = page.getByRole('button', { name: /בדיקה/ });
-    const matchCard = page.getByTestId('match-card');
+    const option = page.getByTestId('option-1');
+    const matchCheck = page.getByTestId('check-button');
+    const matchCard = page.locator('[data-testid^="card-"]');
     await Promise.race([
       option.waitFor({ state: 'visible', timeout: 20_000 }).catch(() => undefined),
       matchCard.first().waitFor({ state: 'visible', timeout: 20_000 }).catch(() => undefined),
@@ -87,7 +87,7 @@ export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise
     } else if (await option.isVisible().catch(() => false)) {
       await option.click();
     }
-    const next = page.getByRole('button', { name: /המשך/ });
+    const next = page.getByTestId('next-button');
     await next.waitFor({ state: 'visible', timeout: 15_000 });
     await next.click();
   }
