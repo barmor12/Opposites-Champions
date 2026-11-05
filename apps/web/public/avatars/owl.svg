@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">ינשוף</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#E9D5FF"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M48 70Q40 44 58 36Q72 44 78 58Z" fill="#A78BFA"/>
+<path d="M152 70Q160 44 142 36Q128 44 122 58Z" fill="#A78BFA"/>
+<path d="M40 110Q40 48 100 48Q160 48 160 110V210H40Z" fill="#A78BFA"/>
+<path d="M62 140Q62 112 100 112Q138 112 138 140V210H62Z" fill="#DDD6FE"/>
+<path d="M72 150Q81 140 90 150M90 150Q100 140 110 150M110 150Q119 140 128 150M81 168Q90 158 100 168M100 168Q110 158 119 168" fill="none" stroke="#A78BFA" stroke-width="4"/>
+<path d="M22 100Q34 96 46 116L30 160Q14 140 22 100Z" fill="#A78BFA"/>
+<path d="M178 100Q166 96 154 116L170 160Q186 140 178 100Z" fill="#A78BFA"/>
+<circle cx="77" cy="92" r="23" fill="#fff"/><circle cx="123" cy="92" r="23" fill="#fff"/>
+<circle cx="78" cy="94" r="11" fill="#2D3748" stroke="none"/><circle cx="124" cy="94" r="11" fill="#2D3748" stroke="none"/>
+<circle cx="83" cy="89" r="4" fill="#fff" stroke="none"/><circle cx="129" cy="89" r="4" fill="#fff" stroke="none"/>
+<path d="M92 112L108 112L100 128Z" fill="#FDBA74"/>
+<circle cx="58" cy="118" r="6" fill="#F9A8D4" stroke="none"/><circle cx="142" cy="118" r="6" fill="#F9A8D4" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

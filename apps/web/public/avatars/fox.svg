@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">שועל</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#DBEAFE"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M38 210Q38 158 100 158Q162 158 162 210Z" fill="#F97316"/>
+<path d="M58 92Q46 58 56 42Q74 48 90 66Q100 62 110 66Q126 48 144 42Q154 58 142 92Q154 128 100 156Q46 128 58 92Z" fill="#F97316"/>
+<path d="M64 60Q72 64 80 72Q70 78 64 84Z" fill="#2D3748" stroke="none"/>
+<path d="M136 60Q128 64 120 72Q130 78 136 84Z" fill="#2D3748" stroke="none"/>
+<path d="M62 108Q74 100 86 112Q100 104 114 112Q126 100 138 108Q138 134 100 152Q62 134 62 108Z" fill="#FFF7ED"/>
+<circle cx="72" cy="112" r="6" fill="#F9A8D4" stroke="none"/><circle cx="128" cy="112" r="6" fill="#F9A8D4" stroke="none"/>
+<ellipse cx="100" cy="126" rx="8" ry="6" fill="#2D3748" stroke="none"/>
+<path d="M100 132V137M100 137Q93 143 88 138M100 137Q107 143 112 138" fill="none"/>
+<circle cx="82" cy="98" r="7" fill="#2D3748" stroke="none"/><circle cx="118" cy="98" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="85" cy="95" r="2.5" fill="#fff" stroke="none"/><circle cx="121" cy="95" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

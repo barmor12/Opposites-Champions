@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">צפרדע</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#FEF9C3"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M34 210Q34 160 100 160Q166 160 166 210Z" fill="#4ADE80"/>
+<circle cx="72" cy="76" r="22" fill="#86EFAC"/><circle cx="128" cy="76" r="22" fill="#86EFAC"/>
+<path d="M44 120Q44 80 100 80Q156 80 156 120Q156 162 100 162Q44 162 44 120Z" fill="#86EFAC"/>
+<circle cx="72" cy="78" r="14" fill="#fff"/><circle cx="128" cy="78" r="14" fill="#fff"/>
+<circle cx="74" cy="80" r="7" fill="#2D3748" stroke="none"/><circle cx="130" cy="80" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="77" cy="77" r="2.5" fill="#fff" stroke="none"/><circle cx="133" cy="77" r="2.5" fill="#fff" stroke="none"/>
+<circle cx="60" cy="118" r="7" fill="#F9A8D4" stroke="none"/><circle cx="140" cy="118" r="7" fill="#F9A8D4" stroke="none"/>
+<circle cx="92" cy="104" r="3" fill="#2D3748" stroke="none"/><circle cx="108" cy="104" r="3" fill="#2D3748" stroke="none"/>
+<path d="M66 118Q100 150 134 118" fill="#F87171"/>
+<path d="M66 118Q100 128 134 118" fill="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

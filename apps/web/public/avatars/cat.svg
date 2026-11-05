@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">חתול</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#FCE7F3"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M38 210Q38 158 100 158Q162 158 162 210Z" fill="#A78BFA"/>
+<path d="M54 92L50 38L92 62Z" fill="#CBD5E1"/><path d="M146 92L150 38L108 62Z" fill="#CBD5E1"/>
+<path d="M60 76L60 52L80 64Z" fill="#F9A8D4" stroke="none"/><path d="M140 76L140 52L120 64Z" fill="#F9A8D4" stroke="none"/>
+<path d="M46 110Q46 58 100 58Q154 58 154 110Q154 160 100 160Q46 160 46 110Z" fill="#CBD5E1"/>
+<path d="M90 60Q100 72 110 60M80 64Q84 76 92 70M120 64Q116 76 108 70" fill="none" stroke="#94A3B8" stroke-width="4"/>
+<circle cx="64" cy="122" r="7" fill="#F9A8D4" stroke="none"/><circle cx="136" cy="122" r="7" fill="#F9A8D4" stroke="none"/>
+<path d="M94 118L106 118L100 126Z" fill="#F9A8D4"/>
+<path d="M100 126V131M100 131Q93 138 87 133M100 131Q107 138 113 133" fill="none"/>
+<path d="M30 118L62 124M30 134L62 130M170 118L138 124M170 134L138 130" fill="none" stroke-width="3.5"/>
+<circle cx="80" cy="100" r="7" fill="#2D3748" stroke="none"/><circle cx="120" cy="100" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="83" cy="97" r="2.5" fill="#fff" stroke="none"/><circle cx="123" cy="97" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

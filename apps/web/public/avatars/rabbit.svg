@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">ארנב</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#CCFBF1"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M40 210Q40 160 100 160Q160 160 160 210Z" fill="#FDE047"/>
+<ellipse cx="74" cy="48" rx="15" ry="40" fill="#fff" transform="rotate(-12 74 48)"/>
+<ellipse cx="126" cy="48" rx="15" ry="40" fill="#fff" transform="rotate(12 126 48)"/>
+<ellipse cx="74" cy="48" rx="7" ry="28" fill="#F9A8D4" stroke="none" transform="rotate(-12 74 48)"/>
+<ellipse cx="126" cy="48" rx="7" ry="28" fill="#F9A8D4" stroke="none" transform="rotate(12 126 48)"/>
+<path d="M50 112Q50 66 100 66Q150 66 150 112Q150 162 100 162Q50 162 50 112Z" fill="#fff"/>
+<circle cx="62" cy="124" r="7" fill="#F9A8D4" stroke="none"/><circle cx="138" cy="124" r="7" fill="#F9A8D4" stroke="none"/>
+<path d="M94 118L106 118L100 126Z" fill="#F9A8D4"/>
+<path d="M100 126V131M100 131Q92 139 86 133M100 131Q108 139 114 133" fill="none"/>
+<path d="M92 134H108V144Q100 150 92 144Z" fill="#fff"/><path d="M100 136V146" fill="none" stroke-width="3"/>
+<circle cx="80" cy="106" r="7" fill="#2D3748" stroke="none"/><circle cx="120" cy="106" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="83" cy="103" r="2.5" fill="#fff" stroke="none"/><circle cx="123" cy="103" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

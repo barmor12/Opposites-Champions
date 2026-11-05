@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">פנדה</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#D1FAE5"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M36 210Q36 156 100 156Q164 156 164 210Z" fill="#2D3748"/>
+<path d="M66 186Q66 160 100 160Q134 160 134 186Z" fill="#fff"/>
+<circle cx="58" cy="66" r="18" fill="#2D3748"/><circle cx="142" cy="66" r="18" fill="#2D3748"/>
+<path d="M48 110Q48 56 100 56Q152 56 152 110Q152 158 100 158Q48 158 48 110Z" fill="#fff"/>
+<ellipse cx="78" cy="104" rx="15" ry="18" fill="#2D3748" stroke="none" transform="rotate(-15 78 104)"/>
+<ellipse cx="122" cy="104" rx="15" ry="18" fill="#2D3748" stroke="none" transform="rotate(15 122 104)"/>
+<circle cx="80" cy="104" r="7" fill="#fff" stroke="none"/><circle cx="120" cy="104" r="7" fill="#fff" stroke="none"/>
+<circle cx="81" cy="105" r="3.5" fill="#2D3748" stroke="none"/><circle cx="121" cy="105" r="3.5" fill="#2D3748" stroke="none"/>
+<circle cx="62" cy="124" r="6" fill="#F9A8D4" stroke="none"/><circle cx="138" cy="124" r="6" fill="#F9A8D4" stroke="none"/>
+<ellipse cx="100" cy="126" rx="8" ry="6" fill="#2D3748" stroke="none"/>
+<path d="M100 132V137M100 137Q93 144 87 139M100 137Q107 144 113 139" fill="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

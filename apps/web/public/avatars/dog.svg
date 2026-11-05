@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">כלב</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#FFEDD5"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M38 210Q38 158 100 158Q162 158 162 210Z" fill="#7DD3FC"/>
+<path d="M62 64Q34 64 30 100Q28 130 52 136Q68 124 68 92Z" fill="#B45309"/>
+<path d="M138 64Q166 64 170 100Q172 130 148 136Q132 124 132 92Z" fill="#B45309"/>
+<path d="M50 104Q50 56 100 56Q150 56 150 104Q150 158 100 158Q50 158 50 104Z" fill="#FDBA74"/>
+<path d="M72 128Q72 108 100 108Q128 108 128 128Q128 150 100 150Q72 150 72 128Z" fill="#FFF7ED"/>
+<path d="M84 60Q100 50 116 60Q112 86 100 92Q88 86 84 60Z" fill="#FFF7ED" stroke="none"/>
+<circle cx="62" cy="118" r="6" fill="#F9A8D4" stroke="none"/><circle cx="138" cy="118" r="6" fill="#F9A8D4" stroke="none"/>
+<ellipse cx="100" cy="120" rx="9" ry="7" fill="#2D3748" stroke="none"/>
+<path d="M92 140Q100 150 108 140Z" fill="#F87171"/>
+<path d="M100 127V132M100 132Q92 140 86 134M100 132Q108 140 114 134" fill="none"/>
+<circle cx="80" cy="98" r="7" fill="#2D3748" stroke="none"/><circle cx="120" cy="98" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="83" cy="95" r="2.5" fill="#fff" stroke="none"/><circle cx="123" cy="95" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

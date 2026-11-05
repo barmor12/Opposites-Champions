@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">אריה</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#FEF3C7"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M40 210Q40 156 100 156Q160 156 160 210Z" fill="#F87171"/>
+<path d="M116.9 48.4Q141.1 42.1 145.3 66.7Q169.1 74.4 159.4 97.5Q175.2 116.8 154.6 130.9Q157.4 155.8 132.4 156.5Q121.4 178.9 100 166Q78.6 178.9 67.6 156.5Q42.6 155.8 45.4 130.9Q24.8 116.8 40.6 97.5Q30.9 74.4 54.7 66.7Q58.9 42.1 83.1 48.4Q100 30 116.9 48.4Z" fill="#FDBA74"/>
+<circle cx="62" cy="68" r="13" fill="#FDE047"/><circle cx="138" cy="68" r="13" fill="#FDE047"/>
+<circle cx="62" cy="68" r="5" fill="#F9A8D4" stroke="none"/><circle cx="138" cy="68" r="5" fill="#F9A8D4" stroke="none"/>
+<circle cx="100" cy="106" r="46" fill="#FDE047"/>
+<ellipse cx="100" cy="124" rx="22" ry="14" fill="#FEF3C7"/>
+<circle cx="70" cy="114" r="7" fill="#F9A8D4" stroke="none"/><circle cx="130" cy="114" r="7" fill="#F9A8D4" stroke="none"/>
+<path d="M92 114L108 114L100 123Z" fill="#2D3748"/>
+<path d="M100 123V129M100 129Q92 136 86 130M100 129Q108 136 114 130" fill="none"/>
+<circle cx="82" cy="96" r="7" fill="#2D3748" stroke="none"/><circle cx="118" cy="96" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="85" cy="93" r="2.5" fill="#fff" stroke="none"/><circle cx="121" cy="93" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>
