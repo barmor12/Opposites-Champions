@@ -139,10 +139,12 @@ describe('ContentService', () => {
     const pairs = await service.getPlayablePairs({
       categories: [Category.SIZES, Category.EMOTIONS],
       difficulty: 'MIXED',
-      questionTypes: [QuestionType.CHOOSE_IMAGE],
+      types: [QuestionType.CHOOSE_IMAGE, QuestionType.TREASURE_CHALLENGE],
       requireImages: true,
     });
     expect(pairs).toHaveLength(1);
+    expect(pairs[0]?.wordImage?.url).toBe('/img/big.png');
+    expect(pairs[0]?.oppositeImage).toBeNull();
     const args = wordPair.findMany.mock.calls[0]?.[0] as { where: Record<string, unknown> };
     expect(args.where.active).toBe(true);
     expect(args.where.deletedAt).toBeNull();

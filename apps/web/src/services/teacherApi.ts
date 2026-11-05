@@ -11,8 +11,8 @@ import type {
 import { apiClient } from '@/services/api';
 
 /**
- * שכבת גישה ל־API של המורה. כל הנתיבים לפי docs/API.md (base path: /api).
- * מניח ש־apiClient מקבל את הנתיב המלא כולל /api.
+ * שכבת גישה ל־API של המורה. כל הנתיבים לפי docs/API.md.
+ * apiClient מוסיף בעצמו את ה־base path (/api), לכן הנתיבים כאן יחסיים אליו.
  */
 
 export interface StatsOverview {
@@ -52,7 +52,7 @@ export interface MediaItem {
 
 export type ExportFormat = 'csv' | 'xlsx';
 
-const BASE = '/api';
+const BASE = '';
 
 function qs(params: Record<string, string | number | boolean | undefined | ''>): string {
   const search = new URLSearchParams();
@@ -150,7 +150,7 @@ export async function exportResults(
   format: ExportFormat,
   sessionId?: string,
 ): Promise<void> {
-  const url = roomPath(roomId, `/export${qs({ format, sessionId })}`);
+  const url = apiClient.url(roomPath(roomId, '/export'), { format, sessionId });
   const res = await fetch(url, {
     method: 'GET',
     credentials: 'include',

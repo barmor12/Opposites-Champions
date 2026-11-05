@@ -145,7 +145,7 @@ export function LiveRoomPage() {
     return (
       <div>
         <PageHeader title="חדר חי" crumbs={[{ label: 'לוח בקרה', to: teacherPath() }, { label: 'חדר' }]} />
-        <Card className="p-8">
+        <Card padding="none" className="p-8">
           <EmptyState title="לא הצלחנו לטעון את החדר" description={liveError} />
           <div className="mt-4 flex justify-center gap-2">
             <Button variant="secondary" onClick={() => void loadLive(id)}>
@@ -237,7 +237,7 @@ export function LiveRoomPage() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* קוד + QR */}
-        <Card className="flex flex-col items-center gap-4 p-6 lg:col-span-1">
+        <Card padding="none" className="flex flex-col items-center gap-4 p-6 lg:col-span-1">
           <div className="text-sm font-medium text-slate-500">קוד החדר</div>
           <div className="flex items-center gap-3">
             <div dir="ltr" className="select-all font-mono text-5xl font-black tracking-[0.25em] text-brand-navy sm:text-6xl" aria-label={`קוד חדר ${room.code}`}>
@@ -274,7 +274,7 @@ export function LiveRoomPage() {
 
         {/* שליטה + מונים */}
         <div className="flex flex-col gap-6 lg:col-span-2">
-          <Card className="p-6">
+          <Card padding="none" className="p-6">
             <h2 className="mb-4 text-base font-bold text-brand-navy">שליטה במשחק</h2>
             <div className="flex flex-wrap gap-2" role="group" aria-label="פעולות">
               {isWaiting && (
@@ -342,7 +342,7 @@ export function LiveRoomPage() {
             )}
           </Card>
 
-          <Card className="p-6">
+          <Card padding="none" className="p-6">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-xs text-slate-500">מחוברים</div>
@@ -376,7 +376,7 @@ export function LiveRoomPage() {
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         {/* משתתפים */}
-        <Card className="p-6 lg:col-span-2">
+        <Card padding="none" className="p-6 lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="inline-flex items-center gap-2 text-base font-bold text-brand-navy">
               <Users className="h-5 w-5 text-brand-violet" aria-hidden />
@@ -411,7 +411,7 @@ export function LiveRoomPage() {
         </Card>
 
         {/* דירוג חי */}
-        <Card className="p-6">
+        <Card padding="none" className="p-6">
           <h2 className="mb-4 text-base font-bold text-brand-navy">דירוג חי</h2>
           {live.leaderboard.length === 0 ? (
             <p className="text-sm text-slate-400">הדירוג יופיע עם התשובות הראשונות.</p>

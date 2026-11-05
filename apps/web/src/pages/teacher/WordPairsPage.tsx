@@ -147,7 +147,7 @@ export function WordPairsPage() {
         }
       />
 
-      <Card className="mb-4 flex flex-col gap-3 p-4 md:flex-row md:items-center">
+      <Card padding="none" className="mb-4 flex flex-col gap-3 p-4 md:flex-row md:items-center">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" aria-hidden />
           <input
@@ -188,7 +188,7 @@ export function WordPairsPage() {
         </select>
       </Card>
 
-      <Card className="overflow-hidden p-0">
+      <Card padding="none" className="overflow-hidden p-0">
         {loading && items.length === 0 ? (
           <div className="flex justify-center py-16">
             <Spinner />
@@ -389,7 +389,7 @@ function WordPairModal({
   const fieldClass = 'w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:border-brand-violet focus:outline-none focus:ring-2 focus:ring-brand-violet/30';
 
   return (
-    <Modal open onClose={saving ? () => undefined : onClose} title={isNew ? 'זוג חדש' : `עריכה: ${pair.word} / ${pair.opposite}`}>
+    <Modal open size="lg" dismissible={!saving} onClose={onClose} title={isNew ? 'זוג חדש' : `עריכה: ${pair.word} / ${pair.opposite}`}>
       <form onSubmit={handleSubmit} noValidate className="flex max-h-[75vh] flex-col gap-4 overflow-y-auto px-1" aria-label="טופס זוג מילים">
         <div className="grid gap-4 sm:grid-cols-2">
           <Input label="מילה" name="word" value={form.word} onChange={(e) => patch('word', e.target.value)} error={errors.word} required />

@@ -165,7 +165,7 @@ export function DashboardPage() {
             <Spinner />
           </div>
         ) : filtered.length === 0 ? (
-          <Card className="p-8">
+          <Card padding="none" className="p-8">
             <EmptyState
               title={games.length === 0 ? 'עדיין אין חדרים' : 'אין חדרים בסינון הזה'}
               description={games.length === 0 ? 'צרו את המשחק הראשון שלכם והזמינו את הכיתה להצטרף.' : 'נסו סינון אחר.'}
@@ -203,7 +203,7 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
   const isLive = ACTIVE_STATES.includes(game.state) || game.state === GameState.WAITING_FOR_PLAYERS;
   const hasResults = game.sessionCount > 0 && game.state !== GameState.WAITING_FOR_PLAYERS && game.state !== GameState.CREATED;
   return (
-    <Card className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+    <Card padding="none" className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex min-w-0 items-center gap-4">
         <div
           dir="ltr"

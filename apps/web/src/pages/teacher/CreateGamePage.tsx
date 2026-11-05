@@ -119,7 +119,7 @@ export function CreateGamePage() {
 
       <form onSubmit={handleSubmit} noValidate className="grid gap-6 lg:grid-cols-3" aria-label="הגדרות משחק">
         <div className="flex flex-col gap-6 lg:col-span-2">
-          <Card className="flex flex-col gap-6 p-6">
+          <Card padding="none" className="flex flex-col gap-6 p-6">
             <Section title="פרטי הכיתה">
               <Input
                 label="שם הכיתה"
@@ -190,7 +190,7 @@ export function CreateGamePage() {
             </Section>
           </Card>
 
-          <Card className="flex flex-col gap-4 p-6">
+          <Card padding="none" className="flex flex-col gap-4 p-6">
             <Section title="מצב משחק">
               <div className="grid gap-3 sm:grid-cols-2">
                 {(Object.values(GameMode) as GameMode[]).map((mode) => {
@@ -226,7 +226,7 @@ export function CreateGamePage() {
         </div>
 
         <div className="flex flex-col gap-6">
-          <Card className="flex flex-col gap-3 p-6">
+          <Card padding="none" className="flex flex-col gap-3 p-6">
             <h2 className="text-base font-bold text-brand-navy">אפשרויות</h2>
             <Toggle name="competitionEnabled" checked={settings.competitionEnabled} onChange={(v) => patch('competitionEnabled', v)} label="מצב תחרות" description="ניקוד, בונוס מהירות ודירוג." />
             <Toggle name="showLeaderboard" checked={settings.showLeaderboard} onChange={(v) => patch('showLeaderboard', v)} label="הצגת טבלת דירוג לתלמידים" />
@@ -234,7 +234,7 @@ export function CreateGamePage() {
             <Toggle name="soundsEnabled" checked={settings.soundsEnabled} onChange={(v) => patch('soundsEnabled', v)} label="צלילים" />
           </Card>
 
-          <Card className="sticky top-24 flex flex-col gap-4 p-6">
+          <Card padding="none" className="sticky top-24 flex flex-col gap-4 p-6">
             <h2 className="text-base font-bold text-brand-navy">סיכום</h2>
             <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
               <dt className="text-slate-500">כיתה</dt>

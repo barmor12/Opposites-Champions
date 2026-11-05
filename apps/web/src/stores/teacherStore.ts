@@ -12,7 +12,7 @@ import {
   type TeacherRoomLive,
 } from '@oc/shared';
 import { teacherApi } from '@/services/teacherApi';
-import { connectAsTeacher } from '@/services/socket';
+import { connectAsTeacher, disconnectSocket } from '@/services/socket';
 
 export type AuthStatus = 'checking' | 'anonymous' | 'authenticated';
 
@@ -109,10 +109,17 @@ function mergeParticipantsFromLeaderboard(
   });
 }
 
-/** Socket יחיד לחדר אחד – המורה צופה בחדר אחד בכל רגע. */
+/** Socket יחיד לחדר אחד – המורה צופה בחדר אחד בכל רגע (הסינגלטון מנוהל ב־services/socket). */
 let socket: TeacherSocket | null = null;
 let boundRoomId: string | null = null;
 let refetchTimer: ReturnType<typeof setTimeout> | null = null;
+
+function teardownSocket() {
+  if (!socket) return;
+  disconnectSocket();
+  socket = null;
+  boundRoomId = null;
+}
 
 export const useTeacherStore = create<TeacherStoreState>()((set, get) => {
   const updateLive = (updater: (live: TeacherRoomLive) => TeacherRoomLive) => {
@@ -236,12 +243,7 @@ export const useTeacherStore = create<TeacherStoreState>()((set, get) => {
         clearTimeout(refetchTimer);
         refetchTimer = null;
       }
-      if (socket) {
-        socket.removeAllListeners();
-        socket.disconnect();
-        socket = null;
-      }
-      boundRoomId = null;
+      teardownSocket();
       set({ live: null, liveRoomId: null, liveLoading: false, liveError: null, socketConnected: false });
     },
 
@@ -251,11 +253,7 @@ export const useTeacherStore = create<TeacherStoreState>()((set, get) => {
         get().live?.participants.find((p) => p.id === participantId)?.displayName ?? null;
 
       // חדר אחר היה מחובר – מנתקים קודם
-      if (socket && boundRoomId !== roomId) {
-        socket.removeAllListeners();
-        socket.disconnect();
-        socket = null;
-      }
+      if (socket && boundRoomId !== roomId) teardownSocket();
       if (!socket) socket = connectAsTeacher();
       const s = socket;
       boundRoomId = roomId;
@@ -396,12 +394,8 @@ export const useTeacherStore = create<TeacherStoreState>()((set, get) => {
         for (const [event, handler] of Object.entries(handlers)) {
           (s.off as (ev: string, fn: (...args: never[]) => void) => void)(event, handler as (...args: never[]) => void);
         }
-        if (boundRoomId === roomId) {
-          boundRoomId = null;
-          if (socket === s) {
-            socket.disconnect();
-            socket = null;
-          }
+        if (boundRoomId === roomId && socket === s) {
+          teardownSocket();
           set({ socketConnected: false });
         }
       };

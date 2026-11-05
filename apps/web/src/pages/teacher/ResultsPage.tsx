@@ -10,7 +10,7 @@ import {
   type LeaderboardEntry,
   type QuestionStat,
 } from '@oc/shared';
-import { Avatar, Button, Card, EmptyState, Medal, Spinner, toast } from '@/components/ui';
+import { Avatar, Button, Card, EmptyState, Medal, Spinner, medalForRank, toast } from '@/components/ui';
 import { Leaderboard } from '@/components/Leaderboard';
 import { teacherApi, type ExportFormat } from '@/services/teacherApi';
 import { useTeacherStore } from '@/stores/teacherStore';
@@ -143,7 +143,7 @@ export function ResultsPage() {
       </div>
 
       {error && (
-        <Card className="p-8">
+        <Card padding="none" className="p-8">
           <EmptyState title="לא הצלחנו לטעון את התוצאות" description={error} />
         </Card>
       )}
@@ -164,18 +164,18 @@ export function ResultsPage() {
           </section>
 
           {results.leaderboard.length === 0 ? (
-            <Card className="mt-6 p-8">
+            <Card padding="none" className="mt-6 p-8">
               <EmptyState title="אין עדיין תוצאות" description="כשהתלמידים יתחילו לענות – התוצאות יופיעו כאן." />
             </Card>
           ) : (
             <>
               <div className="mt-6 grid gap-6 lg:grid-cols-3">
-                <Card className="p-6 lg:col-span-1">
+                <Card padding="none" className="p-6 lg:col-span-1">
                   <h2 className="mb-4 text-base font-bold text-brand-navy">הפודיום</h2>
                   <Leaderboard entries={results.leaderboard.slice(0, 10)} showPodium compact />
                 </Card>
 
-                <Card className="overflow-hidden p-0 lg:col-span-2">
+                <Card padding="none" className="overflow-hidden p-0 lg:col-span-2">
                   <div className="border-b border-slate-100 px-6 py-4">
                     <h2 className="text-base font-bold text-brand-navy">כל התלמידים</h2>
                   </div>
@@ -202,7 +202,7 @@ export function ResultsPage() {
               </div>
 
               {results.hardestQuestions.length > 0 && (
-                <Card className="mt-6 p-6">
+                <Card padding="none" className="mt-6 p-6">
                   <h2 className="text-base font-bold text-brand-navy">שאלות שבהן הכיתה התקשתה</h2>
                   <p className="mb-4 text-sm text-slate-500">השאלות עם אחוז ההצלחה הנמוך ביותר – כדאי לחזור עליהן בכיתה.</p>
                   <ul className="grid gap-3">
@@ -226,7 +226,7 @@ export function ResultsPage() {
                 </Card>
               )}
 
-              <Card className="mt-6 p-6">
+              <Card padding="none" className="mt-6 p-6">
                 <h2 className="mb-4 text-base font-bold text-brand-navy">פירוט לפי שאלה</h2>
                 <div className="flex flex-col gap-2">
                   {results.questionStats.map((q) => (
@@ -263,12 +263,10 @@ function AccuracyBar({ value, tone }: { value: number; tone?: 'auto' | 'correct'
 }
 
 function StudentRow({ entry, achievements, questionCount }: { entry: LeaderboardEntry; achievements: AchievementType[]; questionCount: number }) {
-  const place = entry.rank;
+  const medal = medalForRank(entry.rank);
   return (
     <tr className="border-t border-slate-100 hover:bg-slate-50/60">
-      <td className="px-4 py-2.5 tabular-nums text-slate-500">
-        {place >= 1 && place <= 3 ? <Medal place={place as 1 | 2 | 3} /> : place}
-      </td>
+      <td className="px-4 py-2.5 tabular-nums text-slate-500">{medal ? <Medal kind={medal} size="sm" /> : entry.rank}</td>
       <td className="px-4 py-2.5">
         <div className="flex items-center gap-2">
           <Avatar id={entry.avatar} size="sm" />

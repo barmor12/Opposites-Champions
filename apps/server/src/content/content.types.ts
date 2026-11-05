@@ -23,12 +23,14 @@ export interface MediaAssetView {
   alt: string;
 }
 
-/** Filter used by the game engine to pick pairs for a session. */
+/** Filter used by the game engine to pick pairs for a session (same shape as `@oc/content` PairFilter). */
 export interface PlayablePairFilter {
+  /** Empty / missing = all categories. */
   categories?: Category[];
+  /** 'MIXED' / missing = all difficulties. */
   difficulty?: DifficultySetting;
-  /** Keep only pairs supporting at least one of these types. */
-  questionTypes?: QuestionType[];
+  /** Keep only pairs supporting at least one of these types (TREASURE_CHALLENGE ignored). */
+  types?: QuestionType[];
   /** Keep only pairs that have both images (for CHOOSE_IMAGE). */
   requireImages?: boolean;
 }

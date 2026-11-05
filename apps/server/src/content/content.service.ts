@@ -1,18 +1,17 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'node:crypto';
 import type { Prisma } from '@prisma/client';
-import { Category, CATEGORY_LABELS, type Difficulty, type QuestionType } from '@oc/shared';
+import { Category, CATEGORY_LABELS, type Difficulty, QuestionType } from '@oc/shared';
 import { PrismaService } from '../prisma/prisma.service';
 import { HE } from '../common/hebrew-messages';
 import type { CreateWordPairDto, ListWordPairsQueryDto, UpdateWordPairDto } from './dto/word-pair.dto';
 import type { CategorySummary, MediaAssetView, PlayablePairFilter, WordPairListResult, WordPairRecord } from './content.types';
 
-const WORD_PAIR_INCLUDE = {
-  wordImage: { select: { id: true, url: true, deletedAt: true } },
-  oppositeImage: { select: { id: true, url: true, deletedAt: true } },
-} satisfies Prisma.WordPairInclude;
+const WORD_PAIR_INCLUDE = { wordImage: true, oppositeImage: true } satisfies Prisma.WordPairInclude;
 
-type WordPairRow = Prisma.WordPairGetPayload<{ include: typeof WORD_PAIR_INCLUDE }>;
+/** WordPair row with both MediaAsset relations loaded (soft-deleted assets are nulled out). */
+export type PlayableWordPair = Prisma.WordPairGetPayload<{ include: { wordImage: true; oppositeImage: true } }>;
+type WordPairRow = PlayableWordPair;
 
 type ImageRow = { url: string; deletedAt: Date | null } | null;
 
@@ -160,16 +159,18 @@ export class ContentService {
   }
 
   /**
-   * Active, non-deleted pairs for building a game, with image URLs resolved.
+   * Active, non-deleted WordPair rows for building a game, with `wordImage` / `oppositeImage`
+   * MediaAsset relations loaded (soft-deleted assets are returned as null).
    * `id` is the DB uuid (use it for Question.wordPairId); `slug` is the content id.
+   * Filter semantics mirror `@oc/content` getActivePairs: empty categories = all, 'MIXED' = all
+   * difficulties, `types` = pair must support at least one (TREASURE_CHALLENGE is ignored).
    */
-  async getPlayablePairs(filter: PlayablePairFilter = {}): Promise<WordPairRecord[]> {
+  async getPlayablePairs(filter: PlayablePairFilter = {}): Promise<PlayableWordPair[]> {
     const where: Prisma.WordPairWhereInput = { deletedAt: null, active: true };
     if (filter.categories && filter.categories.length > 0) where.category = { in: filter.categories };
     if (filter.difficulty && filter.difficulty !== 'MIXED') where.difficulty = filter.difficulty as Difficulty;
-    if (filter.questionTypes && filter.questionTypes.length > 0) {
-      where.supportedTypes = { hasSome: filter.questionTypes as QuestionType[] };
-    }
+    const types = (filter.types ?? []).filter((t) => t !== QuestionType.TREASURE_CHALLENGE);
+    if (types.length > 0) where.supportedTypes = { hasSome: types as QuestionType[] };
     if (filter.requireImages) {
       where.imageable = true;
       where.wordImage = { is: { deletedAt: null } };
@@ -180,7 +181,11 @@ export class ContentService {
       include: WORD_PAIR_INCLUDE,
       orderBy: [{ category: 'asc' }, { slug: 'asc' }],
     });
-    return rows.map(toWordPairRecord);
+    return rows.map((row) => ({
+      ...row,
+      wordImage: row.wordImage && !row.wordImage.deletedAt ? row.wordImage : null,
+      oppositeImage: row.oppositeImage && !row.oppositeImage.deletedAt ? row.oppositeImage : null,
+    }));
   }
 
   private async findActiveRow(id: string): Promise<WordPairRow> {

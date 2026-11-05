@@ -36,7 +36,7 @@ export function ConfirmModal({
   };
 
   return (
-    <Modal open={open} onClose={busy ? () => undefined : onClose} title={title}>
+    <Modal open={open} onClose={onClose} dismissible={!busy} title={title} size="sm">
       <div className="flex flex-col gap-5">
         <div className="flex items-start gap-3">
           <div
