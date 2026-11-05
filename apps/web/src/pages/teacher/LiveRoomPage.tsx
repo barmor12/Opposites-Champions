@@ -1,32 +1,38 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { QRCodeSVG } from 'qrcode.react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   ArrowLeft,
   BarChart3,
   Ban,
   Check,
+  ChevronDown,
+  ChevronUp,
   Copy,
   DoorClosed,
   DoorOpen,
   Flag,
+  Hourglass,
   Link2,
+  Minus,
   Pause,
   Play,
   RefreshCw,
   RotateCcw,
   SkipForward,
+  Timer,
+  Trophy,
   UserMinus,
   Users,
   Wifi,
   WifiOff,
 } from 'lucide-react';
-import { GameMode, GameState, type ParticipantView } from '@oc/shared';
-import { Avatar, Button, Card, EmptyState, ProgressBar, Spinner, toast } from '@/components/ui';
-import { Leaderboard } from '@/components/Leaderboard';
+import { GameMode, GameState, type LeaderboardEntry, type ParticipantView } from '@oc/shared';
+import { Avatar, Button, Card, EmptyState, Medal, ProgressBar, Spinner, medalForRank, toast } from '@/components/ui';
+import { cn } from '@/lib/cn';
 import { useTeacherStore, type LiveEvent, type RoomAction } from '@/stores/teacherStore';
-import { ConfirmModal, PageHeader, StateBadge } from './components';
+import { ConfirmModal, CountUp, MagicButton, PageHeader, Panel, StateBadge, Stepper, type StepperStep } from './components';
 import { MODE_LABELS, formatNumber, friendlyError, teacherPath } from './labels';
 
 /** אחרי כמות זו של הודעות על תלמידים – משתיקים כדי לא להציף. */
@@ -36,9 +42,38 @@ type Confirm = 'finish' | 'cancel' | 'new-round' | { remove: ParticipantView } |
 
 const IN_PLAY: readonly GameState[] = [GameState.QUESTION_ACTIVE, GameState.QUESTION_RESULTS, GameState.NEXT_QUESTION];
 
+const TIMELINE: readonly StepperStep[] = [
+  { key: 'waiting', label: 'ממתינים', icon: Hourglass },
+  { key: 'countdown', label: 'ספירה', icon: Timer },
+  { key: 'questions', label: 'שאלות', icon: Play },
+  { key: 'results', label: 'תוצאות', icon: Trophy },
+];
+
+function timelineIndex(state: GameState): number {
+  switch (state) {
+    case GameState.CREATED:
+    case GameState.WAITING_FOR_PLAYERS:
+      return 0;
+    case GameState.COUNTDOWN:
+      return 1;
+    case GameState.QUESTION_ACTIVE:
+    case GameState.QUESTION_RESULTS:
+    case GameState.NEXT_QUESTION:
+    case GameState.PAUSED:
+      return 2;
+    case GameState.FINAL_RESULTS:
+      return 3;
+    case GameState.COMPLETED:
+      return 4;
+    default:
+      return -1;
+  }
+}
+
 export function LiveRoomPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const reduce = useReducedMotion();
   const live = useTeacherStore((s) => s.live);
   const liveLoading = useTeacherStore((s) => s.liveLoading);
   const liveError = useTeacherStore((s) => s.liveError);
@@ -145,14 +180,14 @@ export function LiveRoomPage() {
     return (
       <div>
         <PageHeader title="חדר חי" crumbs={[{ label: 'לוח בקרה', to: teacherPath() }, { label: 'חדר' }]} />
-        <Card padding="none" className="p-8">
-          <EmptyState title="לא הצלחנו לטעון את החדר" description={liveError} />
-          <div className="mt-4 flex justify-center gap-2">
-            <Button variant="secondary" onClick={() => void loadLive(id)}>
-              <RefreshCw className="h-4 w-4" aria-hidden /> ניסיון נוסף
+        <Card variant="glass" padding="none" className="p-6 sm:p-8">
+          <EmptyState title="לא הצלחנו לטעון את החדר" description={liveError} className="bg-transparent" />
+          <div className="mt-2 flex flex-wrap justify-center gap-2">
+            <Button variant="secondary" size="md" onClick={() => void loadLive(id)}>
+              <RefreshCw className="size-4" aria-hidden /> ניסיון נוסף
             </Button>
-            <Button variant="ghost" onClick={() => navigate(teacherPath())}>
-              <ArrowLeft className="h-4 w-4" aria-hidden /> ללוח הבקרה
+            <Button variant="ghost" size="md" onClick={() => navigate(teacherPath())}>
+              <ArrowLeft className="size-4" aria-hidden /> ללוח הבקרה
             </Button>
           </div>
         </Card>
@@ -163,7 +198,7 @@ export function LiveRoomPage() {
   if (!live || !room || !state) {
     return (
       <div className="flex justify-center py-24">
-        <Spinner />
+        <Spinner className="text-brand-violet" />
       </div>
     );
   }
@@ -175,35 +210,59 @@ export function LiveRoomPage() {
   const canCancel = !isEnded && state !== GameState.COMPLETED && state !== GameState.FINAL_RESULTS;
   const canToggleJoin = !isEnded && state !== GameState.FINAL_RESULTS && state !== GameState.COMPLETED;
   const showNext = isTeacherPaced && (state === GameState.QUESTION_ACTIVE || state === GameState.QUESTION_RESULTS);
+  const currentQuestionNumber = (live.currentQuestionIndex ?? room.currentQuestionIndex ?? -1) + 1;
+  const timeline = timelineIndex(state);
+
+  const hint = isWaiting
+    ? totalCount === 0
+      ? 'ממתינים שהתלמידים יצטרפו… אפשר להתחיל ברגע שיש לפחות משתתף אחד.'
+      : `${totalCount} ${totalCount === 1 ? 'תלמיד/ה מחכה' : 'תלמידים מחכים'} – כשכולם בפנים, מתחילים.`
+    : state === GameState.PAUSED
+      ? 'המשחק מושהה. התלמידים רואים מסך המתנה עד שממשיכים.'
+      : state === GameState.QUESTION_RESULTS && isTeacherPaced
+        ? 'מוצגות התוצאות לשאלה – לחצו ״שאלה הבאה״ כדי להמשיך.'
+        : state === GameState.COMPLETED
+          ? 'המשחק הסתיים. אפשר לפתוח סבב חדש עם אותם משתתפים.'
+          : null;
 
   return (
     <div>
       <PageHeader
+        eyebrow="חדר חי"
         title={
           <span className="inline-flex flex-wrap items-center gap-3">
             {room.className}
             <StateBadge state={state} size="md" />
           </span>
         }
-        subtitle={`${MODE_LABELS[room.mode].label} · ${questionCount} שאלות`}
+        subtitle={`${MODE_LABELS[room.mode].label} · ${questionCount} שאלות · קוד ${room.code}`}
         crumbs={[{ label: 'לוח בקרה', to: teacherPath() }, { label: room.className }]}
         actions={
           <>
             <span
-              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
-                socketConnected ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
-              }`}
+              className={cn(
+                'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold ring-1 ring-inset',
+                socketConnected ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-amber-50 text-amber-700 ring-amber-200',
+              )}
               title={socketConnected ? 'מחובר לעדכונים בזמן אמת' : 'אין חיבור בזמן אמת'}
             >
-              {socketConnected ? <Wifi className="h-3.5 w-3.5" aria-hidden /> : <WifiOff className="h-3.5 w-3.5" aria-hidden />}
+              {socketConnected ? (
+                <span className="relative flex size-2">
+                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+                </span>
+              ) : (
+                <WifiOff className="size-3.5" aria-hidden />
+              )}
               {socketConnected ? 'זמן אמת' : 'לא מחובר'}
+              {socketConnected && <Wifi className="size-3.5" aria-hidden />}
             </span>
-            <Button variant="ghost" onClick={() => void loadLive(id)} disabled={liveLoading} aria-label="רענון">
-              <RefreshCw className={`h-4 w-4 ${liveLoading ? 'animate-spin' : ''}`} aria-hidden />
+            <Button variant="ghost" size="md" onClick={() => void loadLive(id)} disabled={liveLoading} aria-label="רענון">
+              <RefreshCw className={cn('size-4', liveLoading && 'animate-spin')} aria-hidden />
             </Button>
-            <Link to={teacherPath(`rooms/${id}/results`)}>
-              <Button variant="secondary">
-                <BarChart3 className="h-4 w-4" aria-hidden />
+            <Link to={teacherPath(`rooms/${id}/results`)} className="rounded-2xl">
+              <Button variant="secondary" size="md" tabIndex={-1}>
+                <BarChart3 className="size-4" aria-hidden />
                 תוצאות
               </Button>
             </Link>
@@ -212,213 +271,233 @@ export function LiveRoomPage() {
       />
 
       {isEnded && (
-        <div role="status" className="mb-6 rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-600">
+        <div role="status" className="mb-5 flex items-center gap-3 rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-600 ring-1 ring-slate-200/80">
+          <Ban className="size-4 shrink-0 text-slate-400" aria-hidden />
           החדר {state === GameState.CANCELLED ? 'בוטל' : 'פג תוקפו'} ואינו פעיל יותר. אפשר ליצור משחק חדש מלוח הבקרה.
         </div>
       )}
 
       {state === GameState.COMPLETED && (
-        <div role="status" className="mb-6 flex flex-col gap-3 rounded-2xl bg-brand-green/10 px-5 py-4 ring-1 ring-brand-green/30 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-sm text-slate-700">
-            <span className="font-bold text-brand-navy">המשחק הסתיים.</span> התוצאות וההישגים מוכנים לצפייה.
+        <motion.div
+          role="status"
+          initial={reduce ? false : { opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-5 flex flex-col gap-3 rounded-2xl bg-linear-to-l from-emerald-50 to-teal-50 px-5 py-4 ring-1 ring-emerald-200/70 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div className="flex items-center gap-3 text-sm text-slate-700">
+            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-linear-to-br from-emerald-400 to-green-600 text-white shadow-lg shadow-emerald-500/40">
+              <Trophy className="size-5" aria-hidden />
+            </span>
+            <span>
+              <span className="block font-extrabold text-brand-navy">המשחק הסתיים!</span>
+              התוצאות וההישגים מוכנים לצפייה.
+            </span>
           </div>
-          <div className="flex gap-2">
-            <Link to={teacherPath(`rooms/${id}/results`)}>
-              <Button variant="success">
-                <BarChart3 className="h-4 w-4" aria-hidden /> לתוצאות
-              </Button>
-            </Link>
-            <Button variant="primary" onClick={() => setConfirm('new-round')} disabled={busy}>
-              <RotateCcw className="h-4 w-4" aria-hidden /> סבב חדש
+          <Link to={teacherPath(`rooms/${id}/results`)} className="rounded-2xl">
+            <Button variant="success" size="md" tabIndex={-1}>
+              <BarChart3 className="size-4" aria-hidden /> לתוצאות
             </Button>
-          </div>
-        </div>
+          </Link>
+        </motion.div>
       )}
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      {/* ציר זמן */}
+      <Card variant="glass" padding="none" className="mb-5 px-3 py-4 sm:px-8 sm:py-5">
+        <Stepper
+          steps={TIMELINE.map((s) => (s.key === 'questions' && state === GameState.PAUSED ? { ...s, tag: 'מושהה' } : s))}
+          current={timeline}
+          muted={isEnded}
+          tone={timeline >= 4 ? 'green' : 'violet'}
+          label="שלבי המשחק"
+        />
+      </Card>
+
+      <div className="grid gap-5 lg:grid-cols-3">
         {/* קוד + QR */}
-        <Card padding="none" className="flex flex-col items-center gap-4 p-6 lg:col-span-1">
-          <div className="text-sm font-medium text-slate-500">קוד החדר</div>
-          <div className="flex items-center gap-3">
-            <div dir="ltr" className="select-all font-mono text-5xl font-black tracking-[0.25em] text-brand-navy sm:text-6xl" aria-label={`קוד חדר ${room.code}`}>
-              {room.code}
-            </div>
-            <button
-              type="button"
-              onClick={() => void copy(room.code, 'code')}
-              className="rounded-xl p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-brand-violet"
-              aria-label="העתקת הקוד"
-              title="העתקת הקוד"
-            >
-              {copied === 'code' ? <Check className="h-5 w-5 text-brand-green" /> : <Copy className="h-5 w-5" />}
-            </button>
-          </div>
-          <div className="rounded-2xl bg-white p-3 ring-1 ring-slate-100">
-            <QRCodeSVG value={live.joinUrl} size={168} level="M" includeMargin={false} aria-label="QR להצטרפות" />
-          </div>
-          <div className="flex w-full items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 text-xs text-slate-600">
-            <Link2 className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
-            <a href={live.joinUrl} target="_blank" rel="noreferrer" dir="ltr" className="min-w-0 flex-1 truncate text-left hover:text-brand-violet">
-              {live.joinUrl}
-            </a>
-            <button type="button" onClick={() => void copy(live.joinUrl, 'link')} className="rounded-lg p-1 hover:bg-white" aria-label="העתקת הקישור">
-              {copied === 'link' ? <Check className="h-4 w-4 text-brand-green" /> : <Copy className="h-4 w-4" />}
-            </button>
-          </div>
-          <p className="text-center text-xs text-slate-400">התלמידים סורקים את ה־QR מהטאבלט או מקלידים את הקוד במסך ההצטרפות.</p>
-          <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${room.joinOpen ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
-            {room.joinOpen ? <DoorOpen className="h-3.5 w-3.5" aria-hidden /> : <DoorClosed className="h-3.5 w-3.5" aria-hidden />}
-            {room.joinOpen ? 'ההצטרפות פתוחה' : 'ההצטרפות סגורה'}
-          </div>
-        </Card>
-
-        {/* שליטה + מונים */}
-        <div className="flex flex-col gap-6 lg:col-span-2">
-          <Card padding="none" className="p-6">
-            <h2 className="mb-4 text-base font-bold text-brand-navy">שליטה במשחק</h2>
-            <div className="flex flex-wrap gap-2" role="group" aria-label="פעולות">
-              {isWaiting && (
-                <Button variant="success" size="lg" onClick={() => void act('start')} disabled={busy} loading={pendingAction === 'start'}>
-                  <Play className="h-5 w-5" aria-hidden /> התחל משחק
-                </Button>
-              )}
-              {(IN_PLAY.includes(state) || state === GameState.COUNTDOWN) && (
-                <Button variant="secondary" size="lg" onClick={() => void act('pause')} disabled={busy} loading={pendingAction === 'pause'}>
-                  <Pause className="h-5 w-5" aria-hidden /> השהה
-                </Button>
-              )}
-              {state === GameState.PAUSED && (
-                <Button variant="success" size="lg" onClick={() => void act('resume')} disabled={busy} loading={pendingAction === 'resume'}>
-                  <Play className="h-5 w-5" aria-hidden /> המשך
-                </Button>
-              )}
-              {showNext && (
-                <Button variant="primary" size="lg" onClick={() => void act('next')} disabled={busy} loading={pendingAction === 'next'}>
-                  <SkipForward className="h-5 w-5" aria-hidden /> שאלה הבאה
-                </Button>
-              )}
-              {canFinish && (
-                <Button variant="danger" size="lg" onClick={() => setConfirm('finish')} disabled={busy}>
-                  <Flag className="h-5 w-5" aria-hidden /> סיים משחק
-                </Button>
-              )}
-              {state === GameState.COMPLETED && (
-                <Button variant="primary" size="lg" onClick={() => setConfirm('new-round')} disabled={busy} loading={pendingAction === 'new-round'}>
-                  <RotateCcw className="h-5 w-5" aria-hidden /> סבב חדש
-                </Button>
-              )}
-              {canToggleJoin && (
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  onClick={() => setJoinOpen(id, !room.joinOpen).catch((err) => toast.error(friendlyError(err)))}
-                  disabled={busy}
-                  loading={pendingAction === 'join-open'}
-                  aria-pressed={room.joinOpen}
+        <div className="relative lg:col-span-1">
+          <div className="pointer-events-none absolute -inset-1 rounded-[2rem] bg-linear-to-br from-violet-400/40 via-sky-300/30 to-fuchsia-300/40 blur-xl" aria-hidden />
+          <Card variant="glass" padding="none" className="relative flex h-full flex-col items-center gap-4 overflow-hidden p-5 sm:p-6">
+            <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(139,92,246,.12)_1px,transparent_1px)] [background-size:18px_18px] opacity-60" aria-hidden />
+            <div className="relative flex w-full flex-col items-center gap-4 md:flex-row md:items-center md:justify-around lg:flex-col">
+              <div className="flex flex-col items-center gap-2">
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">קוד החדר</div>
+                <div className="flex items-center gap-2">
+                  <motion.div
+                    dir="ltr"
+                    className="select-all bg-linear-to-b from-brand-navy to-violet-700 bg-clip-text font-mono text-[2.75rem] font-black leading-none tracking-[0.2em] text-transparent drop-shadow-[0_8px_18px_rgba(139,92,246,.35)] sm:text-6xl"
+                    aria-label={`קוד חדר ${room.code}`}
+                    animate={reduce || !isWaiting ? undefined : { scale: [1, 1.02, 1] }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                  >
+                    {room.code}
+                  </motion.div>
+                  <button
+                    type="button"
+                    onClick={() => void copy(room.code, 'code')}
+                    className="grid size-11 min-h-0 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-violet-50 hover:text-brand-violet"
+                    aria-label="העתקת הקוד"
+                    title="העתקת הקוד"
+                  >
+                    {copied === 'code' ? <Check className="size-5 text-brand-green" /> : <Copy className="size-5" />}
+                  </button>
+                </div>
+                <span
+                  className={cn(
+                    'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ring-1 ring-inset',
+                    room.joinOpen ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-slate-100 text-slate-500 ring-slate-200',
+                  )}
                 >
-                  {room.joinOpen ? <DoorClosed className="h-5 w-5" aria-hidden /> : <DoorOpen className="h-5 w-5" aria-hidden />}
-                  {room.joinOpen ? 'סגור הצטרפות' : 'פתח הצטרפות'}
-                </Button>
-              )}
-              {canCancel && (
-                <Button variant="ghost" size="lg" onClick={() => setConfirm('cancel')} disabled={busy}>
-                  <Ban className="h-5 w-5 text-red-500" aria-hidden /> בטל
-                </Button>
-              )}
-            </div>
-
-            {isWaiting && totalCount === 0 && (
-              <p className="mt-3 text-sm text-slate-500">ממתינים שהתלמידים יצטרפו… אפשר להתחיל ברגע שיש לפחות משתתף אחד.</p>
-            )}
-            {isTeacherPaced && (IN_PLAY.includes(state) || state === GameState.PAUSED) && (
-              <div className="mt-4 flex items-center gap-3 rounded-xl bg-brand-violet/5 px-4 py-3 text-sm">
-                <span className="text-slate-500">שאלה נוכחית</span>
-                <span className="text-2xl font-black text-brand-violet tabular-nums">
-                  {(live.currentQuestionIndex ?? room.currentQuestionIndex ?? -1) + 1 || '—'}
+                  {room.joinOpen ? <DoorOpen className="size-3.5" aria-hidden /> : <DoorClosed className="size-3.5" aria-hidden />}
+                  {room.joinOpen ? 'ההצטרפות פתוחה' : 'ההצטרפות סגורה'}
                 </span>
-                <span className="text-slate-400">/ {questionCount}</span>
-                {state === GameState.QUESTION_RESULTS && <span className="mr-auto text-xs text-slate-500">מוצגות התוצאות – לחצו ״שאלה הבאה״ להמשך</span>}
               </div>
-            )}
-          </Card>
-
-          <Card padding="none" className="p-6">
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <div className="text-xs text-slate-500">מחוברים</div>
-                <div className="text-2xl font-bold text-brand-navy tabular-nums">
-                  {connectedCount}
-                  <span className="text-sm font-normal text-slate-400"> / {totalCount}</span>
-                </div>
-              </div>
-              <div>
-                <div className="text-xs text-slate-500">סיימו</div>
-                <div className="text-2xl font-bold text-brand-green tabular-nums">
-                  {live.finishedCount}
-                  <span className="text-sm font-normal text-slate-400"> מתוך {totalCount}</span>
-                </div>
-              </div>
-              <div>
-                <div className="text-xs text-slate-500">שאלות בסבב</div>
-                <div className="text-2xl font-bold text-brand-navy tabular-nums">{questionCount}</div>
+              <div className="rounded-2xl bg-white p-3 shadow-[0_14px_30px_-16px_rgba(30,41,59,.4)] ring-1 ring-slate-100">
+                <QRCodeSVG value={live.joinUrl} size={160} level="M" includeMargin={false} aria-label="QR להצטרפות" className="size-36 sm:size-40" />
               </div>
             </div>
-            <div className="mt-4">
-              <div className="mb-1 flex justify-between text-xs text-slate-500">
-                <span>התקדמות הסבב</span>
-                <span>{roundProgress.label}</span>
+            <div className="relative flex w-full items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 text-xs text-slate-600 ring-1 ring-slate-200/70">
+              <Link2 className="size-4 shrink-0 text-slate-400" aria-hidden />
+              <a href={live.joinUrl} target="_blank" rel="noreferrer" dir="ltr" className="min-w-0 flex-1 truncate text-left font-medium hover:text-brand-violet">
+                {live.joinUrl}
+              </a>
+              <button type="button" onClick={() => void copy(live.joinUrl, 'link')} className="grid size-8 min-h-0 place-items-center rounded-lg hover:bg-white" aria-label="העתקת הקישור">
+                {copied === 'link' ? <Check className="size-4 text-brand-green" /> : <Copy className="size-4" />}
+              </button>
+            </div>
+            <p className="relative text-center text-xs leading-5 text-slate-400">התלמידים סורקים את ה־QR מהטאבלט או מקלידים את הקוד במסך ההצטרפות.</p>
+          </Card>
+        </div>
+
+        {/* מרכז שליטה */}
+        <div className="flex flex-col gap-5 lg:col-span-2">
+          <Panel title="שליטה במשחק" description={hint ?? undefined} icon={<Play className="size-5" aria-hidden />} tone="navy">
+            <div className="flex flex-col gap-4" role="group" aria-label="פעולות">
+              <div className="flex flex-wrap items-center gap-3">
+                {isWaiting && (
+                  <MagicButton tone="green" size="lg" glow icon={<Play className="size-5" aria-hidden />} onClick={() => void act('start')} disabled={busy}>
+                    התחל משחק
+                  </MagicButton>
+                )}
+                {showNext && (
+                  <MagicButton tone="violet" size="lg" glow icon={<SkipForward className="size-5" aria-hidden />} onClick={() => void act('next')} disabled={busy}>
+                    שאלה הבאה
+                  </MagicButton>
+                )}
+                {state === GameState.PAUSED && (
+                  <MagicButton tone="green" size="lg" glow icon={<Play className="size-5" aria-hidden />} onClick={() => void act('resume')} disabled={busy}>
+                    המשך
+                  </MagicButton>
+                )}
+                {state === GameState.COMPLETED && (
+                  <MagicButton tone="violet" size="lg" glow icon={<RotateCcw className="size-5" aria-hidden />} onClick={() => setConfirm('new-round')} disabled={busy}>
+                    סבב חדש
+                  </MagicButton>
+                )}
+                {(IN_PLAY.includes(state) || state === GameState.COUNTDOWN) && (
+                  <Button variant="secondary" size="md" onClick={() => void act('pause')} disabled={busy} loading={pendingAction === 'pause'}>
+                    <Pause className="size-5" aria-hidden /> השהה
+                  </Button>
+                )}
+                {canFinish && (
+                  <Button variant="danger" size="md" onClick={() => setConfirm('finish')} disabled={busy}>
+                    <Flag className="size-5" aria-hidden /> סיים משחק
+                  </Button>
+                )}
+                {busy && <Spinner size="sm" className="text-brand-violet" label="מבצעים פעולה…" />}
               </div>
-              <ProgressBar value={roundProgress.value} max={roundProgress.max} />
+              {(canToggleJoin || canCancel) && (
+                <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3">
+                  {canToggleJoin && (
+                    <Button
+                      variant="ghost"
+                      size="md"
+                      onClick={() => setJoinOpen(id, !room.joinOpen).catch((err) => toast.error(friendlyError(err)))}
+                      disabled={busy}
+                      loading={pendingAction === 'join-open'}
+                      aria-pressed={room.joinOpen}
+                      className="bg-white/70 ring-1 ring-slate-200/80"
+                    >
+                      {room.joinOpen ? <DoorClosed className="size-4" aria-hidden /> : <DoorOpen className="size-4" aria-hidden />}
+                      {room.joinOpen ? 'סגור הצטרפות' : 'פתח הצטרפות'}
+                    </Button>
+                  )}
+                  {canCancel && (
+                    <Button variant="ghost" size="md" onClick={() => setConfirm('cancel')} disabled={busy} className="text-rose-600 hover:bg-rose-50">
+                      <Ban className="size-4" aria-hidden /> בטל
+                    </Button>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {isTeacherPaced && (IN_PLAY.includes(state) || state === GameState.PAUSED) && (
+              <div className="mt-4 flex items-center gap-3 rounded-2xl bg-linear-to-l from-violet-500/10 to-fuchsia-500/5 px-4 py-3 text-sm ring-1 ring-violet-100">
+                <span className="text-slate-500">שאלה נוכחית</span>
+                <span className="text-3xl font-black text-brand-violet tabular-nums">{currentQuestionNumber || '—'}</span>
+                <span className="text-slate-400">/ {questionCount}</span>
+              </div>
+            )}
+          </Panel>
+
+          <Card variant="glass" padding="none" className="p-5 sm:p-6">
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <Counter label="מחוברים" value={connectedCount} suffix={`/ ${totalCount}`} tone="navy" />
+              <Counter label="סיימו" value={live.finishedCount} suffix={`מתוך ${totalCount}`} tone="green" />
+              <Counter label="שאלות בסבב" value={questionCount} tone="violet" />
+            </div>
+            <div className="mt-5">
+              <div className="mb-1.5 flex justify-between text-xs font-semibold text-slate-500">
+                <span>התקדמות הסבב</span>
+                <span className="tabular-nums">{roundProgress.label}</span>
+              </div>
+              <ProgressBar value={roundProgress.value} max={roundProgress.max} size="sm" color="rainbow" />
             </div>
           </Card>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+      <div className="mt-5 grid gap-5 lg:grid-cols-3">
         {/* משתתפים */}
-        <Card padding="none" className="p-6 lg:col-span-2">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="inline-flex items-center gap-2 text-base font-bold text-brand-navy">
-              <Users className="h-5 w-5 text-brand-violet" aria-hidden />
-              משתתפים ({totalCount})
-            </h2>
-          </div>
+        <Panel
+          className="lg:col-span-2"
+          icon={<Users className="size-5" aria-hidden />}
+          title={
+            <>
+              משתתפים <span className="text-slate-400">({totalCount})</span>
+            </>
+          }
+          description={totalCount > 0 ? `${connectedCount} מחוברים · ${live.finishedCount} סיימו` : undefined}
+        >
           {totalCount === 0 ? (
-            <EmptyState title="עדיין אין משתתפים" description="ברגע שתלמיד מצטרף עם הקוד – הוא יופיע כאן." />
+            <EmptyState title="עדיין אין משתתפים" description="ברגע שתלמיד מצטרף עם הקוד – הוא יופיע כאן." className="bg-transparent py-6" />
           ) : (
             <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4" aria-label="רשימת משתתפים">
               <AnimatePresence initial={false}>
                 {live.participants.map((p) => (
                   <motion.li
                     key={p.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    layout={!reduce}
+                    initial={reduce ? false : { opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.18 }}
+                    transition={{ type: 'spring', stiffness: 320, damping: 28 }}
                   >
-                    <ParticipantCard
-                      participant={p}
-                      questionCount={questionCount}
-                      removing={pendingAction === `remove:${p.id}`}
-                      onRemove={isEnded ? undefined : () => setConfirm({ remove: p })}
-                    />
+                    <ParticipantCard participant={p} questionCount={questionCount} removing={pendingAction === `remove:${p.id}`} onRemove={isEnded ? undefined : () => setConfirm({ remove: p })} />
                   </motion.li>
                 ))}
               </AnimatePresence>
             </ul>
           )}
-        </Card>
+        </Panel>
 
         {/* דירוג חי */}
-        <Card padding="none" className="p-6">
-          <h2 className="mb-4 text-base font-bold text-brand-navy">דירוג חי</h2>
+        <Panel icon={<Trophy className="size-5" aria-hidden />} tone="green" title="דירוג חי" description={live.leaderboard.length > 0 ? 'מתעדכן עם כל תשובה' : undefined}>
           {live.leaderboard.length === 0 ? (
-            <p className="text-sm text-slate-400">הדירוג יופיע עם התשובות הראשונות.</p>
+            <p className="rounded-2xl bg-slate-50 px-4 py-6 text-center text-sm text-slate-400">הדירוג יופיע עם התשובות הראשונות.</p>
           ) : (
-            <Leaderboard entries={live.leaderboard} compact />
+            <LiveLeaderboard entries={live.leaderboard} limit={8} />
           )}
-        </Card>
+        </Panel>
       </div>
 
       {/* אישורים */}
@@ -482,39 +561,61 @@ export function LiveRoomPage() {
   );
 }
 
-function ParticipantCard({
-  participant: p,
-  questionCount,
-  removing,
-  onRemove,
-}: {
-  participant: ParticipantView;
-  questionCount: number;
-  removing: boolean;
-  onRemove?: () => void;
-}) {
+const COUNTER_TONES = { navy: 'text-brand-navy', green: 'text-emerald-600', violet: 'text-brand-violet' } as const;
+
+/** מונה חי – ספירה מונפשת + "פעימה" עדינה בכל שינוי ערך. */
+function Counter({ label, value, suffix, tone }: { label: string; value: number; suffix?: ReactNode; tone: keyof typeof COUNTER_TONES }) {
+  const reduce = useReducedMotion();
+  return (
+    <div className="rounded-2xl bg-white/70 px-2 py-3 ring-1 ring-white/80">
+      <div className="text-[11px] font-bold text-slate-500 sm:text-xs">{label}</div>
+      <motion.div
+        key={value}
+        initial={reduce ? false : { scale: 1.18 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+        className={cn('mt-0.5 text-2xl font-black leading-none tabular-nums sm:text-3xl', COUNTER_TONES[tone])}
+      >
+        <CountUp value={value} />
+        {suffix && <span className="ms-1 text-xs font-semibold text-slate-400 sm:text-sm">{suffix}</span>}
+      </motion.div>
+    </div>
+  );
+}
+
+function ParticipantCard({ participant: p, questionCount, removing, onRemove }: { participant: ParticipantView; questionCount: number; removing: boolean; onRemove?: () => void }) {
+  const pct = questionCount ? Math.min(100, (p.answeredCount / questionCount) * 100) : 0;
   return (
     <div
-      className={`relative flex flex-col gap-2 rounded-2xl border p-3 transition-colors ${
-        p.finished ? 'border-brand-green/40 bg-brand-green/5' : p.connected ? 'border-slate-200 bg-white' : 'border-dashed border-slate-200 bg-slate-50 opacity-70'
-      }`}
+      className={cn(
+        'relative flex h-full flex-col gap-2.5 rounded-2xl border p-3 transition-[border-color,box-shadow,background-color]',
+        p.finished
+          ? 'border-emerald-200 bg-linear-to-br from-emerald-50 to-white shadow-[0_10px_24px_-16px_rgba(34,197,94,.6)]'
+          : p.connected
+            ? 'border-white/80 bg-white/85 shadow-[0_10px_24px_-18px_rgba(30,41,59,.4)]'
+            : 'border-dashed border-slate-300 bg-slate-50/70',
+      )}
       data-participant-id={p.id}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-start gap-2.5">
         <div className="relative shrink-0">
-          <Avatar id={p.avatar} size="sm" />
-          <span
-            className={`absolute -bottom-0.5 -left-0.5 h-3 w-3 rounded-full ring-2 ring-white ${p.connected ? 'bg-emerald-500' : 'bg-slate-300'}`}
-            title={p.connected ? 'מחובר/ת' : 'מנותק/ת'}
-            aria-label={p.connected ? 'מחובר/ת' : 'מנותק/ת'}
+          <Avatar
+            id={p.avatar}
+            size="sm"
+            className={cn('ring-[3px]', p.finished ? 'ring-emerald-400' : p.connected ? 'ring-sky-300' : 'ring-slate-200 grayscale')}
           />
+          <span
+            className={cn('absolute -bottom-0.5 -end-0.5 grid size-4 place-items-center rounded-full ring-2 ring-white', p.finished ? 'bg-emerald-500 text-white' : p.connected ? 'bg-emerald-500' : 'bg-slate-300')}
+            title={p.finished ? 'סיים/ה' : p.connected ? 'מחובר/ת' : 'מנותק/ת'}
+            aria-label={p.finished ? 'סיים/ה' : p.connected ? 'מחובר/ת' : 'מנותק/ת'}
+            role="img"
+          >
+            {p.finished && <Check className="size-2.5" strokeWidth={4} aria-hidden />}
+          </span>
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1">
-            <span className="truncate text-sm font-semibold text-brand-navy">{p.displayName}</span>
-            {p.finished && <Check className="h-4 w-4 shrink-0 text-brand-green" aria-label="סיים/ה" />}
-          </div>
-          <div className="text-xs text-slate-500 tabular-nums">
+          <div className={cn('truncate text-sm font-extrabold', p.connected || p.finished ? 'text-brand-navy' : 'text-slate-500')}>{p.displayName}</div>
+          <div className="text-[11px] text-slate-500 tabular-nums">
             {p.answeredCount}/{questionCount} שאלות
           </div>
         </div>
@@ -523,25 +624,90 @@ function ParticipantCard({
             type="button"
             onClick={onRemove}
             disabled={removing}
-            className="rounded-lg p-1.5 text-slate-300 transition-colors hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+            className="-me-1 -mt-1 grid size-8 min-h-0 shrink-0 place-items-center rounded-lg text-slate-300 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
             aria-label={`הסרת ${p.displayName}`}
             title="הסרה מהחדר"
           >
-            <UserMinus className="h-4 w-4" aria-hidden />
+            <UserMinus className="size-4" aria-hidden />
           </button>
         )}
       </div>
       <div className="flex items-center justify-between text-xs">
         <span className="text-slate-500">ניקוד</span>
-        <span className="font-bold text-brand-violet tabular-nums">{formatNumber(p.score)}</span>
+        <span className="font-black text-brand-violet tabular-nums">{formatNumber(p.score)}</span>
       </div>
-      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
-        <div
-          className={`h-full rounded-full transition-all ${p.finished ? 'bg-brand-green' : 'bg-brand-violet'}`}
-          style={{ width: `${questionCount ? Math.min(100, (p.answeredCount / questionCount) * 100) : 0}%` }}
+      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 shadow-inner">
+        <motion.div
+          className={cn('h-full rounded-full', p.finished ? 'bg-linear-to-l from-emerald-400 to-green-500' : 'bg-linear-to-l from-violet-500 to-fuchsia-400')}
+          initial={false}
+          animate={{ width: `${pct}%` }}
+          transition={{ type: 'spring', stiffness: 160, damping: 24 }}
         />
       </div>
     </div>
+  );
+}
+
+// מבוסס על 21st.dev — Leaderboard Table (medal badges + delta chevrons) בגרסה קומפקטית עם motion layout.
+function LiveLeaderboard({ entries, limit = 8 }: { entries: LeaderboardEntry[]; limit?: number }) {
+  const reduce = useReducedMotion();
+  const sorted = useMemo(() => [...entries].sort((a, b) => a.rank - b.rank || b.score - a.score).slice(0, limit), [entries, limit]);
+  const prevRanks = useRef<Map<string, number>>(new Map());
+  const [deltas, setDeltas] = useState<Map<string, number>>(new Map());
+
+  useEffect(() => {
+    const next = new Map<string, number>();
+    for (const e of sorted) {
+      const prev = prevRanks.current.get(e.participantId);
+      next.set(e.participantId, prev === undefined ? 0 : prev - e.rank);
+    }
+    setDeltas(next);
+    prevRanks.current = new Map(sorted.map((e) => [e.participantId, e.rank]));
+  }, [sorted]);
+
+  return (
+    <ol className="flex flex-col gap-1.5" aria-label="דירוג חי">
+      <AnimatePresence initial={false}>
+        {sorted.map((e) => {
+          const medal = medalForRank(e.rank);
+          const delta = deltas.get(e.participantId) ?? 0;
+          return (
+            <motion.li
+              key={e.participantId}
+              layout={!reduce}
+              initial={reduce ? false : { opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+              className={cn(
+                'flex items-center gap-2.5 rounded-2xl bg-white/85 px-2.5 py-1.5 shadow-sm ring-1 ring-black/5',
+                e.rank === 1 && 'bg-linear-to-l from-amber-50 to-white ring-amber-200/70',
+                !e.connected && 'opacity-60',
+              )}
+            >
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-slate-100 text-sm font-black text-slate-600 tabular-nums" aria-label={`מקום ${e.rank}`}>
+                {medal ? <Medal kind={medal} size="sm" className="size-8" /> : e.rank}
+              </span>
+              <Avatar id={e.avatar} size="xs" />
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-sm font-bold text-brand-navy">{e.displayName}</span>
+                <span className="block text-[11px] text-slate-400 tabular-nums">
+                  {e.correctAnswers}/{e.answeredCount} נכונות
+                </span>
+              </span>
+              <span
+                className={cn('inline-flex items-center text-[11px] font-bold tabular-nums', delta > 0 ? 'text-emerald-600' : delta < 0 ? 'text-rose-500' : 'text-slate-300')}
+                aria-label={delta > 0 ? `עלה ${delta} מקומות` : delta < 0 ? `ירד ${-delta} מקומות` : 'ללא שינוי'}
+              >
+                {delta > 0 ? <ChevronUp className="size-3.5" aria-hidden /> : delta < 0 ? <ChevronDown className="size-3.5" aria-hidden /> : <Minus className="size-3" aria-hidden />}
+                {delta !== 0 && Math.abs(delta)}
+              </span>
+              <span className="shrink-0 text-base font-black text-brand-violet tabular-nums">{formatNumber(e.score)}</span>
+            </motion.li>
+          );
+        })}
+      </AnimatePresence>
+    </ol>
   );
 }
 

@@ -1,13 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="קשה"><title>קשה</title>
-<rect x="4" y="4" width="192" height="192" rx="32" fill="#F1F5F9"/>
-<path d="M4 160H196C196 180 180 196 160 196H40C20 196 4 180 4 160Z" fill="#86EFAC"/>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M4 160 H196" stroke-width="4"/>
-<path d="M36 160 Q24 110 64 92 Q100 76 140 92 Q180 108 166 160 Z" fill="#94A3B8"/>
-<path d="M60 120 L72 112 L74 126 Z M120 112 L134 106 L136 122 Z" fill="#64748B" stroke-width="3"/>
-<path d="M90 130 L100 140 L92 150" fill="none" stroke-width="3"/>
-<path d="M78 82 L70 70 M100 76 V62 M122 82 L130 70 M86 90 L74 86 M114 90 L126 86" stroke="#F59E0B" stroke-width="5"/>
-<circle cx="100" cy="46" r="18" fill="#FDE047"/>
-<path d="M124 50 Q150 50 160 28" fill="none" stroke-width="4" stroke-dasharray="7 6"/>
-<path d="M150 26 L162 26 L160 38" fill="none" stroke-width="4"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="קשה">
+<title>קשה</title>
+<defs><linearGradient id="soft-hard-opposite-g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F1F5F9"/><stop offset="1" stop-color="#E2E8F0"/></linearGradient><linearGradient id="soft-hard-opposite-g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a4f3c1"/><stop offset=".5" stop-color="#86EFAC"/><stop offset="1" stop-color="#6fc392"/></linearGradient><radialGradient id="soft-hard-opposite-g2" cx="0.35" cy="0.25" r="0.78"><stop offset="0" stop-color="#a2acb9"/><stop offset=".55" stop-color="#64748B"/><stop offset="1" stop-color="#4c5a6e"/></radialGradient><linearGradient id="soft-hard-opposite-g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6c7787"/><stop offset=".5" stop-color="#475569"/><stop offset="1" stop-color="#3c495b"/></linearGradient><radialGradient id="soft-hard-opposite-g4" cx="0.36" cy="0.32" r="0.78"><stop offset="0" stop-color="#fcde67"/><stop offset=".55" stop-color="#FACC15"/><stop offset="1" stop-color="#b89b1f"/></radialGradient><filter id="soft-hard-opposite-blur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="url(#soft-hard-opposite-g0)"/><path d="M4 160 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="url(#soft-hard-opposite-g1)"/><path d="M4 160 H196" stroke="#fff" stroke-width="2" opacity=".35"/><ellipse cx="100" cy="162" rx="70" ry="6" fill="#1E293B" opacity="0.25" filter="url(#soft-hard-opposite-blur)"/><path d="M36 160 Q24 110 64 92 Q100 76 140 92 Q180 108 166 160 Z" fill="url(#soft-hard-opposite-g2)"/><ellipse cx="70" cy="108" rx="20" ry="8" fill="#fff" opacity="0.35" transform="rotate(-20 70 108)"/><path d="M60 120 L72 112 L74 126 Z M120 112 L134 106 L136 122 Z" fill="url(#soft-hard-opposite-g3)"/><path d="M90 130 L100 140 L92 150" fill="none" stroke="#334155" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><path d="M78 82 L70 70 M100 76 V62 M122 82 L130 70 M86 90 L74 86 M114 90 L126 86" fill="none" stroke="#F59E0B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="100" cy="46" r="18" fill="url(#soft-hard-opposite-g4)"/><ellipse cx="94.6" cy="38.4" rx="6.5" ry="3.6" fill="#fff" opacity="0.45" transform="rotate(-30 94.6 38.4)"/><path d="M124 50 Q150 50 160 28" fill="none" stroke="#334155" stroke-width="3.5" stroke-dasharray="7 6" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/><path d="M150 26 L162 26 L160 38" fill="none" stroke="#334155" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+</svg>

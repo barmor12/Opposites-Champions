@@ -15,7 +15,7 @@ export interface CharacterProps {
   delay?: number;
 }
 
-const SIZES = { sm: 'size-20', md: 'size-28 sm:size-32', lg: 'size-36 sm:size-44', xl: 'size-44 sm:size-56', auto: 'size-20 sm:size-28 lg:size-32' };
+const SIZES = { sm: 'size-20', md: 'size-28 sm:size-32', lg: 'size-36 sm:size-44', xl: 'size-44 sm:size-56', auto: 'size-20 sm:size-28 lg:size-32', none: '' };
 const EMOJI: Record<CharacterName, string> = { sun: '☀️', moon: '🌙' };
 const LABEL: Record<CharacterName, string> = { sun: 'שמש', moon: 'ירח' };
 
@@ -32,7 +32,7 @@ export function Character({ name, mood = 'happy', size = 'md', animate = 'float'
           : { animate: { rotate: [-5, 5, -5] }, transition: { duration: 1.4, repeat: Infinity, ease: 'easeInOut' as const, delay } };
 
   return (
-    <motion.div className={cn('relative inline-block drop-shadow-[0_12px_18px_rgba(30,41,59,0.18)]', SIZES[size], className)} {...motionProps}>
+    <motion.div className={cn('relative inline-block drop-shadow-[0_14px_22px_rgba(30,41,59,0.22)]', SIZES[size], className)} {...motionProps}>
       <LazyImage
         src={characterSrc(name, mood)}
         alt={LABEL[name]}

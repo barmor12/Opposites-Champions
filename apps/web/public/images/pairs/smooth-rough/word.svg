@@ -1,11 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="חלק"><title>חלק</title>
-<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<ellipse cx="100" cy="176" rx="50" ry="7" fill="#CBD5E1" stroke="none"/>
-<circle cx="100" cy="104" r="64" fill="#F87171"/>
-<path d="M38 92 Q100 70 162 92 Q100 98 38 92 Z" fill="#FDE047" stroke="none"/>
-<path d="M38 92 Q100 70 162 92" fill="none" stroke="#FDE047" stroke-width="8"/>
-<ellipse cx="72" cy="66" rx="16" ry="9" fill="#fff" opacity="0.85" stroke="none" transform="rotate(-35 72 66)"/>
-<circle cx="56" cy="88" r="4" fill="#fff" opacity="0.85" stroke="none"/>
-<path d="M28 150 l4 -4 M18 128 l5 -1 M172 150 l-4 -4 M182 128 l-5 -1" stroke-width="3"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="חלק">
+<title>חלק</title>
+<defs><linearGradient id="smooth-rough-word-g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0F9FF"/><stop offset="1" stop-color="#DBEAFE"/></linearGradient><linearGradient id="smooth-rough-word-g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9e9fe"/><stop offset=".5" stop-color="#BFDBFE"/><stop offset="1" stop-color="#9fb7d6"/></linearGradient><radialGradient id="smooth-rough-word-g2" cx="0.35" cy="0.3" r="0.78"><stop offset="0" stop-color="#f58f8f"/><stop offset=".55" stop-color="#EF4444"/><stop offset="1" stop-color="#a63b3f"/></radialGradient><linearGradient id="smooth-rough-word-g3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fcdb5b"/><stop offset=".5" stop-color="#FACC15"/><stop offset="1" stop-color="#ceab1c"/></linearGradient><filter id="smooth-rough-word-blur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="url(#smooth-rough-word-g0)"/><ellipse cx="100" cy="176" rx="56" ry="8" fill="url(#smooth-rough-word-g1)"/><ellipse cx="100" cy="174" rx="50" ry="7" fill="#1E293B" opacity="0.25" filter="url(#smooth-rough-word-blur)"/><circle cx="100" cy="104" r="64" fill="url(#smooth-rough-word-g2)"/><path d="M38 92 Q100 70 162 92 Q100 104 38 92 Z" fill="url(#smooth-rough-word-g3)"/><ellipse cx="70" cy="62" rx="18" ry="10" fill="#fff" opacity="0.75" transform="rotate(-35 70 62)"/><circle cx="56" cy="88" r="4.5" fill="#fff" opacity=".8"/><ellipse cx="100" cy="150" rx="40" ry="12" fill="#7F1D1D" opacity="0.25"/><path d="M32 37 Q32 44 39 44 Q32 44 32 51 Q32 44 25 44 Q32 44 32 37Z" fill="#fff" opacity="0.9"/><path d="M170 134 Q170 140 176 140 Q170 140 170 146 Q170 140 164 140 Q170 140 170 134Z" fill="#fff" opacity="0.9"/>
+</svg>
