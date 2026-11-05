@@ -158,26 +158,28 @@ export function PlayPage() {
     }
   };
 
+  const wide = screen === 'question';
+
   return (
-    <main className="relative flex min-h-dvh flex-col px-3 pb-8 pt-3 sm:px-4 sm:pt-4">
-      <PageBackground variant={screen === 'question' ? 'day' : 'day'} rainbow={screen === 'waiting'} />
+    <main className="relative flex min-h-dvh flex-col safe-x safe-bottom pt-2 sm:pt-4">
+      <PageBackground variant="day" rainbow={screen === 'waiting'} balloons={screen !== 'question'} />
 
       {/* סרגל עליון */}
-      <div className="mx-auto mb-3 flex w-full max-w-3xl items-center justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-2">
-          {avatar && <Avatar id={avatar} size="sm" ring />}
-          <span className="truncate font-bold text-brand-navy/80">{displayName}</span>
+      <div className={`mx-auto mb-3 flex w-full items-center justify-between gap-2 ${wide ? 'max-w-4xl' : 'max-w-3xl'}`}>
+        <div className="flex min-w-0 items-center gap-2 rounded-full glass py-1 pe-3 ps-1">
+          {avatar && <Avatar id={avatar} size="sm" ring ringColor="violet" />}
+          <span className="truncate font-bold text-brand-navy/85">{displayName}</span>
           <ConnectionBadge status={connection} />
         </div>
         <div className="flex items-center gap-2">
           <SoundToggle />
-          <Button variant="ghost" size="md" aria-label="יציאה מהמשחק" onClick={onLeave} icon={<LogOut className="size-5" />}>
+          <Button variant="ghost" size="md" aria-label="יציאה מהמשחק" onClick={onLeave} icon={<LogOut className="size-5" />} className="rounded-full glass">
             <span className="hidden sm:inline">יציאה</span>
           </Button>
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col">
+      <div className={`mx-auto flex w-full flex-1 flex-col ${wide ? 'max-w-4xl' : 'max-w-3xl'}`}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={screen === 'question' && question ? `q-${question.sessionQuestionId}` : screen}
@@ -190,7 +192,7 @@ export function PlayPage() {
             {screen === 'loading' && <CenterMessage spinner text="מתחברים למשחק…" />}
             {screen === 'error' && (
               <CenterMessage text={error ?? 'לא הצלחנו להתחבר'}>
-                <div className="flex gap-3">
+                <div className="flex flex-wrap justify-center gap-3">
                   <Button onClick={() => restoreSession().then((s) => s && bindSocket())}>לנסות שוב</Button>
                   <Button variant="secondary" onClick={() => { leave(); navigate('/'); }}>לדף הבית</Button>
                 </div>
@@ -208,9 +210,9 @@ export function PlayPage() {
               />
             )}
             {screen === 'countdown' && countdown && (
-              <div className="flex flex-1 flex-col items-center justify-center gap-6">
+              <div className="flex flex-1 flex-col items-center justify-center gap-8 py-6">
                 <Countdown startsAt={countdown.startsAt} seconds={countdown.seconds} serverOffsetMs={serverOffsetMs} />
-                <div className="flex gap-8">
+                <div className="flex gap-10 sm:gap-16">
                   <Character name="sun" mood="cheer" size="sm" animate="bounce" />
                   <Character name="moon" mood="happy" size="sm" animate="bounce" delay={0.3} />
                 </div>
@@ -218,7 +220,7 @@ export function PlayPage() {
             )}
             {screen === 'preparing' && <CenterMessage spinner text="מכינים את השאלה הבאה…" />}
             {screen === 'question' && question && room && (
-              <div className="flex flex-1 flex-col gap-4">
+              <div className="flex flex-1 flex-col gap-3 sm:gap-4">
                 <QuestionHeader
                   question={question}
                   score={score}
@@ -276,7 +278,7 @@ export function PlayPage() {
 function CenterMessage({ text, spinner, children }: { text: string; spinner?: boolean; children?: React.ReactNode }) {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-5 text-center">
-      <Card variant="glass" className="flex flex-col items-center gap-4">
+      <Card variant="glass" className="flex w-full max-w-md flex-col items-center gap-4 shadow-float">
         {spinner ? <Spinner size="lg" className="text-brand-violet" /> : <Character name="moon" mood="think" size="sm" animate="wiggle" />}
         <p className="text-xl font-bold" role="status">{text}</p>
         {children}
