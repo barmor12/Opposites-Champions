@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { motion, useReducedMotion } from 'motion/react';
-import { LogIn, Mail, ShieldCheck, Sparkles } from 'lucide-react';
+import { LogIn, ShieldCheck, Sparkles } from 'lucide-react';
 import { Button, Input } from '@/components/ui';
 import { useTeacherStore } from '@/stores/teacherStore';
 import { friendlyError, teacherPath } from './labels';
@@ -78,7 +78,7 @@ export function LoginPage() {
             אלופי ההפכים
             <span className="mt-2 block bg-linear-to-l from-violet-600 to-sky-500 bg-clip-text text-2xl font-extrabold text-transparent xl:text-3xl">משחק כיתתי בלחיצה אחת</span>
           </h1>
-          <p className="max-w-md text-base leading-7 text-slate-600">יוצרים חדר, מציגים את הקוד על הלוב, והכיתה משחקת מהטאבלטים. עוקבים אחרי ההתקדמות בזמן אמת ומקבלים תוצאות מפורטות בסוף.</p>
+          <p className="max-w-md text-base leading-7 text-slate-600">יוצרים חדר, מציגים את הקוד על הלוח, והכיתה משחקת מהטאבלטים. עוקבים אחרי ההתקדמות בזמן אמת ומקבלים תוצאות מפורטות בסוף.</p>
           <ul className="grid gap-2 text-sm text-slate-600">
             {['קוד חדר ו־QR להצטרפות מיידית', 'מעקב חי אחרי כל תלמיד', 'דוחות ויצוא ל־Excel'].map((t) => (
               <li key={t} className="flex items-center gap-2">
@@ -123,7 +123,6 @@ export function LoginPage() {
                 size="md"
                 autoComplete="email"
                 dir="ltr"
-                icon={<Mail className="size-5" aria-hidden />}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 error={errors.email}

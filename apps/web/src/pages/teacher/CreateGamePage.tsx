@@ -143,15 +143,17 @@ export function CreateGamePage() {
       <form onSubmit={handleSubmit} noValidate className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-start" aria-label="הגדרות משחק">
         <div className="flex min-w-0 flex-col gap-5 sm:gap-6">
           {/* 1 – כללי */}
-          <Panel
+          <div
             ref={(el) => {
               sectionRefs.current[0] = el;
             }}
             id="step-general"
+            className="scroll-mt-40"
+          >
+          <Panel
             step={1}
             title="כללי"
             description="שם הכיתה ואופן ההתקדמות במשחק."
-            className="scroll-mt-40"
           >
             <div className="flex flex-col gap-5">
               <Input
@@ -217,17 +219,20 @@ export function CreateGamePage() {
               </Field>
             </div>
           </Panel>
+          </div>
 
           {/* 2 – תוכן */}
-          <Panel
+          <div
             ref={(el) => {
               sectionRefs.current[1] = el;
             }}
             id="step-content"
+            className="scroll-mt-40"
+          >
+          <Panel
             step={2}
             title="תוכן"
             description="מאילו קטגוריות ובאילו סוגי שאלות ישחקו."
-            className="scroll-mt-40"
           >
             <div className="flex flex-col gap-6">
               <Field title="קטגוריות" description="השאלות ייבחרו מתוך הקטגוריות המסומנות." error={errors.categories}>
@@ -249,17 +254,20 @@ export function CreateGamePage() {
               </Field>
             </div>
           </Panel>
+          </div>
 
           {/* 3 – זמן ומשחק */}
-          <Panel
+          <div
             ref={(el) => {
               sectionRefs.current[2] = el;
             }}
             id="step-timing"
+            className="scroll-mt-40"
+          >
+          <Panel
             step={3}
             title="זמן ומשחק"
             description="כמה שאלות, באיזו רמה ובכמה זמן."
-            className="scroll-mt-40"
           >
             <div className="grid gap-6 md:grid-cols-2">
               <Field title="מספר שאלות">
@@ -273,17 +281,20 @@ export function CreateGamePage() {
               </Field>
             </div>
           </Panel>
+          </div>
 
           {/* 4 – אפשרויות */}
-          <Panel
+          <div
             ref={(el) => {
               sectionRefs.current[3] = el;
             }}
             id="step-options"
+            className="scroll-mt-40"
+          >
+          <Panel
             step={4}
             title="אפשרויות"
             description="תחרותיות, משוב וצלילים."
-            className="scroll-mt-40"
           >
             <div className="grid gap-3 md:grid-cols-2">
               <Toggle name="competitionEnabled" checked={settings.competitionEnabled} onChange={(v) => patch('competitionEnabled', v)} icon={<Trophy className="size-4" aria-hidden />} label="מצב תחרות" description="ניקוד, בונוס מהירות ודירוג." />
@@ -292,6 +303,7 @@ export function CreateGamePage() {
               <Toggle name="soundsEnabled" checked={settings.soundsEnabled} onChange={(v) => patch('soundsEnabled', v)} icon={<Volume2 className="size-4" aria-hidden />} label="צלילים" />
             </div>
           </Panel>
+          </div>
         </div>
 
         {/* סיכום חי – כרטיס דביק בדסקטופ, סרגל תחתון בנייד */}
