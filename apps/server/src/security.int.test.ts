@@ -247,8 +247,9 @@ describe('security hardening (integration)', () => {
     expect(ack.ok).toBe(true);
     if (ack.ok) expect(ack.data.scoreAwarded).toBeGreaterThanOrEqual(100);
     expect(await emitAck(socket, 'answer:submit', { sessionQuestionId: sq.id, optionId })).toMatchObject({ ok: false, error: { code: 'ALREADY_ANSWERED' } });
+    expect(await answered()).toBe(before + 1);
     const progress = await prisma.participantProgress.findUniqueOrThrow({ where: { sessionId_participantId: { sessionId: roomA.sessionId, participantId: playerA.participantId } } });
-    expect(progress.answeredCount).toBe(1);
+    expect(progress.answeredCount).toBe(before + 1);
     socket.disconnect();
   });
 
