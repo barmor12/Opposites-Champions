@@ -1,3 +1,4 @@
+import { motion, useTransform } from 'motion/react';
 import { useCountUp } from './useCountUp';
 
 export interface CountUpProps {
@@ -7,12 +8,18 @@ export interface CountUpProps {
   className?: string;
 }
 
+const defaultFormat = (n: number) => Math.round(n).toLocaleString('he-IL');
+
 /** מספר עם אנימציית ספירה – לכרטיסי KPI ומונים חיים. */
-export function CountUp({ value, format = (n) => Math.round(n).toLocaleString('he-IL'), placeholder = '—', className }: CountUpProps) {
-  const n = useCountUp(value);
+export function CountUp({ value, format = defaultFormat, placeholder = '—', className }: CountUpProps) {
+  const mv = useCountUp(value);
+  const text = useTransform(mv, (v) => format(v));
+  if (value === null || value === undefined || !Number.isFinite(value)) {
+    return <span className={className}>{placeholder}</span>;
+  }
   return (
-    <span className={className} data-value={value ?? undefined}>
-      {n === null ? placeholder : format(n)}
-    </span>
+    <motion.span className={className} data-value={value}>
+      {text}
+    </motion.span>
   );
 }
