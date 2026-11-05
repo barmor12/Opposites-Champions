@@ -1,39 +1,86 @@
 import type { LucideIcon } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Card } from '@/components/ui';
+import { cn } from '@/lib/cn';
+import { CountUp } from './CountUp';
 
 const TONES = {
-  sky: 'bg-brand-sky/15 text-brand-sky',
-  violet: 'bg-brand-violet/15 text-brand-violet',
-  green: 'bg-brand-green/15 text-brand-green',
-  orange: 'bg-brand-orange/15 text-brand-orange',
-  pink: 'bg-brand-pink/15 text-brand-pink',
-  yellow: 'bg-brand-yellow/25 text-amber-700',
+  sky: { circle: 'from-sky-400 to-cyan-500 shadow-sky-500/40', spark: '#38bdf8', ring: 'ring-sky-100' },
+  violet: { circle: 'from-violet-500 to-fuchsia-500 shadow-violet-500/40', spark: '#8b5cf6', ring: 'ring-violet-100' },
+  green: { circle: 'from-emerald-400 to-green-500 shadow-emerald-500/40', spark: '#22c55e', ring: 'ring-emerald-100' },
+  orange: { circle: 'from-orange-400 to-amber-500 shadow-orange-500/40', spark: '#fb923c', ring: 'ring-orange-100' },
+  pink: { circle: 'from-pink-400 to-rose-500 shadow-pink-500/40', spark: '#f472b6', ring: 'ring-pink-100' },
+  yellow: { circle: 'from-yellow-300 to-amber-400 shadow-amber-400/40', spark: '#f59e0b', ring: 'ring-amber-100' },
 } as const;
+
+export type StatTone = keyof typeof TONES;
 
 export interface StatCardProps {
   label: string;
-  value: string;
+  /** ערך מספרי – מונפש בספירה. null/undefined = אין נתון. */
+  value: number | null | undefined;
+  format?: (n: number) => string;
   icon: LucideIcon;
-  tone?: keyof typeof TONES;
+  tone?: StatTone;
   hint?: string;
   loading?: boolean;
+  /** השהיית כניסה (שניות) – ל־stagger של רשת כרטיסים */
+  delay?: number;
 }
 
-export function StatCard({ label, value, icon: Icon, tone = 'violet', hint, loading }: StatCardProps) {
+/** עקומה דקורטיבית (ללא נתונים) – מרמזת על "מגמה" בפינת הכרטיס. */
+function SparkAccent({ color }: { color: string }) {
+  const id = `spark-${color.replace('#', '')}`;
   return (
-    <Card padding="none" className="flex items-center gap-4 p-5">
-      <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${TONES[tone]}`}>
-        <Icon className="h-6 w-6" aria-hidden />
-      </div>
-      <div className="min-w-0">
-        <div className="text-sm text-slate-500">{label}</div>
-        {loading ? (
-          <div className="mt-1 h-7 w-16 animate-pulse rounded-lg bg-slate-100" />
-        ) : (
-          <div className="text-2xl font-bold text-brand-navy tabular-nums">{value}</div>
-        )}
-        {hint && <div className="text-xs text-slate-400">{hint}</div>}
-      </div>
-    </Card>
+    <svg aria-hidden viewBox="0 0 140 48" className="pointer-events-none absolute bottom-0 start-0 h-12 w-36 opacity-80" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={color} stopOpacity="0.28" />
+          <stop offset="1" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d="M0 36 C 18 34, 26 18, 42 22 S 66 40, 84 26 S 112 6, 140 14 L140 48 L0 48 Z" fill={`url(#${id})`} />
+      <path d="M0 36 C 18 34, 26 18, 42 22 S 66 40, 84 26 S 112 6, 140 14" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" opacity="0.7" />
+    </svg>
+  );
+}
+
+export function StatCard({ label, value, format, icon: Icon, tone = 'violet', hint, loading, delay = 0 }: StatCardProps) {
+  const reduce = useReducedMotion();
+  const t = TONES[tone];
+  return (
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 24, delay }}
+      whileHover={reduce ? undefined : { y: -3 }}
+      className="h-full"
+    >
+      <Card variant="glass" padding="none" className={cn('relative h-full overflow-hidden p-5 ring-1', t.ring)}>
+        <div className="relative z-10 flex items-start gap-4">
+          <div
+            className={cn(
+              'relative grid size-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br text-white shadow-lg',
+              'before:absolute before:inset-x-1.5 before:top-1 before:h-3 before:rounded-full before:bg-white/35 before:blur-[2px]',
+              t.circle,
+            )}
+          >
+            <Icon className="relative size-6" aria-hidden />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</div>
+            {loading ? (
+              <div className="mt-1.5 h-8 w-20 animate-pulse rounded-lg bg-slate-200/70" />
+            ) : (
+              <div className="mt-0.5 text-3xl font-extrabold leading-tight tracking-tight text-brand-navy tabular-nums">
+                <CountUp value={value} format={format} />
+              </div>
+            )}
+            {hint && <div className="mt-0.5 text-xs text-slate-400">{hint}</div>}
+          </div>
+        </div>
+        <SparkAccent color={t.spark} />
+      </Card>
+    </motion.div>
   );
 }

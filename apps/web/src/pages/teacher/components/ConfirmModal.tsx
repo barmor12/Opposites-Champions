@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, HelpCircle } from 'lucide-react';
 import { Button, Modal } from '@/components/ui';
+import { cn } from '@/lib/cn';
 
 export interface ConfirmModalProps {
   open: boolean;
@@ -35,24 +36,27 @@ export function ConfirmModal({
     }
   };
 
+  const Icon = variant === 'danger' ? AlertTriangle : HelpCircle;
+
   return (
     <Modal open={open} onClose={onClose} dismissible={!busy} title={title} size="sm">
       <div className="flex flex-col gap-5">
         <div className="flex items-start gap-3">
           <div
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-              variant === 'danger' ? 'bg-red-50 text-red-600' : 'bg-brand-violet/10 text-brand-violet'
-            }`}
+            className={cn(
+              'grid size-11 shrink-0 place-items-center rounded-2xl text-white shadow-lg',
+              variant === 'danger' ? 'bg-linear-to-br from-rose-400 to-red-600 shadow-rose-500/40' : 'bg-linear-to-br from-violet-500 to-fuchsia-500 shadow-violet-500/40',
+            )}
           >
-            <AlertTriangle className="h-5 w-5" aria-hidden />
+            <Icon className="size-5" aria-hidden />
           </div>
           <div className="text-sm leading-6 text-slate-600">{description}</div>
         </div>
         <div className="flex justify-start gap-2">
-          <Button variant={variant} onClick={handleConfirm} loading={busy} disabled={busy}>
+          <Button variant={variant} size="md" onClick={handleConfirm} loading={busy} disabled={busy}>
             {confirmLabel}
           </Button>
-          <Button variant="ghost" onClick={onClose} disabled={busy}>
+          <Button variant="ghost" size="md" onClick={onClose} disabled={busy}>
             {cancelLabel}
           </Button>
         </div>
