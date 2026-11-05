@@ -36,8 +36,12 @@ const PLAYER_NOT_FOUND = 'ההתחברות לא נמצאה, הצטרפו מחד�
 export const SOCKET_MAX_PAYLOAD_BYTES = 16 * 1024;
 /** Handshakes per client IP per window – a whole class behind one NAT reconnecting at once still fits. */
 export const HANDSHAKE_LIMIT = { limit: 100, windowMs: 10_000 } as const;
-/** Failed socket authentications per IP per window before further handshakes are refused outright. */
-export const AUTH_FAILURE_LIMIT = { limit: 20, windowMs: 60_000 } as const;
+/**
+ * Failed socket authentications per IP per window before further handshakes are refused outright.
+ * Generous on purpose: a class behind one NAT whose stale tokens all fail after a room was deleted must not
+ * lock out the valid ones; the handshake limiter above already bounds the DB work of any flood.
+ */
+export const AUTH_FAILURE_LIMIT = { limit: 60, windowMs: 60_000 } as const;
 /** Game events per socket per window (answer/next/join); time:ping is exempt (no DB work). */
 export const SOCKET_EVENT_LIMIT = { limit: 60, windowMs: 10_000 } as const;
 
