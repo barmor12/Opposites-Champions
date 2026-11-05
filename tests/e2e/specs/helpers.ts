@@ -105,3 +105,11 @@ export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise
     }
   }
 }
+
+/** לוחץ "סיים משחק" אם המשחק עדיין פעיל (כשכל התלמידים סיימו המשחק מסתיים אוטומטית) */
+export async function finishGameIfNeeded(page: Page): Promise<void> {
+  const btn = page.getByRole('button', { name: /סיים משחק/ });
+  const visible = await btn.isVisible().catch(() => false);
+  if (!visible) return;
+  await btn.click({ timeout: 10_000 }).catch(() => undefined);
+}

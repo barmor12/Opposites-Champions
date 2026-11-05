@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { answerAllQuestions, createGameViaApi, joinAsStudent, pickAvatar, teacherLogin } from './helpers';
+import { answerAllQuestions, createGameViaApi, finishGameIfNeeded, joinAsStudent, pickAvatar, teacherLogin } from './helpers';
 
 test.describe('זרימת משחק מלאה', () => {
   test('מורה יוצרת חדר, תלמידים מצטרפים, משחקים ורואים דירוג', async ({ page, browser }) => {
@@ -38,7 +38,7 @@ test.describe('זרימת משחק מלאה', () => {
     await student2.reload();
     await Promise.all([answerAllQuestions(student1), answerAllQuestions(student2)]);
 
-    await page.getByRole('button', { name: /סיים משחק/ }).click();
+    await finishGameIfNeeded(page);
 
     // כל התלמידים עוברים למסך התוצאות עם מדליות
     await student1.waitForURL(/\/results/, { timeout: 20_000 });
@@ -90,7 +90,7 @@ test.describe('רמה קלה – תמונות בלבד', () => {
     await expect(firstTile.locator('img')).toHaveCount(1);
 
     await answerAllQuestions(student);
-    await page.getByRole('button', { name: /סיים משחק/ }).click();
+    await finishGameIfNeeded(page);
     await student.waitForURL(/\/results/, { timeout: 20_000 });
     await expect(student.getByTestId('results-page')).toBeVisible();
   });
