@@ -58,7 +58,7 @@ export class RoomsService {
 
   constructor(private readonly prisma: PrismaService, private readonly events: GameEventsService) {}
 
-  /** יוצר חדר חדש עם קוד ייחודי בן 6 ספרות (ניסיון חוזר בהתנגשות) */
+  /** יוצר חדר חדש עם קוד ייחודי בן 6 ספרות (ניסיון חוזר בהתנגשות) ותוקף של 24 שעות */
   async createRoom(teacherId: string, settings: GameSettings): Promise<GameRoom> {
     for (let attempt = 0; attempt < CODE_MAX_ATTEMPTS; attempt += 1) {
       const code = generateRoomCode();
@@ -72,11 +72,13 @@ export class RoomsService {
             joinOpen: true,
             settings: settingsToJson(settings),
             mode: settings.mode === GameMode.TEACHER_PACED ? GameMode.TEACHER_PACED : GameMode.SELF_PACED,
+            expiresAt: nextRoomExpiry(),
           },
         });
       } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
-          this.logger.warn(`room code collision (${code}), retrying`);
+          // The code itself is not logged – it is a (short-lived) access credential.
+          this.logger.warn(`room code collision, retrying (attempt ${attempt + 1}/${CODE_MAX_ATTEMPTS})`);
           continue;
         }
         throw err;
@@ -85,8 +87,69 @@ export class RoomsService {
     throw GameError.conflict('CODE_GENERATION_FAILED', 'לא הצלחנו ליצור קוד חדר, נסו שוב');
   }
 
+  /** חיפוש לפי קוד – חדר שפג תוקפו מסומן EXPIRED בדרך (ולא ניתן להצטרף אליו) */
   async findByCode(code: string): Promise<GameRoom | null> {
-    return this.prisma.gameRoom.findFirst({ where: { code, deletedAt: null } });
+    const room = await this.prisma.gameRoom.findFirst({ where: { code, deletedAt: null } });
+    return room ? this.expireIfStale(room) : null;
+  }
+
+  // ===== תפוגת חדרים =====
+
+  /**
+   * מסמן חדר (והסבב הפעיל שלו) כ־EXPIRED אם עברו 24 שעות. מוחזר החדר המעודכן.
+   * אידמפוטנטי ובטוח למקביליות (updateMany עם תנאי מצב).
+   */
+  async expireIfStale(room: GameRoom, now: number = Date.now()): Promise<GameRoom> {
+    if (!isRoomStale(room, now)) return room;
+    const expired = await this.markExpired(room.id, new Date(now));
+    if (expired.roomIds.length > 0) {
+      this.events.toRoom(room.id, 'error:message', { code: 'ROOM_EXPIRED', message: 'תוקף החדר פג, יש לפתוח משחק חדש' });
+      await this.emitRoomUpdated(room.id);
+    }
+    return { ...room, state: GameState.EXPIRED, joinOpen: false };
+  }
+
+  /** סריקה תקופתית: כל החדרים שפג תוקפם ועדיין אינם במצב סופי */
+  async expireStaleRooms(now: number = Date.now()): Promise<ExpiredRooms> {
+    const stale = await this.prisma.gameRoom.findMany({
+      where: {
+        deletedAt: null,
+        state: { notIn: [...TERMINAL_ROOM_STATES] },
+        expiresAt: { lte: new Date(now) },
+      },
+      select: { id: true },
+    });
+    const result: ExpiredRooms = { roomIds: [], sessionIds: [] };
+    for (const { id } of stale) {
+      const expired = await this.markExpired(id, new Date(now));
+      result.roomIds.push(...expired.roomIds);
+      result.sessionIds.push(...expired.sessionIds);
+      if (expired.roomIds.length > 0) {
+        this.events.toRoom(id, 'error:message', { code: 'ROOM_EXPIRED', message: 'תוקף החדר פג, יש לפתוח משחק חדש' });
+      }
+    }
+    if (result.roomIds.length > 0) this.logger.log(`expired ${result.roomIds.length} stale room(s)`);
+    return result;
+  }
+
+  private async markExpired(roomId: string, at: Date): Promise<ExpiredRooms> {
+    return this.prisma.$transaction(async (tx) => {
+      const room = await tx.gameRoom.updateMany({
+        where: { id: roomId, deletedAt: null, state: { notIn: [...TERMINAL_ROOM_STATES] } },
+        data: { state: GameState.EXPIRED, joinOpen: false },
+      });
+      if (room.count === 0) return { roomIds: [], sessionIds: [] };
+      const sessions = await tx.gameSession.findMany({ where: { roomId, state: { in: NON_FINAL_SESSION_STATES } }, select: { id: true } });
+      const sessionIds = sessions.map((s) => s.id);
+      if (sessionIds.length > 0) {
+        await tx.gameSession.updateMany({
+          where: { id: { in: sessionIds } },
+          data: { state: GameState.EXPIRED, finishedAt: at, pausedAt: null, pausedRemainingMs: null, questionEndsAt: null },
+        });
+      }
+      await tx.auditLog.create({ data: { roomId, action: 'ROOM_EXPIRED', details: { sessionIds } } });
+      return { roomIds: [roomId], sessionIds };
+    });
   }
 
   async getPublicView(code: string): Promise<RoomPublicView> {
@@ -135,6 +198,7 @@ export class RoomsService {
   async join(code: string, rawName: string, avatar: AvatarId): Promise<JoinRoomResponse> {
     const room = await this.findByCode(code);
     if (!room) throw GameError.notFound('ROOM_NOT_FOUND', 'החדר לא נמצא, בדקו את הקוד');
+    if (room.state === GameState.EXPIRED) throw GameError.forbidden('ROOM_EXPIRED', 'תוקף החדר פג, בקשו מהמורה קוד חדש');
     if (!isJoinable(room.state, room.joinOpen)) throw GameError.forbidden('JOIN_CLOSED', 'ההצטרפות לחדר סגורה כרגע');
 
     const validation = validateDisplayName(rawName);
