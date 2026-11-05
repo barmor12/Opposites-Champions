@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { QRCodeSVG } from 'qrcode.react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
-  ArrowLeft,
+  ArrowRight,
   BarChart3,
   Ban,
   Check,
@@ -32,8 +32,8 @@ import { GameMode, GameState, type LeaderboardEntry, type ParticipantView } from
 import { Avatar, Button, Card, EmptyState, Medal, ProgressBar, Spinner, medalForRank, toast } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import { useTeacherStore, type LiveEvent, type RoomAction } from '@/stores/teacherStore';
-import { ConfirmModal, CountUp, MagicButton, PageHeader, Panel, StateBadge, Stepper, type StepperStep } from './components';
-import { MODE_LABELS, formatNumber, friendlyError, teacherPath } from './labels';
+import { ConfirmModal, CountUp, HIT_AREA, MagicButton, PageHeader, Panel, StateBadge, Stepper, type StepperStep } from './components';
+import { MODE_LABELS, STATE_LABELS, formatNumber, friendlyError, teacherPath } from './labels';
 
 /** אחרי כמות זו של הודעות על תלמידים – משתיקים כדי לא להציף. */
 const PLAYER_TOAST_LIMIT = 40;
@@ -187,7 +187,7 @@ export function LiveRoomPage() {
               <RefreshCw className="size-4" aria-hidden /> ניסיון נוסף
             </Button>
             <Button variant="ghost" size="md" onClick={() => navigate(teacherPath())}>
-              <ArrowLeft className="size-4" aria-hidden /> ללוח הבקרה
+              <ArrowRight className="size-4" aria-hidden /> ללוח הבקרה
             </Button>
           </div>
         </Card>
@@ -215,14 +215,14 @@ export function LiveRoomPage() {
 
   const hint = isWaiting
     ? totalCount === 0
-      ? 'ממתינים שהתלמידים יצטרפו… אפשר להתחיל ברגע שיש לפחות משתתף אחד.'
+      ? 'ממתינים שהתלמידים יצטרפו… אפשר להתחיל ברגע שיש לפחות תלמיד/ה אחד/ת.'
       : `${totalCount} ${totalCount === 1 ? 'תלמיד/ה מחכה' : 'תלמידים מחכים'} – כשכולם בפנים, מתחילים.`
     : state === GameState.PAUSED
       ? 'המשחק מושהה. התלמידים רואים מסך המתנה עד שממשיכים.'
       : state === GameState.QUESTION_RESULTS && isTeacherPaced
         ? 'מוצגות התוצאות לשאלה – לחצו ״שאלה הבאה״ כדי להמשיך.'
         : state === GameState.COMPLETED
-          ? 'המשחק הסתיים. אפשר לפתוח סבב חדש עם אותם משתתפים.'
+          ? 'המשחק הסתיים. אפשר לפתוח סבב חדש עם אותם תלמידים.'
           : null;
 
   return (
@@ -240,6 +240,7 @@ export function LiveRoomPage() {
         actions={
           <>
             <span
+              role="status"
               className={cn(
                 'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold ring-1 ring-inset',
                 socketConnected ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-amber-50 text-amber-700 ring-amber-200',
@@ -247,7 +248,7 @@ export function LiveRoomPage() {
               title={socketConnected ? 'מחובר לעדכונים בזמן אמת' : 'אין חיבור בזמן אמת'}
             >
               {socketConnected ? (
-                <span className="relative flex size-2">
+                <span className="relative flex size-2" aria-hidden>
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
                 </span>
@@ -260,15 +261,18 @@ export function LiveRoomPage() {
             <Button variant="ghost" size="md" onClick={() => void loadLive(id)} disabled={liveLoading} aria-label="רענון">
               <RefreshCw className={cn('size-4', liveLoading && 'animate-spin')} aria-hidden />
             </Button>
-            <Link to={teacherPath(`rooms/${id}/results`)} className="rounded-2xl">
-              <Button variant="secondary" size="md" tabIndex={-1}>
-                <BarChart3 className="size-4" aria-hidden />
-                תוצאות
-              </Button>
-            </Link>
+            <Button variant="secondary" size="md" onClick={() => navigate(teacherPath(`rooms/${id}/results`))}>
+              <BarChart3 className="size-4" aria-hidden />
+              תוצאות
+            </Button>
           </>
         }
       />
+
+      {/* אזור חי לקוראי מסך – מצב המשחק ומוני תלמידים (בלי ניקוד, כדי לא להציף) */}
+      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {`${STATE_LABELS[state].label}. ${connectedCount} מחוברים מתוך ${totalCount}, ${live.finishedCount} סיימו.`}
+      </p>
 
       {isEnded && (
         <div role="status" className="mb-5 flex items-center gap-3 rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-600 ring-1 ring-slate-200/80">
@@ -293,11 +297,9 @@ export function LiveRoomPage() {
               התוצאות וההישגים מוכנים לצפייה.
             </span>
           </div>
-          <Link to={teacherPath(`rooms/${id}/results`)} className="rounded-2xl">
-            <Button variant="success" size="md" tabIndex={-1}>
-              <BarChart3 className="size-4" aria-hidden /> לתוצאות
-            </Button>
-          </Link>
+          <Button variant="success" size="md" onClick={() => navigate(teacherPath(`rooms/${id}/results`))}>
+            <BarChart3 className="size-4" aria-hidden /> לתוצאות
+          </Button>
         </motion.div>
       )}
 
@@ -338,7 +340,7 @@ export function LiveRoomPage() {
                     aria-label="העתקת הקוד"
                     title="העתקת הקוד"
                   >
-                    {copied === 'code' ? <Check className="size-5 text-brand-green" /> : <Copy className="size-5" />}
+                    {copied === 'code' ? <Check className="size-5 text-brand-green" aria-hidden /> : <Copy className="size-5" aria-hidden />}
                   </button>
                 </div>
                 <span
@@ -357,11 +359,11 @@ export function LiveRoomPage() {
             </div>
             <div className="relative flex w-full items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 text-xs text-slate-600 ring-1 ring-slate-200/70">
               <Link2 className="size-4 shrink-0 text-slate-500" aria-hidden />
-              <a href={live.joinUrl} target="_blank" rel="noreferrer" dir="ltr" className="min-w-0 flex-1 truncate text-left font-medium hover:text-violet-700">
+              <a href={live.joinUrl} target="_blank" rel="noreferrer" dir="ltr" className="-my-3.5 min-w-0 flex-1 truncate py-3.5 text-start font-medium hover:text-violet-700" aria-label={`קישור הצטרפות (נפתח בחלון חדש): ${live.joinUrl}`}>
                 {live.joinUrl}
               </a>
-              <button type="button" onClick={() => void copy(live.joinUrl, 'link')} className="grid size-8 min-h-0 place-items-center rounded-lg hover:bg-white" aria-label="העתקת הקישור">
-                {copied === 'link' ? <Check className="size-4 text-brand-green" /> : <Copy className="size-4" />}
+              <button type="button" onClick={() => void copy(live.joinUrl, 'link')} className={cn('grid size-8 min-h-0 place-items-center rounded-lg hover:bg-white', HIT_AREA.sm)} aria-label="העתקת הקישור">
+                {copied === 'link' ? <Check className="size-4 text-brand-green" aria-hidden /> : <Copy className="size-4" aria-hidden />}
               </button>
             </div>
             <p className="relative text-center text-xs leading-5 text-slate-500">התלמידים סורקים את ה־QR מהטאבלט או מקלידים את הקוד במסך ההצטרפות.</p>
@@ -414,7 +416,6 @@ export function LiveRoomPage() {
                       onClick={() => setJoinOpen(id, !room.joinOpen).catch((err) => toast.error(friendlyError(err)))}
                       disabled={busy}
                       loading={pendingAction === 'join-open'}
-                      aria-pressed={room.joinOpen}
                       className="bg-white/70 ring-1 ring-slate-200/80"
                     >
                       {room.joinOpen ? <DoorClosed className="size-4" aria-hidden /> : <DoorOpen className="size-4" aria-hidden />}
@@ -441,7 +442,7 @@ export function LiveRoomPage() {
 
           <Card variant="glass" padding="none" className="p-5 sm:p-6">
             <div className="grid grid-cols-3 gap-3 text-center">
-              <Counter label="מחוברים" value={connectedCount} suffix={`/ ${totalCount}`} tone="navy" />
+              <Counter label="מחוברים" value={connectedCount} suffix={`מתוך ${totalCount}`} tone="navy" />
               <Counter label="סיימו" value={live.finishedCount} suffix={`מתוך ${totalCount}`} tone="green" />
               <Counter label="שאלות בסבב" value={questionCount} tone="violet" />
             </div>
@@ -450,7 +451,7 @@ export function LiveRoomPage() {
                 <span>התקדמות הסבב</span>
                 <span className="tabular-nums">{roundProgress.label}</span>
               </div>
-              <ProgressBar value={roundProgress.value} max={roundProgress.max} size="sm" color="rainbow" />
+              <ProgressBar value={roundProgress.value} max={roundProgress.max} size="sm" color="rainbow" label="התקדמות הסבב" />
             </div>
           </Card>
         </div>
@@ -463,15 +464,15 @@ export function LiveRoomPage() {
           icon={<Users className="size-5" aria-hidden />}
           title={
             <>
-              משתתפים <span className="text-slate-500">({totalCount})</span>
+              תלמידים <span className="text-slate-500">({totalCount})</span>
             </>
           }
           description={totalCount > 0 ? `${connectedCount} מחוברים · ${live.finishedCount} סיימו` : undefined}
         >
           {totalCount === 0 ? (
-            <EmptyState title="עדיין אין משתתפים" description="ברגע שתלמיד מצטרף עם הקוד – הוא יופיע כאן." className="bg-transparent py-6" />
+            <EmptyState title="עדיין אין תלמידים" description="ברגע שתלמיד/ה מצטרפים עם הקוד – הם יופיעו כאן." className="bg-transparent py-6" />
           ) : (
-            <ul className="grid grid-cols-[repeat(auto-fill,minmax(8.25rem,1fr))] gap-3" aria-label="רשימת משתתפים">
+            <ul className="grid grid-cols-[repeat(auto-fill,minmax(8.25rem,1fr))] gap-3" aria-label="רשימת תלמידים">
               <AnimatePresence initial={false}>
                 {live.participants.map((p) => (
                   <motion.li
@@ -493,7 +494,7 @@ export function LiveRoomPage() {
         {/* דירוג חי */}
         <Panel className="lg:col-span-2" icon={<Trophy className="size-5" aria-hidden />} tone="green" title="דירוג חי" description={live.leaderboard.length > 0 ? 'מתעדכן עם כל תשובה' : undefined}>
           {live.leaderboard.length === 0 ? (
-            <p className="rounded-2xl bg-slate-50 px-4 py-6 text-center text-sm text-slate-500">הדירוג יופיע עם התשובות הראשונות.</p>
+            <p className="rounded-2xl bg-slate-50 px-4 py-6 text-center text-sm text-slate-600">הדירוג יופיע עם התשובות הראשונות.</p>
           ) : (
             <LiveLeaderboard entries={live.leaderboard} limit={8} />
           )}
@@ -522,7 +523,7 @@ export function LiveRoomPage() {
         onClose={() => setConfirm(null)}
         title="סבב חדש"
         variant="primary"
-        description="להתחיל סבב חדש עם אותם משתתפים ואותן הגדרות? הניקוד של הסבב הקודם נשמר בתוצאות, והסבב החדש מתחיל מאפס."
+        description="להתחיל סבב חדש עם אותם תלמידים ואותן הגדרות? הניקוד של הסבב הקודם נשמר בתוצאות, והסבב החדש מתחיל מאפס."
         confirmLabel="התחל סבב חדש"
         onConfirm={async () => {
           try {
@@ -584,6 +585,7 @@ function Counter({ label, value, suffix, tone }: { label: string; value: number;
 }
 
 function ParticipantCard({ participant: p, questionCount, removing, onRemove }: { participant: ParticipantView; questionCount: number; removing: boolean; onRemove?: () => void }) {
+  const reduce = useReducedMotion();
   const pct = questionCount ? Math.min(100, (p.answeredCount / questionCount) * 100) : 0;
   const status = p.finished ? 'סיים/ה' : p.connected ? 'מחובר/ת' : 'מנותק/ת';
   return (
@@ -603,7 +605,7 @@ function ParticipantCard({ participant: p, questionCount, removing, onRemove }: 
           type="button"
           onClick={onRemove}
           disabled={removing}
-          className="absolute start-1.5 top-1.5 grid size-8 min-h-0 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
+          className={cn('absolute start-1.5 top-1.5 grid size-8 min-h-0 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50', HIT_AREA.sm)}
           aria-label={`הסרת ${p.displayName}`}
           title="הסרה מהחדר"
         >
@@ -636,12 +638,12 @@ function ParticipantCard({ participant: p, questionCount, removing, onRemove }: 
         <span className="text-slate-600">ניקוד</span>
         <span className="font-black text-violet-700 tabular-nums">{formatNumber(p.score)}</span>
       </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner" role="progressbar" aria-label={`התקדמות ${p.displayName}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct)}>
         <motion.div
           className={cn('h-full rounded-full', p.finished ? 'bg-linear-to-l from-emerald-400 to-green-500' : 'bg-linear-to-l from-violet-500 to-fuchsia-400')}
           initial={false}
           animate={{ width: `${pct}%` }}
-          transition={{ type: 'spring', stiffness: 160, damping: 24 }}
+          transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 160, damping: 24 }}
         />
       </div>
     </div>
@@ -658,8 +660,15 @@ function LiveLeaderboard({ entries, limit = 8 }: { entries: LeaderboardEntry[]; 
     setSnapshot({ entries, prevRanks: new Map(snapshot.entries.map((e) => [e.participantId, e.rank])) });
   }
   const deltas = snapshot.prevRanks;
+  const leader = sorted[0];
 
   return (
+    <>
+      {leader && (
+        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          {`במקום הראשון: ${leader.displayName}, ${formatNumber(leader.score)} נקודות`}
+        </p>
+      )}
     <ol className="flex flex-col gap-1.5" aria-label="דירוג חי">
       <AnimatePresence initial={false}>
         {sorted.map((e) => {
@@ -703,6 +712,7 @@ function LiveLeaderboard({ entries, limit = 8 }: { entries: LeaderboardEntry[]; 
         })}
       </AnimatePresence>
     </ol>
+    </>
   );
 }
 
