@@ -652,25 +652,20 @@ function ParticipantCard({ participant: p, questionCount, removing, onRemove }: 
 function LiveLeaderboard({ entries, limit = 8 }: { entries: LeaderboardEntry[]; limit?: number }) {
   const reduce = useReducedMotion();
   const sorted = useMemo(() => [...entries].sort((a, b) => a.rank - b.rank || b.score - a.score).slice(0, limit), [entries, limit]);
-  const prevRanks = useRef<Map<string, number>>(new Map());
-  const [deltas, setDeltas] = useState<Map<string, number>>(new Map());
-
-  useEffect(() => {
-    const next = new Map<string, number>();
-    for (const e of sorted) {
-      const prev = prevRanks.current.get(e.participantId);
-      next.set(e.participantId, prev === undefined ? 0 : prev - e.rank);
-    }
-    setDeltas(next);
-    prevRanks.current = new Map(sorted.map((e) => [e.participantId, e.rank]));
-  }, [sorted]);
+  // "מצב נגזר": שומרים את הדירוג הקודם כדי להציג חיצי שינוי מיקום (ללא effect)
+  const [snapshot, setSnapshot] = useState<{ entries: LeaderboardEntry[]; prevRanks: Map<string, number> }>({ entries, prevRanks: new Map() });
+  if (snapshot.entries !== entries) {
+    setSnapshot({ entries, prevRanks: new Map(snapshot.entries.map((e) => [e.participantId, e.rank])) });
+  }
+  const deltas = snapshot.prevRanks;
 
   return (
     <ol className="flex flex-col gap-1.5" aria-label="דירוג חי">
       <AnimatePresence initial={false}>
         {sorted.map((e) => {
           const medal = medalForRank(e.rank);
-          const delta = deltas.get(e.participantId) ?? 0;
+          const prevRank = deltas.get(e.participantId);
+          const delta = prevRank === undefined ? 0 : prevRank - e.rank;
           return (
             <motion.li
               key={e.participantId}

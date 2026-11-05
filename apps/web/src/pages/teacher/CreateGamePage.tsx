@@ -90,7 +90,8 @@ export function CreateGamePage() {
 
   const goTo = (i: number) => {
     setActiveStep(i);
-    sectionRefs.current[i]?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    const el = sectionRefs.current[i];
+    if (el && typeof el.scrollIntoView === 'function') el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   };
 
   const handleSubmit = async (e: FormEvent) => {

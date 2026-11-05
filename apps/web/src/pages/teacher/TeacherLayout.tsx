@@ -14,9 +14,9 @@ const NAV: ReadonlyArray<{ to: string; label: string; short: string; icon: Lucid
   { to: teacherPath('content'), label: 'מאגר ההפכים', short: 'מאגר', icon: BookOpenText, end: false },
 ];
 
-function Logo({ compact = false, className }: { compact?: boolean; className?: string }) {
+function Logo({ compact = false, className, onClick }: { compact?: boolean; className?: string; onClick?: () => void }) {
   return (
-    <Link to={teacherPath()} className={cn('flex items-center gap-3 rounded-2xl', className)} aria-label="אלופי ההפכים – לוח הבקרה">
+    <Link to={teacherPath()} onClick={onClick} className={cn('flex items-center gap-3 rounded-2xl', className)} aria-label="אלופי ההפכים – לוח הבקרה">
       <span className="relative grid size-11 shrink-0 place-items-center rounded-2xl bg-linear-to-br from-sky-400 via-violet-500 to-fuchsia-500 shadow-[0_8px_20px_-8px_rgba(139,92,246,.8)] ring-1 ring-white/60">
         <span className="absolute inset-x-2 top-1 h-3 rounded-full bg-white/40 blur-[2px]" aria-hidden />
         <img src="/images/ui/logo.svg" alt="" className="relative size-8 drop-shadow" />
@@ -184,10 +184,7 @@ export function TeacherLayout() {
     if (authStatus === 'checking') void checkAuth();
   }, [authStatus, checkAuth]);
 
-  // סגירת המגירה בניווט + Esc
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location.pathname]);
+  // סגירת המגירה ב־Esc + נעילת גלילה
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
@@ -320,7 +317,7 @@ export function TeacherLayout() {
                 transition={{ type: 'spring', stiffness: 380, damping: 36 }}
               >
                 <div className="flex items-center justify-between">
-                  <Logo />
+                  <Logo onClick={() => setMenuOpen(false)} />
                   <button
                     type="button"
                     onClick={() => setMenuOpen(false)}
