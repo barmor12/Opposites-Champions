@@ -68,8 +68,9 @@ export async function joinAsStudent(browser: Browser, code: string, name: string
 export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise<void> {
   for (let i = 0; i < maxQuestions; i++) {
     // מסך "סיימת" (ממתינים לשאר הכיתה) או מעבר למסך התוצאות
-    const finished = page.getByText(/סיימת/).first();
-    const option = page.getByTestId('option-1');
+    const finished = page.getByTestId('finished-screen');
+    // רק כפתור פעיל של השאלה הנוכחית (כפתור השאלה הקודמת נשאר מושבת לרגע באנימציית היציאה)
+    const option = page.locator('[data-testid="option-1"]:not([aria-disabled="true"])');
     const matchCheck = page.getByTestId('check-button');
     const matchCard = page.locator('[data-testid^="card-"]');
     await Promise.race([
@@ -78,7 +79,7 @@ export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise
       finished.waitFor({ state: 'visible', timeout: 20_000 }).catch(() => undefined),
     ]);
     if (await finished.isVisible().catch(() => false)) return;
-    if (/\/results/.test(page.url())) return;
+    if (/\/results/.test(page.url()) || (await page.getByTestId('results-page').isVisible().catch(() => false))) return;
     if (await matchCard.first().isVisible().catch(() => false)) {
       const cards = await matchCard.all();
       for (let c = 0; c + 1 < cards.length; c += 2) {
@@ -88,7 +89,6 @@ export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise
       await matchCheck.click();
     } else if (await option.isVisible().catch(() => false)) {
       // ממתינים שהשאלה החדשה תיטען (הכפתור של השאלה הקודמת נשאר מושבת לרגע)
-      await expect(option).toBeEnabled({ timeout: 15_000 });
       await option.click();
     }
     const next = page.getByTestId('next-button');
