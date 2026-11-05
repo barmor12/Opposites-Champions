@@ -1,10 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="כבוי"><title>כבוי</title>
-<rect x="4" y="4" width="192" height="192" rx="32" fill="#F1F5F9"/>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-
-<path d="M100 38 A42 42 0 0 0 76 115 L80 132 L120 132 L124 115 A42 42 0 0 0 100 38 Z" fill="#E2E8F0"/>
-<path d="M90 130 V104 L95 96 L100 104 L105 96 L110 104 V130" fill="none" stroke="#94A3B8" stroke-width="3"/>
-<rect x="80" y="132" width="40" height="22" rx="4" fill="#CBD5E1"/>
-<path d="M80 140 H120 M80 147 H120" stroke-width="3"/>
-<rect x="90" y="154" width="20" height="10" rx="4" fill="#475569"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="כבוי">
+<title>כבוי</title>
+<defs><linearGradient id="on-off-opposite-g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F1F5F9"/><stop offset="1" stop-color="#CBD5E1"/></linearGradient><radialGradient id="on-off-opposite-g1" cx="0.38" cy="0.3" r="0.78"><stop offset="0" stop-color="#e5eaf2"/><stop offset=".55" stop-color="#E2E8F0"/><stop offset="1" stop-color="#b1b8c2"/></radialGradient><linearGradient id="on-off-opposite-g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F8FAFC"/><stop offset="0.5" stop-color="#CBD5E1"/><stop offset="1" stop-color="#64748B"/></linearGradient><linearGradient id="on-off-opposite-g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#707a88"/><stop offset=".5" stop-color="#334155"/><stop offset="1" stop-color="#2d3a4d"/></linearGradient><filter id="on-off-opposite-blur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="url(#on-off-opposite-g0)"/><ellipse cx="100" cy="172" rx="24" ry="4" fill="#1E293B" opacity="0.2" filter="url(#on-off-opposite-blur)"/><path d="M100 38 A42 42 0 0 0 76 115 L80 132 L120 132 L124 115 A42 42 0 0 0 100 38 Z" fill="url(#on-off-opposite-g1)"/><ellipse cx="84" cy="62" rx="10" ry="18" fill="#fff" opacity="0.5" transform="rotate(-20 84 62)"/><path d="M90 130 V104 L95 96 L100 104 L105 96 L110 104 V130" fill="none" stroke="#94A3B8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="80" y="132" width="40" height="22" rx="5" fill="url(#on-off-opposite-g2)"/><path d="M80 140 H120 M80 147 H120" fill="none" stroke="#475569" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><rect x="90" y="154" width="20" height="10" rx="4" fill="url(#on-off-opposite-g3)"/>
+</svg>

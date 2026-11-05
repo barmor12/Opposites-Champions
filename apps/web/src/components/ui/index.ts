@@ -17,3 +17,4 @@ export { SoundToggle, type SoundToggleProps } from './SoundToggle';
 export { LazyImage, type LazyImageProps } from './LazyImage';
 export { Countdown, type CountdownProps } from './Countdown';
 export { EmptyState, type EmptyStateProps } from './EmptyState';
+export { NumberTicker, type NumberTickerProps } from './NumberTicker';
