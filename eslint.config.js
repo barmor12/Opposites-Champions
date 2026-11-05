@@ -14,4 +14,9 @@ export default tseslint.config(
       '@typescript-eslint/consistent-type-imports': 'warn',
     },
   },
+  {
+    // NestJS DI relies on emitDecoratorMetadata – value imports are required for injected classes
+    files: ['apps/server/**/*.ts'],
+    rules: { '@typescript-eslint/consistent-type-imports': 'off' },
+  },
 );
