@@ -74,7 +74,7 @@ describe('CreateGamePage', () => {
 
   it('לא שולח כשחסר שם כיתה או קטגוריות', async () => {
     renderAt('new', <CreateGamePage />);
-    fireEvent.click(screen.getByRole('button', { name: 'בחר הכול' })); // מבטל את כל הקטגוריות
+    fireEvent.click(screen.getByRole('button', { name: 'בחירת הכול' })); // מבטל את כל הקטגוריות
     fireEvent.click(screen.getByRole('button', { name: /יצירת חדר/ }));
     expect(await screen.findByText('יש להזין שם כיתה')).toBeTruthy();
     expect(screen.getByText('יש לבחור לפחות קטגוריה אחת')).toBeTruthy();

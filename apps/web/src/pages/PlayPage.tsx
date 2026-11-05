@@ -185,7 +185,7 @@ export function PlayPage() {
             key={screen === 'question' && question ? `q-${question.sessionQuestionId}` : screen}
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -16, scale: 0.98 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -16, scale: 0.98, transition: { duration: 0.12 } }}
             transition={{ type: 'spring', stiffness: 260, damping: 26 }}
             className="flex flex-1 flex-col"
           >

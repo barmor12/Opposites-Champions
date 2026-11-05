@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useId, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 import { motion, useReducedMotion } from 'motion/react';
 import { BookOpenText, CheckCircle2, Gem, Info, ListOrdered, Rocket, Settings2, SlidersHorizontal, Timer, Trophy, Users, Volume2 } from 'lucide-react';
@@ -15,7 +15,7 @@ import {
 import { Button, Input, toast } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import { useTeacherStore } from '@/stores/teacherStore';
-import { MultiChips, PageHeader, Panel, SingleChips, Stepper, Toggle, type StepperStep } from './components';
+import { MultiChips, PageHeader, Panel, SingleChips, Stepper, Toggle, radioGroupKeyDown, type StepperStep } from './components';
 import { MODE_LABELS, friendlyError, teacherPath, timeLabel } from './labels';
 import { ALL_CATEGORIES, DEFAULT_SETTINGS, DIFFICULTIES, REGULAR_TYPES, validateSettings, type GameSettingsErrors as Errors } from './gameSettingsForm';
 
@@ -31,16 +31,23 @@ const MODE_ART: Record<GameMode, { src: string; icon: typeof Rocket; accent: str
   [GameMode.TEACHER_PACED]: { src: '/images/characters/moon.svg', icon: Users, accent: 'from-indigo-200/70 to-violet-100/40' },
 };
 
-function Field({ title, description, children, error }: { title: string; description?: string; children: ReactNode; error?: string }) {
+function Field({ title, description, children, error }: { title: string; description?: string; children: (ids: { describedBy?: string; invalid: boolean }) => ReactNode; error?: string }) {
+  const id = useId();
+  const descId = `${id}-desc`;
+  const errorId = `${id}-error`;
+  const describedBy = [description ? descId : null, error ? errorId : null].filter(Boolean).join(' ') || undefined;
   return (
-    <fieldset className="flex min-w-0 flex-col gap-2.5">
-      <div>
-        <legend className="text-sm font-extrabold text-brand-navy">{title}</legend>
-        {description && <p className="mt-0.5 text-xs leading-5 text-slate-600">{description}</p>}
-      </div>
-      {children}
+    // legend חייב להיות הילד הראשון של fieldset כדי לשמש כשם הקבוצה
+    <fieldset className="flex min-w-0 flex-col gap-2.5" aria-describedby={describedBy}>
+      <legend className="text-sm font-extrabold text-brand-navy">{title}</legend>
+      {description && (
+        <p id={descId} className="-mt-1 text-xs leading-5 text-slate-600">
+          {description}
+        </p>
+      )}
+      {children({ describedBy, invalid: Boolean(error) })}
       {error && (
-        <p role="alert" className="text-sm font-semibold text-rose-600">
+        <p id={errorId} role="alert" className="text-sm font-semibold text-rose-600">
           {error}
         </p>
       )}
@@ -169,7 +176,8 @@ export function CreateGamePage() {
                 required
               />
               <Field title="מצב משחק" description="אפשר לשנות את המצב בכל משחק חדש.">
-                <div role="radiogroup" aria-label="מצב משחק" className="grid gap-3 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
+                {() => (
+                <div role="radiogroup" aria-label="מצב משחק" onKeyDown={radioGroupKeyDown} className="grid gap-3 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
                   {(Object.values(GameMode) as GameMode[]).map((mode) => {
                     const selected = settings.mode === mode;
                     const art = MODE_ART[mode];
@@ -180,6 +188,7 @@ export function CreateGamePage() {
                         type="button"
                         role="radio"
                         aria-checked={selected}
+                        tabIndex={selected ? 0 : -1}
                         onClick={() => patch('mode', mode)}
                         whileTap={reduce ? undefined : { scale: 0.985 }}
                         className={cn(
@@ -217,6 +226,7 @@ export function CreateGamePage() {
                     );
                   })}
                 </div>
+                )}
               </Field>
             </div>
           </Panel>
@@ -237,10 +247,12 @@ export function CreateGamePage() {
           >
             <div className="flex flex-col gap-6">
               <Field title="קטגוריות" description="השאלות ייבחרו מתוך הקטגוריות המסומנות." error={errors.categories}>
-                <MultiChips name="קטגוריות" allLabel="בחר הכול" options={categoryOptions} value={settings.categories} onChange={(v) => patch('categories', v)} />
+                {(a) => <MultiChips name="קטגוריות" allLabel="בחירת הכול" options={categoryOptions} value={settings.categories} onChange={(v) => patch('categories', v)} {...a} />}
               </Field>
               <Field title="סוגי שאלות" error={errors.questionTypes}>
-                <MultiChips name="סוגי שאלות" options={typeOptions} value={settings.questionTypes} onChange={(v) => patch('questionTypes', v)} />
+                {(a) => (
+                <>
+                <MultiChips name="סוגי שאלות" options={typeOptions} value={settings.questionTypes} onChange={(v) => patch('questionTypes', v)} {...a} />
                 <div className="mt-1">
                   <Toggle
                     name="treasureChallenge"
@@ -252,6 +264,8 @@ export function CreateGamePage() {
                     description="5 השאלות האחרונות הופכות לאתגר: 5 תשובות נכונות ברצף מזכות בבונוס של 150 נקודות."
                   />
                 </div>
+                </>
+                )}
               </Field>
             </div>
           </Panel>
@@ -272,13 +286,13 @@ export function CreateGamePage() {
           >
             <div className="grid gap-6 md:grid-cols-2">
               <Field title="מספר שאלות">
-                <SingleChips name="מספר שאלות" options={QUESTION_COUNT_OPTIONS.map((n) => ({ value: n, label: `${n} שאלות` }))} value={settings.questionCount} onChange={(v) => patch('questionCount', v)} />
+                {() => <SingleChips name="מספר שאלות" options={QUESTION_COUNT_OPTIONS.map((n) => ({ value: n, label: `${n} שאלות` }))} value={settings.questionCount} onChange={(v) => patch('questionCount', v)} />}
               </Field>
               <Field title="רמת קושי">
-                <SingleChips name="רמת קושי" options={DIFFICULTIES.map((d) => ({ value: d, label: DIFFICULTY_LABELS[d] }))} value={settings.difficulty} onChange={(v) => patch('difficulty', v)} />
+                {() => <SingleChips name="רמת קושי" options={DIFFICULTIES.map((d) => ({ value: d, label: DIFFICULTY_LABELS[d] }))} value={settings.difficulty} onChange={(v) => patch('difficulty', v)} />}
               </Field>
               <Field title="זמן לשאלה" description="בלי הגבלת זמן אין בונוס מהירות.">
-                <SingleChips name="זמן לשאלה" options={TIME_PER_QUESTION_OPTIONS.map((t) => ({ value: t, label: timeLabel(t) }))} value={settings.timePerQuestionSec} onChange={(v) => patch('timePerQuestionSec', v)} />
+                {(a) => <SingleChips name="זמן לשאלה" options={TIME_PER_QUESTION_OPTIONS.map((t) => ({ value: t, label: timeLabel(t) }))} value={settings.timePerQuestionSec} onChange={(v) => patch('timePerQuestionSec', v)} describedBy={a.describedBy} />}
               </Field>
             </div>
           </Panel>
@@ -360,7 +374,7 @@ export function CreateGamePage() {
                 יצירת חדר
               </Button>
 
-              <p className="hidden items-start gap-2 text-xs leading-5 text-slate-500 xl:flex">
+              <p className="hidden items-start gap-2 text-xs leading-5 text-slate-600 xl:flex">
                 <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
                 אחרי יצירת החדר יוצג קוד בן 6 ספרות ו־QR להצטרפות מהטאבלטים.
               </p>
