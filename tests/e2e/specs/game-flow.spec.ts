@@ -23,9 +23,13 @@ test.describe('זרימת משחק מלאה', () => {
     await expect(dup.getByText(/תפוס/)).toBeVisible();
     await dupCtx.close();
 
-    // המורה רואה 2 תלמידים
-    await expect(page.getByText('נועה')).toBeVisible();
-    await expect(page.getByText('יואב')).toBeVisible();
+    // המורה רואה 2 תלמידים (האריחים נטענים באנימציה כשהם נכנסים לתצוגה)
+    for (const name of ['נועה', 'יואב']) {
+      const tile = page.getByText(name, { exact: true }).first();
+      await tile.waitFor({ state: 'attached', timeout: 15_000 });
+      await tile.scrollIntoViewIfNeeded();
+      await expect(tile).toBeVisible();
+    }
 
     await page.getByRole('button', { name: /התחל משחק/ }).click();
 
