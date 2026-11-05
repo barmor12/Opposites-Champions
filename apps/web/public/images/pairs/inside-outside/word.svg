@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="בפנים">
+<title>בפנים</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<polygon points="46,70 154,70 146,46 54,46" fill="#FDBA74"/>
+<rect x="46" y="70" width="108" height="62" fill="#B45309"/>
+<polygon points="74.5,83 71.5,54.5 94,69.5" fill="#CBD5E1"/><polygon points="125.5,83 128.5,54.5 106,69.5" fill="#CBD5E1"/>
+<circle cx="100" cy="98" r="30" fill="#CBD5E1"/>
+<circle cx="88.8" cy="95" r="7.199999999999999" fill="#fff" stroke-width="3"/><circle cx="89.8" cy="96.1" r="3.6" fill="#2D3748" stroke="none"/><circle cx="88.5" cy="94.8" r="1.2" fill="#fff" stroke="none"/><circle cx="111.3" cy="95" r="7.199999999999999" fill="#fff" stroke-width="3"/><circle cx="112.3" cy="96.1" r="3.6" fill="#2D3748" stroke="none"/><circle cx="111" cy="94.8" r="1.2" fill="#fff" stroke="none"/>
+<polygon points="96,107 104,107 100,112.4" fill="#F9A8D4" stroke-width="2"/>
+<path d="M94 116 Q100 119.6 100 112.4 Q100 119.6 106 116" fill="none" stroke-width="3"/>
+<path d="M85 107 L64 102.5 M85 111.5 L64 114.5 M115 107 L136 102.5 M115 111.5 L136 114.5" fill="none" stroke-width="3"/>
+<rect x="40" y="130" width="120" height="54" fill="#FDBA74"/>
+<rect x="92" y="130" width="16" height="54" fill="#FDE047" stroke="none"/>
+<path d="M40 130 H160" fill="none"/>
+<ellipse cx="78" cy="131" rx="11" ry="7" fill="#CBD5E1"/><ellipse cx="122" cy="131" rx="11" ry="7" fill="#CBD5E1"/>
+</g>
+</svg>

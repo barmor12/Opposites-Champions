@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מוקדם"><title>מוקדם</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מוקדם">
+<title>מוקדם</title>
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M100 112 V124 M64 126 L72 134 M136 126 L128 134 M50 150 H62 M138 150 H150" stroke="#F59E0B" stroke-width="5"/><circle cx="100" cy="152" r="24" fill="#FDE047"/>
-<path d="M4 152H196C196 176 176 196 152 196H48C24 196 4 176 4 152Z" fill="#86EFAC" stroke="none"/>
-<path d="M4 152 H196" stroke-width="4"/>
-<circle cx="100" cy="74" r="48" fill="#7DD3FC"/>
-<circle cx="100" cy="74" r="38" fill="#fff" stroke-width="3"/>
-<path d="M100 40 V46 M100 102 V108 M66 74 H72 M128 74 H134" stroke-width="4"/>
-<path d="M100 74 V44" stroke-width="5"/>
-<path d="M100 74 L88 95" stroke-width="7"/>
-<circle cx="100" cy="74" r="4" fill="#F87171" stroke-width="2"/>
-</g></svg>
+<path d="M68 150 L54 150" fill="none" stroke-width="12"/><path d="M68 150 L54 150" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M72.3 134 L60.2 127" fill="none" stroke-width="12"/><path d="M72.3 134 L60.2 127" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M84 122.3 L77 110.2" fill="none" stroke-width="12"/><path d="M84 122.3 L77 110.2" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M100 118 L100 104" fill="none" stroke-width="12"/><path d="M100 118 L100 104" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M116 122.3 L123 110.2" fill="none" stroke-width="12"/><path d="M116 122.3 L123 110.2" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M127.7 134 L139.8 127" fill="none" stroke-width="12"/><path d="M127.7 134 L139.8 127" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M132 150 L146 150" fill="none" stroke-width="12"/><path d="M132 150 L146 150" fill="none" stroke="#FDE047" stroke-width="7"/>
+<circle cx="100" cy="150" r="26" fill="#FDE047"/>
+<path d="M4 150 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#86EFAC"/>
+<circle cx="100" cy="72" r="44" fill="#fff"/>
+<path d="M100 34 v8 M100 110 v-8 M62 72 h8 M138 72 h-8" fill="none" stroke-width="4"/>
+<path d="M100 72 L100.0 94.0" fill="none" stroke-width="7"/><path d="M100 72 L100.0 39.4" fill="none" stroke-width="5"/>
+<circle cx="100" cy="72" r="5" fill="#2D3748"/>
+</g>
+</svg>

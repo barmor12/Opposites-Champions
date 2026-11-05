@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="חורף">
+<title>חורף</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#E0F2FE"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 152 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#fff"/>
+<path d="M20 40 H40 M25 31.3 L35 48.7 M25 48.7 L35 31.3" fill="none" stroke="#7DD3FC" stroke-width="3"/><path d="M160 52 H180 M165 43.3 L175 60.7 M165 60.7 L175 43.3" fill="none" stroke="#7DD3FC" stroke-width="3"/><path d="M28 110 H44 M32 103 L40 117 M32 117 L40 103" fill="none" stroke="#7DD3FC" stroke-width="3"/><path d="M160 120 H176 M164 113 L172 127 M164 127 L172 113" fill="none" stroke="#7DD3FC" stroke-width="3"/><path d="M144 20 H156 M147 14.8 L153 25.2 M147 25.2 L153 14.8" fill="none" stroke="#7DD3FC" stroke-width="3"/>
+<circle cx="100" cy="150" r="38" fill="#fff"/>
+<path d="M74 104 L36 84" fill="none" stroke-width="10"/><path d="M74 104 L36 84" fill="none" stroke="#B45309" stroke-width="5"/><path d="M46 90 L42 76" fill="none" stroke-width="10"/><path d="M46 90 L42 76" fill="none" stroke="#B45309" stroke-width="5"/>
+<path d="M126 104 L164 84" fill="none" stroke-width="10"/><path d="M126 104 L164 84" fill="none" stroke="#B45309" stroke-width="5"/><path d="M154 90 L158 76" fill="none" stroke-width="10"/><path d="M154 90 L158 76" fill="none" stroke="#B45309" stroke-width="5"/>
+<circle cx="100" cy="102" r="28" fill="#fff"/>
+<circle cx="100" cy="98" r="4" fill="#2D3748"/><circle cx="100" cy="114" r="4" fill="#2D3748"/>
+<path d="M116 82 L128 108" fill="none" stroke-width="15"/><path d="M116 82 L128 108" fill="none" stroke="#F87171" stroke-width="10"/>
+<path d="M78 80 Q100 92 122 80" fill="none" stroke-width="16"/><path d="M78 80 Q100 92 122 80" fill="none" stroke="#F87171" stroke-width="11"/>
+<circle cx="100" cy="58" r="22" fill="#fff"/>
+<rect x="84" y="12" width="32" height="28" rx="4" fill="#2D3748"/>
+<rect x="84" y="30" width="32" height="8" fill="#F87171" stroke="none"/>
+<rect x="76" y="36" width="48" height="9" rx="4" fill="#2D3748"/>
+<circle cx="92" cy="54" r="3.5" fill="#2D3748"/><circle cx="108" cy="54" r="3.5" fill="#2D3748"/>
+<polygon points="102,60 128,66 102,68" fill="#FDBA74" stroke-width="3"/>
+<path d="M90 68 Q100 76 110 68" fill="none" stroke-width="3"/>
+</g>
+</svg>

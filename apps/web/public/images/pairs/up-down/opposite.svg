@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="למטה">
+<title>למטה</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<polygon transform="translate(100 26) rotate(90)" points="0,-18 102,-18 102,-40 146,0 102,40 102,18 0,18" fill="#FDBA74"/><path d="M40 132 Q40 140 48 140 Q40 140 40 148 Q40 140 32 140 Q40 140 40 132Z" fill="#fff" stroke-width="3"/><path d="M164 122 Q164 128 170 128 Q164 128 164 134 Q164 128 158 128 Q164 128 164 122Z" fill="#fff" stroke-width="3"/>
+</g>
+</svg>

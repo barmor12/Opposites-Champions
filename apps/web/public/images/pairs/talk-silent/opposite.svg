@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שותק">
+<title>שותק</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M36 194 V166 Q36 148 54 148 H82 Q100 148 100 166 V194Z" fill="#A78BFA"/>
+<circle cx="68" cy="104" r="36" fill="#FFE0B2"/>
+<path d="M32 93.2 A36 36 0 0 1 104 93.2 Q87.8 78.8 75.2 86 Q62.6 75.2 50 86 Q39.2 89.6 32 93.2Z" fill="#B45309"/>
+<circle cx="55" cy="100" r="8" fill="#fff" stroke-width="3"/><circle cx="56.2" cy="101.2" r="4" fill="#2D3748" stroke="none"/><circle cx="54.8" cy="99.8" r="1.4" fill="#fff" stroke="none"/><circle cx="81" cy="100" r="8" fill="#fff" stroke-width="3"/><circle cx="82.2" cy="101.2" r="4" fill="#2D3748" stroke="none"/><circle cx="80.8" cy="99.8" r="1.4" fill="#fff" stroke="none"/><circle cx="41" cy="116" r="5" fill="#F9A8D4" stroke="none"/><circle cx="95" cy="116" r="5" fill="#F9A8D4" stroke="none"/>
+<path d="M58 130 H84" fill="none" stroke-width="4"/>
+<path d="M106 40 H184 Q190 40 190 46 V96 Q190 102 184 102 H132 L114 120 L120 102 H112 Q106 102 106 96 V46 Q106 40 112 40Z" fill="#fff"/>
+<circle cx="128" cy="71" r="6" fill="#CBD5E1"/><circle cx="148" cy="71" r="6" fill="#CBD5E1"/><circle cx="168" cy="71" r="6" fill="#CBD5E1"/>
+<circle cx="148" cy="71" r="24" fill="none" stroke="#F87171" stroke-width="6"/><path d="M131 54 L165 88" fill="none" stroke="#F87171" stroke-width="6"/>
+</g>
+</svg>

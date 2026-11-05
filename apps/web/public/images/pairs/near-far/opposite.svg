@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="רחוק">
+<title>רחוק</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#BAE6FD"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 102 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#86EFAC"/>
+<path d="M184 34 L194 34" fill="none" stroke-width="10"/><path d="M184 34 L194 34" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M178.7 46.7 L185.8 53.8" fill="none" stroke-width="10"/><path d="M178.7 46.7 L185.8 53.8" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M166 52 L166 62" fill="none" stroke-width="10"/><path d="M166 52 L166 62" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M153.3 46.7 L146.2 53.8" fill="none" stroke-width="10"/><path d="M153.3 46.7 L146.2 53.8" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M148 34 L138 34" fill="none" stroke-width="10"/><path d="M148 34 L138 34" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M153.3 21.3 L146.2 14.2" fill="none" stroke-width="10"/><path d="M153.3 21.3 L146.2 14.2" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M166 16 L166 6" fill="none" stroke-width="10"/><path d="M166 16 L166 6" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M178.7 21.3 L185.8 14.2" fill="none" stroke-width="10"/><path d="M178.7 21.3 L185.8 14.2" fill="none" stroke="#FDE047" stroke-width="5"/><circle cx="166" cy="34" r="14" fill="#FDE047"/>
+<path transform="translate(50 50) scale(0.6)" d="M-30 10 A12 12 0 0 1 -22 -10 A16 16 0 0 1 8 -14 A13 13 0 0 1 28 4 A10 10 0 0 1 24 20 L-24 20 A10 10 0 0 1 -30 10Z" fill="#fff" stroke-width="8.3"/>
+<polygon points="56,194 144,194 104,102 96,102" fill="#CBD5E1"/>
+<path d="M100 184 L100 112" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="10 8"/>
+<rect x="108" y="84" width="10" height="12" fill="#B45309" stroke-width="2"/>
+<rect x="88" y="86" width="24" height="16" fill="#FDE047" stroke-width="3"/>
+<polygon points="84,87 100,72 116,87" fill="#F87171" stroke-width="3"/>
+<rect x="96" y="92" width="8" height="10" fill="#B45309" stroke-width="2"/>
+<circle cx="40" cy="100" r="9" fill="#4ADE80" stroke-width="3"/><circle cx="162" cy="100" r="7" fill="#4ADE80" stroke-width="3"/>
+</g>
+</svg>

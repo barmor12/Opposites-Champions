@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="בחוץ">
+<title>בחוץ</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<polygon points="26,90 98,90 92,70 32,70" fill="#FDBA74"/>
+<rect x="26" y="90" width="72" height="42" fill="#B45309"/>
+<rect x="20" y="130" width="84" height="50" fill="#FDBA74"/>
+<rect x="56" y="130" width="12" height="50" fill="#FDE047" stroke="none"/>
+<path d="M20 130 H104" fill="none"/>
+<path d="M170 162 Q192 150 184 124" fill="none" stroke-width="15"/><path d="M170 162 Q192 150 184 124" fill="none" stroke="#CBD5E1" stroke-width="10"/>
+<ellipse cx="148" cy="152" rx="30" ry="28" fill="#CBD5E1"/>
+<ellipse cx="136" cy="176" rx="11" ry="7" fill="#CBD5E1"/><ellipse cx="160" cy="176" rx="11" ry="7" fill="#CBD5E1"/>
+<polygon points="125.05,94.5 122.35,68.85 142.6,82.35" fill="#CBD5E1"/><polygon points="170.95,94.5 173.65,68.85 153.4,82.35" fill="#CBD5E1"/>
+<circle cx="148" cy="108" r="27" fill="#CBD5E1"/>
+<circle cx="137.9" cy="105.3" r="6.4799999999999995" fill="#fff" stroke-width="3"/><circle cx="138.8" cy="106.3" r="3.2" fill="#2D3748" stroke="none"/><circle cx="137.7" cy="105.1" r="1.1" fill="#fff" stroke="none"/><circle cx="158.1" cy="105.3" r="6.4799999999999995" fill="#fff" stroke-width="3"/><circle cx="159.1" cy="106.3" r="3.2" fill="#2D3748" stroke="none"/><circle cx="157.9" cy="105.1" r="1.1" fill="#fff" stroke="none"/>
+<polygon points="144,116.1 152,116.1 148,120.96" fill="#F9A8D4" stroke-width="2"/>
+<path d="M142 124.2 Q148 127.44 148 120.96 Q148 127.44 154 124.2" fill="none" stroke-width="3"/>
+<path d="M134.5 116.1 L115.6 112.05 M134.5 120.15 L115.6 122.85 M161.5 116.1 L180.4 112.05 M161.5 120.15 L180.4 122.85" fill="none" stroke-width="3"/>
+</g>
+</svg>

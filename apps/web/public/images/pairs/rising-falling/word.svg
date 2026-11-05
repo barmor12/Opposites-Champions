@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="עולה">
+<title>עולה</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path transform="translate(46 48) scale(0.7)" d="M-30 10 A12 12 0 0 1 -22 -10 A16 16 0 0 1 8 -14 A13 13 0 0 1 28 4 A10 10 0 0 1 24 20 L-24 20 A10 10 0 0 1 -30 10Z" fill="#fff" stroke-width="7.1"/><path transform="translate(150 150) scale(0.7)" d="M-30 10 A12 12 0 0 1 -22 -10 A16 16 0 0 1 8 -14 A13 13 0 0 1 28 4 A10 10 0 0 1 24 20 L-24 20 A10 10 0 0 1 -30 10Z" fill="#fff" stroke-width="7.1"/>
+<ellipse cx="100" cy="78" rx="38" ry="46" fill="#F87171"/>
+<ellipse cx="86" cy="58" rx="7" ry="12" fill="#fff" stroke="none" transform="rotate(20 86 58)"/>
+<polygon points="93,124 107,124 100,133" fill="#F87171"/>
+<path d="M100 133 Q90 150 100 164 Q108 178 98 190" fill="none" stroke-width="3"/>
+<polygon transform="translate(164 150) rotate(-90)" points="0,-8 50,-8 50,-18 70,0 50,18 50,8 0,8" fill="#86EFAC"/>
+<path d="M36 150 V128 M22 166 V146" fill="none" stroke-width="3"/>
+</g>
+</svg>

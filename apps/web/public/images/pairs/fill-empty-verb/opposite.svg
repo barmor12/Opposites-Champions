@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מרוקן">
+<title>מרוקן</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M104 90 Q150 100 150 150" fill="none" stroke-width="21"/><path d="M104 90 Q150 100 150 150" fill="none" stroke="#7DD3FC" stroke-width="16"/>
+<ellipse cx="136" cy="168" rx="46" ry="12" fill="#7DD3FC"/>
+<g transform="translate(96 84) rotate(118)">
+<polygon points="-36,0 36,0 28,74 -28,74" fill="#CBD5E1"/>
+<path d="M-36 4 Q0 -44 36 4" fill="none" stroke-width="5"/>
+<ellipse cx="0" cy="0" rx="36" ry="9" fill="#7DD3FC"/>
+</g>
+<path d="M132 112 Q136 117.6 132 119.6 Q128 117.6 132 112Z" fill="#7DD3FC" stroke-width="3"/><path d="M174 140 Q178 145.6 174 147.6 Q170 145.6 174 140Z" fill="#7DD3FC" stroke-width="3"/>
+</g>
+</svg>

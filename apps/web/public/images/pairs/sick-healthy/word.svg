@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="חולה">
+<title>חולה</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="30" y="118" width="140" height="50" rx="8" fill="#B45309"/><rect x="34" y="168" width="12" height="16" fill="#B45309"/><rect x="154" y="168" width="12" height="16" fill="#B45309"/>
+<rect x="26" y="78" width="14" height="90" rx="6" fill="#B45309"/>
+<rect x="40" y="96" width="56" height="26" rx="8" fill="#fff"/>
+<path d="M82 118 Q96 108 110 118 T138 118 T164 118 V148 H82Z" fill="#F87171"/>
+<circle cx="64" cy="100" r="22" fill="#D9F99D"/>
+<rect x="58" y="62" width="12" height="12" rx="3" fill="#CBD5E1"/>
+<ellipse cx="64" cy="78" rx="22" ry="10" fill="#7DD3FC"/>
+<circle cx="56" cy="96" r="6" fill="#fff" stroke-width="3"/><circle cx="56.9" cy="96.9" r="3" fill="#2D3748" stroke="none"/><circle cx="55.8" cy="95.8" r="1" fill="#fff" stroke="none"/><circle cx="72" cy="96" r="6" fill="#fff" stroke-width="3"/><circle cx="72.9" cy="96.9" r="3" fill="#2D3748" stroke="none"/><circle cx="71.8" cy="95.8" r="1" fill="#fff" stroke="none"/>
+<path d="M50 88 L60 90 M78 88 L68 90" fill="none" stroke-width="3"/>
+<path d="M61 114.5 Q66 109.5 71 114.5" fill="none" stroke-width="4"/>
+<path d="M74 114 L108 104" fill="none" stroke-width="12"/><path d="M74 114 L108 104" fill="none" stroke="#fff" stroke-width="7"/><path d="M80 113 L104 106" fill="none" stroke="#F87171" stroke-width="3"/><circle cx="108" cy="104" r="5" fill="#F87171" stroke-width="2"/>
+<path d="M30 56 q4 -6 8 0 t8 0 M24 42 q4 -6 8 0 t8 0" fill="none" stroke-width="3"/>
+<path d="M96 72 Q101 79 96 81.5 Q91 79 96 72Z" fill="#7DD3FC" stroke-width="3"/>
+</g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ממלא">
+<title>ממלא</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M30 44 H118 Q132 44 132 58 V72" fill="none" stroke-width="21"/><path d="M30 44 H118 Q132 44 132 58 V72" fill="none" stroke="#CBD5E1" stroke-width="16"/>
+<rect x="62" y="18" width="30" height="16" rx="5" fill="#F87171"/><rect x="72" y="32" width="10" height="10" fill="#CBD5E1" stroke-width="3"/>
+<rect x="124" y="78" width="16" height="66" rx="7" fill="#7DD3FC" stroke-width="3"/>
+<path d="M76 110 Q56 140 86 176" fill="none" stroke-width="5"/>
+<polygon points="76,106 148,106 140,180 84,180" fill="#CBD5E1"/>
+<polygon points="79,138 145,138 140,180 84,180" fill="#7DD3FC" stroke-width="3"/>
+<polygon points="76,106 148,106 140,180 84,180" fill="none"/>
+<ellipse cx="112" cy="106" rx="36" ry="8" fill="#E2E8F0"/>
+<path d="M150 120 Q154 125.6 150 127.6 Q146 125.6 150 120Z" fill="#7DD3FC" stroke-width="3"/><path d="M106 116 Q110 121.6 106 123.6 Q102 121.6 106 116Z" fill="#7DD3FC" stroke-width="3"/>
+</g>
+</svg>

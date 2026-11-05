@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="גשום">
+<title>גשום</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#E2E8F0"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path transform="translate(100 72) scale(1.8)" d="M-30 10 A12 12 0 0 1 -22 -10 A16 16 0 0 1 8 -14 A13 13 0 0 1 28 4 A10 10 0 0 1 24 20 L-24 20 A10 10 0 0 1 -30 10Z" fill="#CBD5E1" stroke-width="2.8"/>
+<circle cx="85" cy="66" r="7" fill="#fff" stroke-width="3"/><circle cx="86" cy="67" r="3.5" fill="#2D3748" stroke="none"/><circle cx="84.8" cy="65.8" r="1.2" fill="#fff" stroke="none"/><circle cx="115" cy="66" r="7" fill="#fff" stroke-width="3"/><circle cx="116" cy="67" r="3.5" fill="#2D3748" stroke="none"/><circle cx="114.8" cy="65.8" r="1.2" fill="#fff" stroke="none"/><path d="M89 90 Q100 82 111 90" fill="none" stroke-width="4"/>
+<path d="M50 112 Q56 120.4 50 123.4 Q44 120.4 50 112Z" fill="#7DD3FC" stroke-width="3"/><path d="M80 124 Q86 132.4 80 135.4 Q74 132.4 80 124Z" fill="#7DD3FC" stroke-width="3"/><path d="M110 112 Q116 120.4 110 123.4 Q104 120.4 110 112Z" fill="#7DD3FC" stroke-width="3"/><path d="M140 122 Q146 130.4 140 133.4 Q134 130.4 140 122Z" fill="#7DD3FC" stroke-width="3"/><path d="M66 148 Q72 156.4 66 159.4 Q60 156.4 66 148Z" fill="#7DD3FC" stroke-width="3"/><path d="M126 150 Q132 158.4 126 161.4 Q120 158.4 126 150Z" fill="#7DD3FC" stroke-width="3"/><path d="M96 140 Q102 148.4 96 151.4 Q90 148.4 96 140Z" fill="#7DD3FC" stroke-width="3"/>
+<ellipse cx="100" cy="178" rx="52" ry="9" fill="#7DD3FC"/>
+</g>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="לילה">
+<title>לילה</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#3730A3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 150 Q50 120 100 148 Q150 118 196 150 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#1E1B4B"/>
+<polygon points="40,30 42.6,36.4 49.5,36.9 44.3,41.4 45.9,48.1 40,44.5 34.1,48.1 35.7,41.4 30.5,36.9 37.4,36.4" fill="#FDE047" stroke-width="3"/><polygon points="166,22 168.1,27.1 173.6,27.5 169.4,31.1 170.7,36.5 166,33.6 161.3,36.5 162.6,31.1 158.4,27.5 163.9,27.1" fill="#FDE047" stroke-width="3"/><polygon points="176,93 177.9,97.5 182.7,97.8 179,101 180.1,105.7 176,103.2 171.9,105.7 173,101 169.3,97.8 174.1,97.5" fill="#FDE047" stroke-width="3"/><polygon points="30,93 31.9,97.5 36.7,97.8 33,101 34.1,105.7 30,103.2 25.9,105.7 27,101 23.3,97.8 28.1,97.5" fill="#FDE047" stroke-width="3"/><polygon points="150,65 151.3,68.2 154.8,68.5 152.1,70.7 152.9,74 150,72.3 147.1,74 147.9,70.7 145.2,68.5 148.7,68.2" fill="#FDE047" stroke-width="3"/>
+<path d="M103.5 36 A50 50 0 1 0 103.5 136 A62.5 62.5 0 0 1 103.5 36Z" fill="#FDE047"/>
+<path d="M59 78 Q66 86 73 78" fill="none" stroke-width="4"/>
+<path d="M62 102 Q70 110 78 104" fill="none" stroke-width="4"/>
+<circle cx="56" cy="96" r="5" fill="#F9A8D4" stroke="none"/>
+</g>
+</svg>

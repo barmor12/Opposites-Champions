@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מפסיד">
+<title>מפסיד</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#EFF6FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="90" cy="92" r="54" fill="#FFE0B2"/>
+<path d="M36 75.8 A54 54 0 0 1 144 75.8 Q119.7 54.2 100.8 65 Q81.9 48.8 63 65 Q46.8 70.4 36 75.8Z" fill="#B45309"/>
+<circle cx="73" cy="92" r="9" fill="#fff" stroke-width="3"/><circle cx="74.3" cy="93.3" r="4.5" fill="#2D3748" stroke="none"/><circle cx="72.7" cy="91.7" r="1.5" fill="#fff" stroke="none"/><circle cx="107" cy="92" r="9" fill="#fff" stroke-width="3"/><circle cx="108.3" cy="93.3" r="4.5" fill="#2D3748" stroke="none"/><circle cx="106.7" cy="91.7" r="1.5" fill="#fff" stroke="none"/>
+<path d="M62 70 L80 78 M118 70 L100 78" fill="none" stroke-width="4"/>
+<path d="M75 129 Q90 119 105 129" fill="none" stroke-width="4"/>
+<path d="M146 58 Q152 66.4 146 69.4 Q140 66.4 146 58Z" fill="#7DD3FC" stroke-width="3"/>
+<rect x="130" y="138" width="44" height="34" rx="12" fill="#FFE0B2"/>
+<path d="M142 138 v34 M156 138 v34" fill="none" stroke-width="2.5"/>
+<rect x="136" y="166" width="14" height="28" rx="7" fill="#FFE0B2"/>
+</g>
+</svg>

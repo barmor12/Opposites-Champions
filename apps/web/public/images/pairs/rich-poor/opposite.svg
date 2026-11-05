@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="עני">
+<title>עני</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M40 60 H160 V176 Q160 184 152 184 H116 Q108 184 108 176 V120 H92 V176 Q92 184 84 184 H48 Q40 184 40 176Z" fill="#7DD3FC"/>
+<path d="M44 72 Q38 112 56 114 Q76 110 70 72Z" fill="#fff"/>
+<path d="M156 72 Q162 112 144 114 Q124 110 130 72Z" fill="#fff"/>
+<rect x="48" y="138" width="26" height="24" rx="4" fill="#FDBA74" stroke-width="3" stroke-dasharray="5 3"/>
+<rect x="126" y="146" width="26" height="24" rx="4" fill="#FDBA74" stroke-width="3" stroke-dasharray="5 3"/>
+<rect x="36" y="52" width="128" height="16" rx="5" fill="#B45309"/>
+<rect x="90" y="49" width="20" height="22" rx="4" fill="#FDE047" stroke-width="3"/>
+<path d="M96 56 v8" fill="none" stroke-width="3"/>
+</g>
+</svg>

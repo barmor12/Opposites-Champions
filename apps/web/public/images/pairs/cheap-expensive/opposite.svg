@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="יקר">
+<title>יקר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<polygon points="60,52 140,52 172,92 100,172 28,92" fill="#7DD3FC"/>
+<polygon points="60,52 82,92 100,52" fill="#fff" fill-opacity=".7" stroke="none"/>
+<polygon points="28,92 82,92 100,172" fill="#fff" fill-opacity=".35" stroke="none"/>
+<path d="M28 92 H172 M60 52 L82 92 L100 172 M140 52 L118 92 L100 172 M82 92 L100 52 L118 92" fill="none" stroke-width="3"/>
+<path d="M36 29 Q36 40 47 40 Q36 40 36 51 Q36 40 25 40 Q36 40 36 29Z" fill="#fff" stroke-width="3"/><path d="M166 26 Q166 34 174 34 Q166 34 166 42 Q166 34 158 34 Q166 34 166 26Z" fill="#fff" stroke-width="3"/><path d="M160 143 Q160 150 167 150 Q160 150 160 157 Q160 150 153 150 Q160 150 160 143Z" fill="#fff" stroke-width="3"/>
+<path d="M118 162 L136 142 H168 Q174 142 174 148 V176 Q174 182 168 182 H136Z" fill="#FDE047" stroke-width="3"/>
+<circle cx="134" cy="162" r="3" fill="#fff" stroke-width="2"/>
+<text x="155" y="167" font-size="13" font-weight="bold" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" fill="#2D3748" stroke="none">₪₪₪</text>
+</g>
+</svg>

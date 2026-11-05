@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מעט">
+<title>מעט</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M100 64 v-10" fill="none" stroke-width="4"/><path d="M100 58 q18.4 -27.6 39.1 -9.2 q-18.4 23 -39.1 9.2z" fill="#86EFAC" stroke-width="3"/><circle cx="100" cy="108" r="46" fill="#F87171"/><circle cx="83.9" cy="91.9" r="7.4" fill="#fff" stroke="none"/>
+</g>
+</svg>

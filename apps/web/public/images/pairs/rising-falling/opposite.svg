@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="יורד">
+<title>יורד</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 160 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#86EFAC"/>
+<path d="M30 160 l-4 -12 M38 160 l2 -12 M150 160 l4 -12 M160 160 l-2 -12" fill="none" stroke-width="3"/>
+<path d="M124 14 Q140 32 118 42 Q104 50 118 60" fill="none" stroke-width="3" stroke-dasharray="6 7"/>
+<g transform="translate(118 104) rotate(30)">
+<path d="M0 -44 Q40 -14 10 40 Q0 48 -10 40 Q-40 -14 0 -44Z" fill="#FDBA74"/>
+<path d="M0 -36 L0 40 M0 -10 L14 -24 M0 6 L-14 -8 M0 20 L12 8" fill="none" stroke-width="3"/>
+<path d="M0 40 L-4 58" fill="none" stroke-width="4"/>
+</g>
+<polygon transform="translate(40 46) rotate(90)" points="0,-8 60,-8 60,-18 80,0 60,18 60,8 0,8" fill="#FDBA74"/>
+</g>
+</svg>

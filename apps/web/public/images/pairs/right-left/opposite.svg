@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שמאל">
+<title>שמאל</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<polygon transform="translate(174 100) rotate(180)" points="0,-18 104,-18 104,-40 148,0 104,40 104,18 0,18" fill="#F9A8D4"/>
+</g>
+</svg>

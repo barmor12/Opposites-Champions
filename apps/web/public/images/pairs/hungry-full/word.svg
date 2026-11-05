@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="רעב">
+<title>רעב</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="60" y="102" width="80" height="54" rx="16" fill="#86EFAC"/>
+<path d="M84 132 q4 -8 8 0 t8 0 t8 0" fill="none" stroke-width="3"/>
+<path d="M52 118 l-8 -6 M50 132 l-10 0 M148 118 l8 -6 M150 132 l10 0" fill="none" stroke-width="3"/>
+<circle cx="100" cy="74" r="30" fill="#FFE0B2"/>
+<path d="M70 65 A30 30 0 0 1 130 65 Q116.5 53 106 59 Q95.5 50 85 59 Q76 62 70 65Z" fill="#B45309"/>
+<circle cx="89" cy="72" r="7" fill="#fff" stroke-width="3"/><circle cx="90" cy="73" r="3.5" fill="#2D3748" stroke="none"/><circle cx="88.8" cy="71.8" r="1.2" fill="#fff" stroke="none"/><circle cx="111" cy="72" r="7" fill="#fff" stroke-width="3"/><circle cx="112" cy="73" r="3.5" fill="#2D3748" stroke="none"/><circle cx="110.8" cy="71.8" r="1.2" fill="#fff" stroke="none"/>
+<path d="M82 60 L94 64 M118 60 L106 64" fill="none" stroke-width="3"/>
+<path d="M91 95.5 Q100 88.5 109 95.5" fill="none" stroke-width="4"/>
+<path d="M4 148 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#B45309"/>
+<ellipse cx="100" cy="164" rx="42" ry="12" fill="#fff"/><ellipse cx="100" cy="164" rx="26" ry="7" fill="#E0F2FE" stroke-width="2"/>
+<path d="M48 150 V178 M46 150 v8 M52 150 v8 M152 150 V178" fill="none" stroke-width="4"/>
+<circle cx="154" cy="46" r="22" fill="#fff"/><circle cx="130" cy="68" r="5" fill="#fff" stroke-width="3"/><circle cx="121" cy="80" r="3" fill="#fff" stroke-width="2"/>
+<ellipse cx="158" cy="42" rx="12" ry="9" fill="#FDBA74" stroke-width="3" transform="rotate(-35 158 42)"/>
+<path d="M150 50 L142 58" fill="none" stroke-width="10"/><path d="M150 50 L142 58" fill="none" stroke="#fff" stroke-width="5"/>
+</g>
+</svg>

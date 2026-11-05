@@ -45,8 +45,12 @@ COPY packages/shared    packages/shared
 COPY apps/web           apps/web
 
 # משתני VITE_* חייבים להיות זמינים בזמן build (נאפים לתוך ה-bundle)
+# VITE_API_URL   – בסיס ה-API (ברירת מחדל: /api, יחסי לאותו origin)
+# VITE_SOCKET_URL – כתובת Socket.IO; ריק = אותו origin (ברירת המחדל הרצויה מאחורי nginx)
 ARG VITE_API_URL=/api
-ENV VITE_API_URL=${VITE_API_URL}
+ARG VITE_SOCKET_URL=
+ENV VITE_API_URL=${VITE_API_URL} \
+    VITE_SOCKET_URL=${VITE_SOCKET_URL}
 
 RUN pnpm --filter @oc/web build \
     && test -f apps/web/dist/index.html

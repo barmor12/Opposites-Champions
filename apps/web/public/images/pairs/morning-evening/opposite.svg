@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ערב">
+<title>ערב</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FDBA74"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 36 Q4 4 36 4 H164 Q196 4 196 36 V64 H4Z" fill="#A78BFA" stroke="none"/>
+<rect x="4" y="64" width="192" height="26" fill="#F9A8D4" stroke="none"/>
+<polygon points="160,25 162.4,30.7 168.6,31.2 163.9,35.3 165.3,41.3 160,38 154.7,41.3 156.1,35.3 151.4,31.2 157.6,30.7" fill="#FDE047" stroke-width="3"/><polygon points="40,38 41.6,41.8 45.7,42.1 42.6,44.8 43.5,48.9 40,46.7 36.5,48.9 37.4,44.8 34.3,42.1 38.4,41.8" fill="#FDE047" stroke-width="3"/>
+<path d="M60 56 q7 -7 14 0 q7 -7 14 0 M120 76 q6 -6 12 0 q6 -6 12 0" fill="none" stroke-width="3"/>
+<path d="M62.4 118.3 L51.1 114.2" fill="none" stroke-width="12"/><path d="M62.4 118.3 L51.1 114.2" fill="none" stroke="#F87171" stroke-width="7"/><path d="M77.1 99.2 L70.2 89.4" fill="none" stroke-width="12"/><path d="M77.1 99.2 L70.2 89.4" fill="none" stroke="#F87171" stroke-width="7"/><path d="M100 92 L100 80" fill="none" stroke-width="12"/><path d="M100 92 L100 80" fill="none" stroke="#F87171" stroke-width="7"/><path d="M122.9 99.2 L129.8 89.4" fill="none" stroke-width="12"/><path d="M122.9 99.2 L129.8 89.4" fill="none" stroke="#F87171" stroke-width="7"/><path d="M137.6 118.3 L148.9 114.2" fill="none" stroke-width="12"/><path d="M137.6 118.3 L148.9 114.2" fill="none" stroke="#F87171" stroke-width="7"/>
+<circle cx="100" cy="132" r="32" fill="#F87171"/>
+<path d="M4 132 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#3730A3"/>
+<path d="M82 144 H118 M88 156 H112 M94 168 H106" fill="none" stroke="#F87171" stroke-width="5"/>
+</g>
+</svg>

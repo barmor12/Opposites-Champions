@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="בוכה">
+<title>בוכה</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#EFF6FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="100" cy="100" r="66" fill="#FDE047"/>
+<path d="M60 66 L84 76 M140 66 L116 76" fill="none" stroke-width="4"/>
+<path d="M65 86 Q74 94 83 86" fill="none" stroke-width="4"/><path d="M117 86 Q126 94 135 86" fill="none" stroke-width="4"/>
+<path d="M70 96 Q68 126 64 152" fill="none" stroke-width="14"/><path d="M70 96 Q68 126 64 152" fill="none" stroke="#7DD3FC" stroke-width="9"/><path d="M130 96 Q132 126 136 152" fill="none" stroke-width="14"/><path d="M130 96 Q132 126 136 152" fill="none" stroke="#7DD3FC" stroke-width="9"/>
+<path d="M72 140 Q100 108 128 140 Q100 152 72 140Z" fill="#7F1D1D"/>
+<path d="M44 44 Q50 52.4 44 55.4 Q38 52.4 44 44Z" fill="#7DD3FC" stroke-width="3"/><path d="M150 40 Q156 48.4 150 51.4 Q144 48.4 150 40Z" fill="#7DD3FC" stroke-width="3"/><path d="M160 120 Q165 127 160 129.5 Q155 127 160 120Z" fill="#7DD3FC" stroke-width="3"/><path d="M36 130 Q41 137 36 139.5 Q31 137 36 130Z" fill="#7DD3FC" stroke-width="3"/>
+</g>
+</svg>

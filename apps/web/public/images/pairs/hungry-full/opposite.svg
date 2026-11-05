@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שבע">
+<title>שבע</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="100" cy="130" rx="46" ry="34" fill="#86EFAC"/>
+<path d="M136 108 L130 134" fill="none" stroke-width="14"/><path d="M136 108 L130 134" fill="none" stroke="#FFE0B2" stroke-width="9"/><circle cx="128" cy="136" r="10" fill="#FFE0B2"/>
+<circle cx="100" cy="74" r="30" fill="#FFE0B2"/>
+<path d="M70 65 A30 30 0 0 1 130 65 Q116.5 53 106 59 Q95.5 50 85 59 Q76 62 70 65Z" fill="#B45309"/>
+<path d="M83 75 Q89 66 95 75" fill="none" stroke-width="4"/><path d="M105 75 Q111 66 117 75" fill="none" stroke-width="4"/><circle cx="80" cy="82" r="5" fill="#F9A8D4" stroke="none"/><circle cx="120" cy="82" r="5" fill="#F9A8D4" stroke="none"/>
+<path d="M90 88 Q100 97 110 88" fill="none" stroke-width="4"/>
+<path d="M4 148 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#B45309"/>
+<ellipse cx="100" cy="164" rx="42" ry="12" fill="#fff"/><ellipse cx="100" cy="164" rx="26" ry="7" fill="#E0F2FE" stroke-width="2"/><circle cx="90" cy="162" r="2.5" fill="#B45309" stroke="none"/><circle cx="106" cy="166" r="2.5" fill="#B45309" stroke="none"/><circle cx="98" cy="160" r="2" fill="#B45309" stroke="none"/>
+<path d="M48 150 V178 M46 150 v8 M52 150 v8 M152 150 V178" fill="none" stroke-width="4"/>
+<path d="M160 60 Q168 54 164 46 M172 76 Q180 70 176 62" fill="none" stroke-width="3"/>
+</g>
+</svg>

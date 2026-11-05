@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="צוחק">
+<title>צוחק</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="100" cy="100" r="66" fill="#FDE047"/>
+<path d="M64 87 Q74 78 84 87" fill="none" stroke-width="4"/><path d="M116 87 Q126 78 136 87" fill="none" stroke-width="4"/>
+<clipPath id="m"><path d="M62 110 H138 Q100 168 62 110Z"/></clipPath>
+<path d="M62 110 H138 Q100 168 62 110Z" fill="#7F1D1D"/>
+<rect x="62" y="110" width="76" height="12" fill="#fff" stroke="none" clip-path="url(#m)"/>
+<ellipse cx="100" cy="146" rx="20" ry="12" fill="#F9A8D4" stroke="none" clip-path="url(#m)"/>
+<path d="M62 110 H138 Q100 168 62 110Z" fill="none"/>
+<circle cx="48" cy="112" r="8" fill="#F9A8D4" stroke="none"/><circle cx="152" cy="112" r="8" fill="#F9A8D4" stroke="none"/>
+<path d="M20 70 L34 78 M18 100 H36 M20 130 L34 122 M180 70 L166 78 M182 100 H164 M180 130 L166 122" fill="none" stroke-width="4"/>
+</g>
+</svg>

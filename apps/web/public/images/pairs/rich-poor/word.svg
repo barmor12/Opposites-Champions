@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="עשיר">
+<title>עשיר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M62 96 Q26 130 36 168 Q42 188 100 188 Q158 188 164 168 Q174 130 138 96Z" fill="#B45309"/>
+<path d="M66 90 Q62 70 100 68 Q138 70 134 90Z" fill="#B45309"/>
+<circle cx="78" cy="76" r="11" fill="#FDE047" stroke-width="3"/><circle cx="78" cy="76" r="6" fill="none" stroke-width="2"/><circle cx="122" cy="76" r="11" fill="#FDE047" stroke-width="3"/><circle cx="122" cy="76" r="6" fill="none" stroke-width="2"/><circle cx="100" cy="66" r="11" fill="#FDE047" stroke-width="3"/><circle cx="100" cy="66" r="6" fill="none" stroke-width="2"/><circle cx="100" cy="82" r="10" fill="#FDE047" stroke-width="3"/><circle cx="100" cy="82" r="5" fill="none" stroke-width="2"/>
+<rect x="56" y="88" width="88" height="14" rx="7" fill="#FDE047"/>
+<text x="100" y="158" font-size="46" font-weight="bold" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" fill="#FDE047" stroke="#2D3748" stroke-width="2">₪</text>
+<circle cx="28" cy="172" r="11" fill="#FDE047" stroke-width="3"/><circle cx="28" cy="172" r="6" fill="none" stroke-width="2"/><circle cx="172" cy="172" r="11" fill="#FDE047" stroke-width="3"/><circle cx="172" cy="172" r="6" fill="none" stroke-width="2"/><circle cx="154" cy="150" r="10" fill="#FDE047" stroke-width="3"/><circle cx="154" cy="150" r="5" fill="none" stroke-width="2"/><circle cx="46" cy="150" r="10" fill="#FDE047" stroke-width="3"/><circle cx="46" cy="150" r="5" fill="none" stroke-width="2"/><path d="M170 31 Q170 40 179 40 Q170 40 170 49 Q170 40 161 40 Q170 40 170 31Z" fill="#fff" stroke-width="3"/><path d="M30 49 Q30 56 37 56 Q30 56 30 63 Q30 56 23 56 Q30 56 30 49Z" fill="#fff" stroke-width="3"/>
+</g>
+</svg>

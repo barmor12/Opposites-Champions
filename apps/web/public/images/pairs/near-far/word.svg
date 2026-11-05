@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="קרוב">
+<title>קרוב</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#BAE6FD"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 150 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#86EFAC"/>
+<path d="M184 34 L194 34" fill="none" stroke-width="10"/><path d="M184 34 L194 34" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M178.7 46.7 L185.8 53.8" fill="none" stroke-width="10"/><path d="M178.7 46.7 L185.8 53.8" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M166 52 L166 62" fill="none" stroke-width="10"/><path d="M166 52 L166 62" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M153.3 46.7 L146.2 53.8" fill="none" stroke-width="10"/><path d="M153.3 46.7 L146.2 53.8" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M148 34 L138 34" fill="none" stroke-width="10"/><path d="M148 34 L138 34" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M153.3 21.3 L146.2 14.2" fill="none" stroke-width="10"/><path d="M153.3 21.3 L146.2 14.2" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M166 16 L166 6" fill="none" stroke-width="10"/><path d="M166 16 L166 6" fill="none" stroke="#FDE047" stroke-width="5"/><path d="M178.7 21.3 L185.8 14.2" fill="none" stroke-width="10"/><path d="M178.7 21.3 L185.8 14.2" fill="none" stroke="#FDE047" stroke-width="5"/><circle cx="166" cy="34" r="14" fill="#FDE047"/>
+<rect x="130" y="46" width="18" height="34" fill="#B45309"/>
+<rect x="38" y="92" width="124" height="80" fill="#FDE047" stroke-width="5"/><polygon points="30,94 100,48 170,94" fill="#F87171" stroke-width="5"/>
+<rect x="48" y="108" width="26" height="24" rx="3" fill="#7DD3FC"/><path d="M61 108 V132 M48 120 H74" fill="none" stroke-width="3"/>
+<rect x="126" y="108" width="26" height="24" rx="3" fill="#7DD3FC"/><path d="M139 108 V132 M126 120 H152" fill="none" stroke-width="3"/>
+<rect x="84" y="126" width="32" height="46" rx="4" fill="#B45309"/>
+<circle cx="108" cy="150" r="3.5" fill="#FDE047" stroke-width="2"/>
+</g>
+</svg>

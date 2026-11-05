@@ -1,17 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שבור"><title>שבור</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שבור">
+<title>שבור</title>
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<g transform="translate(-10 2) rotate(-6 100 100)">
-<path d="M96 26 A74 74 0 0 0 92 174 L104 150 L90 124 L108 100 L92 76 L106 50 Z" fill="#fff"/>
-<path d="M62 58 A52 52 0 0 0 60 142" fill="none" stroke-width="3"/>
-<circle cx="37" cy="100" r="5" fill="#7DD3FC" stroke="none"/><circle cx="55" cy="55" r="5" fill="#7DD3FC" stroke="none"/><circle cx="55" cy="145" r="5" fill="#7DD3FC" stroke="none"/>
-<circle cx="86" cy="100" r="8" fill="#F9A8D4" stroke-width="3"/>
+<g transform="translate(-9 2) rotate(-6 100 100)">
+<clipPath id="a"><path d="M100 30 A70 70 0 0 0 100 170 L93 148 L109 120 L91 92 L107 64Z"/></clipPath>
+<path d="M100 30 A70 70 0 0 0 100 170 L93 148 L109 120 L91 92 L107 64Z" fill="#fff"/>
+<circle cx="100" cy="100" r="58" fill="none" stroke="#7DD3FC" stroke-width="4" clip-path="url(#a)"/>
+<circle cx="100" cy="100" r="48" fill="#E0F2FE" stroke-width="3" clip-path="url(#a)"/>
+<path d="M100 30 A70 70 0 0 0 100 170 L93 148 L109 120 L91 92 L107 64Z" fill="none"/>
 </g>
-<g transform="translate(14 -2) rotate(8 100 100)">
-<path d="M106 50 L92 76 L108 100 L90 124 L104 150 L92 174 A74 74 0 0 0 96 26 Z" fill="#fff"/>
-<path d="M138 58 A52 52 0 0 1 140 142" fill="none" stroke-width="3"/>
-<circle cx="163" cy="100" r="5" fill="#7DD3FC" stroke="none"/><circle cx="145" cy="55" r="5" fill="#7DD3FC" stroke="none"/><circle cx="145" cy="145" r="5" fill="#7DD3FC" stroke="none"/>
-<circle cx="118" cy="100" r="8" fill="#F9A8D4" stroke-width="3"/>
+<g transform="translate(9 -2) rotate(6 100 100)">
+<clipPath id="b"><path d="M100 30 A70 70 0 0 1 100 170 L93 148 L109 120 L91 92 L107 64Z"/></clipPath>
+<path d="M100 30 A70 70 0 0 1 100 170 L93 148 L109 120 L91 92 L107 64Z" fill="#fff"/>
+<circle cx="100" cy="100" r="58" fill="none" stroke="#7DD3FC" stroke-width="4" clip-path="url(#b)"/>
+<circle cx="100" cy="100" r="48" fill="#E0F2FE" stroke-width="3" clip-path="url(#b)"/>
+<path d="M100 30 A70 70 0 0 1 100 170 L93 148 L109 120 L91 92 L107 64Z" fill="none"/>
 </g>
-<path d="M40 178 L54 170 L52 186 Z M150 182 L166 176 L162 190 Z" fill="#fff" stroke-width="3"/>
-</g></svg>
+<polygon points="56,174 72,166 70,184" fill="#fff" stroke-width="4"/>
+<polygon points="128,178 144,170 148,186" fill="#fff" stroke-width="4"/>
+<path d="M44 40 l-8 -8 M156 40 l8 -8" fill="none" stroke-width="4"/>
+</g>
+</svg>

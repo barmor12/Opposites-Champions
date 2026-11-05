@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שלם"><title>שלם</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שלם">
+<title>שלם</title>
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<circle cx="100" cy="100" r="74" fill="#fff"/>
-<circle cx="100" cy="100" r="52" fill="#fff" stroke-width="3"/>
-<g fill="#7DD3FC" stroke="none">
-<circle cx="100" cy="37" r="5"/><circle cx="100" cy="163" r="5"/><circle cx="37" cy="100" r="5"/><circle cx="163" cy="100" r="5"/>
-<circle cx="55" cy="55" r="5"/><circle cx="145" cy="55" r="5"/><circle cx="55" cy="145" r="5"/><circle cx="145" cy="145" r="5"/>
+<circle cx="100" cy="100" r="72" fill="#fff"/>
+<circle cx="100" cy="100" r="58" fill="none" stroke="#7DD3FC" stroke-width="4"/>
+<circle cx="100" cy="100" r="48" fill="#E0F2FE" stroke-width="3"/>
+<path d="M82 100 Q100 84 118 100 Q100 116 82 100Z" fill="#7DD3FC" stroke-width="3"/>
+<path d="M152 35 Q152 46 163 46 Q152 46 152 57 Q152 46 141 46 Q152 46 152 35Z" fill="#fff" stroke-width="3"/><path d="M40 55 Q40 62 47 62 Q40 62 40 69 Q40 62 33 62 Q40 62 40 55Z" fill="#fff" stroke-width="3"/>
 </g>
-<circle cx="100" cy="86" r="8" fill="#F9A8D4" stroke-width="3"/><circle cx="100" cy="114" r="8" fill="#F9A8D4" stroke-width="3"/><circle cx="86" cy="100" r="8" fill="#F9A8D4" stroke-width="3"/><circle cx="114" cy="100" r="8" fill="#F9A8D4" stroke-width="3"/><circle cx="100" cy="100" r="7" fill="#FDE047" stroke-width="3"/>
-</g></svg>
+</svg>
