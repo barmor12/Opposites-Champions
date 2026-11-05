@@ -1,9 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="קל"><title>קל</title>
-<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M58 172 C36 126 60 56 128 28 C144 86 112 150 58 172 Z" fill="#fff"/>
-<path d="M48 192 L58 172 C84 124 108 76 128 28" fill="none" stroke-width="4"/>
-<path d="M74 140 L60 132 M84 122 L68 114 M94 104 L82 94 M104 86 L96 72 M78 134 L94 138 M88 116 L106 118 M98 98 L116 98 M108 80 L122 74" fill="none" stroke-width="3"/>
-<path d="M24 150 q6 -6 12 0 t12 0 M150 120 q6 -6 12 0 t12 0 M140 160 q6 -6 12 0 t12 0" fill="none" stroke="#7DD3FC" stroke-width="4"/>
-<path d="M40 60 l0 16 M32 68 l16 0 M160 70 l0 12 M154 76 l12 0" stroke="#FDE047" stroke-width="4"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="קל">
+<title>קל</title>
+<defs><linearGradient id="heavy-light-opposite-g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0F9FF"/><stop offset="1" stop-color="#DBEAFE"/></linearGradient><linearGradient id="heavy-light-opposite-g1" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f9fbfc"/><stop offset=".5" stop-color="#F8FAFC"/><stop offset="1" stop-color="#c8ccd1"/></linearGradient><filter id="heavy-light-opposite-blur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="url(#heavy-light-opposite-g0)"/><ellipse cx="92" cy="184" rx="40" ry="5" fill="#1E293B" opacity="0.14" filter="url(#heavy-light-opposite-blur)"/><path d="M58 172 C36 126 60 56 128 28 C144 86 112 150 58 172 Z" fill="url(#heavy-light-opposite-g1)"/><path d="M62 160 C50 122 70 70 120 42 C130 90 100 136 62 160 Z" fill="#fff" opacity=".5"/><path d="M48 192 L58 172 C84 124 108 76 128 28" fill="none" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M74 140 L60 132 M84 122 L68 114 M94 104 L82 94 M104 86 L96 72 M78 134 L94 138 M88 116 L106 118 M98 98 L116 98 M108 80 L122 74" fill="none" stroke="#CBD5E1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M24 150 q6 -6 12 0 t12 0 M150 120 q6 -6 12 0 t12 0 M140 160 q6 -6 12 0 t12 0" fill="none" stroke="#7DD3FC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M40 59 Q40 68 49 68 Q40 68 40 77 Q40 68 31 68 Q40 68 40 59Z" fill="#FDE047" opacity="0.9"/><path d="M160 69 Q160 76 167 76 Q160 76 160 83 Q160 76 153 76 Q160 76 160 69Z" fill="#FDE047" opacity="0.9"/><path d="M150 35 Q150 40 155 40 Q150 40 150 45 Q150 40 145 40 Q150 40 150 35Z" fill="#FDE047" opacity="0.9"/>
+</svg>
