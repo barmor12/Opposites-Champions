@@ -23,7 +23,7 @@ export function SoundToggle({ className, showLabel }: SoundToggleProps) {
       aria-label={enabled ? 'השתקת צלילים' : 'הפעלת צלילים'}
       title={enabled ? 'השתקת צלילים' : 'הפעלת צלילים'}
       className={cn(
-        'inline-flex min-h-12 items-center gap-2 rounded-full bg-white/80 px-3 font-bold text-brand-navy shadow-card backdrop-blur hover:bg-white',
+        'inline-flex min-h-12 min-w-12 items-center justify-center gap-2 rounded-full glass px-3 font-bold text-brand-navy transition-transform hover:-translate-y-0.5 active:translate-y-0',
         className,
       )}
     >
