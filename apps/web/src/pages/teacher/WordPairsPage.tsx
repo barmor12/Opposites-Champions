@@ -195,7 +195,7 @@ export function WordPairsPage() {
             options={[{ value: 'ALL', label: 'כל הרמות' }, ...ALL_DIFFICULTIES.map((d) => ({ value: d, label: DIFFICULTY_LABELS[d] }))]}
           />
         </div>
-        <div className="-mx-3 overflow-x-auto px-3 pb-0.5 [scrollbar-width:thin] sm:-mx-4 sm:px-4" role="group" aria-label="סינון לפי קטגוריה">
+        <div className="-mx-3 overflow-x-auto px-3 pb-1 [scrollbar-width:thin] [mask-image:linear-gradient(to_left,#000_calc(100%-2.5rem),transparent)] sm:-mx-4 sm:px-4" role="group" aria-label="סינון לפי קטגוריה">
           <div className="flex w-max gap-1.5">
             <FilterPill active={category === ''} onClick={() => setCategory('')}>
               כל הקטגוריות
@@ -252,7 +252,7 @@ export function WordPairsPage() {
                     <th className="px-4 py-3 text-start">הפך</th>
                     <th className="px-4 py-3 text-start">קטגוריה</th>
                     <th className="px-4 py-3 text-start">קושי</th>
-                    <th className="hidden px-4 py-3 text-start lg:table-cell">סוגי שאלות</th>
+                    <th className="px-4 py-3 text-start">סוגי שאלות</th>
                     <th className="px-4 py-3 text-start">תמונה</th>
                     <th className="px-4 py-3 text-start">פעיל</th>
                     <th className="px-4 py-3 text-start">
@@ -269,14 +269,19 @@ export function WordPairsPage() {
                       <td className="px-4 py-2.5">
                         <TonePill tone={DIFFICULTY_TONE[pair.difficulty]}>{DIFFICULTY_LABELS[pair.difficulty]}</TonePill>
                       </td>
-                      <td className="hidden px-4 py-2.5 lg:table-cell">
-                        <div className="flex flex-wrap gap-1">
+                      <td className="px-4 py-2.5">
+                        <div className="hidden flex-wrap gap-1 2xl:flex">
                           {pair.supportedTypes.map((t) => (
                             <TonePill key={t} tone="gray">
                               {QUESTION_TYPE_LABELS[t]}
                             </TonePill>
                           ))}
                         </div>
+                        <span className="2xl:hidden">
+                          <TonePill tone="gray" className="cursor-help" icon={<span className="font-black tabular-nums">{pair.supportedTypes.length}</span>}>
+                            <span title={pair.supportedTypes.map((t) => QUESTION_TYPE_LABELS[t]).join(' · ')}>סוגים</span>
+                          </TonePill>
+                        </span>
                       </td>
                       <td className="px-4 py-2.5">
                         <Thumbs pair={pair} />

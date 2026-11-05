@@ -83,7 +83,7 @@ export const MagicButton = forwardRef<HTMLButtonElement, MagicButtonProps>(funct
       {/* פאה */}
       <span
         className={cn(
-          'relative flex w-full -translate-y-[5px] items-center justify-center overflow-hidden rounded-2xl font-extrabold leading-none',
+          'relative flex w-full -translate-y-[5px] items-center justify-center overflow-hidden whitespace-nowrap rounded-2xl font-extrabold leading-none',
           'shadow-[inset_0_2px_0_rgba(255,255,255,.55),inset_0_-2px_0_rgba(0,0,0,.08)]',
           'transition-transform duration-500 ease-[cubic-bezier(.3,.7,.4,1)] group-hover:-translate-y-[7px] group-hover:duration-200 group-active:-translate-y-[1px] group-active:duration-75',
           'group-disabled:translate-y-0',

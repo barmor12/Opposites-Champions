@@ -324,7 +324,7 @@ export function LiveRoomPage() {
                 <div className="flex items-center gap-2">
                   <motion.div
                     dir="ltr"
-                    className="select-all bg-linear-to-b from-brand-navy to-violet-700 bg-clip-text font-mono text-[2.75rem] font-black leading-none tracking-[0.2em] text-transparent drop-shadow-[0_8px_18px_rgba(139,92,246,.35)] sm:text-6xl"
+                    className="select-all whitespace-nowrap bg-linear-to-b from-brand-navy to-violet-700 bg-clip-text font-mono text-[2.5rem] font-black leading-none tracking-[0.12em] text-transparent drop-shadow-[0_8px_18px_rgba(139,92,246,.35)] sm:text-6xl lg:text-4xl xl:text-5xl"
                     aria-label={`קוד חדר ${room.code}`}
                     animate={reduce || !isWaiting ? undefined : { scale: [1, 1.02, 1] }}
                     transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
@@ -577,7 +577,7 @@ function Counter({ label, value, suffix, tone }: { label: string; value: number;
         className={cn('mt-0.5 text-2xl font-black leading-none tabular-nums sm:text-3xl', COUNTER_TONES[tone])}
       >
         <CountUp value={value} />
-        {suffix && <span className="ms-1 text-xs font-semibold text-slate-400 sm:text-sm">{suffix}</span>}
+        {suffix && <span className="ms-1 whitespace-nowrap text-xs font-semibold text-slate-400 sm:text-sm">{suffix}</span>}
       </motion.div>
     </div>
   );

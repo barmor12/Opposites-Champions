@@ -126,7 +126,7 @@ export function CreateGamePage() {
   const ready = settings.className.trim().length > 0 && settings.categories.length > 0 && settings.questionTypes.length > 0;
 
   return (
-    <div className="pb-24 lg:pb-0">
+    <div className="pb-24 xl:pb-0">
       <PageHeader
         eyebrow="הגדרת משחק"
         title="משחק חדש"
@@ -141,7 +141,7 @@ export function CreateGamePage() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} noValidate className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-start" aria-label="הגדרות משחק">
+      <form onSubmit={handleSubmit} noValidate className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_21rem] xl:items-start" aria-label="הגדרות משחק">
         <div className="flex min-w-0 flex-col gap-5 sm:gap-6">
           {/* 1 – כללי */}
           <div
@@ -169,7 +169,7 @@ export function CreateGamePage() {
                 required
               />
               <Field title="מצב משחק" description="אפשר לשנות את המצב בכל משחק חדש.">
-                <div role="radiogroup" aria-label="מצב משחק" className="grid gap-3 sm:grid-cols-2">
+                <div role="radiogroup" aria-label="מצב משחק" className="grid gap-3 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
                   {(Object.values(GameMode) as GameMode[]).map((mode) => {
                     const selected = settings.mode === mode;
                     const art = MODE_ART[mode];
@@ -297,7 +297,7 @@ export function CreateGamePage() {
             title="אפשרויות"
             description="תחרותיות, משוב וצלילים."
           >
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
               <Toggle name="competitionEnabled" checked={settings.competitionEnabled} onChange={(v) => patch('competitionEnabled', v)} icon={<Trophy className="size-4" aria-hidden />} label="מצב תחרות" description="ניקוד, בונוס מהירות ודירוג." />
               <Toggle name="showLeaderboard" checked={settings.showLeaderboard} onChange={(v) => patch('showLeaderboard', v)} icon={<ListOrdered className="size-4" aria-hidden />} label="הצגת טבלת דירוג לתלמידים" />
               <Toggle name="showCorrectAnswers" checked={settings.showCorrectAnswers} onChange={(v) => patch('showCorrectAnswers', v)} icon={<CheckCircle2 className="size-4" aria-hidden />} label="הצגת התשובה הנכונה" description="אחרי כל שאלה, עם הסבר קצר." />
@@ -308,17 +308,17 @@ export function CreateGamePage() {
         </div>
 
         {/* סיכום חי – כרטיס דביק בדסקטופ, סרגל תחתון בנייד */}
-        <aside className="fixed inset-x-0 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-20 lg:static lg:bottom-auto lg:z-auto">
-          <div className="border-t border-white/70 bg-white/85 px-4 py-3 shadow-[0_-12px_30px_-20px_rgba(30,41,59,.4)] backdrop-blur-xl sm:px-6 lg:sticky lg:top-24 lg:rounded-[1.75rem] lg:border lg:border-white/70 lg:bg-white/85 lg:p-6 lg:shadow-card">
-            <div className="mx-auto flex max-w-7xl items-center gap-3 lg:flex-col lg:items-stretch lg:gap-4">
-              <div className="min-w-0 flex-1 lg:hidden">
+        <aside className="fixed inset-x-0 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-20 lg:bottom-0 xl:static xl:bottom-auto xl:z-auto">
+          <div className="border-t border-white/70 bg-white/85 px-4 py-3 shadow-[0_-12px_30px_-20px_rgba(30,41,59,.4)] backdrop-blur-xl sm:px-6 xl:sticky xl:top-24 xl:rounded-[1.75rem] xl:border xl:border-white/70 xl:bg-white/85 xl:p-6 xl:shadow-card">
+            <div className="mx-auto flex max-w-7xl items-center gap-3 xl:flex-col xl:items-stretch xl:gap-4">
+              <div className="min-w-0 flex-1 xl:hidden">
                 <div className="truncate text-sm font-extrabold text-brand-navy">{settings.className.trim() || 'כיתה ללא שם'}</div>
                 <div className="truncate text-xs text-slate-500">
                   {settings.questionCount} שאלות · {DIFFICULTY_LABELS[settings.difficulty]} · {timeLabel(settings.timePerQuestionSec)} · {categoriesLabel}
                 </div>
               </div>
 
-              <div className="hidden lg:block">
+              <div className="hidden xl:block">
                 <div className="flex items-center justify-between">
                   <h2 className="text-base font-extrabold text-brand-navy">סיכום המשחק</h2>
                   <span className={cn('rounded-full px-2 py-0.5 text-[11px] font-bold', ready ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700')}>{ready ? 'מוכן ליצירה' : 'חסרים פרטים'}</span>
@@ -355,12 +355,12 @@ export function CreateGamePage() {
                 </div>
               </div>
 
-              <Button type="submit" variant="primary" size="lg" loading={submitting} disabled={submitting} className="shrink-0 lg:w-full">
+              <Button type="submit" variant="primary" size="lg" loading={submitting} disabled={submitting} className="shrink-0 xl:w-full">
                 <Rocket className="size-5" aria-hidden />
                 יצירת חדר
               </Button>
 
-              <p className="hidden items-start gap-2 text-xs leading-5 text-slate-400 lg:flex">
+              <p className="hidden items-start gap-2 text-xs leading-5 text-slate-400 xl:flex">
                 <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
                 אחרי יצירת החדר יוצג קוד בן 6 ספרות ו־QR להצטרפות מהטאבלטים.
               </p>

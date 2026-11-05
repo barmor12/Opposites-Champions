@@ -6,6 +6,7 @@ import { QuestionsService, SESSION_QUESTION_INCLUDE, type SessionQuestionFull } 
 import { GameError } from '../games/game-error';
 import { parseSettings } from '../games/settings';
 import { toRoomPublicView } from '../rooms/room-views';
+import { isRoomStale } from '../rooms/room-expiry';
 
 export interface PlayerProgressView {
   score: number;
@@ -28,8 +29,11 @@ export class PlayersService {
       include: { student: true, room: true },
     });
     if (!participant || participant.room.deletedAt) throw GameError.forbidden('NOT_IN_ROOM', 'אינך משתתף/ת בחדר זה');
-    const room = participant.room;
+    // חדר בן 24 שעות ומעלה מוצג כ־EXPIRED גם לפני שהסריקה התקופתית עדכנה את המסד (אין שאלה פעילה)
+    const stale = isRoomStale(participant.room);
+    const room = stale ? { ...participant.room, state: GameState.EXPIRED, joinOpen: false } : participant.room;
     const session = room.currentSessionId ? await this.prisma.gameSession.findUnique({ where: { id: room.currentSessionId } }) : null;
+    if (session && stale) session.state = GameState.EXPIRED;
     const [participantCount, progress, achievements] = await Promise.all([
       this.prisma.gameParticipant.count({ where: { roomId: room.id, removedAt: null } }),
       session ? this.prisma.participantProgress.findUnique({ where: { sessionId_participantId: { sessionId: session.id, participantId } } }) : null,

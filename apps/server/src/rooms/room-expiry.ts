@@ -6,19 +6,25 @@ export const TERMINAL_ROOM_STATES: readonly GameState[] = [GameState.CANCELLED, 
 
 export interface RoomExpiryFields {
   state: GameState | string;
-  createdAt: Date;
-  expiresAt: Date | null;
+  createdAt?: Date;
+  expiresAt?: Date | null;
 }
 
-/** Effective expiry timestamp: `expiresAt` when set, otherwise `createdAt + ROOM_TTL_MS` (rows created before the column was used). */
-export function roomExpiresAt(room: Pick<RoomExpiryFields, 'createdAt' | 'expiresAt'>): number {
-  return room.expiresAt?.getTime() ?? room.createdAt.getTime() + ROOM_TTL_MS;
+/**
+ * Effective expiry timestamp: `expiresAt` when set, otherwise `createdAt + ROOM_TTL_MS`
+ * (rows created before the column was populated). `null` when neither is known.
+ */
+export function roomExpiresAt(room: Pick<RoomExpiryFields, 'createdAt' | 'expiresAt'>): number | null {
+  if (room.expiresAt instanceof Date) return room.expiresAt.getTime();
+  if (room.createdAt instanceof Date) return room.createdAt.getTime() + ROOM_TTL_MS;
+  return null;
 }
 
 /** True when the room should be treated as EXPIRED (older than its TTL and not already terminal). */
 export function isRoomStale(room: RoomExpiryFields, now: number = Date.now()): boolean {
   if (TERMINAL_ROOM_STATES.includes(room.state as GameState)) return false;
-  return roomExpiresAt(room) <= now;
+  const at = roomExpiresAt(room);
+  return at !== null && at <= now;
 }
 
 export function nextRoomExpiry(now: number = Date.now()): Date {

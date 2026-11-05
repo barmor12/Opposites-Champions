@@ -173,16 +173,19 @@ export function ResultsPage() {
             </Card>
           ) : (
             <>
-              <div className="mt-5 grid gap-5 lg:grid-cols-3">
-                <Panel title="הפודיום" description="שלושת המקומות הראשונים" icon={<MedalIcon className="size-5" aria-hidden />} tone="green" className="lg:col-span-1">
-                  <div className="overflow-hidden rounded-2xl bg-linear-to-b from-sky-50/80 to-amber-50/60 px-2 pb-0 pt-4 ring-1 ring-white">
-                    <Leaderboard entries={results.leaderboard.slice(0, 3)} showPodium compact />
+              <div className="mt-5 grid gap-5">
+                <Panel title="הפודיום" description="שלושת המקומות הראשונים" icon={<MedalIcon className="size-5" aria-hidden />} tone="green">
+                  <div className="relative overflow-hidden rounded-2xl bg-linear-to-b from-sky-50/80 via-white/40 to-amber-50/70 px-2 pb-0 pt-5 ring-1 ring-white [zoom:.82] sm:[zoom:1]">
+                    <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(245,158,11,.14)_1px,transparent_1px)] [background-size:18px_18px]" aria-hidden />
+                    <div className="relative mx-auto max-w-3xl">
+                      <Leaderboard entries={results.leaderboard.slice(0, 3)} showPodium compact />
+                    </div>
                   </div>
                 </Panel>
 
-                <Panel title="כל התלמידים" description={`${results.leaderboard.length} תלמידים · ממוינים לפי ניקוד`} icon={<Users className="size-5" aria-hidden />} flush className="lg:col-span-2">
+                <Panel title="כל התלמידים" description={`${results.leaderboard.length} תלמידים · ממוינים לפי ניקוד`} icon={<Users className="size-5" aria-hidden />} flush>
                   {/* טבלה – טאבלט ומעלה */}
-                  <div className="hidden md:block">
+                  <div className="hidden overflow-x-auto md:block">
                     <table className="w-full text-sm">
                       <thead className="bg-slate-50/80 text-xs font-bold text-slate-500">
                         <tr>

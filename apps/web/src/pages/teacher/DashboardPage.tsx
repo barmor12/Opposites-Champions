@@ -285,7 +285,7 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
             </div>
           </div>
         </div>
-        <div className="relative flex flex-wrap items-center gap-2 sm:justify-end">
+        <div className="relative flex items-center gap-2 sm:shrink-0 sm:justify-end">
           <Link to={teacherPath(`rooms/${game.roomId}`)} className="flex-1 rounded-2xl sm:flex-none">
             <Button variant={isLive ? 'primary' : 'secondary'} size="md" fullWidth tabIndex={-1}>
               <Eye className="size-4" aria-hidden />

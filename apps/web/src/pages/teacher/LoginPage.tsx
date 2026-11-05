@@ -92,7 +92,7 @@ export function LoginPage() {
           <motion.img
             src="/images/characters/sun.svg"
             alt=""
-            className="pointer-events-none absolute -bottom-10 left-6 hidden w-44 opacity-90 drop-shadow-xl xl:block"
+            className="pointer-events-none -mb-6 ms-10 mt-2 hidden w-36 self-start drop-shadow-xl xl:block"
             animate={reduce ? undefined : { y: [0, -12, 0], rotate: [0, 3, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           />

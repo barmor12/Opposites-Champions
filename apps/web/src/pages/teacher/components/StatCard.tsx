@@ -70,7 +70,7 @@ export function StatCard({ label, value, format, icon: Icon, tone = 'violet', hi
             <Icon className="relative size-6" aria-hidden />
           </div>
           <div className="min-w-0 flex-1">
-            <div className="truncate text-[11px] font-bold tracking-wide text-slate-500 sm:text-xs">{label}</div>
+            <div className="text-[11px] font-bold leading-tight tracking-wide text-slate-500 sm:text-xs">{label}</div>
             {loading ? (
               <div className="mt-1.5 h-8 w-20 animate-pulse rounded-lg bg-slate-200/70" />
             ) : (
