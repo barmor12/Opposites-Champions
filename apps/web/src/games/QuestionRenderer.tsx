@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   QuestionType,
   TREASURE_BONUS,
@@ -50,16 +50,14 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [expired, setExpired] = useState(false);
-  const [burst, setBurst] = useState(0);
-  const [confetti, setConfetti] = useState(false);
   const [treasureOpen, setTreasureOpen] = useState(false);
   const nextCalled = useRef(false);
 
   // התוצאה: מה־prop (מקור האמת) או מהערך שחזר מ־onAnswer
-  const result = useMemo(() => {
-    const r = resultProp ?? localResult;
-    return r && r.sessionQuestionId === question.sessionQuestionId ? r : null;
-  }, [resultProp, localResult, question.sessionQuestionId]);
+  const candidate = resultProp ?? localResult;
+  const result = candidate && candidate.sessionQuestionId === question.sessionQuestionId ? candidate : null;
+  // הרכיב ממופתח לפי השאלה, לכן "תוצאה נכונה" היא אירוע חד-פעמי → קונפטי ופרץ כוכבים נגזרים ישירות
+  const celebrate = !!result?.correct;
 
   // ----- פג תוקף לפי endsAt + serverOffsetMs -----
   useEffect(() => {
@@ -92,8 +90,6 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
     announcedFor.current = result.sessionQuestionId;
     if (result.correct) {
       play('correct');
-      setBurst((b) => b + 1);
-      setConfetti(true);
     } else {
       play('wrong');
     }
@@ -175,11 +171,8 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
   const inputDisabled = submitting || !!result || expired;
   const feedbackKind: FeedbackKind | null = result ? (result.correct ? 'correct' : 'wrong') : expired ? 'timeout' : null;
 
-  const selectedOption = useMemo(() => question.options.find((o) => o.id === selectedId) ?? null, [question.options, selectedId]);
-  const correctOption = useMemo(
-    () => (result?.correctOptionId ? question.options.find((o) => o.id === result.correctOptionId) ?? null : null),
-    [question.options, result?.correctOptionId],
-  );
+  const selectedOption = question.options.find((o) => o.id === selectedId) ?? null;
+  const correctOption = result?.correctOptionId ? (question.options.find((o) => o.id === result.correctOptionId) ?? null) : null;
   const correctText = !isMatch && result && !result.correct && showCorrectAnswers ? correctOption?.text ?? null : null;
   const explanation = result ? (result.explanation ?? (!result.correct ? question.explanationHint : undefined) ?? null) : null;
 
@@ -195,8 +188,8 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
   return (
     <div dir="rtl" lang="he" data-testid="question-renderer" data-type={question.type} className="relative mx-auto w-full max-w-3xl px-4 py-3 sm:py-5">
       <FloatingStars count={10} className="-z-10 opacity-70" />
-      <StarBurst trigger={burst} />
-      <Confetti active={confetti} durationMs={2200} />
+      <StarBurst trigger={celebrate ? 1 : 0} />
+      <Confetti active={celebrate} durationMs={2200} />
 
       <div className="flex flex-col gap-4 sm:gap-5">
         {question.isTreasure && (

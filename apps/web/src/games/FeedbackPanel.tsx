@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowLeft, Flame, Lightbulb, PartyPopper, Smile, Clock } from 'lucide-react';
 import type { AnswerResult } from '@oc/shared';
-import { Button, ScoreBadge, cn } from './_ui';
+import { Button, ScoreBadge } from './_ui';
+import { cn, pick } from './utils';
 
 export type FeedbackKind = 'correct' | 'wrong' | 'timeout';
 
@@ -17,12 +18,6 @@ export interface FeedbackPanelProps {
 
 const ENCOURAGE_WRONG = ['לא נורא, בפעם הבאה!', 'כמעט! ממשיכים קדימה 💪', 'יופי שניסית! עוד מעט זה יצליח'];
 const PRAISE = ['כל הכבוד!', 'מעולה!', 'וואו, אלוף!', 'תשובה מצוינת!'];
-
-export function pick<T>(arr: readonly T[], seed: string): T {
-  let h = 0;
-  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
-  return arr[h % arr.length] as T;
-}
 
 export function FeedbackPanel({ kind, result, correctText, explanation, onNext, nextLabel = 'המשך' }: FeedbackPanelProps) {
   const seed = result?.sessionQuestionId ?? 'x';

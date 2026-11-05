@@ -1,15 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="כהה"><title>כהה</title>
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M58 72 C44 42 80 18 100 34 C118 12 156 32 144 62 C166 74 144 110 120 96 C104 120 70 112 74 90 C50 92 44 84 58 72 Z" fill="#1E3A8A"/>
-<g transform="translate(132 112) rotate(32)">
-<rect x="-7" y="-92" width="14" height="70" rx="5" fill="#B45309"/>
-<rect x="-9" y="-24" width="18" height="12" fill="#CBD5E1"/>
-<path d="M-9 -12 L9 -12 L7 6 L-7 6 Z" fill="#1E3A8A"/>
+<path d="M34 66 H118" stroke-width="44"/>
+<path d="M34 66 H118" stroke="#1E3A8A" stroke-width="36"/>
+<path d="M50 90 q0 8 5 8 q5 0 5 -8 M84 90 q0 10 5 10 q5 0 5 -10" fill="#1E3A8A" stroke-width="3"/>
+<g transform="translate(122 66) rotate(-55)">
+<rect x="-7" y="-78" width="14" height="52" rx="5" fill="#B45309"/>
+<rect x="-9" y="-28" width="18" height="12" fill="#CBD5E1"/>
+<path d="M-10 -16 L10 -16 L8 4 L-8 4 Z" fill="#1E3A8A"/>
 </g>
-<path d="M50 112 L150 112 L142 182 L58 182 Z" fill="#CBD5E1"/>
-<ellipse cx="100" cy="112" rx="50" ry="10" fill="#1E3A8A"/>
-<path d="M66 120 Q62 140 68 150 Q74 140 70 122 Z" fill="#1E3A8A" stroke-width="3"/>
-<rect x="74" y="132" width="52" height="30" rx="4" fill="#fff" stroke-width="4"/>
-<rect x="84" y="140" width="32" height="14" rx="2" fill="#1E3A8A" stroke="none"/>
+<path d="M50 118 L150 118 L142 184 L58 184 Z" fill="#CBD5E1"/>
+<ellipse cx="100" cy="118" rx="50" ry="10" fill="#1E3A8A"/>
+<path d="M66 126 Q62 146 68 156 Q74 146 70 128 Z" fill="#1E3A8A" stroke-width="3"/>
+<rect x="76" y="138" width="48" height="28" rx="4" fill="#fff" stroke-width="4"/>
+<rect x="86" y="146" width="28" height="12" rx="2" fill="#1E3A8A" stroke="none"/>
 </g></svg>

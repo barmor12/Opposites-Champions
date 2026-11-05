@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="דולק"><title>דולק</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="100" cy="80" r="62" fill="#FDE68A" opacity="0.7" stroke="none"/>
+<path d="M100 10 V24 M152 28 L142 38 M170 80 H156 M30 80 H44 M48 28 L58 38 M158 130 L148 120 M42 130 L52 120" stroke="#F59E0B" stroke-width="6"/>
+<path d="M100 38 A42 42 0 0 0 76 115 L80 132 L120 132 L124 115 A42 42 0 0 0 100 38 Z" fill="#FDE047"/>
+<path d="M90 130 V104 L95 96 L100 104 L105 96 L110 104 V130" fill="none" stroke="#2D3748" stroke-width="3"/>
+<rect x="80" y="132" width="40" height="22" rx="4" fill="#CBD5E1"/>
+<path d="M80 140 H120 M80 147 H120" stroke-width="3"/>
+<rect x="90" y="154" width="20" height="10" rx="4" fill="#475569"/>
+</g></svg>

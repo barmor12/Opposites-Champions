@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="רטוב"><title>רטוב</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M64 42 A16 16 0 0 1 80 16 A22 22 0 0 1 124 16 A16 16 0 0 1 140 42 Z" fill="#CBD5E1"/>
+<path d="M44 68 C36 80 36 88 44 88 C52 88 52 80 44 68 Z M160 76 C152 88 152 96 160 96 C168 96 168 88 160 76 Z M24 120 C16 132 16 140 24 140 C32 140 32 132 24 120 Z M176 134 C168 146 168 154 176 154 C184 154 184 146 176 134 Z M60 54 C54 62 54 68 60 68 C66 68 66 62 60 54 Z M140 56 C134 64 134 70 140 70 C146 70 146 64 140 56 Z" fill="#7DD3FC" stroke-width="3"/>
+<ellipse cx="100" cy="184" rx="40" ry="6" fill="#7DD3FC" stroke-width="3"/>
+<path d="M100 120 V172 Q100 186 88 186" fill="none" stroke-width="7"/>
+<path d="M40 120 A60 60 0 0 1 160 120 Q150 110 140 120 Q130 110 120 120 Q110 110 100 120 Q90 110 80 120 Q70 110 60 120 Q50 110 40 120 Z" fill="#A78BFA"/>
+<path d="M100 60 L60 120 M100 60 L80 120 M100 60 V120 M100 60 L120 120 M100 60 L140 120" fill="none" stroke-width="3" opacity="0.6"/>
+<circle cx="100" cy="58" r="4" fill="#2D3748"/>
+</g></svg>

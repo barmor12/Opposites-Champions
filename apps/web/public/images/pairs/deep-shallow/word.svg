@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="עמוק"><title>עמוק</title>
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<rect x="26" y="52" width="148" height="134" rx="4" fill="#7DD3FC"/>
-<path d="M4 52 H26 M174 52 H196" stroke-width="5"/>
-<path d="M26 166 H174 M30 176 H170" stroke="#38BDF8" stroke-width="4" stroke-dasharray="10 8"/>
+<rect x="30" y="52" width="140" height="128" rx="4" fill="#7DD3FC"/>
+<path d="M4 52 H30 M170 52 H196" stroke-width="5"/>
+<path d="M34 162 H166 M38 172 H162" stroke="#38BDF8" stroke-width="4" stroke-dasharray="10 8"/>
 <path d="M34 64 q8 -6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#fff" stroke-width="3"/>
 <path d="M152 42 V112 M166 42 V112 M152 56 H166 M152 72 H166 M152 88 H166 M152 104 H166" stroke-width="4"/>
 <path d="M46 76 V168 M38 160 L46 170 L54 160" stroke-width="4"/>

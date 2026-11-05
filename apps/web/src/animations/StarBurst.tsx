@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export interface StarBurstProps {
   /** כל שינוי בערך (שונה מ־0) מפעיל פרץ כוכבים */
@@ -17,13 +17,13 @@ const COLORS = ['#FACC15', '#F9A8D4', '#38BDF8', '#8B5CF6', '#22C55E', '#FB923C'
 export function StarBurst({ trigger, count = 12, className = '' }: StarBurstProps) {
   const reduced = useReducedMotion();
   const [bursts, setBursts] = useState<number[]>([]);
-
-  useEffect(() => {
-    if (!trigger) return;
-    setBursts((b) => [...b, trigger]);
-    const t = setTimeout(() => setBursts((b) => b.filter((x) => x !== trigger)), 1100);
-    return () => clearTimeout(t);
-  }, [trigger]);
+  const [lastTrigger, setLastTrigger] = useState(trigger);
+  if (trigger !== lastTrigger) {
+    // "adjusting state during render": כל שינוי ב־trigger מוסיף פרץ חדש
+    setLastTrigger(trigger);
+    if (trigger) setBursts((b) => (b.includes(trigger) ? b : [...b, trigger]));
+  }
+  const remove = (id: number) => setBursts((b) => b.filter((x) => x !== id));
 
   if (reduced) return null;
 
@@ -35,7 +35,14 @@ export function StarBurst({ trigger, count = 12, className = '' }: StarBurstProp
     >
       <AnimatePresence>
         {bursts.map((id) => (
-          <div key={id} className="absolute left-1/2 top-1/2">
+          <motion.div
+            key={id}
+            className="absolute left-1/2 top-1/2"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: [1, 1, 0] }}
+            transition={{ duration: 1.1, times: [0, 0.8, 1] }}
+            onAnimationComplete={() => remove(id)}
+          >
             {Array.from({ length: count }, (_, i) => {
               const angle = (i / count) * Math.PI * 2 + (id % 7) * 0.1;
               const dist = 90 + (i % 3) * 40;
@@ -65,7 +72,7 @@ export function StarBurst({ trigger, count = 12, className = '' }: StarBurstProp
                 </motion.svg>
               );
             })}
-          </div>
+          </motion.div>
         ))}
       </AnimatePresence>
     </div>

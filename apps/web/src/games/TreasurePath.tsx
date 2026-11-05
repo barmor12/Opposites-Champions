@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { Check, Star } from 'lucide-react';
 import { TREASURE_QUESTIONS } from '@oc/shared';
-import { cn } from './_ui';
+import { cn } from './utils';
 import { TreasureChestImage } from './TreasureChest';
 
 export interface TreasurePathProps {

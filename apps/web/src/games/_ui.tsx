@@ -3,11 +3,8 @@
  * כדי לאפשר פיתוח מקבילי. (LazyImage / Button / cn)
  */
 import { motion, useReducedMotion } from 'motion/react';
-import { useEffect, useState, type ButtonHTMLAttributes, type ReactNode } from 'react';
-
-export function cn(...parts: Array<string | false | null | undefined>): string {
-  return parts.filter(Boolean).join(' ');
-}
+import { useState, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { cn } from './utils';
 
 // ---------- LazyImage ----------
 export interface LazyImageProps {
@@ -25,10 +22,12 @@ type ImgStatus = 'loading' | 'loaded' | 'error';
 
 export function LazyImage({ src, alt, className, imgClassName, fallback = null, onError }: LazyImageProps) {
   const [status, setStatus] = useState<ImgStatus>('loading');
-
-  useEffect(() => {
+  const [prevSrc, setPrevSrc] = useState(src);
+  if (src !== prevSrc) {
+    // איפוס מצב כשהמקור משתנה (adjusting state during render)
+    setPrevSrc(src);
     setStatus('loading');
-  }, [src]);
+  }
 
   if (status === 'error') {
     return fallback ? <div className={cn('flex items-center justify-center', className)}>{fallback}</div> : null;

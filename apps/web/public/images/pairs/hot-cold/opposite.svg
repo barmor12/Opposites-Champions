@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="קר"><title>קר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<g stroke="#38BDF8" stroke-width="5" fill="none">
+<path d="M100 26 V98 M69 44 L131 80 M69 80 L131 44"/>
+<path d="M92 36 L100 44 L108 36 M92 88 L100 80 L108 88 M74 54 L85 53 L80 43 M126 54 L115 53 L120 43 M74 70 L85 71 L80 81 M126 70 L115 71 L120 81"/>
+</g>
+<path d="M28 146 L40 134 L82 134 L70 146 Z" fill="#E0F2FE"/>
+<path d="M70 146 L82 134 L82 176 L70 188 Z" fill="#7DD3FC"/>
+<rect x="28" y="146" width="42" height="42" fill="#BAE6FD"/>
+<path d="M36 156 L36 170" stroke="#fff" stroke-width="4"/>
+<path d="M104 136 L116 124 L158 124 L146 136 Z" fill="#E0F2FE"/>
+<path d="M146 136 L158 124 L158 166 L146 178 Z" fill="#7DD3FC"/>
+<rect x="104" y="136" width="42" height="42" fill="#BAE6FD"/>
+<path d="M112 146 L112 160" stroke="#fff" stroke-width="4"/>
+<path d="M24 60 l0 12 M18 66 l12 0 M172 100 l0 12 M166 106 l12 0 M170 40 l0 8 M166 44 l8 0" stroke="#7DD3FC" stroke-width="3"/>
+</g></svg>

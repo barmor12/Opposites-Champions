@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שמח"><title>שמח</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="100" cy="100" r="72" fill="#FDE047"/>
+<circle cx="56" cy="114" r="9" fill="#F9A8D4" stroke="none"/><circle cx="144" cy="114" r="9" fill="#F9A8D4" stroke="none"/>
+<path d="M62 118 Q100 168 138 118 Z" fill="#DC2626"/>
+<path d="M68 120 Q100 130 132 120 L130 128 Q100 138 70 128 Z" fill="#fff" stroke="none"/>
+<circle cx="74" cy="84" r="11" fill="#fff"/><circle cx="74" cy="84" r="5.5" fill="#2D3748" stroke="none"/><circle cx="72" cy="82" r="2" fill="#fff" stroke="none"/>
+<circle cx="126" cy="84" r="11" fill="#fff"/><circle cx="126" cy="84" r="5.5" fill="#2D3748" stroke="none"/><circle cx="124" cy="82" r="2" fill="#fff" stroke="none"/>
+<path d="M62 66 Q74 58 86 66 M114 66 Q126 58 138 66" fill="none"/>
+</g></svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="כבוי"><title>כבוי</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F1F5F9"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+
+<path d="M100 38 A42 42 0 0 0 76 115 L80 132 L120 132 L124 115 A42 42 0 0 0 100 38 Z" fill="#E2E8F0"/>
+<path d="M90 130 V104 L95 96 L100 104 L105 96 L110 104 V130" fill="none" stroke="#94A3B8" stroke-width="3"/>
+<rect x="80" y="132" width="40" height="22" rx="4" fill="#CBD5E1"/>
+<path d="M80 140 H120 M80 147 H120" stroke-width="3"/>
+<rect x="90" y="154" width="20" height="10" rx="4" fill="#475569"/>
+</g></svg>

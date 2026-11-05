@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="חם"><title>חם</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FFEDD5"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M156 10 V20 M156 68 V78 M122 44 H132 M180 44 H190 M132 20 L139 27 M173 61 L180 68 M132 68 L139 61 M173 27 L180 20" stroke="#F59E0B" stroke-width="5"/>
+<circle cx="156" cy="44" r="18" fill="#FDE047"/>
+<path d="M62 84 C52 72 72 64 62 52 C54 42 70 34 64 24 M88 82 C78 70 98 62 88 50 C80 40 96 32 90 22 M114 84 C104 72 124 64 114 52 C106 42 122 34 116 24" fill="none" stroke="#94A3B8" stroke-width="5"/>
+<path d="M130 116 C166 108 166 160 130 152" fill="none" stroke-width="15"/>
+<path d="M130 116 C166 108 166 160 130 152" fill="none" stroke="#F87171" stroke-width="7"/>
+<rect x="44" y="96" width="88" height="80" rx="10" fill="#F87171"/>
+<ellipse cx="88" cy="98" rx="44" ry="9" fill="#FCA5A5"/>
+<ellipse cx="88" cy="98" rx="34" ry="5" fill="#B45309" stroke-width="3"/>
+<path d="M60 118 V158" stroke="#fff" stroke-width="5" opacity="0.6"/>
+</g></svg>

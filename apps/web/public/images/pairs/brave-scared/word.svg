@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="אמיץ"><title>אמיץ</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F5F3FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="82" y="150" width="15" height="32" rx="5" fill="#64748B"/>
+<rect x="103" y="150" width="15" height="32" rx="5" fill="#64748B"/>
+<path d="M70 112 L44 132 M130 112 L158 98" stroke-width="9"/>
+<path d="M70 104 L130 104 L124 156 L76 156 Z" fill="#94A3B8"/>
+<rect x="74" y="134" width="52" height="9" fill="#B45309" stroke-width="3"/>
+<path d="M154 24 L160 12 L166 24 L166 78 L154 78 Z" fill="#E2E8F0"/>
+<rect x="146" y="78" width="28" height="8" rx="3" fill="#FDE047"/>
+<rect x="156" y="86" width="8" height="18" rx="3" fill="#B45309"/>
+<circle cx="160" cy="100" r="7" fill="#FDE1C8" stroke-width="4"/>
+<path d="M20 116 L64 116 L64 146 Q42 172 20 146 Z" fill="#F87171"/>
+<path d="M42 126 L45 134 L54 134 L47 139 L50 148 L42 143 L34 148 L37 139 L30 134 L39 134 Z" fill="#FDE047" stroke-width="3"/>
+<path d="M100 48 Q102 24 120 20 Q108 32 110 48 Z" fill="#F87171"/>
+<circle cx="100" cy="78" r="24" fill="#FDE1C8"/>
+<path d="M72 70 A28 28 0 0 1 128 70 L128 80 L72 80 Z" fill="#94A3B8"/>
+<circle cx="90" cy="86" r="6" fill="#fff" stroke-width="3"/><circle cx="90" cy="86" r="3" fill="#2D3748" stroke="none"/><circle cx="88.8" cy="84.8" r="1.2" fill="#fff" stroke="none"/>
+<circle cx="110" cy="86" r="6" fill="#fff" stroke-width="3"/><circle cx="110" cy="86" r="3" fill="#2D3748" stroke="none"/><circle cx="108.8" cy="84.8" r="1.2" fill="#fff" stroke="none"/>
+<path d="M90 96 Q100 102 110 96" fill="none" stroke-width="3"/>
+</g></svg>

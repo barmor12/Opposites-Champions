@@ -16,7 +16,7 @@ import {
 } from '@oc/shared';
 import { useSound } from '@/hooks/useSound';
 import { QuestionRenderer } from '../QuestionRenderer';
-import { cn } from '../_ui';
+import { cn } from '../utils';
 
 interface DemoQuestion {
   label: string;

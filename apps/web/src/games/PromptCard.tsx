@@ -1,7 +1,8 @@
 import { motion } from 'motion/react';
 import { useMemo, type ReactNode } from 'react';
 import { QuestionType, type QuestionView } from '@oc/shared';
-import { LazyImage, cn } from './_ui';
+import { LazyImage } from './_ui';
+import { cn, promptInstruction } from './utils';
 
 export interface PromptCardProps {
   question: QuestionView;
@@ -11,18 +12,6 @@ export interface PromptCardProps {
 }
 
 const BLANK_RE = /_{3,}/;
-
-const TYPE_INSTRUCTION: Record<string, string> = {
-  [QuestionType.CHOOSE_OPPOSITE]: 'מה ההפך של המילה?',
-  [QuestionType.CHOOSE_IMAGE]: 'איזו תמונה מראה את ההפך?',
-  [QuestionType.COMPLETE_SENTENCE]: 'איזו מילה משלימה את המשפט?',
-  [QuestionType.MATCH_PAIRS]: 'חברו כל מילה להפך שלה',
-  [QuestionType.TREASURE_CHALLENGE]: 'מה ההפך של המילה?',
-};
-
-export function promptInstruction(type: QuestionType): string {
-  return TYPE_INSTRUCTION[type] ?? 'בחרו את התשובה הנכונה';
-}
 
 /** כרטיס ה"שאלה": מילה גדולה / משפט עם חלל, ותמונה אופציונלית */
 export function PromptCard({ question, filled = null, children }: PromptCardProps) {

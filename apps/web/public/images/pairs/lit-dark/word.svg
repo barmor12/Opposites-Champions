@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מואר"><title>מואר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<path d="M4 150H196C196 174 174 196 150 196H50C26 196 4 174 4 150Z" fill="#E9C98A"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 150 H196" stroke-width="4"/>
+<rect x="118" y="36" width="60" height="60" rx="4" fill="#BAE6FD"/>
+<circle cx="148" cy="66" r="13" fill="#FDE047" stroke-width="4"/>
+<path d="M148 36 V96 M118 66 H178" stroke-width="4"/>
+<path d="M30 86 L84 86 L118 150 L4 150 Z" fill="#FDE047" opacity="0.45" stroke="none"/>
+<path d="M57 30 V22 M20 60 H12 M94 60 H102 M30 34 L24 28 M84 34 L90 28" stroke="#F59E0B" stroke-width="5"/>
+<path d="M57 86 V150" stroke-width="6"/>
+<ellipse cx="57" cy="152" rx="20" ry="6" fill="#475569"/>
+<path d="M28 86 L86 86 L76 44 L38 44 Z" fill="#F9A8D4"/>
+<circle cx="57" cy="94" r="9" fill="#FDE047"/>
+<rect x="90" y="110" width="22" height="26" rx="3" fill="#86EFAC" stroke-width="4"/>
+<circle cx="101" cy="123" r="5" fill="#F87171" stroke-width="3"/>
+</g></svg>

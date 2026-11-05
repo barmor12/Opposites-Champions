@@ -2,7 +2,8 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { ArrowLeftRight, Check, Link2, X } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { MATCH_PAIRS_PER_QUESTION, type AnswerResult, type MatchAnswerPayload, type MatchCardView, type QuestionView } from '@oc/shared';
-import { Button, LazyImage, cn } from './_ui';
+import { Button, LazyImage } from './_ui';
+import { cn, samePair } from './utils';
 
 export interface MatchPairsQuestionProps {
   question: QuestionView;
@@ -28,10 +29,6 @@ const PAIR_COLORS = [
   { bg: 'bg-green-100 border-green-400 text-green-900', badge: 'bg-green-500 text-white' },
   { bg: 'bg-orange-100 border-orange-400 text-orange-900', badge: 'bg-orange-500 text-white' },
 ] as const;
-
-function samePair(a: { cardA: string; cardB: string }, b: { cardA: string; cardB: string }) {
-  return (a.cardA === b.cardA && a.cardB === b.cardB) || (a.cardA === b.cardB && a.cardB === b.cardA);
-}
 
 export function MatchPairsQuestion({ question, result, disabled, showCorrectAnswers, onSubmit, onLink, onUnlink }: MatchPairsQuestionProps) {
   const reduced = useReducedMotion();

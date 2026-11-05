@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="פחדן"><title>פחדן</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F5F3FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M56 124 L46 124 M56 136 L46 136 M144 124 L154 124 M144 136 L154 136 M64 166 L56 170 M136 166 L144 170" stroke-width="3"/>
+<rect x="82" y="150" width="15" height="30" rx="5" fill="#7DD3FC"/>
+<rect x="103" y="150" width="15" height="30" rx="5" fill="#7DD3FC"/>
+<path d="M76 110 L58 88 M124 110 L142 88" stroke-width="9"/>
+<circle cx="56" cy="84" r="8" fill="#FDE1C8" stroke-width="4"/>
+<circle cx="144" cy="84" r="8" fill="#FDE1C8" stroke-width="4"/>
+<path d="M74 104 L126 104 L122 152 L78 152 Z" fill="#86EFAC"/>
+<circle cx="100" cy="72" r="26" fill="#FDE1C8"/>
+<path d="M74 64 L78 40 L86 56 L94 34 L102 56 L110 34 L118 56 L124 40 L126 64 Z" fill="#B45309"/>
+<circle cx="90" cy="74" r="10" fill="#fff" stroke-width="3"/><circle cx="90" cy="76" r="3" fill="#2D3748" stroke="none"/>
+<circle cx="110" cy="74" r="10" fill="#fff" stroke-width="3"/><circle cx="110" cy="76" r="3" fill="#2D3748" stroke="none"/>
+<ellipse cx="100" cy="92" rx="6" ry="5" fill="#DC2626" stroke-width="3"/>
+<path d="M134 46 C128 56 128 62 134 62 C140 62 140 56 134 46 Z M66 44 C60 54 60 60 66 60 C72 60 72 54 66 44 Z M146 66 C141 74 141 78 146 78 C151 78 151 74 146 66 Z" fill="#7DD3FC" stroke-width="3"/>
+</g></svg>

@@ -3,7 +3,8 @@ import { Check, X } from 'lucide-react';
 import { useEffect } from 'react';
 import { QuestionType, type AnswerResult, type QuestionOptionView, type QuestionView } from '@oc/shared';
 import { Shake } from '@/animations';
-import { LazyImage, cn } from './_ui';
+import { LazyImage } from './_ui';
+import { cn, optionState, type OptionState } from './utils';
 
 export interface ChoiceQuestionProps {
   question: QuestionView;
@@ -21,23 +22,6 @@ const OPTION_STYLES = [
   { idle: 'border-yellow-300 bg-yellow-100 text-yellow-900 hover:bg-yellow-200', key: 'bg-yellow-400 text-yellow-900' },
   { idle: 'border-pink-300 bg-pink-100 text-pink-900 hover:bg-pink-200', key: 'bg-pink-400 text-white' },
 ] as const;
-
-export type OptionState = 'idle' | 'pending' | 'correct' | 'wrong' | 'reveal' | 'dim';
-
-export function optionState(
-  option: QuestionOptionView,
-  selectedId: string | null,
-  result: AnswerResult | null,
-  showCorrectAnswers: boolean,
-): OptionState {
-  if (!result) return selectedId === option.id ? 'pending' : 'idle';
-  const isChosen = selectedId === option.id;
-  const isCorrectOption = result.correctOptionId ? result.correctOptionId === option.id : isChosen && result.correct;
-  if (isChosen && result.correct) return 'correct';
-  if (isChosen && !result.correct) return 'wrong';
-  if (isCorrectOption && showCorrectAnswers) return 'reveal';
-  return 'dim';
-}
 
 const STATE_CLASSES: Record<Exclude<OptionState, 'idle'>, string> = {
   pending: 'border-slate-400 bg-white text-slate-800 ring-4 ring-slate-300 scale-[1.02]',

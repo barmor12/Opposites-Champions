@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="יבש"><title>יבש</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M44 10 V18 M44 70 V78 M10 44 H18 M70 44 H78 M20 20 L26 26 M62 62 L68 68 M20 68 L26 62 M62 26 L68 20" stroke="#F59E0B" stroke-width="5"/>
+<circle cx="44" cy="44" r="18" fill="#FDE047"/>
+<path d="M4 66 Q100 82 196 66" fill="none" stroke-width="4"/>
+<rect x="60" y="78" width="80" height="94" rx="4" fill="#7DD3FC"/>
+<rect x="60" y="96" width="80" height="10" fill="#fff" stroke="none"/>
+<rect x="60" y="144" width="80" height="10" fill="#fff" stroke="none"/>
+<path d="M66 172 V182 M78 172 V182 M90 172 V182 M102 172 V182 M114 172 V182 M126 172 V182 M138 172 V182" stroke-width="3"/>
+<rect x="70" y="66" width="9" height="20" rx="3" fill="#B45309" stroke-width="3"/>
+<rect x="122" y="68" width="9" height="20" rx="3" fill="#B45309" stroke-width="3"/>
+<path d="M160 110 c6 -6 12 0 12 0 M160 130 c6 -6 12 0 12 0 M26 120 c6 -6 12 0 12 0" fill="none" stroke="#F59E0B" stroke-width="4" opacity="0.7"/>
+</g></svg>

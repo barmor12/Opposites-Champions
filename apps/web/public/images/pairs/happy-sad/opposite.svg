@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="עצוב"><title>עצוב</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="100" cy="100" r="72" fill="#FDE047"/>
+<path d="M68 148 Q100 118 132 148" fill="none" stroke-width="6"/>
+<circle cx="74" cy="90" r="11" fill="#fff"/><circle cx="74" cy="92" r="5.5" fill="#2D3748" stroke="none"/><circle cx="72" cy="90" r="2" fill="#fff" stroke="none"/>
+<circle cx="126" cy="90" r="11" fill="#fff"/><circle cx="126" cy="92" r="5.5" fill="#2D3748" stroke="none"/><circle cx="124" cy="90" r="2" fill="#fff" stroke="none"/>
+<path d="M60 70 L86 78 M140 70 L114 78" fill="none"/>
+<path d="M74 104 C66 118 66 130 74 130 C82 130 82 118 74 104 Z" fill="#7DD3FC" stroke-width="3"/>
+<path d="M126 104 C118 118 118 130 126 130 C134 130 134 118 126 104 Z" fill="#7DD3FC" stroke-width="3"/>
+</g></svg>
