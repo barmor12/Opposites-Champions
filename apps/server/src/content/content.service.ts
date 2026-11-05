@@ -1,6 +1,6 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'node:crypto';
-import { Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { Category, CATEGORY_LABELS, type Difficulty, type QuestionType } from '@oc/shared';
 import { PrismaService } from '../prisma/prisma.service';
 import { HE } from '../common/hebrew-messages';
