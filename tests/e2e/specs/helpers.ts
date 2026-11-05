@@ -91,8 +91,17 @@ export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise
       // ממתינים שהשאלה החדשה תיטען (הכפתור של השאלה הקודמת נשאר מושבת לרגע)
       await option.click();
     }
+    // אחרי תשובה: כפתור "המשך", או (בשאלה האחרונה) מעבר ישיר למסך הסיום/התוצאות
     const next = page.getByTestId('next-button');
-    await next.waitFor({ state: 'visible', timeout: 15_000 });
-    await next.click();
+    const deadline = Date.now() + 15_000;
+    while (Date.now() < deadline) {
+      if (await next.isVisible().catch(() => false)) {
+        await next.click().catch(() => undefined);
+        break;
+      }
+      if (await finished.isVisible().catch(() => false)) return;
+      if (/\/results/.test(page.url())) return;
+      await page.waitForTimeout(150);
+    }
   }
 }
