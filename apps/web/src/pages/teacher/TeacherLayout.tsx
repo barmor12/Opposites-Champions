@@ -24,7 +24,7 @@ function Logo({ compact = false, className, onClick }: { compact?: boolean; clas
       {!compact && (
         <span className="leading-tight">
           <span className="block text-base font-black tracking-tight text-brand-navy">אלופי ההפכים</span>
-          <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-violet">ממשק המורה</span>
+          <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-700">ממשק המורה</span>
         </span>
       )}
     </Link>
@@ -59,7 +59,7 @@ function SidebarNav({ onNavigate, layoutId }: { onNavigate?: () => void; layoutI
                   aria-hidden
                 />
               )}
-              <span className={cn('relative grid size-9 place-items-center rounded-xl transition-colors', isActive ? 'bg-white/20' : 'bg-slate-100 text-slate-500 group-hover:bg-white group-hover:text-brand-violet')}>
+              <span className={cn('relative grid size-9 place-items-center rounded-xl transition-colors', isActive ? 'bg-white/20' : 'bg-slate-100 text-slate-600 group-hover:bg-white group-hover:text-violet-700')}>
                 <Icon className="size-[18px]" aria-hidden />
               </span>
               <span className="relative flex-1">{label}</span>
@@ -83,7 +83,7 @@ function TeacherChip({ name, email, onLogout, loggingOut, compact }: { name?: st
       {!compact && (
         <span className="min-w-0 flex-1 leading-tight">
           <span className="block truncate text-sm font-bold text-brand-navy">{name}</span>
-          <span className="block truncate text-[11px] text-slate-500" dir="ltr">
+          <span className="block truncate text-[11px] text-slate-600" dir="ltr">
             {email}
           </span>
         </span>
@@ -93,7 +93,7 @@ function TeacherChip({ name, email, onLogout, loggingOut, compact }: { name?: st
           type="button"
           onClick={onLogout}
           disabled={loggingOut}
-          className="grid size-9 min-h-0 shrink-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
+          className="grid size-9 min-h-0 shrink-0 place-items-center rounded-xl text-slate-600 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
           aria-label="התנתקות"
           title="התנתקות"
         >
@@ -114,15 +114,15 @@ function Breadcrumbs({ crumbs }: { crumbs: Crumb[] }) {
           return (
             <li key={`${c.label}-${i}`} className="flex min-w-0 items-center gap-1.5">
               {c.to && !last ? (
-                <Link to={c.to} className="truncate rounded-md font-semibold text-slate-500 transition-colors hover:text-brand-violet">
+                <Link to={c.to} className="truncate rounded-md font-semibold text-slate-600 transition-colors hover:text-violet-700">
                   {c.label}
                 </Link>
               ) : (
-                <span className={cn('truncate', last ? 'font-bold text-brand-navy' : 'text-slate-500')} aria-current={last ? 'page' : undefined}>
+                <span className={cn('truncate', last ? 'font-bold text-brand-navy' : 'text-slate-600')} aria-current={last ? 'page' : undefined}>
                   {c.label}
                 </span>
               )}
-              {!last && <ChevronLeft className="size-3.5 shrink-0 text-slate-300" aria-hidden />}
+              {!last && <ChevronLeft className="size-3.5 shrink-0 text-slate-500" aria-hidden />}
             </li>
           );
         })}
@@ -144,7 +144,7 @@ function BottomNav() {
               to={to}
               end={end}
               className={({ isActive }) =>
-                cn('flex flex-1 flex-col items-center justify-center gap-0.5 rounded-2xl text-[11px] font-bold transition-colors', isActive ? 'text-brand-violet' : 'text-slate-500')
+                cn('flex flex-1 flex-col items-center justify-center gap-0.5 rounded-2xl text-[11px] font-bold transition-colors', isActive ? 'text-violet-700' : 'text-slate-600')
               }
             >
               {({ isActive }) => (
@@ -201,8 +201,8 @@ export function TeacherLayout() {
     return (
       <div dir="rtl" className="relative flex min-h-dvh items-center justify-center">
         <FloatingBlobs />
-        <div className="flex flex-col items-center gap-3 text-slate-500">
-          <Spinner className="text-brand-violet" />
+        <div className="flex flex-col items-center gap-3 text-slate-600">
+          <Spinner className="text-violet-700" />
           <span className="text-sm font-semibold">בודקים התחברות…</span>
         </div>
       </div>
@@ -235,11 +235,11 @@ export function TeacherLayout() {
               <Logo />
             </div>
             <div className="mt-6 flex-1">
-              <div className="mb-2 px-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">תפריט</div>
+              <div className="mb-2 px-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">תפריט</div>
               <SidebarNav layoutId="sidebar-active" />
               <div className="mt-6 overflow-hidden rounded-2xl bg-linear-to-br from-violet-500/10 via-sky-400/10 to-transparent p-4 ring-1 ring-violet-200/50">
                 <div className="flex items-center gap-2 text-sm font-bold text-brand-navy">
-                  <Sparkles className="size-4 text-brand-violet" aria-hidden />
+                  <Sparkles className="size-4 text-violet-700" aria-hidden />
                   טיפ קטן
                 </div>
                 <p className="mt-1 text-xs leading-5 text-slate-600">הציגו את קוד החדר על הלוח – התלמידים מצטרפים בסריקה אחת מהטאבלט.</p>
@@ -322,7 +322,7 @@ export function TeacherLayout() {
                     type="button"
                     onClick={() => setMenuOpen(false)}
                     aria-label="סגירת תפריט"
-                    className="grid size-11 min-h-0 place-items-center rounded-xl text-slate-500 hover:bg-slate-100"
+                    className="grid size-11 min-h-0 place-items-center rounded-xl text-slate-600 hover:bg-slate-100"
                   >
                     <X className="size-6" aria-hidden />
                   </button>

@@ -23,7 +23,7 @@ const TONES: Record<MagicButtonTone, { face: string; edge: string; glow: string 
     glow: 'from-amber-300 via-yellow-200 to-orange-300',
   },
   violet: {
-    face: 'bg-linear-to-b from-violet-500 to-violet-600 text-white',
+    face: 'bg-linear-to-b from-violet-600 to-violet-700 text-white',
     edge: 'bg-linear-to-l from-violet-900 via-violet-800 to-violet-900',
     glow: 'from-violet-400 via-fuchsia-300 to-sky-300',
   },

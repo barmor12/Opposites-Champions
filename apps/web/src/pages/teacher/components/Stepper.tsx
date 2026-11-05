@@ -99,7 +99,7 @@ export function Stepper({ steps, current, muted, onSelect, tone = 'violet', clas
                         initial={reduce ? false : { scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={reduce ? undefined : { scale: 0, opacity: 0 }}
-                        className={cn('flex', active ? 'text-white' : 'text-slate-400')}
+                        className={cn('flex', active ? 'text-white' : 'text-slate-500')}
                       >
                         <Icon className="size-4 sm:size-5" aria-hidden />
                       </motion.span>
@@ -107,7 +107,7 @@ export function Stepper({ steps, current, muted, onSelect, tone = 'violet', clas
                   </AnimatePresence>
                 </motion.span>
               </Wrapper>
-              <span className={cn('block max-w-full truncate px-0.5 text-[11px] font-bold sm:text-sm', active ? 'text-brand-navy' : done ? 'text-emerald-700' : 'text-slate-400')}>{s.label}</span>
+              <span className={cn('block max-w-full truncate px-0.5 text-[11px] font-bold sm:text-sm', active ? 'text-brand-navy' : done ? 'text-emerald-700' : 'text-slate-500')}>{s.label}</span>
               {s.tag && active && <span className="-mt-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 sm:text-[11px]">{s.tag}</span>}
             </li>
           );

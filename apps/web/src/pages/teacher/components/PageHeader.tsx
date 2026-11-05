@@ -39,9 +39,9 @@ export function PageHeader({
       className={cn('mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between', className)}
     >
       <div className="min-w-0">
-        {eyebrow && <div className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-brand-violet">{eyebrow}</div>}
+        {eyebrow && <div className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-violet-700">{eyebrow}</div>}
         <h1 className="text-2xl font-extrabold tracking-tight text-brand-navy sm:text-[2rem] sm:leading-tight">{title}</h1>
-        {subtitle && <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-500">{subtitle}</p>}
+        {subtitle && <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-600">{subtitle}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </motion.div>

@@ -36,7 +36,7 @@ function Field({ title, description, children, error }: { title: string; descrip
     <fieldset className="flex min-w-0 flex-col gap-2.5">
       <div>
         <legend className="text-sm font-extrabold text-brand-navy">{title}</legend>
-        {description && <p className="mt-0.5 text-xs leading-5 text-slate-500">{description}</p>}
+        {description && <p className="mt-0.5 text-xs leading-5 text-slate-600">{description}</p>}
       </div>
       {children}
       {error && (
@@ -196,11 +196,11 @@ export function CreateGamePage() {
                         </span>
                         <span className="relative min-w-0 flex-1">
                           <span className="flex items-center gap-2">
-                            <span className={cn('grid size-6 place-items-center rounded-lg', selected ? 'bg-brand-violet text-white' : 'bg-slate-100 text-slate-500')}>
+                            <span className={cn('grid size-6 place-items-center rounded-lg', selected ? 'bg-brand-violet text-white' : 'bg-slate-100 text-slate-600')}>
                               <Icon className="size-3.5" aria-hidden />
                             </span>
                             <span className="font-extrabold text-brand-navy">{MODE_LABELS[mode].label}</span>
-                            {mode === GameMode.SELF_PACED && <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">ברירת מחדל</span>}
+                            {mode === GameMode.SELF_PACED && <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600">ברירת מחדל</span>}
                           </span>
                           <span className="mt-1 block text-xs leading-5 text-slate-600">{MODE_LABELS[mode].description}</span>
                         </span>
@@ -313,7 +313,7 @@ export function CreateGamePage() {
             <div className="mx-auto flex max-w-7xl items-center gap-3 xl:flex-col xl:items-stretch xl:gap-4">
               <div className="min-w-0 flex-1 xl:hidden">
                 <div className="truncate text-sm font-extrabold text-brand-navy">{settings.className.trim() || 'כיתה ללא שם'}</div>
-                <div className="truncate text-xs text-slate-500">
+                <div className="truncate text-xs text-slate-600">
                   {settings.questionCount} שאלות · {DIFFICULTY_LABELS[settings.difficulty]} · {timeLabel(settings.timePerQuestionSec)} · {categoriesLabel}
                 </div>
               </div>
@@ -324,25 +324,25 @@ export function CreateGamePage() {
                   <span className={cn('rounded-full px-2 py-0.5 text-[11px] font-bold', ready ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700')}>{ready ? 'מוכן ליצירה' : 'חסרים פרטים'}</span>
                 </div>
                 <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2.5 text-sm">
-                  <dt className="text-slate-500">כיתה</dt>
+                  <dt className="text-slate-600">כיתה</dt>
                   <dd className="truncate text-end font-bold text-brand-navy">{settings.className.trim() || '—'}</dd>
-                  <dt className="text-slate-500">מצב</dt>
+                  <dt className="text-slate-600">מצב</dt>
                   <dd className="text-end font-bold text-brand-navy">{MODE_LABELS[settings.mode].label}</dd>
-                  <dt className="text-slate-500">שאלות</dt>
+                  <dt className="text-slate-600">שאלות</dt>
                   <dd className="text-end font-bold text-brand-navy tabular-nums">{settings.questionCount}</dd>
-                  <dt className="text-slate-500">קושי</dt>
+                  <dt className="text-slate-600">קושי</dt>
                   <dd className="text-end font-bold text-brand-navy">{DIFFICULTY_LABELS[settings.difficulty]}</dd>
-                  <dt className="text-slate-500">קטגוריות</dt>
+                  <dt className="text-slate-600">קטגוריות</dt>
                   <dd className="text-end font-bold text-brand-navy">{categoriesLabel}</dd>
-                  <dt className="text-slate-500">סוגי שאלות</dt>
+                  <dt className="text-slate-600">סוגי שאלות</dt>
                   <dd className="text-end font-bold text-brand-navy">{settings.questionTypes.length} מתוך {REGULAR_TYPES.length}</dd>
-                  <dt className="text-slate-500">זמן לשאלה</dt>
+                  <dt className="text-slate-600">זמן לשאלה</dt>
                   <dd className="text-end font-bold text-brand-navy">{timeLabel(settings.timePerQuestionSec)}</dd>
                   {settings.treasureChallenge && (
                     <>
-                      <dt className="text-slate-500">אתגר</dt>
+                      <dt className="text-slate-600">אתגר</dt>
                       <dd className="inline-flex items-center justify-end gap-1 text-end font-bold text-brand-navy">
-                        <Gem className="size-4 text-brand-violet" aria-hidden /> אתגר האוצר
+                        <Gem className="size-4 text-violet-700" aria-hidden /> אתגר האוצר
                       </dd>
                     </>
                   )}
@@ -360,7 +360,7 @@ export function CreateGamePage() {
                 יצירת חדר
               </Button>
 
-              <p className="hidden items-start gap-2 text-xs leading-5 text-slate-400 xl:flex">
+              <p className="hidden items-start gap-2 text-xs leading-5 text-slate-500 xl:flex">
                 <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
                 אחרי יצירת החדר יוצג קוד בן 6 ספרות ו־QR להצטרפות מהטאבלטים.
               </p>

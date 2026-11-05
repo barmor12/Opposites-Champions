@@ -141,9 +141,9 @@ export function ResultsPage() {
               </option>
             ))}
           </select>
-          <ChevronDown className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden />
+          <ChevronDown className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" aria-hidden />
         </div>
-        {sessionCount > 1 && <span className="text-xs text-slate-400">בחדר זה התקיימו {sessionCount} סבבים · מוצג הסבב האחרון כברירת מחדל</span>}
+        {sessionCount > 1 && <span className="text-xs text-slate-500">בחדר זה התקיימו {sessionCount} סבבים · מוצג הסבב האחרון כברירת מחדל</span>}
       </div>
 
       {error && (
@@ -154,7 +154,7 @@ export function ResultsPage() {
 
       {loading && !results && (
         <div className="flex justify-center py-24">
-          <Spinner className="text-brand-violet" />
+          <Spinner className="text-violet-700" />
         </div>
       )}
 
@@ -187,7 +187,7 @@ export function ResultsPage() {
                   {/* טבלה – טאבלט ומעלה */}
                   <div className="hidden overflow-x-auto md:block">
                     <table className="w-full text-sm">
-                      <thead className="bg-slate-50/80 text-xs font-bold text-slate-500">
+                      <thead className="bg-slate-50/80 text-xs font-bold text-slate-600">
                         <tr>
                           <th className="px-5 py-3 text-start">#</th>
                           <th className="px-4 py-3 text-start">תלמיד/ה</th>
@@ -220,14 +220,14 @@ export function ResultsPage() {
                       <li key={q.sessionQuestionId} className="flex flex-col gap-2 rounded-2xl bg-white/70 p-4 ring-1 ring-slate-100">
                         <div className="flex items-start justify-between gap-3 text-sm">
                           <span className="min-w-0">
-                            <span className="me-1.5 text-xs text-slate-400 tabular-nums">{q.index + 1}.</span>
+                            <span className="me-1.5 text-xs text-slate-500 tabular-nums">{q.index + 1}.</span>
                             <span className="font-bold text-brand-navy">{q.prompt}</span>
-                            <span className="ms-1.5 text-xs text-slate-400">({QUESTION_TYPE_LABELS[q.type]})</span>
+                            <span className="ms-1.5 text-xs text-slate-500">({QUESTION_TYPE_LABELS[q.type]})</span>
                           </span>
-                          <span className={cn('shrink-0 text-base font-black tabular-nums', q.accuracy < 50 ? 'text-rose-600' : 'text-amber-600')}>{formatPercent(q.accuracy)}</span>
+                          <span className={cn('shrink-0 text-base font-black tabular-nums', q.accuracy < 50 ? 'text-rose-600' : 'text-amber-700')}>{formatPercent(q.accuracy)}</span>
                         </div>
                         <AccuracyBar value={q.accuracy} />
-                        <div className="text-xs text-slate-500">
+                        <div className="text-xs text-slate-600">
                           תשובה נכונה: <b className="text-brand-navy">{q.correctAnswerText}</b> · ענו נכון {q.correct} מתוך {q.answered}
                         </div>
                       </li>
@@ -281,7 +281,7 @@ function AccuracyBar({ value, tone, className }: { value: number; tone?: 'auto' 
 }
 
 function AchievementChips({ achievements, compact }: { achievements: AchievementType[]; compact?: boolean }) {
-  if (achievements.length === 0) return <span className="text-xs text-slate-300">—</span>;
+  if (achievements.length === 0) return <span className="text-xs text-slate-500">—</span>;
   return (
     <div className="flex flex-wrap gap-1">
       {achievements.map((a) => (
@@ -316,7 +316,7 @@ function StudentRow({ entry, achievements, questionCount }: { entry: Leaderboard
           <span className="font-bold text-brand-navy">{entry.displayName}</span>
         </div>
       </td>
-      <td className="px-4 py-2.5 font-black tabular-nums text-brand-violet">{formatNumber(entry.score)}</td>
+      <td className="px-4 py-2.5 font-black tabular-nums text-violet-700">{formatNumber(entry.score)}</td>
       <td className="px-4 py-2.5 tabular-nums text-slate-700">
         {entry.correctAnswers}/{questionCount}
       </td>
@@ -340,7 +340,7 @@ function StudentCard({ entry, achievements, questionCount }: { entry: Leaderboar
         <RankCell rank={entry.rank} />
         <Avatar id={entry.avatar} size="xs" />
         <span className="min-w-0 flex-1 truncate text-sm font-extrabold text-brand-navy">{entry.displayName}</span>
-        <span className="text-base font-black tabular-nums text-brand-violet">{formatNumber(entry.score)}</span>
+        <span className="text-base font-black tabular-nums text-violet-700">{formatNumber(entry.score)}</span>
       </div>
       <div className="flex items-center gap-2 text-xs text-slate-600">
         <span className="shrink-0 tabular-nums">
@@ -358,20 +358,20 @@ function QuestionAccordion({ stat }: { stat: QuestionStat }) {
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const total = Math.max(stat.answered, 1);
-  const toneText = stat.accuracy < 50 ? 'text-rose-600' : stat.accuracy < 75 ? 'text-amber-600' : 'text-emerald-600';
+  const toneText = stat.accuracy < 50 ? 'text-rose-600' : stat.accuracy < 75 ? 'text-amber-700' : 'text-emerald-700';
   return (
     <div className={cn('overflow-hidden rounded-2xl border bg-white/70 transition-colors', open ? 'border-violet-200 shadow-[0_12px_28px_-20px_rgba(139,92,246,.6)]' : 'border-slate-200/80 hover:border-violet-200')}>
       <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} className="flex min-h-0 w-full items-center gap-3 px-3 py-3 text-start sm:px-4">
         <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-slate-100 text-xs font-black text-slate-600 tabular-nums">{stat.index + 1}</span>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-bold text-brand-navy">{stat.prompt}</span>
-          <span className="block text-xs text-slate-400">{QUESTION_TYPE_LABELS[stat.type]}</span>
+          <span className="block text-xs text-slate-500">{QUESTION_TYPE_LABELS[stat.type]}</span>
         </span>
         <span className="hidden w-24 sm:block">
           <AccuracyBar value={stat.accuracy} />
         </span>
         <span className={cn('w-12 shrink-0 text-end text-sm font-black tabular-nums', toneText)}>{formatPercent(stat.accuracy)}</span>
-        <ChevronDown className={cn('size-4 shrink-0 text-slate-400 transition-transform', open && 'rotate-180')} aria-hidden />
+        <ChevronDown className={cn('size-4 shrink-0 text-slate-500 transition-transform', open && 'rotate-180')} aria-hidden />
       </button>
       <AnimatePresence initial={false}>
         {open && (
@@ -384,18 +384,18 @@ function QuestionAccordion({ stat }: { stat: QuestionStat }) {
             className="overflow-hidden"
           >
             <div className="border-t border-slate-100 px-3 py-3 sm:px-4">
-              <div className="mb-3 text-xs text-slate-500">
+              <div className="mb-3 text-xs text-slate-600">
                 ענו {stat.answered} · נכון {stat.correct} · תשובה נכונה: <b className="text-brand-navy">{stat.correctAnswerText}</b>
               </div>
               <ul className="flex flex-col gap-2">
                 {stat.distribution.map((d, i) => (
                   <li key={`${d.text}-${i}`} className="flex items-center gap-3 text-sm">
-                    <span className={cn('grid size-5 shrink-0 place-items-center rounded-full', d.isCorrect ? 'bg-brand-green text-white' : 'bg-slate-100 text-slate-400')} aria-label={d.isCorrect ? 'תשובה נכונה' : 'תשובה שגויה'} role="img">
+                    <span className={cn('grid size-5 shrink-0 place-items-center rounded-full', d.isCorrect ? 'bg-brand-green text-white' : 'bg-slate-100 text-slate-500')} aria-label={d.isCorrect ? 'תשובה נכונה' : 'תשובה שגויה'} role="img">
                       {d.isCorrect ? <Check className="size-3" strokeWidth={3} /> : <X className="size-3" />}
                     </span>
                     <span className={cn('w-28 min-w-0 truncate sm:w-48', d.isCorrect ? 'font-bold text-brand-navy' : 'text-slate-700')}>{d.text}</span>
                     <AccuracyBar value={(d.count / total) * 100} tone={d.isCorrect ? 'correct' : 'wrong'} className="flex-1" />
-                    <span className="w-8 shrink-0 text-end text-xs font-bold tabular-nums text-slate-500">{d.count}</span>
+                    <span className="w-8 shrink-0 text-end text-xs font-bold tabular-nums text-slate-600">{d.count}</span>
                   </li>
                 ))}
               </ul>

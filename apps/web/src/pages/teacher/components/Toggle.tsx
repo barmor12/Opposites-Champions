@@ -24,13 +24,13 @@ export function Toggle({ checked, onChange, label, description, disabled, name, 
     >
       <span className="flex min-w-0 items-center gap-3">
         {icon && (
-          <span className={cn('grid size-9 shrink-0 place-items-center rounded-xl transition-colors', checked ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500')} aria-hidden>
+          <span className={cn('grid size-9 shrink-0 place-items-center rounded-xl transition-colors', checked ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600')} aria-hidden>
             {icon}
           </span>
         )}
         <span className="min-w-0">
           <span className="block text-sm font-semibold text-brand-navy">{label}</span>
-          {description && <span className="block text-xs leading-5 text-slate-500">{description}</span>}
+          {description && <span className="block text-xs leading-5 text-slate-600">{description}</span>}
         </span>
       </span>
       <button

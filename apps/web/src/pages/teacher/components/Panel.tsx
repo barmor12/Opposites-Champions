@@ -39,7 +39,7 @@ export function Panel({ title, description, icon, actions, step, padding = 'md',
             )}
             <div className="min-w-0">
               {title && <h2 className="text-base font-extrabold leading-tight tracking-tight text-brand-navy sm:text-lg">{title}</h2>}
-              {description && <p className="mt-0.5 text-sm text-slate-500">{description}</p>}
+              {description && <p className="mt-0.5 text-sm text-slate-600">{description}</p>}
             </div>
           </div>
           {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}

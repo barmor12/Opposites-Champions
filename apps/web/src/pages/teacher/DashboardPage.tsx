@@ -157,7 +157,7 @@ export function DashboardPage() {
       <section className="mt-7 sm:mt-8" aria-label="החדרים שלי">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
           <h2 className="inline-flex items-center gap-2 text-lg font-extrabold tracking-tight text-brand-navy">
-            <Radio className="size-5 text-brand-violet" aria-hidden />
+            <Radio className="size-5 text-violet-700" aria-hidden />
             החדרים שלי
             {games.length > 0 && <span className="rounded-full bg-slate-200/80 px-2 py-0.5 text-xs font-bold text-slate-600 tabular-nums">{games.length}</span>}
           </h2>
@@ -181,7 +181,7 @@ export function DashboardPage() {
 
         {gamesLoading && games.length === 0 ? (
           <div className="flex justify-center py-16">
-            <Spinner className="text-brand-violet" />
+            <Spinner className="text-violet-700" />
           </div>
         ) : filtered.length === 0 ? (
           <Card variant="glass" padding="none" className="p-4 sm:p-8">
@@ -254,7 +254,7 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
             dir="ltr"
             className={cn(
               'relative grid shrink-0 place-items-center rounded-2xl px-3 py-2 font-mono text-lg font-black tracking-[0.18em] shadow-inner sm:text-xl',
-              isLive ? 'bg-linear-to-br from-violet-500/15 to-fuchsia-500/10 text-brand-violet ring-1 ring-violet-200' : 'bg-slate-100 text-slate-500 ring-1 ring-slate-200/70',
+              isLive ? 'bg-linear-to-br from-violet-500/15 to-fuchsia-500/10 text-violet-700 ring-1 ring-violet-200' : 'bg-slate-100 text-slate-600 ring-1 ring-slate-200/70',
             )}
             aria-label={`קוד ${game.code}`}
           >
@@ -265,7 +265,7 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
               <h3 className="truncate text-base font-extrabold tracking-tight text-brand-navy">{game.className}</h3>
               <StateBadge state={game.state} />
             </div>
-            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600">
               <span className="inline-flex items-center gap-1">
                 <Users className="size-3.5" aria-hidden />
                 {formatNumber(game.participantCount)} משתתפים
@@ -305,7 +305,7 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
             onClick={onDelete}
             aria-label={`מחיקת חדר ${game.code}`}
             title="מחיקת החדר"
-            className="grid size-11 min-h-0 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-600"
+            className="grid size-11 min-h-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-600"
           >
             <Trash2 className="size-[18px]" aria-hidden />
           </button>

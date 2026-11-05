@@ -198,7 +198,7 @@ export function LiveRoomPage() {
   if (!live || !room || !state) {
     return (
       <div className="flex justify-center py-24">
-        <Spinner className="text-brand-violet" />
+        <Spinner className="text-violet-700" />
       </div>
     );
   }
@@ -272,7 +272,7 @@ export function LiveRoomPage() {
 
       {isEnded && (
         <div role="status" className="mb-5 flex items-center gap-3 rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-600 ring-1 ring-slate-200/80">
-          <Ban className="size-4 shrink-0 text-slate-400" aria-hidden />
+          <Ban className="size-4 shrink-0 text-slate-500" aria-hidden />
           החדר {state === GameState.CANCELLED ? 'בוטל' : 'פג תוקפו'} ואינו פעיל יותר. אפשר ליצור משחק חדש מלוח הבקרה.
         </div>
       )}
@@ -320,7 +320,7 @@ export function LiveRoomPage() {
             <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(139,92,246,.12)_1px,transparent_1px)] [background-size:18px_18px] opacity-60" aria-hidden />
             <div className="relative flex w-full flex-col items-center gap-4 md:flex-row md:items-center md:justify-around lg:flex-col">
               <div className="flex flex-col items-center gap-2">
-                <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">קוד החדר</div>
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-600">קוד החדר</div>
                 <div className="flex items-center gap-2">
                   <motion.div
                     dir="ltr"
@@ -334,7 +334,7 @@ export function LiveRoomPage() {
                   <button
                     type="button"
                     onClick={() => void copy(room.code, 'code')}
-                    className="grid size-11 min-h-0 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-violet-50 hover:text-brand-violet"
+                    className="grid size-11 min-h-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-violet-50 hover:text-violet-700"
                     aria-label="העתקת הקוד"
                     title="העתקת הקוד"
                   >
@@ -344,7 +344,7 @@ export function LiveRoomPage() {
                 <span
                   className={cn(
                     'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ring-1 ring-inset',
-                    room.joinOpen ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-slate-100 text-slate-500 ring-slate-200',
+                    room.joinOpen ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-slate-100 text-slate-600 ring-slate-200',
                   )}
                 >
                   {room.joinOpen ? <DoorOpen className="size-3.5" aria-hidden /> : <DoorClosed className="size-3.5" aria-hidden />}
@@ -356,15 +356,15 @@ export function LiveRoomPage() {
               </div>
             </div>
             <div className="relative flex w-full items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 text-xs text-slate-600 ring-1 ring-slate-200/70">
-              <Link2 className="size-4 shrink-0 text-slate-400" aria-hidden />
-              <a href={live.joinUrl} target="_blank" rel="noreferrer" dir="ltr" className="min-w-0 flex-1 truncate text-left font-medium hover:text-brand-violet">
+              <Link2 className="size-4 shrink-0 text-slate-500" aria-hidden />
+              <a href={live.joinUrl} target="_blank" rel="noreferrer" dir="ltr" className="min-w-0 flex-1 truncate text-left font-medium hover:text-violet-700">
                 {live.joinUrl}
               </a>
               <button type="button" onClick={() => void copy(live.joinUrl, 'link')} className="grid size-8 min-h-0 place-items-center rounded-lg hover:bg-white" aria-label="העתקת הקישור">
                 {copied === 'link' ? <Check className="size-4 text-brand-green" /> : <Copy className="size-4" />}
               </button>
             </div>
-            <p className="relative text-center text-xs leading-5 text-slate-400">התלמידים סורקים את ה־QR מהטאבלט או מקלידים את הקוד במסך ההצטרפות.</p>
+            <p className="relative text-center text-xs leading-5 text-slate-500">התלמידים סורקים את ה־QR מהטאבלט או מקלידים את הקוד במסך ההצטרפות.</p>
           </Card>
         </div>
 
@@ -403,7 +403,7 @@ export function LiveRoomPage() {
                     <Flag className="size-5" aria-hidden /> סיים משחק
                   </Button>
                 )}
-                {busy && <Spinner size="sm" className="text-brand-violet" label="מבצעים פעולה…" />}
+                {busy && <Spinner size="sm" className="text-violet-700" label="מבצעים פעולה…" />}
               </div>
               {(canToggleJoin || canCancel) && (
                 <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3">
@@ -432,9 +432,9 @@ export function LiveRoomPage() {
 
             {isTeacherPaced && (IN_PLAY.includes(state) || state === GameState.PAUSED) && (
               <div className="mt-4 flex items-center gap-3 rounded-2xl bg-linear-to-l from-violet-500/10 to-fuchsia-500/5 px-4 py-3 text-sm ring-1 ring-violet-100">
-                <span className="text-slate-500">שאלה נוכחית</span>
-                <span className="text-3xl font-black text-brand-violet tabular-nums">{currentQuestionNumber || '—'}</span>
-                <span className="text-slate-400">/ {questionCount}</span>
+                <span className="text-slate-600">שאלה נוכחית</span>
+                <span className="text-3xl font-black text-violet-700 tabular-nums">{currentQuestionNumber || '—'}</span>
+                <span className="text-slate-500">/ {questionCount}</span>
               </div>
             )}
           </Panel>
@@ -446,7 +446,7 @@ export function LiveRoomPage() {
               <Counter label="שאלות בסבב" value={questionCount} tone="violet" />
             </div>
             <div className="mt-5">
-              <div className="mb-1.5 flex justify-between text-xs font-semibold text-slate-500">
+              <div className="mb-1.5 flex justify-between text-xs font-semibold text-slate-600">
                 <span>התקדמות הסבב</span>
                 <span className="tabular-nums">{roundProgress.label}</span>
               </div>
@@ -463,7 +463,7 @@ export function LiveRoomPage() {
           icon={<Users className="size-5" aria-hidden />}
           title={
             <>
-              משתתפים <span className="text-slate-400">({totalCount})</span>
+              משתתפים <span className="text-slate-500">({totalCount})</span>
             </>
           }
           description={totalCount > 0 ? `${connectedCount} מחוברים · ${live.finishedCount} סיימו` : undefined}
@@ -493,7 +493,7 @@ export function LiveRoomPage() {
         {/* דירוג חי */}
         <Panel className="lg:col-span-2" icon={<Trophy className="size-5" aria-hidden />} tone="green" title="דירוג חי" description={live.leaderboard.length > 0 ? 'מתעדכן עם כל תשובה' : undefined}>
           {live.leaderboard.length === 0 ? (
-            <p className="rounded-2xl bg-slate-50 px-4 py-6 text-center text-sm text-slate-400">הדירוג יופיע עם התשובות הראשונות.</p>
+            <p className="rounded-2xl bg-slate-50 px-4 py-6 text-center text-sm text-slate-500">הדירוג יופיע עם התשובות הראשונות.</p>
           ) : (
             <LiveLeaderboard entries={live.leaderboard} limit={8} />
           )}
@@ -561,14 +561,14 @@ export function LiveRoomPage() {
   );
 }
 
-const COUNTER_TONES = { navy: 'text-brand-navy', green: 'text-emerald-600', violet: 'text-brand-violet' } as const;
+const COUNTER_TONES = { navy: 'text-brand-navy', green: 'text-emerald-700', violet: 'text-violet-700' } as const;
 
 /** מונה חי – ספירה מונפשת + "פעימה" עדינה בכל שינוי ערך. */
 function Counter({ label, value, suffix, tone }: { label: string; value: number; suffix?: ReactNode; tone: keyof typeof COUNTER_TONES }) {
   const reduce = useReducedMotion();
   return (
     <div className="rounded-2xl bg-white/70 px-2 py-3 ring-1 ring-white/80">
-      <div className="text-[11px] font-bold text-slate-500 sm:text-xs">{label}</div>
+      <div className="text-[11px] font-bold text-slate-600 sm:text-xs">{label}</div>
       <motion.div
         key={value}
         initial={reduce ? false : { scale: 1.18 }}
@@ -577,7 +577,7 @@ function Counter({ label, value, suffix, tone }: { label: string; value: number;
         className={cn('mt-0.5 text-2xl font-black leading-none tabular-nums sm:text-3xl', COUNTER_TONES[tone])}
       >
         <CountUp value={value} />
-        {suffix && <span className="ms-1 whitespace-nowrap text-xs font-semibold text-slate-400 sm:text-sm">{suffix}</span>}
+        {suffix && <span className="ms-1 whitespace-nowrap text-xs font-semibold text-slate-500 sm:text-sm">{suffix}</span>}
       </motion.div>
     </div>
   );
@@ -603,7 +603,7 @@ function ParticipantCard({ participant: p, questionCount, removing, onRemove }: 
           type="button"
           onClick={onRemove}
           disabled={removing}
-          className="absolute start-1.5 top-1.5 grid size-8 min-h-0 place-items-center rounded-lg text-slate-300 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
+          className="absolute start-1.5 top-1.5 grid size-8 min-h-0 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
           aria-label={`הסרת ${p.displayName}`}
           title="הסרה מהחדר"
         >
@@ -625,16 +625,16 @@ function ParticipantCard({ participant: p, questionCount, removing, onRemove }: 
         </span>
       </div>
       <div className="w-full min-w-0">
-        <div className={cn('line-clamp-2 break-words text-sm font-extrabold leading-tight', p.connected || p.finished ? 'text-brand-navy' : 'text-slate-500')} title={p.displayName}>
+        <div className={cn('line-clamp-2 break-words text-sm font-extrabold leading-tight', p.connected || p.finished ? 'text-brand-navy' : 'text-slate-600')} title={p.displayName}>
           {p.displayName}
         </div>
-        <div className="mt-1 text-[11px] text-slate-500 tabular-nums">
+        <div className="mt-1 text-[11px] text-slate-600 tabular-nums">
           {p.answeredCount}/{questionCount} שאלות
         </div>
       </div>
       <div className="mt-auto flex w-full items-center justify-between text-xs">
-        <span className="text-slate-500">ניקוד</span>
-        <span className="font-black text-brand-violet tabular-nums">{formatNumber(p.score)}</span>
+        <span className="text-slate-600">ניקוד</span>
+        <span className="font-black text-violet-700 tabular-nums">{formatNumber(p.score)}</span>
       </div>
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner">
         <motion.div
@@ -686,18 +686,18 @@ function LiveLeaderboard({ entries, limit = 8 }: { entries: LeaderboardEntry[]; 
               <Avatar id={e.avatar} size="xs" />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-sm font-bold text-brand-navy" title={e.displayName}>{e.displayName}</span>
-                <span className="block text-[11px] text-slate-400 tabular-nums">
+                <span className="block text-[11px] text-slate-500 tabular-nums">
                   {e.correctAnswers}/{e.answeredCount} נכונות
                 </span>
               </span>
               <span
-                className={cn('inline-flex items-center text-[11px] font-bold tabular-nums', delta > 0 ? 'text-emerald-600' : delta < 0 ? 'text-rose-500' : 'text-slate-300')}
+                className={cn('inline-flex items-center text-[11px] font-bold tabular-nums', delta > 0 ? 'text-emerald-700' : delta < 0 ? 'text-rose-600' : 'text-slate-500')}
                 aria-label={delta > 0 ? `עלה ${delta} מקומות` : delta < 0 ? `ירד ${-delta} מקומות` : 'ללא שינוי'}
               >
                 {delta > 0 ? <ChevronUp className="size-3.5" aria-hidden /> : delta < 0 ? <ChevronDown className="size-3.5" aria-hidden /> : <Minus className="size-3" aria-hidden />}
                 {delta !== 0 && Math.abs(delta)}
               </span>
-              <span className="shrink-0 text-sm font-black text-brand-violet tabular-nums sm:text-base">{formatNumber(e.score)}</span>
+              <span className="shrink-0 text-sm font-black text-violet-700 tabular-nums sm:text-base">{formatNumber(e.score)}</span>
             </motion.li>
           );
         })}

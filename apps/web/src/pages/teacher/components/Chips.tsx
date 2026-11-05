@@ -21,11 +21,11 @@ const base =
   'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30 disabled:cursor-not-allowed disabled:opacity-50';
 const sizes = { sm: 'h-9 px-3.5 text-[13px]', md: 'h-10 px-4 text-sm' };
 const on =
-  'border border-violet-500/80 bg-linear-to-b from-violet-500 to-violet-600 text-white ' +
+  'border border-violet-600/80 bg-linear-to-b from-violet-600 to-violet-700 text-white ' +
   'shadow-[0_6px_16px_-6px_rgba(139,92,246,.75),inset_0_1px_0_rgba(255,255,255,.35)] ring-2 ring-violet-300/50';
 const off =
   'border border-slate-200/90 bg-white text-slate-700 shadow-[0_1px_2px_rgba(30,41,59,.06),0_4px_10px_-6px_rgba(30,41,59,.18)] ' +
-  'hover:border-violet-300 hover:text-brand-violet hover:shadow-[0_6px_14px_-6px_rgba(139,92,246,.4)]';
+  'hover:border-violet-300 hover:text-violet-700 hover:shadow-[0_6px_14px_-6px_rgba(139,92,246,.4)]';
 
 function Chip({
   selected,

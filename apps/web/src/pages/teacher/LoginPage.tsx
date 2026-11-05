@@ -72,7 +72,7 @@ export function LoginPage() {
             <span className="grid size-12 place-items-center rounded-2xl bg-linear-to-br from-sky-400 via-violet-500 to-fuchsia-500 shadow-[0_10px_24px_-10px_rgba(139,92,246,.9)] ring-1 ring-white/60">
               <img src="/images/ui/logo.svg" alt="" className="size-9" />
             </span>
-            <span className="text-sm font-bold uppercase tracking-[0.2em] text-brand-violet">ממשק המורה</span>
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-violet-700">ממשק המורה</span>
           </div>
           <h1 className="text-4xl font-black leading-[1.15] tracking-tight text-brand-navy xl:text-5xl">
             אלופי ההפכים
@@ -111,7 +111,7 @@ export function LoginPage() {
               <img src="/images/ui/logo.svg" alt="אלופי ההפכים" className="size-16 drop-shadow-md lg:hidden" />
               <div>
                 <h2 className="text-2xl font-black tracking-tight text-brand-navy">ברוכים השבים</h2>
-                <p className="mt-1 text-sm text-slate-500">התחברו כדי לנהל משחקים ולצפות בתוצאות הכיתה.</p>
+                <p className="mt-1 text-sm text-slate-600">התחברו כדי לנהל משחקים ולצפות בתוצאות הכיתה.</p>
               </div>
             </div>
 
@@ -150,7 +150,7 @@ export function LoginPage() {
                 <LogIn className="size-5" aria-hidden />
                 התחברות
               </Button>
-              <p className="flex items-center justify-center gap-1.5 text-center text-xs text-slate-400">
+              <p className="flex items-center justify-center gap-1.5 text-center text-xs text-slate-500">
                 <ShieldCheck className="size-3.5" aria-hidden />
                 הגישה מיועדת לצוות ההוראה בלבד. התלמידים מצטרפים עם קוד חדר.
               </p>

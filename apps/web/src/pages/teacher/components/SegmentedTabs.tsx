@@ -44,7 +44,7 @@ export function SegmentedTabs<T extends string>({
               'relative min-h-0 shrink-0 whitespace-nowrap rounded-full font-semibold transition-colors',
               'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
               size === 'sm' ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm',
-              active ? 'text-brand-navy' : 'text-slate-500 hover:text-brand-navy',
+              active ? 'text-brand-navy' : 'text-slate-600 hover:text-brand-navy',
             )}
           >
             {active && (
@@ -58,7 +58,7 @@ export function SegmentedTabs<T extends string>({
             <span className="relative inline-flex items-center gap-1.5">
               {opt.label}
               {opt.count !== undefined && (
-                <span className={cn('rounded-full px-1.5 text-[11px] tabular-nums', active ? 'bg-brand-violet/10 text-brand-violet' : 'bg-slate-300/60 text-slate-600')}>{opt.count}</span>
+                <span className={cn('rounded-full px-1.5 text-[11px] tabular-nums', active ? 'bg-brand-violet/10 text-violet-700' : 'bg-slate-300/60 text-slate-600')}>{opt.count}</span>
               )}
             </span>
           </button>

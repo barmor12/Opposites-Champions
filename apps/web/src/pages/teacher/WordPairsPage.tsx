@@ -125,7 +125,7 @@ export function WordPairsPage() {
   const hasFilters = Boolean(debouncedSearch || category || difficulty);
 
   const pagination = total > PAGE_SIZE && (
-    <div className="flex items-center justify-between gap-3 border-t border-slate-100 px-4 py-3 text-sm text-slate-500">
+    <div className="flex items-center justify-between gap-3 border-t border-slate-100 px-4 py-3 text-sm text-slate-600">
       <span className="tabular-nums">
         {from}–{to} מתוך {total.toLocaleString('he-IL')}
       </span>
@@ -173,17 +173,17 @@ export function WordPairsPage() {
       <Card variant="glass" padding="none" className="mb-4 flex flex-col gap-3 p-3 sm:p-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           <div className="relative flex-1">
-            <Search className="pointer-events-none absolute start-3.5 top-1/2 size-[18px] -translate-y-1/2 text-slate-400" aria-hidden />
+            <Search className="pointer-events-none absolute start-3.5 top-1/2 size-[18px] -translate-y-1/2 text-slate-500" aria-hidden />
             <input
               type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="חיפוש מילה או הפך…"
               aria-label="חיפוש"
-              className="min-h-12 w-full rounded-2xl border border-slate-200 bg-white/90 py-2 pe-10 ps-11 text-sm font-medium shadow-sm transition-[border-color,box-shadow] placeholder:text-slate-400 focus:border-brand-violet focus:outline-none focus:ring-4 focus:ring-brand-violet/20"
+              className="min-h-12 w-full rounded-2xl border border-slate-200 bg-white/90 py-2 pe-10 ps-11 text-sm font-medium shadow-sm transition-[border-color,box-shadow] placeholder:text-slate-500 focus:border-brand-violet focus:outline-none focus:ring-4 focus:ring-brand-violet/20"
             />
             {search && (
-              <button type="button" onClick={() => setSearch('')} aria-label="ניקוי החיפוש" className="absolute end-2 top-1/2 grid size-8 min-h-0 -translate-y-1/2 place-items-center rounded-lg text-slate-400 hover:bg-slate-100">
+              <button type="button" onClick={() => setSearch('')} aria-label="ניקוי החיפוש" className="absolute end-2 top-1/2 grid size-8 min-h-0 -translate-y-1/2 place-items-center rounded-lg text-slate-500 hover:bg-slate-100">
                 <X className="size-4" aria-hidden />
               </button>
             )}
@@ -212,7 +212,7 @@ export function WordPairsPage() {
       <Card variant="glass" padding="none" className="overflow-hidden p-0">
         {loading && items.length === 0 ? (
           <div className="flex justify-center py-16">
-            <Spinner className="text-brand-violet" />
+            <Spinner className="text-violet-700" />
           </div>
         ) : items.length === 0 ? (
           <div className="p-6 sm:p-8">
@@ -246,7 +246,7 @@ export function WordPairsPage() {
             {/* טבלה – טאבלט ומעלה */}
             <div className="hidden max-h-[70vh] overflow-auto md:block">
               <table className="w-full text-sm">
-                <thead className="sticky top-0 z-10 bg-slate-50/95 text-xs font-bold text-slate-500 shadow-[0_1px_0_rgba(226,232,240,1)] backdrop-blur">
+                <thead className="sticky top-0 z-10 bg-slate-50/95 text-xs font-bold text-slate-600 shadow-[0_1px_0_rgba(226,232,240,1)] backdrop-blur">
                   <tr>
                     <th className="px-5 py-3 text-start">מילה</th>
                     <th className="px-4 py-3 text-start">הפך</th>
@@ -262,9 +262,9 @@ export function WordPairsPage() {
                 </thead>
                 <tbody>
                   {items.map((pair) => (
-                    <tr key={pair.id} className={cn('group border-t border-slate-100 transition-colors odd:bg-white/40 even:bg-slate-50/40 hover:bg-violet-50/50', !pair.active && 'text-slate-400')}>
+                    <tr key={pair.id} className={cn('group border-t border-slate-100 transition-colors odd:bg-white/40 even:bg-slate-50/40 hover:bg-violet-50/50', !pair.active && 'text-slate-500')}>
                       <td className="px-5 py-2.5 text-base font-extrabold text-brand-navy">{pair.word}</td>
-                      <td className="px-4 py-2.5 text-base font-extrabold text-brand-violet">{pair.opposite}</td>
+                      <td className="px-4 py-2.5 text-base font-extrabold text-violet-700">{pair.opposite}</td>
                       <td className="px-4 py-2.5 text-slate-600">{CATEGORY_LABELS[pair.category]}</td>
                       <td className="px-4 py-2.5">
                         <TonePill tone={DIFFICULTY_TONE[pair.difficulty]}>{DIFFICULTY_LABELS[pair.difficulty]}</TonePill>
@@ -312,8 +312,8 @@ export function WordPairsPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-baseline gap-x-2 text-base font-extrabold">
                         <span className="text-brand-navy">{pair.word}</span>
-                        <span className="text-xs font-normal text-slate-400">⇄</span>
-                        <span className="text-brand-violet">{pair.opposite}</span>
+                        <span className="text-xs font-normal text-slate-500">⇄</span>
+                        <span className="text-violet-700">{pair.opposite}</span>
                       </div>
                       <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                         <TonePill tone="sky">{CATEGORY_LABELS[pair.category]}</TonePill>
@@ -374,25 +374,25 @@ function FilterPill({ active, onClick, count, children }: { active: boolean; onC
         'inline-flex min-h-0 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-bold transition-[background-color,color,box-shadow] duration-200',
         'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
         active
-          ? 'bg-linear-to-b from-violet-500 to-violet-600 text-white shadow-[0_6px_14px_-6px_rgba(139,92,246,.8),inset_0_1px_0_rgba(255,255,255,.35)]'
-          : 'bg-white text-slate-600 ring-1 ring-slate-200/90 hover:text-brand-violet hover:ring-violet-300',
+          ? 'bg-linear-to-b from-violet-600 to-violet-700 text-white shadow-[0_6px_14px_-6px_rgba(139,92,246,.8),inset_0_1px_0_rgba(255,255,255,.35)]'
+          : 'bg-white text-slate-600 ring-1 ring-slate-200/90 hover:text-violet-700 hover:ring-violet-300',
       )}
     >
       {children}
-      {count !== undefined && <span className={cn('rounded-full px-1.5 text-[10px] tabular-nums', active ? 'bg-white/20' : 'bg-slate-100 text-slate-500')}>{count}</span>}
+      {count !== undefined && <span className={cn('rounded-full px-1.5 text-[10px] tabular-nums', active ? 'bg-white/20' : 'bg-slate-100 text-slate-600')}>{count}</span>}
     </button>
   );
 }
 
 function Thumbs({ pair }: { pair: WordPairContent }) {
-  if (!pair.imageable) return <span className="text-xs text-slate-300">—</span>;
+  if (!pair.imageable) return <span className="text-xs text-slate-500">—</span>;
   return (
     <div className="flex items-center gap-1">
       {pair.wordImage && <img src={pair.wordImage} alt={pair.word} className="size-9 rounded-xl bg-white object-cover shadow-sm ring-1 ring-slate-100" loading="lazy" />}
       {pair.oppositeImage && <img src={pair.oppositeImage} alt={pair.opposite} className="size-9 rounded-xl bg-white object-cover shadow-sm ring-1 ring-slate-100" loading="lazy" />}
       {!pair.wordImage && !pair.oppositeImage && (
         <span className="grid size-9 place-items-center rounded-xl bg-slate-50 ring-1 ring-slate-100" title="ניתן להמחשה – אין תמונה">
-          <ImageIcon className="size-4 text-slate-300" aria-label="ניתן להמחשה" />
+          <ImageIcon className="size-4 text-slate-500" aria-label="ניתן להמחשה" />
         </span>
       )}
     </div>
@@ -416,7 +416,7 @@ function ActiveSwitch({ pair, busy, onToggle, withLabel }: { pair: WordPairConte
       >
         <span className={cn('block size-5 rounded-full bg-white shadow-[0_1px_3px_rgba(30,41,59,.35)] transition-[margin]', pair.active ? 'ms-auto' : 'me-auto')} />
       </button>
-      {withLabel && <span className="text-xs font-semibold text-slate-500">{pair.active ? 'פעיל' : 'מושבת'}</span>}
+      {withLabel && <span className="text-xs font-semibold text-slate-600">{pair.active ? 'פעיל' : 'מושבת'}</span>}
     </span>
   );
 }
@@ -424,10 +424,10 @@ function ActiveSwitch({ pair, busy, onToggle, withLabel }: { pair: WordPairConte
 function RowActions({ pair, onEdit, onDelete }: { pair: WordPairContent; onEdit: () => void; onDelete: () => void }) {
   return (
     <div className="flex justify-end gap-1">
-      <button type="button" onClick={onEdit} className="grid size-9 min-h-0 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-violet-100 hover:text-brand-violet" aria-label={`עריכת ${pair.word}`} title="עריכה">
+      <button type="button" onClick={onEdit} className="grid size-9 min-h-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-violet-100 hover:text-violet-700" aria-label={`עריכת ${pair.word}`} title="עריכה">
         <Pencil className="size-4" aria-hidden />
       </button>
-      <button type="button" onClick={onDelete} className="grid size-9 min-h-0 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-600" aria-label={`מחיקת ${pair.word}`} title="מחיקה">
+      <button type="button" onClick={onDelete} className="grid size-9 min-h-0 place-items-center rounded-xl text-slate-500 transition-colors hover:bg-rose-50 hover:text-rose-600" aria-label={`מחיקת ${pair.word}`} title="מחיקה">
         <Trash2 className="size-4" aria-hidden />
       </button>
     </div>
@@ -458,7 +458,7 @@ const fieldClass =
 function FormGroup({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="flex flex-col gap-3 rounded-2xl bg-slate-50/80 p-4 ring-1 ring-slate-100">
-      <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">{title}</h3>
+      <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-slate-600">{title}</h3>
       {children}
     </section>
   );
@@ -532,7 +532,7 @@ function WordPairModal({ pair, media, onClose, onSaved }: { pair: WordPairConten
         <FormGroup title="משפט דוגמה">
           <div className="flex flex-col gap-1.5 text-sm">
             <label htmlFor="wp-sentence" className="font-bold text-brand-navy">
-              משפט <span className="font-normal text-slate-400">(עם {BLANK} במקום המילה החסרה)</span>
+              משפט <span className="font-normal text-slate-500">(עם {BLANK} במקום המילה החסרה)</span>
             </label>
             <textarea id="wp-sentence" rows={2} value={form.sentence} onChange={(e) => patch('sentence', e.target.value)} className={fieldClass} placeholder={`לדוגמה: הפיל ${BLANK} והעכבר קטן.`} />
             {errors.sentence && (
@@ -541,7 +541,7 @@ function WordPairModal({ pair, media, onClose, onSaved }: { pair: WordPairConten
               </p>
             )}
             <div className="flex flex-wrap items-center gap-3">
-              <span className="text-xs text-slate-500">המילה שמשלימה את המשפט:</span>
+              <span className="text-xs text-slate-600">המילה שמשלימה את המשפט:</span>
               <SingleChips
                 name="תשובת המשפט"
                 size="sm"
@@ -557,7 +557,7 @@ function WordPairModal({ pair, media, onClose, onSaved }: { pair: WordPairConten
           </div>
           <div className="flex flex-col gap-1.5 text-sm">
             <label htmlFor="wp-explanation" className="font-bold text-brand-navy">
-              הסבר קצר <span className="font-normal text-slate-400">(אופציונלי, מוצג אחרי התשובה)</span>
+              הסבר קצר <span className="font-normal text-slate-500">(אופציונלי, מוצג אחרי התשובה)</span>
             </label>
             <textarea id="wp-explanation" rows={2} value={form.explanation ?? ''} onChange={(e) => patch('explanation', e.target.value)} className={fieldClass} />
           </div>
@@ -603,7 +603,7 @@ function ImageField({ label, name, value, onChange, error, options }: { label: s
   return (
     <div className="flex items-start gap-3">
       <div className="grid size-16 shrink-0 place-items-center overflow-hidden rounded-2xl bg-slate-50 ring-1 ring-slate-200">
-        {value && !broken ? <img src={value} alt={label} className="size-full object-cover" onError={() => setBrokenSrc(value)} /> : <ImageIcon className="size-6 text-slate-300" aria-hidden />}
+        {value && !broken ? <img src={value} alt={label} className="size-full object-cover" onError={() => setBrokenSrc(value)} /> : <ImageIcon className="size-6 text-slate-500" aria-hidden />}
       </div>
       <div className="min-w-0 flex-1">
         <Input
