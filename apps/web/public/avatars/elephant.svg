@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">פיל</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#FEF08A"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M36 210Q36 160 100 160Q164 160 164 210Z" fill="#7DD3FC"/>
+<path d="M60 70Q22 60 16 100Q14 140 50 146Z" fill="#7DD3FC"/><path d="M140 70Q178 60 184 100Q186 140 150 146Z" fill="#7DD3FC"/>
+<path d="M58 80Q30 76 28 104Q28 128 50 134Z" fill="#F9A8D4" stroke="none"/><path d="M142 80Q170 76 172 104Q172 128 150 134Z" fill="#F9A8D4" stroke="none"/>
+<path d="M50 104Q50 54 100 54Q150 54 150 104Q150 150 100 150Q50 150 50 104Z" fill="#7DD3FC"/>
+<path d="M88 118Q86 150 96 166Q108 178 124 170Q136 162 128 150" fill="none" stroke-width="22"/>
+<path d="M88 118Q86 150 96 166Q108 178 124 170Q136 162 128 150" fill="none" stroke="#7DD3FC" stroke-width="13"/>
+<path d="M92 136H110M92 150Q104 148 110 152" fill="none" stroke-width="3"/>
+<circle cx="64" cy="118" r="7" fill="#F9A8D4" stroke="none"/><circle cx="136" cy="118" r="7" fill="#F9A8D4" stroke="none"/>
+<path d="M68 130Q74 140 82 136M132 130Q126 140 118 136" fill="none"/>
+<circle cx="80" cy="100" r="7" fill="#2D3748" stroke="none"/><circle cx="120" cy="100" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="83" cy="97" r="2.5" fill="#fff" stroke="none"/><circle cx="123" cy="97" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

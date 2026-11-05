@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">דבורה</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#BAE6FD"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="44" cy="150" rx="40" ry="22" fill="#fff" fill-opacity="0.85" transform="rotate(-30 44 150)"/>
+<ellipse cx="156" cy="150" rx="40" ry="22" fill="#fff" fill-opacity="0.85" transform="rotate(30 156 150)"/>
+<path d="M40 210Q40 156 100 156Q160 156 160 210Z" fill="#FDE047"/>
+<path d="M48 176Q100 160 152 176L156 194Q100 180 44 194Z" fill="#2D3748" stroke="none"/>
+<path d="M72 60Q58 40 44 38M128 60Q142 40 156 38" fill="none"/>
+<circle cx="42" cy="36" r="8" fill="#2D3748"/><circle cx="158" cy="36" r="8" fill="#2D3748"/>
+<path d="M48 110Q48 58 100 58Q152 58 152 110Q152 160 100 160Q48 160 48 110Z" fill="#FDE047"/>
+<circle cx="64" cy="122" r="7" fill="#F9A8D4" stroke="none"/><circle cx="136" cy="122" r="7" fill="#F9A8D4" stroke="none"/>
+<path d="M84 128Q100 142 116 128" fill="none"/>
+<ellipse cx="80" cy="102" rx="11" ry="13" fill="#2D3748" stroke="none"/><ellipse cx="120" cy="102" rx="11" ry="13" fill="#2D3748" stroke="none"/>
+<circle cx="84" cy="97" r="4" fill="#fff" stroke="none"/><circle cx="124" cy="97" r="4" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

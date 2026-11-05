@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">חד־קרן</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#F3E8FF"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M38 210Q38 158 100 158Q162 158 162 210Z" fill="#F9A8D4"/>
+<path d="M100 8L112 66H88Z" fill="#FDE047"/>
+<path d="M92 48H108M96 30H104" fill="none" stroke-width="3"/>
+<path d="M60 78L52 40L84 62Z" fill="#fff"/><path d="M140 78L148 40L116 62Z" fill="#fff"/>
+<path d="M136 60Q168 70 160 110Q172 126 156 140Q150 120 140 106Q146 88 136 60Z" fill="#F9A8D4"/>
+<path d="M142 72Q164 84 156 118Q152 104 144 96Z" fill="#A78BFA" stroke="none"/>
+<path d="M148 90Q166 100 162 134Q156 126 150 118Z" fill="#7DD3FC" stroke="none"/>
+<path d="M50 112Q50 60 100 60Q150 60 150 112Q150 160 100 160Q50 160 50 112Z" fill="#fff"/>
+<path d="M64 70Q86 56 112 64Q96 70 90 84Q80 74 64 70Z" fill="#A78BFA"/>
+<path d="M76 64Q96 58 110 64Q98 66 90 76Z" fill="#7DD3FC" stroke="none"/>
+<circle cx="64" cy="124" r="7" fill="#F9A8D4" stroke="none"/><circle cx="136" cy="124" r="7" fill="#F9A8D4" stroke="none"/>
+<circle cx="90" cy="130" r="3" fill="#2D3748" stroke="none"/><circle cx="110" cy="130" r="3" fill="#2D3748" stroke="none"/>
+<path d="M88 142Q100 150 112 142" fill="none"/>
+<circle cx="80" cy="106" r="7" fill="#2D3748" stroke="none"/><circle cx="120" cy="106" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="83" cy="103" r="2.5" fill="#fff" stroke="none"/><circle cx="123" cy="103" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

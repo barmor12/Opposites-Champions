@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">צב</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#FED7AA"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M22 210Q22 136 100 136Q178 136 178 210Z" fill="#16A34A"/>
+<path d="M60 170L80 158L100 170L120 158L140 170M70 196L90 184L110 196L130 184" fill="none" stroke="#FDE047" stroke-width="4"/>
+<path d="M46 110Q46 58 100 58Q154 58 154 110Q154 160 100 160Q46 160 46 110Z" fill="#86EFAC"/>
+<circle cx="64" cy="122" r="7" fill="#F9A8D4" stroke="none"/><circle cx="136" cy="122" r="7" fill="#F9A8D4" stroke="none"/>
+<circle cx="92" cy="118" r="2.8" fill="#2D3748" stroke="none"/><circle cx="108" cy="118" r="2.8" fill="#2D3748" stroke="none"/>
+<path d="M82 132Q100 146 118 132" fill="none"/>
+<circle cx="80" cy="100" r="7" fill="#2D3748" stroke="none"/><circle cx="120" cy="100" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="83" cy="97" r="2.5" fill="#fff" stroke="none"/><circle cx="123" cy="97" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

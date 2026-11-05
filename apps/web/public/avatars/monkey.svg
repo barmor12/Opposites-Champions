@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">קוף</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#ECFCCB"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M38 210Q38 158 100 158Q162 158 162 210Z" fill="#7DD3FC"/>
+<circle cx="46" cy="100" r="20" fill="#B45309"/><circle cx="154" cy="100" r="20" fill="#B45309"/>
+<circle cx="46" cy="100" r="10" fill="#FDE68A" stroke="none"/><circle cx="154" cy="100" r="10" fill="#FDE68A" stroke="none"/>
+<path d="M50 104Q50 54 100 54Q150 54 150 104Q150 160 100 160Q50 160 50 104Z" fill="#B45309"/>
+<path d="M66 100Q66 78 86 78Q100 72 114 78Q134 78 134 100Q140 150 100 152Q60 150 66 100Z" fill="#FDE68A"/>
+<path d="M90 56Q100 44 110 56" fill="none"/>
+<circle cx="70" cy="122" r="6" fill="#F9A8D4" stroke="none"/><circle cx="130" cy="122" r="6" fill="#F9A8D4" stroke="none"/>
+<circle cx="94" cy="118" r="2.8" fill="#2D3748" stroke="none"/><circle cx="106" cy="118" r="2.8" fill="#2D3748" stroke="none"/>
+<path d="M84 132Q100 146 116 132" fill="none"/>
+<circle cx="82" cy="98" r="7" fill="#2D3748" stroke="none"/><circle cx="118" cy="98" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="85" cy="95" r="2.5" fill="#fff" stroke="none"/><circle cx="121" cy="95" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

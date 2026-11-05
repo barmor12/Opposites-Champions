@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">דינוזאור</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#FFE4E6"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M36 210Q36 158 100 158Q164 158 164 210Z" fill="#4ADE80"/>
+<path d="M66 72L74 40L88 68Z" fill="#FDE047"/><path d="M88 66L100 30L112 66Z" fill="#FDE047"/><path d="M112 68L126 40L134 72Z" fill="#FDE047"/>
+<path d="M40 162L44 136L58 160Z" fill="#FDE047"/><path d="M160 162L156 136L142 160Z" fill="#FDE047"/>
+<path d="M46 110Q46 60 100 60Q154 60 154 110Q154 162 100 162Q46 162 46 110Z" fill="#4ADE80"/>
+<path d="M72 128Q72 110 100 110Q128 110 128 128Q128 150 100 152Q72 150 72 128Z" fill="#BBF7D0"/>
+<path d="M70 126Q100 150 130 126" fill="none"/>
+<path d="M82 132L86 140L90 132M110 132L114 140L118 132" fill="#fff" stroke-width="3"/>
+<circle cx="90" cy="118" r="2.8" fill="#2D3748" stroke="none"/><circle cx="110" cy="118" r="2.8" fill="#2D3748" stroke="none"/>
+<circle cx="62" cy="118" r="7" fill="#F9A8D4" stroke="none"/><circle cx="138" cy="118" r="7" fill="#F9A8D4" stroke="none"/>
+<circle cx="80" cy="98" r="7" fill="#2D3748" stroke="none"/><circle cx="120" cy="98" r="7" fill="#2D3748" stroke="none"/>
+<circle cx="83" cy="95" r="2.5" fill="#fff" stroke="none"/><circle cx="123" cy="95" r="2.5" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>

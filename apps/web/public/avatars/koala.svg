@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">קואלה</title>
+<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="#FEE2E2"/>
+<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M38 210Q38 158 100 158Q162 158 162 210Z" fill="#86EFAC"/>
+<circle cx="50" cy="84" r="28" fill="#94A3B8"/><circle cx="150" cy="84" r="28" fill="#94A3B8"/>
+<circle cx="50" cy="84" r="15" fill="#F9A8D4" stroke="none"/><circle cx="150" cy="84" r="15" fill="#F9A8D4" stroke="none"/>
+<path d="M48 108Q48 60 100 60Q152 60 152 108Q152 160 100 160Q48 160 48 108Z" fill="#CBD5E1"/>
+<circle cx="66" cy="124" r="7" fill="#F9A8D4" stroke="none"/><circle cx="134" cy="124" r="7" fill="#F9A8D4" stroke="none"/>
+<ellipse cx="100" cy="120" rx="12" ry="16" fill="#2D3748"/>
+<circle cx="96" cy="113" r="3" fill="#fff" stroke="none"/>
+<path d="M88 142Q100 150 112 142" fill="none"/>
+<circle cx="78" cy="100" r="6" fill="#2D3748" stroke="none"/><circle cx="122" cy="100" r="6" fill="#2D3748" stroke="none"/>
+<circle cx="80" cy="97" r="2.2" fill="#fff" stroke="none"/><circle cx="124" cy="97" r="2.2" fill="#fff" stroke="none"/>
+</g>
+<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+</svg>
