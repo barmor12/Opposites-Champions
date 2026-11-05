@@ -18,9 +18,16 @@ export interface AppConfig {
   teacherInitial: TeacherInitialConfig;
   logLevel: string;
   isProd: boolean;
+  /**
+   * Number of reverse-proxy hops to trust for X-Forwarded-* (express `trust proxy`).
+   * 0 = none (direct exposure / local dev). Default: 1 in production (nginx), 0 otherwise.
+   * Wrong values let clients spoof their IP (rate limiting) – keep it equal to the real proxy depth.
+   */
+  trustProxyHops: number;
 }
 
 const MIN_SECRET_LENGTH = 32;
+const MAX_TRUST_PROXY_HOPS = 10;
 const DEV_DEFAULTS = {
   databaseUrl: 'postgresql://opposites:opposites@localhost:5432/opposites?schema=public',
   jwtSecret: 'dev-only-jwt-secret-do-not-use-in-production-0000',
@@ -130,6 +137,17 @@ export function loadAppConfig(env: Env, logger: Pick<Logger, 'warn'> = new Logge
 
   const logLevel = readString(env, 'LOG_LEVEL') ?? (isProd ? 'info' : 'debug');
 
+  const trustProxyRaw = readString(env, 'TRUST_PROXY');
+  let trustProxyHops = isProd ? 1 : 0;
+  if (trustProxyRaw !== undefined) {
+    const parsed = Number.parseInt(trustProxyRaw, 10);
+    if (!Number.isInteger(parsed) || parsed < 0 || parsed > MAX_TRUST_PROXY_HOPS) {
+      problems.push(`TRUST_PROXY must be an integer between 0 and ${MAX_TRUST_PROXY_HOPS} (got "${trustProxyRaw}")`);
+    } else {
+      trustProxyHops = parsed;
+    }
+  }
+
   if (problems.length > 0) throw new ConfigValidationError(problems);
   for (const w of warnings) logger.warn(w);
 
@@ -145,5 +163,6 @@ export function loadAppConfig(env: Env, logger: Pick<Logger, 'warn'> = new Logge
     teacherInitial,
     logLevel,
     isProd,
+    trustProxyHops,
   };
 }

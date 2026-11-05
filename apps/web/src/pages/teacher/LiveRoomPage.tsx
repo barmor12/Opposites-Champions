@@ -471,7 +471,7 @@ export function LiveRoomPage() {
           {totalCount === 0 ? (
             <EmptyState title="עדיין אין משתתפים" description="ברגע שתלמיד מצטרף עם הקוד – הוא יופיע כאן." className="bg-transparent py-6" />
           ) : (
-            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4" aria-label="רשימת משתתפים">
+            <ul className="grid grid-cols-[repeat(auto-fill,minmax(8.25rem,1fr))] gap-3" aria-label="רשימת משתתפים">
               <AnimatePresence initial={false}>
                 {live.participants.map((p) => (
                   <motion.li
@@ -585,58 +585,58 @@ function Counter({ label, value, suffix, tone }: { label: string; value: number;
 
 function ParticipantCard({ participant: p, questionCount, removing, onRemove }: { participant: ParticipantView; questionCount: number; removing: boolean; onRemove?: () => void }) {
   const pct = questionCount ? Math.min(100, (p.answeredCount / questionCount) * 100) : 0;
+  const status = p.finished ? 'סיים/ה' : p.connected ? 'מחובר/ת' : 'מנותק/ת';
   return (
     <div
       className={cn(
-        'relative flex h-full flex-col gap-2.5 rounded-2xl border p-3 transition-[border-color,box-shadow,background-color]',
+        'relative flex h-full min-w-0 flex-col items-center gap-2 rounded-2xl border px-2.5 pb-3 pt-4 text-center transition-[border-color,box-shadow,background-color]',
         p.finished
-          ? 'border-emerald-200 bg-linear-to-br from-emerald-50 to-white shadow-[0_10px_24px_-16px_rgba(34,197,94,.6)]'
+          ? 'border-emerald-200 bg-linear-to-b from-emerald-50 to-white shadow-[0_10px_24px_-16px_rgba(34,197,94,.6)]'
           : p.connected
             ? 'border-white/80 bg-white/85 shadow-[0_10px_24px_-18px_rgba(30,41,59,.4)]'
             : 'border-dashed border-slate-300 bg-slate-50/70',
       )}
       data-participant-id={p.id}
     >
-      <div className="flex items-start gap-2.5">
-        <div className="relative shrink-0">
-          <Avatar
-            id={p.avatar}
-            size="sm"
-            className={cn('ring-[3px]', p.finished ? 'ring-emerald-400' : p.connected ? 'ring-sky-300' : 'ring-slate-200 grayscale')}
-          />
-          <span
-            className={cn('absolute -bottom-0.5 -end-0.5 grid size-4 place-items-center rounded-full ring-2 ring-white', p.finished ? 'bg-emerald-500 text-white' : p.connected ? 'bg-emerald-500' : 'bg-slate-300')}
-            title={p.finished ? 'סיים/ה' : p.connected ? 'מחובר/ת' : 'מנותק/ת'}
-            aria-label={p.finished ? 'סיים/ה' : p.connected ? 'מחובר/ת' : 'מנותק/ת'}
-            role="img"
-          >
-            {p.finished && <Check className="size-2.5" strokeWidth={4} aria-hidden />}
-          </span>
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className={cn('truncate text-sm font-extrabold', p.connected || p.finished ? 'text-brand-navy' : 'text-slate-500')}>{p.displayName}</div>
-          <div className="text-[11px] text-slate-500 tabular-nums">
-            {p.answeredCount}/{questionCount} שאלות
-          </div>
-        </div>
-        {onRemove && (
-          <button
-            type="button"
-            onClick={onRemove}
-            disabled={removing}
-            className="-me-1 -mt-1 grid size-8 min-h-0 shrink-0 place-items-center rounded-lg text-slate-300 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
-            aria-label={`הסרת ${p.displayName}`}
-            title="הסרה מהחדר"
-          >
-            <UserMinus className="size-4" aria-hidden />
-          </button>
-        )}
+      {onRemove && (
+        <button
+          type="button"
+          onClick={onRemove}
+          disabled={removing}
+          className="absolute start-1.5 top-1.5 grid size-8 min-h-0 place-items-center rounded-lg text-slate-300 transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
+          aria-label={`הסרת ${p.displayName}`}
+          title="הסרה מהחדר"
+        >
+          <UserMinus className="size-4" aria-hidden />
+        </button>
+      )}
+      <div className="relative">
+        <Avatar id={p.avatar} size="md" className={cn('ring-[3px]', p.finished ? 'ring-emerald-400' : p.connected ? 'ring-sky-300' : 'ring-slate-200 grayscale')} />
+        <span
+          className={cn(
+            'absolute -bottom-0.5 -end-0.5 grid size-5 place-items-center rounded-full ring-2 ring-white',
+            p.finished ? 'bg-emerald-500 text-white' : p.connected ? 'bg-emerald-500' : 'bg-slate-300',
+          )}
+          title={status}
+          aria-label={status}
+          role="img"
+        >
+          {p.finished && <Check className="size-3" strokeWidth={4} aria-hidden />}
+        </span>
       </div>
-      <div className="flex items-center justify-between text-xs">
+      <div className="w-full min-w-0">
+        <div className={cn('line-clamp-2 break-words text-sm font-extrabold leading-tight', p.connected || p.finished ? 'text-brand-navy' : 'text-slate-500')} title={p.displayName}>
+          {p.displayName}
+        </div>
+        <div className="mt-1 text-[11px] text-slate-500 tabular-nums">
+          {p.answeredCount}/{questionCount} שאלות
+        </div>
+      </div>
+      <div className="mt-auto flex w-full items-center justify-between text-xs">
         <span className="text-slate-500">ניקוד</span>
         <span className="font-black text-brand-violet tabular-nums">{formatNumber(p.score)}</span>
       </div>
-      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 shadow-inner">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner">
         <motion.div
           className={cn('h-full rounded-full', p.finished ? 'bg-linear-to-l from-emerald-400 to-green-500' : 'bg-linear-to-l from-violet-500 to-fuchsia-400')}
           initial={false}
