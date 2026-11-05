@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="נקי"><title>נקי</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M60 48 L84 36 Q100 52 116 36 L140 48 L164 86 L140 100 L136 166 L64 166 L60 100 L36 86 Z" fill="#7DD3FC"/>
+<path d="M84 36 Q100 62 116 36" fill="none" stroke-width="4"/>
+<path d="M30 30 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4 l12 -4 Z M170 100 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4 l12 -4 Z M100 164 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3 Z" fill="#FDE047" stroke-width="3"/>
+</g></svg>

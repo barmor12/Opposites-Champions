@@ -3,53 +3,19 @@ import { useNavigate } from 'react-router';
 import { Gem, Info, Rocket, Users } from 'lucide-react';
 import {
   CATEGORY_LABELS,
-  Category,
   DIFFICULTY_LABELS,
   GameMode,
   QUESTION_COUNT_OPTIONS,
   QUESTION_TYPE_LABELS,
   QuestionType,
   TIME_PER_QUESTION_OPTIONS,
-  type DifficultySetting,
   type GameSettings,
 } from '@oc/shared';
 import { Button, Card, Input, toast } from '@/components/ui';
 import { useTeacherStore } from '@/stores/teacherStore';
 import { MultiChips, PageHeader, SingleChips, Toggle } from './components';
 import { MODE_LABELS, friendlyError, teacherPath, timeLabel } from './labels';
-
-const ALL_CATEGORIES = Object.values(Category);
-const DIFFICULTIES: DifficultySetting[] = ['EASY', 'MEDIUM', 'HARD', 'MIXED'];
-/** סוגי השאלות הרגילים – אתגר האוצר נבחר במתג נפרד. */
-const REGULAR_TYPES = Object.values(QuestionType).filter((t) => t !== QuestionType.TREASURE_CHALLENGE);
-
-export const DEFAULT_SETTINGS: GameSettings = {
-  className: '',
-  questionCount: 12,
-  difficulty: 'MIXED',
-  categories: [...ALL_CATEGORIES],
-  timePerQuestionSec: 20,
-  questionTypes: [...REGULAR_TYPES],
-  mode: GameMode.SELF_PACED,
-  competitionEnabled: true,
-  showLeaderboard: true,
-  showCorrectAnswers: true,
-  soundsEnabled: true,
-  treasureChallenge: false,
-};
-
-type Errors = Partial<Record<'className' | 'categories' | 'questionTypes', string>>;
-
-export function validateSettings(s: GameSettings): Errors {
-  const errors: Errors = {};
-  const name = s.className.trim();
-  if (!name) errors.className = 'יש להזין שם כיתה';
-  else if (name.length < 2) errors.className = 'שם הכיתה קצר מדי';
-  else if (name.length > 40) errors.className = 'שם הכיתה ארוך מדי (עד 40 תווים)';
-  if (s.categories.length === 0) errors.categories = 'יש לבחור לפחות קטגוריה אחת';
-  if (s.questionTypes.length === 0) errors.questionTypes = 'יש לבחור לפחות סוג שאלה אחד';
-  return errors;
-}
+import { ALL_CATEGORIES, DEFAULT_SETTINGS, DIFFICULTIES, REGULAR_TYPES, validateSettings, type GameSettingsErrors as Errors } from './gameSettingsForm';
 
 function Section({ title, description, children, error }: { title: string; description?: string; children: React.ReactNode; error?: string }) {
   return (

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מסודר"><title>מסודר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<path d="M4 140H196C196 170 170 196 140 196H60C30 196 4 170 4 140Z" fill="#E9C98A"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 140 H196" stroke-width="4"/>
+<path d="M116 72 H188" stroke-width="5"/>
+<rect x="122" y="42" width="11" height="30" rx="2" fill="#F87171"/>
+<rect x="135" y="42" width="11" height="30" rx="2" fill="#FDE047"/>
+<rect x="148" y="42" width="11" height="30" rx="2" fill="#86EFAC"/>
+<rect x="161" y="42" width="11" height="30" rx="2" fill="#A78BFA"/>
+<rect x="174" y="42" width="11" height="30" rx="2" fill="#F9A8D4"/>
+<rect x="14" y="76" width="10" height="64" rx="3" fill="#B45309"/>
+<rect x="22" y="104" width="86" height="34" rx="4" fill="#A78BFA"/>
+<path d="M22 118 H108" stroke="#fff" stroke-width="4"/>
+<rect x="28" y="92" width="30" height="14" rx="5" fill="#fff"/>
+<circle cx="156" cy="110" r="11" fill="#F87171"/>
+<rect x="128" y="112" width="56" height="28" rx="3" fill="#86EFAC"/>
+<circle cx="136" cy="112" r="5" fill="#FDE047" stroke-width="3"/>
+<circle cx="176" cy="112" r="5" fill="#7DD3FC" stroke-width="3"/>
+</g></svg>

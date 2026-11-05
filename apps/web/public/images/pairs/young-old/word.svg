@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="צעיר"><title>צעיר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FDF2F8"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="72" cy="168" rx="20" ry="11" fill="#BAE6FD"/>
+<ellipse cx="128" cy="168" rx="20" ry="11" fill="#BAE6FD"/>
+<circle cx="56" cy="174" r="7" fill="#FDE1C8" stroke-width="4"/>
+<circle cx="144" cy="174" r="7" fill="#FDE1C8" stroke-width="4"/>
+<path d="M72 128 L50 152 M128 128 L150 152" stroke-width="9"/>
+<circle cx="48" cy="154" r="8" fill="#FDE1C8" stroke-width="4"/>
+<circle cx="152" cy="154" r="8" fill="#FDE1C8" stroke-width="4"/>
+<path d="M70 116 L130 116 L134 162 L66 162 Z" fill="#BAE6FD"/>
+<path d="M82 116 Q100 134 118 116 Z" fill="#fff" stroke-width="4"/>
+<circle cx="100" cy="78" r="38" fill="#FDE1C8"/>
+<path d="M100 40 Q98 28 110 26" fill="none" stroke-width="4"/>
+<circle cx="72" cy="96" r="6" fill="#F9A8D4" stroke="none"/><circle cx="128" cy="96" r="6" fill="#F9A8D4" stroke="none"/>
+<circle cx="86" cy="76" r="9" fill="#fff"/><circle cx="86" cy="76" r="4.5" fill="#2D3748" stroke="none"/><circle cx="84.5" cy="74.5" r="1.6" fill="#fff" stroke="none"/>
+<circle cx="114" cy="76" r="9" fill="#fff"/><circle cx="114" cy="76" r="4.5" fill="#2D3748" stroke="none"/><circle cx="112.5" cy="74.5" r="1.6" fill="#fff" stroke="none"/>
+<ellipse cx="100" cy="100" rx="11" ry="8" fill="#F9A8D4" stroke-width="4"/>
+<circle cx="100" cy="100" r="4" fill="#A78BFA" stroke-width="3"/>
+<circle cx="170" cy="142" r="11" fill="#FDE047" stroke-width="4"/>
+<path d="M170 153 L172 178" stroke-width="6"/>
+<path d="M170 153 L172 178" stroke="#A78BFA" stroke-width="2.5"/>
+<circle cx="166" cy="140" r="2" fill="#F87171" stroke="none"/><circle cx="174" cy="144" r="2" fill="#7DD3FC" stroke="none"/>
+</g></svg>

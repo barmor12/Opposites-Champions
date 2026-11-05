@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="חדש"><title>חדש</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M40 30 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4 l12 -4 Z M160 42 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4 l12 -4 Z M104 22 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3 Z" fill="#FDE047" stroke-width="3"/>
+<path d="M30 150 Q26 172 44 172 L170 172 Q186 172 184 156 L178 148 Z" fill="#fff"/>
+<path d="M34 148 C30 120 50 96 86 96 L110 96 C130 96 140 112 150 124 C160 134 178 138 178 148 Z" fill="#F87171"/>
+<path d="M34 148 C32 128 44 112 62 106 L66 148 Z" fill="#fff"/>
+<path d="M88 102 L114 110 M90 114 L116 120 M94 126 L118 130" stroke="#fff" stroke-width="4"/>
+<path d="M30 150 L178 148" stroke-width="4"/>
+<path d="M120 150 Q146 146 174 150" stroke="#fff" stroke-width="3" opacity="0.6"/>
+</g></svg>

@@ -23,10 +23,14 @@ export function ResultsPage() {
   const games = useTeacherStore((s) => s.games);
   const loadGames = useTeacherStore((s) => s.loadGames);
 
-  const [results, setResults] = useState<GameResults | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | undefined>(undefined);
+  const requestKey = `${id}|${sessionId ?? ''}`;
+  // התוצאות האחרונות שנטענו (ייתכן שמסבב קודם בזמן טעינה) + שגיאה לבקשה הנוכחית
+  const [resultsState, setResultsState] = useState<{ key: string; value: GameResults } | null>(null);
+  const [errorState, setErrorState] = useState<{ key: string; message: string } | null>(null);
+  const results = resultsState?.value ?? null;
+  const error = errorState?.key === requestKey ? errorState.message : null;
+  const loading = resultsState?.key !== requestKey && !error;
   const [knownSessions, setKnownSessions] = useState<Array<{ id: string; label: string }>>([]);
   const [exporting, setExporting] = useState<ExportFormat | null>(null);
 
@@ -38,25 +42,21 @@ export function ResultsPage() {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    setError(null);
+    const key = `${id}|${sessionId ?? ''}`;
     teacherApi.games
       .results(id, sessionId)
       .then((r) => {
         if (cancelled) return;
-        setResults(r);
+        setResultsState({ key, value: r });
         setKnownSessions((prev) => {
           if (prev.some((s) => s.id === r.gameSessionId)) return prev;
           const label = r.startedAt ? `סבב מ־${formatDateTime(r.startedAt)}` : 'הסבב הנוכחי';
           return [...prev, { id: r.gameSessionId, label }];
         });
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         if (cancelled) return;
-        setError(friendlyError(err, 'לא הצלחנו לטעון את התוצאות'));
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        setErrorState({ key, message: friendlyError(err, 'לא הצלחנו לטעון את התוצאות') });
       });
     return () => {
       cancelled = true;

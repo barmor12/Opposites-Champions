@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מבולגן"><title>מבולגן</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<path d="M4 140H196C196 170 170 196 140 196H60C30 196 4 170 4 140Z" fill="#E9C98A"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 140 H196" stroke-width="4"/>
+<path d="M116 72 H188" stroke-width="5"/>
+<rect x="122" y="42" width="11" height="30" rx="2" fill="#F87171" transform="rotate(-28 128 72)"/>
+<rect x="140" y="42" width="11" height="30" rx="2" fill="#FDE047" transform="rotate(14 146 72)"/>
+<rect x="170" y="62" width="30" height="11" rx="2" fill="#86EFAC" transform="rotate(-6 180 68)"/>
+<rect x="14" y="76" width="10" height="64" rx="3" fill="#B45309"/>
+<rect x="22" y="104" width="86" height="34" rx="4" fill="#fff"/>
+<path d="M60 104 Q84 112 72 140 Q60 174 100 170 Q122 168 116 150 Q108 134 108 104 Z" fill="#A78BFA"/>
+<rect x="40" y="150" width="30" height="14" rx="5" fill="#fff" transform="rotate(-18 55 157)"/>
+<rect x="130" y="148" width="28" height="11" rx="2" fill="#A78BFA" transform="rotate(22 144 154)"/>
+<circle cx="172" cy="124" r="12" fill="#F87171"/>
+<path d="M148 100 L156 94 L164 102 L158 108 L166 116 L156 118 L150 112 L142 114 Z" fill="#fff" stroke-width="3"/>
+<path d="M28 160 l6 -10 l6 10 l6 -10 l6 10" fill="none" stroke="#86EFAC" stroke-width="5"/>
+<path d="M90 184 Q92 170 104 174 Q112 170 118 182 L104 188 Z" fill="#FDE047" stroke-width="3"/>
+</g></svg>

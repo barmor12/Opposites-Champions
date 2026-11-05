@@ -11,6 +11,7 @@ import {
 } from '@oc/shared';
 import { Button, Card, EmptyState, Input, Modal, Spinner, toast } from '@/components/ui';
 import { teacherApi, type CategoryInfo, type MediaItem, type WordPairInput } from '@/services/teacherApi';
+import { BLANK, EMPTY_FORM, validateWordPair, type WordPairFormErrors as FormErrors } from './wordPairForm';
 import { ConfirmModal, MultiChips, PageHeader, SingleChips, Toggle, TonePill } from './components';
 import { friendlyError, teacherPath } from './labels';
 
@@ -18,53 +19,21 @@ const PAGE_SIZE = 20;
 const ALL_CATEGORIES = Object.values(Category);
 const ALL_DIFFICULTIES = Object.values(Difficulty);
 const ALL_TYPES = Object.values(QuestionType);
-const BLANK = '____';
 
 const DIFFICULTY_TONE = { EASY: 'green', MEDIUM: 'yellow', HARD: 'pink' } as const;
 
-const EMPTY_FORM: WordPairInput = {
-  word: '',
-  opposite: '',
-  category: Category.SIZES,
-  difficulty: Difficulty.EASY,
-  sentence: '',
-  sentenceAnswer: 'opposite',
-  explanation: '',
-  imageable: false,
-  wordImage: '',
-  oppositeImage: '',
-  supportedTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE],
-  active: true,
-};
-
-type FormErrors = Partial<Record<keyof WordPairInput, string>>;
-
-export function validateWordPair(f: WordPairInput): FormErrors {
-  const e: FormErrors = {};
-  if (!f.word.trim()) e.word = 'יש להזין מילה';
-  if (!f.opposite.trim()) e.opposite = 'יש להזין את ההפך';
-  if (f.word.trim() && f.word.trim() === f.opposite.trim()) e.opposite = 'ההפך חייב להיות שונה מהמילה';
-  if (!f.sentence.trim()) e.sentence = 'יש להזין משפט דוגמה';
-  else if (!f.sentence.includes(BLANK)) e.sentence = `המשפט חייב להכיל ${BLANK} במקום המילה החסרה`;
-  if (f.supportedTypes.length === 0) e.supportedTypes = 'יש לבחור לפחות סוג שאלה אחד';
-  if (f.imageable) {
-    if (!f.wordImage?.trim()) e.wordImage = 'יש להזין נתיב תמונה למילה';
-    if (!f.oppositeImage?.trim()) e.oppositeImage = 'יש להזין נתיב תמונה להפך';
-  } else if (f.supportedTypes.includes(QuestionType.CHOOSE_IMAGE)) {
-    e.supportedTypes = '״בחירת תמונה״ דורשת זוג שניתן להמחשה בתמונה';
-  }
-  return e;
-}
-
 export function WordPairsPage() {
-  const [items, setItems] = useState<WordPairContent[]>([]);
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [category, setCategory] = useState<Category | ''>('');
-  const [difficulty, setDifficulty] = useState<Difficulty | ''>('');
+  const [category, setCategoryState] = useState<Category | ''>('');
+  const [difficulty, setDifficultyState] = useState<Difficulty | ''>('');
+  const [reloadTick, setReloadTick] = useState(0);
+  const queryKey = JSON.stringify({ debouncedSearch, category, difficulty, page, reloadTick });
+  const [listState, setListState] = useState<{ key: string; items: WordPairContent[]; total: number } | null>(null);
+  const items = listState?.items ?? [];
+  const total = listState?.total ?? 0;
+  const loading = listState?.key !== queryKey;
   const [categories, setCategories] = useState<CategoryInfo[]>([]);
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [editing, setEditing] = useState<WordPairContent | 'new' | null>(null);
@@ -72,30 +41,45 @@ export function WordPairsPage() {
   const [togglingId, setTogglingId] = useState<string | null>(null);
 
   useEffect(() => {
-    const t = setTimeout(() => setDebouncedSearch(search.trim()), 300);
+    const t = setTimeout(() => {
+      setDebouncedSearch((prev) => {
+        const next = search.trim();
+        if (next !== prev) setPage(1);
+        return next;
+      });
+    }, 300);
     return () => clearTimeout(t);
   }, [search]);
 
-  useEffect(() => {
+  const setCategory = (c: Category | '') => {
+    setCategoryState(c);
     setPage(1);
-  }, [debouncedSearch, category, difficulty]);
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await teacherApi.wordPairs.list({ search: debouncedSearch, category, difficulty, page, limit: PAGE_SIZE });
-      setItems(res.items);
-      setTotal(res.total);
-    } catch (err) {
-      toast.error(friendlyError(err, 'לא הצלחנו לטעון את המאגר'));
-    } finally {
-      setLoading(false);
-    }
-  }, [debouncedSearch, category, difficulty, page]);
+  };
+  const setDifficulty = (d: Difficulty | '') => {
+    setDifficultyState(d);
+    setPage(1);
+  };
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    let cancelled = false;
+    teacherApi.wordPairs
+      .list({ search: debouncedSearch, category, difficulty, page, limit: PAGE_SIZE })
+      .then((res) => {
+        if (!cancelled) setListState({ key: queryKey, items: res.items, total: res.total });
+      })
+      .catch((err: unknown) => {
+        if (!cancelled) toast.error(friendlyError(err, 'לא הצלחנו לטעון את המאגר'));
+      });
+    return () => {
+      cancelled = true;
+    };
+    // queryKey מקפל את כל הפרמטרים
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryKey]);
+
+  const load = useCallback(() => setReloadTick((t) => t + 1), []);
+  const setItems = (updater: (items: WordPairContent[]) => WordPairContent[]) =>
+    setListState((prev) => (prev ? { ...prev, items: updater(prev.items) } : prev));
 
   useEffect(() => {
     teacherApi.categories.list().then(setCategories).catch(() => setCategories([]));
@@ -124,7 +108,7 @@ export function WordPairsPage() {
     try {
       await teacherApi.wordPairs.remove(toDelete.id);
       toast.success(`הזוג ״${toDelete.word} / ${toDelete.opposite}״ נמחק`);
-      await load();
+      load();
       void refreshCategories();
     } catch (err) {
       toast.error(friendlyError(err, 'המחיקה נכשלה'));
@@ -297,7 +281,7 @@ export function WordPairsPage() {
           onClose={() => setEditing(null)}
           onSaved={(saved, isNew) => {
             setEditing(null);
-            if (isNew) void load();
+            if (isNew) load();
             else setItems((prev) => prev.map((p) => (p.id === saved.id ? saved : p)));
             void refreshCategories();
           }}
@@ -496,13 +480,13 @@ function ImageField({
   options: MediaItem[];
 }) {
   const listId = `media-list-${name}`;
-  const [broken, setBroken] = useState(false);
-  useEffect(() => setBroken(false), [value]);
+  const [brokenSrc, setBrokenSrc] = useState<string | null>(null);
+  const broken = brokenSrc !== null && brokenSrc === value;
   return (
     <div className="flex items-start gap-3">
       <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white ring-1 ring-slate-200">
         {value && !broken ? (
-          <img src={value} alt={label} className="h-full w-full object-cover" onError={() => setBroken(true)} />
+          <img src={value} alt={label} className="h-full w-full object-cover" onError={() => setBrokenSrc(value)} />
         ) : (
           <ImageIcon className="h-6 w-6 text-slate-300" aria-hidden />
         )}

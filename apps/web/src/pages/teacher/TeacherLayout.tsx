@@ -61,10 +61,6 @@ export function TeacherLayout() {
     if (authStatus === 'checking') void checkAuth();
   }, [authStatus, checkAuth]);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location.pathname]);
-
   if (authStatus === 'checking') {
     return (
       <div dir="rtl" className="flex min-h-screen items-center justify-center bg-slate-50">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import {
   Activity,
@@ -35,26 +35,25 @@ export function DashboardPage() {
   const [filter, setFilter] = useState<Filter>('all');
   const [toDelete, setToDelete] = useState<GameSummary | null>(null);
 
-  const loadStats = async () => {
-    setStatsLoading(true);
-    try {
-      setStats(await teacherApi.games.statsOverview());
-    } catch (err) {
-      toast.error(friendlyError(err, 'לא הצלחנו לטעון את הסטטיסטיקות'));
-    } finally {
-      setStatsLoading(false);
-    }
-  };
+  const fetchStats = useCallback(
+    () =>
+      teacherApi.games
+        .statsOverview()
+        .then(setStats)
+        .catch((err: unknown) => toast.error(friendlyError(err, 'לא הצלחנו לטעון את הסטטיסטיקות')))
+        .finally(() => setStatsLoading(false)),
+    [],
+  );
 
   useEffect(() => {
     void loadGames();
-    void loadStats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    void fetchStats();
+  }, [loadGames, fetchStats]);
 
   const refresh = () => {
+    setStatsLoading(true);
     void loadGames();
-    void loadStats();
+    void fetchStats();
   };
 
   const filtered = games.filter((g) => {
@@ -68,7 +67,7 @@ export function DashboardPage() {
     try {
       await deleteGame(toDelete.roomId);
       toast.success(`החדר ${toDelete.code} נמחק`);
-      void loadStats();
+      void fetchStats();
     } catch (err) {
       toast.error(friendlyError(err, 'מחיקת החדר נכשלה'));
       throw err;

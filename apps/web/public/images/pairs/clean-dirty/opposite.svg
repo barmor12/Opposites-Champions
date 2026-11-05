@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מלוכלך"><title>מלוכלך</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M60 48 L84 36 Q100 52 116 36 L140 48 L164 86 L140 100 L136 166 L64 166 L60 100 L36 86 Z" fill="#7DD3FC"/>
+<path d="M84 36 Q100 62 116 36" fill="none" stroke-width="4"/>
+<ellipse cx="84" cy="94" rx="12" ry="9" fill="#B45309" stroke="none"/><ellipse cx="120" cy="124" rx="15" ry="11" fill="#B45309" stroke="none"/><ellipse cx="92" cy="146" rx="10" ry="7" fill="#92400E" stroke="none"/><ellipse cx="62" cy="128" rx="7" ry="6" fill="#92400E" stroke="none"/>
+<circle cx="104" cy="84" r="3" fill="#B45309" stroke="none"/><circle cx="72" cy="110" r="3.5" fill="#92400E" stroke="none"/><circle cx="136" cy="100" r="3" fill="#B45309" stroke="none"/><circle cx="110" cy="150" r="2.5" fill="#B45309" stroke="none"/><circle cx="52" cy="76" r="3" fill="#92400E" stroke="none"/><circle cx="126" cy="60" r="3" fill="#B45309" stroke="none"/>
+</g></svg>

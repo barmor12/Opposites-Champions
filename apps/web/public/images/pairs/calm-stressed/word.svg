@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="רגוע"><title>רגוע</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#DCFCE7"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="78" cy="156" rx="32" ry="15" fill="#7DD3FC"/>
+<ellipse cx="122" cy="156" rx="32" ry="15" fill="#7DD3FC"/>
+<path d="M74 104 L52 144 M126 104 L148 144" stroke-width="9"/>
+<path d="M74 96 L126 96 L132 150 L68 150 Z" fill="#FDE047"/>
+<circle cx="50" cy="148" r="8" fill="#FDE1C8" stroke-width="4"/>
+<circle cx="150" cy="148" r="8" fill="#FDE1C8" stroke-width="4"/>
+<circle cx="100" cy="70" r="26" fill="#FDE1C8"/>
+<path d="M74 66 Q76 42 100 42 Q124 42 126 66 Q114 56 100 58 Q86 56 74 66 Z" fill="#B45309"/>
+<path d="M84 74 Q90 80 96 74 M104 74 Q110 80 116 74" fill="none" stroke-width="3.5"/>
+<path d="M92 86 Q100 92 108 86" fill="none" stroke-width="3"/>
+<path d="M40 70 C26 58 32 42 40 48 C48 42 54 58 40 70 Z M162 56 C148 44 154 28 162 34 C170 28 176 44 162 56 Z M158 104 C148 96 152 84 158 88 C164 84 168 96 158 104 Z" fill="#F9A8D4" stroke-width="3"/>
+</g></svg>
