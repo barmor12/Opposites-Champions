@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { answerAllQuestions, createGameViaApi, joinAsStudent, teacherLogin } from './helpers';
+import { answerAllQuestions, createGameViaApi, joinAsStudent, pickAvatar, teacherLogin } from './helpers';
 
 test.describe('זרימת משחק מלאה', () => {
   test('מורה יוצרת חדר, תלמידים מצטרפים, משחקים ורואים דירוג', async ({ page, browser }) => {
@@ -18,6 +18,7 @@ test.describe('זרימת משחק מלאה', () => {
     const dup = await dupCtx.newPage();
     await dup.goto(`/join/${code}`);
     await dup.getByLabel(/שם/).first().fill('נועה');
+    await pickAvatar(dup);
     await dup.getByRole('button', { name: /בואו נשחק/ }).click();
     await expect(dup.getByText(/תפוס/)).toBeVisible();
     await dupCtx.close();
@@ -47,6 +48,7 @@ test.describe('זרימת משחק מלאה', () => {
     await page.goto('/');
     await page.getByLabel(/שם/).first().fill('דנה');
     await page.getByLabel(/קוד/).first().fill('000000');
+    await pickAvatar(page);
     await page.getByRole('button', { name: /בואו נשחק/ }).click();
     await expect(page.getByText(/לא נמצא|לא קיים/)).toBeVisible();
   });

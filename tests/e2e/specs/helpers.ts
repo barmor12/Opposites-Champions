@@ -22,7 +22,10 @@ export async function createGameViaApi(
       className: 'כיתה ג׳ בדיקה',
       questionCount: 10,
       difficulty: 'MIXED',
-      categories: [],
+      categories: [
+        'SIZES', 'COLORS_LIGHT', 'EMOTIONS', 'ACTIONS', 'TIME_SPEED',
+        'DIRECTIONS_PLACES', 'ANIMALS_NATURE', 'TRAITS_STATES', 'OBJECTS_ENVIRONMENT', 'CHALLENGING',
+      ],
       timePerQuestionSec: 0,
       questionTypes: ['CHOOSE_OPPOSITE', 'COMPLETE_SENTENCE'],
       mode: 'SELF_PACED',
@@ -39,11 +42,22 @@ export async function createGameViaApi(
   return { roomId: body.roomId, code: body.code };
 }
 
+/** בוחר אווטאר (שדה חובה בטופס ההצטרפות) */
+export async function pickAvatar(page: Page): Promise<void> {
+  const radio = page.getByRole('radio').first();
+  if (await radio.isVisible().catch(() => false)) {
+    await radio.click();
+    return;
+  }
+  await page.getByText('אריה', { exact: true }).first().click();
+}
+
 export async function joinAsStudent(browser: Browser, code: string, name: string): Promise<Page> {
   const ctx = await browser.newContext({ locale: 'he-IL' });
   const page = await ctx.newPage();
   await page.goto(`/join/${code}`);
   await page.getByLabel(/שם/).first().fill(name);
+  await pickAvatar(page);
   await page.getByRole('button', { name: /בואו נשחק/ }).click();
   await expect(page.getByText(new RegExp(`שלום ${name}`))).toBeVisible();
   await expect(page.getByText(/מחכים שהמורה/)).toBeVisible({ timeout: 15_000 });
