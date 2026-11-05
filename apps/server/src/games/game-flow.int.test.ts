@@ -286,3 +286,95 @@ describe('game flow (integration, self-paced)', () => {
     await api().get(`/api/games/${game.roomId}`).set('Cookie', cookie).expect(404);
   });
 });
+
+describe('game flow (integration, teacher-paced)', () => {
+  let app: INestApplication;
+  let prisma: PrismaService;
+  let scoring: ScoringService;
+  let cookie: string;
+  let teacherId: string;
+  let game: GameSummary;
+  const players: JoinRoomResponse[] = [];
+  const api = () => request(app.getHttpServer());
+
+  async function answerCurrent(participantId: string): Promise<AnswerResult> {
+    const session = await prisma.gameSession.findUniqueOrThrow({ where: { id: game.currentSessionId as string } });
+    const sq = await prisma.sessionQuestion.findUniqueOrThrow({ where: { sessionId_index: { sessionId: session.id, index: session.currentQuestionIndex ?? 0 } }, include: SESSION_QUESTION_INCLUDE });
+    const option = sq.question.options.find((o) => o.isCorrect);
+    return scoring.submitAnswer(participantId, { sessionQuestionId: sq.id, optionId: option?.id ?? '' });
+  }
+
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({ imports: [AppConfigModule, PrismaModule, GameFeatureModule] }).compile();
+    app = moduleRef.createNestApplication();
+    setupApp(app, { corsOrigins: ['http://localhost:5173'], cookieSecret: 'int-test-cookie-secret-32-chars-long!!', isProd: false, http: false });
+    await app.init();
+    prisma = app.get(PrismaService);
+    scoring = app.get(ScoringService);
+    await prisma.teacher.deleteMany({ where: { email: 'game-int-tp@example.com' } });
+    const teacher = await prisma.teacher.create({ data: { email: 'game-int-tp@example.com', name: 'מורה קצב מורה', passwordHash: 'x' } });
+    teacherId = teacher.id;
+    cookie = `${TEACHER_COOKIE}=${await app.get(JwtService).signAsync({ sub: teacher.id, email: teacher.email, name: teacher.name })}`;
+    game = (await api().post('/api/games').set('Cookie', cookie).set(CSRF)
+      .send({ ...SETTINGS, mode: GameMode.TEACHER_PACED, treasureChallenge: false, questionTypes: [QuestionType.CHOOSE_OPPOSITE], timePerQuestionSec: 15 })
+      .expect(201)).body as GameSummary;
+    for (const name of ['רון', 'מאיה']) {
+      players.push((await api().post('/api/rooms/join').send({ code: game.code, displayName: name, avatar: 'panda' }).expect(200)).body as JoinRoomResponse);
+    }
+    // teacher-paced auto-close counts connected players; mark them connected as the gateway would
+    await prisma.gameParticipant.updateMany({ where: { roomId: game.roomId }, data: { connected: true } });
+  });
+
+  afterAll(async () => {
+    if (game) await api().delete(`/api/games/${game.roomId}`).set('Cookie', cookie).set(CSRF);
+    await prisma.teacher.deleteMany({ where: { id: teacherId } });
+    await app.close();
+  });
+
+  it('activates question 0 for the whole room, closes when everyone answered, and advances with next', async () => {
+    await api().post(`/api/games/${game.roomId}/start`).set('Cookie', cookie).set(CSRF).expect(200);
+    await sleep(COUNTDOWN_MS + 700);
+    let live = (await api().get(`/api/games/${game.roomId}`).set('Cookie', cookie).expect(200)).body as TeacherRoomLive;
+    expect(live.room.state).toBe(GameState.QUESTION_ACTIVE);
+    expect(live.currentQuestionIndex).toBe(0);
+    const session = (await api().get('/api/player/session').set(SESSION_TOKEN_HEADER, players[0]?.sessionToken ?? '').expect(200)).body as PlayerSession;
+    expect(session.currentQuestion?.index).toBe(0);
+    expect(session.currentQuestion?.endsAt).toBeGreaterThan(session.currentQuestion?.startedAt ?? 0);
+
+    const r1 = await answerCurrent(players[0]?.participantId ?? '');
+    expect(r1.correct).toBe(true);
+    expect(r1.correctOptionId).toBeUndefined(); // נחשף רק ב־question:ended
+    await answerCurrent(players[1]?.participantId ?? '');
+    await sleep(300);
+    live = (await api().get(`/api/games/${game.roomId}`).set('Cookie', cookie).expect(200)).body as TeacherRoomLive;
+    expect(live.room.state).toBe(GameState.QUESTION_RESULTS);
+    await expect(answerCurrent(players[0]?.participantId ?? '')).rejects.toMatchObject({ code: 'NOT_ACTIVE' });
+
+    live = (await api().post(`/api/games/${game.roomId}/next`).set('Cookie', cookie).set(CSRF).expect(200)).body as TeacherRoomLive;
+    expect(live.room.state).toBe(GameState.QUESTION_ACTIVE);
+    expect(live.currentQuestionIndex).toBe(1);
+  });
+
+  it('pauses and resumes keeping the remaining time, then finishes', async () => {
+    const paused = (await api().post(`/api/games/${game.roomId}/pause`).set('Cookie', cookie).set(CSRF).expect(200)).body as TeacherRoomLive;
+    expect(paused.room.state).toBe(GameState.PAUSED);
+    const stored = await prisma.gameSession.findUniqueOrThrow({ where: { id: game.currentSessionId as string } });
+    expect(stored.pausedRemainingMs).toBeGreaterThan(10_000);
+    expect(stored.pausedRemainingMs).toBeLessThanOrEqual(15_000);
+    await expect(answerCurrent(players[0]?.participantId ?? '')).rejects.toMatchObject({ code: 'GAME_PAUSED' });
+    await sleep(400);
+    const resumed = (await api().post(`/api/games/${game.roomId}/resume`).set('Cookie', cookie).set(CSRF).expect(200)).body as TeacherRoomLive;
+    expect(resumed.room.state).toBe(GameState.QUESTION_ACTIVE);
+    const after = await prisma.gameSession.findUniqueOrThrow({ where: { id: game.currentSessionId as string } });
+    expect(after.questionEndsAt?.getTime()).toBeGreaterThan(Date.now() + 9_000);
+    const r = await answerCurrent(players[1]?.participantId ?? '');
+    expect(r.correct).toBe(true);
+
+    const finished = (await api().post(`/api/games/${game.roomId}/finish`).set('Cookie', cookie).set(CSRF).expect(200)).body as TeacherRoomLive;
+    expect(finished.room.state).toBe(GameState.COMPLETED);
+    expect(finished.finishedCount).toBe(2);
+    const results = (await api().get(`/api/games/${game.roomId}/results`).set('Cookie', cookie).expect(200)).body as GameResults;
+    expect(results.leaderboard[0]?.participantId).toBe(players[1]?.participantId);
+    await api().post(`/api/games/${game.roomId}/next`).set('Cookie', cookie).set(CSRF).expect(409);
+  });
+});
