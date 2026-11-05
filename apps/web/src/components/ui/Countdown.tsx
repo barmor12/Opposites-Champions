@@ -75,7 +75,7 @@ export function Countdown({ startsAt, seconds = COUNTDOWN_SECONDS, serverOffsetM
             )}
           >
             <span aria-hidden className="pointer-events-none absolute inset-x-[18%] top-[6%] h-[30%] rounded-full bg-gradient-to-b from-white/70 to-transparent blur-[2px]" />
-            <span className={cn('relative font-black leading-none text-extrude', go ? 'text-[2.4rem] sm:text-6xl lg:text-7xl' : 'text-fluid-count')} dir="ltr">
+            <span className={cn('relative font-black leading-none text-extrude', go ? 'text-[2.4rem] sm:text-6xl lg:text-7xl' : 'text-fluid-count')} dir={go ? 'rtl' : 'ltr'}>
               {label}
             </span>
           </motion.div>

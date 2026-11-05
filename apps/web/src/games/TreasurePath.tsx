@@ -21,9 +21,9 @@ function pathPoints(total: number): { steps: Point[]; chest: Point } {
   const endX = 14;
   const steps: Point[] = Array.from({ length: total }, (_, i) => {
     const t = total === 1 ? 0 : i / total;
-    return { x: startX - t * (startX - endX), y: i % 2 === 0 ? 34 : 66 };
+    return { x: startX - t * (startX - endX), y: i % 2 === 0 ? 40 : 72 };
   });
-  return { steps, chest: { x: 6, y: 52 } };
+  return { steps, chest: { x: 6, y: 56 } };
 }
 
 function roadD(pts: Point[], chest: Point): string {
@@ -63,12 +63,12 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
           <span aria-hidden="true">🗺️ </span>
           אתגר האוצר – שלב {safeStep} מתוך {total}
         </h2>
-        <span className="rounded-full bg-gradient-to-b from-amber-200 to-amber-300 px-3 py-0.5 text-xs font-bold text-amber-900 ring-1 ring-amber-400/60 shadow-[inset_0_1px_0_#fff] sm:text-sm">
+        <span className="hidden whitespace-nowrap rounded-full bg-gradient-to-b from-amber-200 to-amber-300 px-3 py-0.5 text-xs font-bold text-amber-900 ring-1 ring-amber-400/60 shadow-[inset_0_1px_0_#fff] sm:inline-block sm:text-sm">
           {completed ? 'הושלם!' : 'ענו נכון כדי להתקדם'}
         </span>
       </div>
 
-      <div className="relative h-24 w-full sm:h-28" dir="ltr">
+      <div className="relative mt-1 h-[6.5rem] w-full sm:h-32" dir="ltr">
         {/* הדרך */}
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
           <defs>
@@ -122,7 +122,7 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
                     <motion.div
                       aria-hidden="true"
                       data-testid="treasure-marker"
-                      className="absolute -top-9 text-2xl leading-none drop-shadow-[0_6px_6px_rgba(30,41,59,0.3)] sm:-top-10 sm:text-3xl"
+                      className="absolute -top-8 text-2xl leading-none drop-shadow-[0_6px_6px_rgba(30,41,59,0.3)] sm:-top-9 sm:text-3xl"
                       animate={reduced ? undefined : { y: [0, -6, 0] }}
                       transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
                     >
@@ -138,7 +138,7 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
         {/* תיבת האוצר */}
         <motion.div
           className="absolute h-16 w-20 -translate-x-1/2 -translate-y-1/2 sm:h-20 sm:w-24"
-          style={{ left: `${chest.x + 4}%`, top: `${chest.y - 4}%` }}
+          style={{ left: `${chest.x + 4}%`, top: `${chest.y - 6}%` }}
           animate={reduced ? undefined : completed ? { scale: [1, 1.1, 1] } : { rotate: [0, -4, 4, 0] }}
           transition={{ duration: 2, repeat: Infinity, repeatDelay: 1.5 }}
         >

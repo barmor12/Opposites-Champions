@@ -14,3 +14,5 @@ infrastructure/certbot/
 *.tsbuildinfo
 .pnpm-store/
 backups/
+
+tests/e2e/test-results*/

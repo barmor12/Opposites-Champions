@@ -7,7 +7,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { ContentService } from '../content/content.service';
 import { GameError } from '../games/game-error';
-import { pickDistractors } from '@oc/content';
+import { pickDistractors, synonymsOf } from '@oc/content';
 import { toWordPairRecord } from '../content/content.service';
 import { pairKey, parseQuestionPayload, payloadToJson, type MatchPair, type QuestionPayload } from './question-payload';
 import { pick, randomId, seededRng, shuffle, type Rng } from './rng';
@@ -47,12 +47,25 @@ interface QuestionSpec {
 }
 
 const DISTRACTOR_COUNT = 3;
+const MIN_POOL = DISTRACTOR_COUNT + 1;
 const PLAYABLE_TYPES: readonly QuestionType[] = [
   QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE,
+  QuestionType.PICTURE_TO_PICTURE,
 ];
 
-function hasImages(p: PlayablePair): p is PlayablePair & { wordImage: NonNullable<PlayablePair['wordImage']>; oppositeImage: NonNullable<PlayablePair['oppositeImage']> } {
+type ImagedPair = PlayablePair & { wordImage: NonNullable<PlayablePair['wordImage']>; oppositeImage: NonNullable<PlayablePair['oppositeImage']> };
+
+function hasImages(p: PlayablePair): p is ImagedPair {
   return p.imageable && p.wordImage !== null && p.oppositeImage !== null;
+}
+
+function supportsType(p: PlayablePair, type: QuestionType): boolean {
+  return p.supportedTypes.length === 0 || p.supportedTypes.includes(type);
+}
+
+/** זוגות עם איורים שתומכים ב"תמונה מול תמונה" */
+function picturePairs(pairs: readonly PlayablePair[]): ImagedPair[] {
+  return pairs.filter(hasImages).filter((p) => supportsType(p, QuestionType.PICTURE_TO_PICTURE));
 }
 
 function explanationFor(p: PlayablePair): string {
@@ -113,7 +126,10 @@ export class QuestionsService {
       difficulty: settings.difficulty,
       types: requestedTypes.length > 0 ? requestedTypes : [...PLAYABLE_TYPES],
     });
-    const specs = this.buildSpecs(pairs, settings, rng);
+    const pictureFallback = requestedTypes.includes(QuestionType.PICTURE_TO_PICTURE) && picturePairs(pairs).length < MIN_POOL
+      ? await this.pictureFallbackPairs(settings)
+      : [];
+    const specs = this.buildSpecs(pairs, settings, rng, pictureFallback);
     const timeLimitMs = Math.max(0, settings.timePerQuestionSec) * 1000;
     const treasureStart = specs.length - this.treasureCount(settings);
 
@@ -150,20 +166,47 @@ export class QuestionsService {
     });
   }
 
-  /** בניית מפרטי השאלות בזיכרון (ללא DB) – נגיש לבדיקות יחידה */
-  buildSpecs(pairs: readonly PlayablePair[], settings: GameSettings, rng: Rng): QuestionSpec[] {
-    if (pairs.length < DISTRACTOR_COUNT + 1) {
+  /**
+   * מאגר חלופי ל"תמונה מול תמונה": כשסינון הקטגוריות/רמת הקושי משאיר פחות מ־4 זוגות עם איורים,
+   * המשחק עדיין חייב להתמלא ב־questionCount שאלות – לכן נופלים לכל הזוגות עם איורים
+   * (קודם תוך שמירה על רמת הקושי, ואם גם זה לא מספיק – ללא כל סינון). הקטגוריה מתעלמת במכוון.
+   */
+  private async pictureFallbackPairs(settings: GameSettings): Promise<PlayablePair[]> {
+    const types = [QuestionType.PICTURE_TO_PICTURE];
+    const sameDifficulty = await this.content.getPlayablePairs({ difficulty: settings.difficulty, types, requireImages: true });
+    if (picturePairs(sameDifficulty).length >= MIN_POOL) return sameDifficulty;
+    const all = await this.content.getPlayablePairs({ types, requireImages: true });
+    if (picturePairs(all).length < MIN_POOL) return sameDifficulty;
+    this.logger.warn('PICTURE_TO_PICTURE: falling back to all imageable pairs (category/difficulty filters ignored)');
+    return all;
+  }
+
+  /**
+   * בניית מפרטי השאלות בזיכרון (ללא DB) – נגיש לבדיקות יחידה.
+   * `pictureFallback` – זוגות עם איורים (ללא סינון קטגוריה) שמשמשים ל־PICTURE_TO_PICTURE בלבד,
+   * ורק אם ב־`pairs` יש פחות מ־4 זוגות מתאימים (ראו pictureFallbackPairs).
+   */
+  buildSpecs(pairs: readonly PlayablePair[], settings: GameSettings, rng: Rng, pictureFallback: readonly PlayablePair[] = []): QuestionSpec[] {
+    const imageable = pairs.filter(hasImages);
+    const ownPicturePool = picturePairs(pairs);
+    const picturePool: ImagedPair[] = ownPicturePool.length >= MIN_POOL ? ownPicturePool : (() => {
+      const fallback = picturePairs(pictureFallback);
+      return fallback.length >= MIN_POOL ? fallback : ownPicturePool;
+    })();
+    if (pairs.length < MIN_POOL && picturePool.length < MIN_POOL) {
       throw GameError.badRequest('NOT_ENOUGH_PAIRS', 'אין מספיק זוגות מילים להגדרות שנבחרו');
     }
-    const imageable = pairs.filter(hasImages);
     const poolFor = (type: QuestionType): PlayablePair[] => {
+      if (type === QuestionType.PICTURE_TO_PICTURE) return picturePool.length >= MIN_POOL ? picturePool : [];
       const base = type === QuestionType.CHOOSE_IMAGE ? imageable : pairs;
-      const supporting = base.filter((p) => p.supportedTypes.length === 0 || p.supportedTypes.includes(type));
+      const supporting = base.filter((p) => supportsType(p, type));
       return supporting.length >= (type === QuestionType.MATCH_PAIRS ? MATCH_PAIRS_PER_QUESTION : 1) ? supporting : [];
     };
     const requested = settings.questionTypes.filter((t): t is QuestionType => (PLAYABLE_TYPES as readonly string[]).includes(t));
     let active = (requested.length > 0 ? requested : [...PLAYABLE_TYPES]).filter((t) => {
-      if (t === QuestionType.CHOOSE_IMAGE) return imageable.length >= DISTRACTOR_COUNT + 1 && poolFor(t).length > 0;
+      if (t === QuestionType.CHOOSE_IMAGE) return imageable.length >= MIN_POOL && poolFor(t).length > 0;
+      // סוגים טקסטואליים זקוקים ל־4 זוגות לפחות במאגר המסונן (למסיחים)
+      if (t !== QuestionType.PICTURE_TO_PICTURE && pairs.length < MIN_POOL) return false;
       return poolFor(t).length > 0;
     });
     if (active.length === 0) active = [QuestionType.CHOOSE_OPPOSITE];
@@ -180,6 +223,8 @@ export class QuestionsService {
       switch (type) {
         case QuestionType.CHOOSE_IMAGE:
           return this.chooseImageSpec(deck.take(poolFor(type)), imageable, rng);
+        case QuestionType.PICTURE_TO_PICTURE:
+          return this.pictureToPictureSpec(deck.take(poolFor(type)) as ImagedPair, picturePool, pairs, rng);
         case QuestionType.MATCH_PAIRS:
           return this.matchPairsSpec(deck.takeMany(poolFor(type), MATCH_PAIRS_PER_QUESTION), rng);
         case QuestionType.COMPLETE_SENTENCE:
@@ -265,6 +310,64 @@ export class QuestionsService {
     const options = shuffle([{ text: pair.opposite, image: pair.oppositeImage.url, isCorrect: true }, ...distractors], rng);
     return {
       type: QuestionType.CHOOSE_IMAGE,
+      wordPairId: pair.id,
+      prompt: pair.word,
+      promptImage: pair.wordImage.url,
+      explanation: explanationFor(pair),
+      payload: { kind: 'choice', pairId: pair.id, word: pair.word, opposite: pair.opposite },
+      options,
+    };
+  }
+
+  /**
+   * "תמונה מול תמונה" (רמה קלה ללא קריאה): ה־prompt הוא איור המילה (המילה נשמרת ב־prompt להקראה/דוחות),
+   * וכל 4 האפשרויות הן איורים – איור ההפך + 3 איורים של מילים אחרות מהמאגר (עדיפות לאותה קטגוריה).
+   * לעולם לא: איור המילה עצמה, איור של הפך תקף/נרדף של אחת ממילות הזוג, או אותו איור פעמיים.
+   * `options[].text` = המילה (ל־alt ולהקראה בלבד). הבדיקה והניקוד זהים ל־CHOOSE_IMAGE.
+   */
+  private pictureToPictureSpec(pair: ImagedPair, pool: readonly ImagedPair[], all: readonly PlayablePair[], rng: Rng): QuestionSpec {
+    const forbiddenTexts = new Set<string>();
+    const ban = (w: string): void => {
+      for (const syn of synonymsOf(w)) forbiddenTexts.add(syn);
+    };
+    ban(pair.word);
+    ban(pair.opposite);
+    for (const other of [...all, ...pool]) {
+      if (other.word === pair.word || other.word === pair.opposite) ban(other.opposite);
+      if (other.opposite === pair.word || other.opposite === pair.opposite) ban(other.word);
+    }
+    const usedImages = new Set<string>([pair.wordImage.url, pair.oppositeImage.url]);
+
+    interface ImageCandidate { pairId: string; text: string; image: string; sameCategory: boolean }
+    const candidates: ImageCandidate[] = [];
+    for (const p of pool) {
+      if (p.id === pair.id) continue;
+      const sameCategory = p.category === pair.category;
+      candidates.push({ pairId: p.id, text: p.word, image: p.wordImage.url, sameCategory });
+      candidates.push({ pairId: p.id, text: p.opposite, image: p.oppositeImage.url, sameCategory });
+    }
+    // ערבוב ואז מיון יציב: אותה קטגוריה קודם
+    const ordered = shuffle(candidates, rng).sort((a, b) => Number(b.sameCategory) - Number(a.sameCategory));
+    const distractors: OptionSpec[] = [];
+    const usedPairs = new Set<string>();
+    const take = (c: ImageCandidate): void => {
+      usedImages.add(c.image);
+      forbiddenTexts.add(c.text);
+      usedPairs.add(c.pairId);
+      distractors.push({ text: c.text, image: c.image, isCorrect: false });
+    };
+    // מעבר ראשון: איור אחד לכל זוג (מגוון), מעבר שני: משלים גם מזוגות שכבר שימשו
+    for (const allowUsedPair of [false, true]) {
+      for (const c of ordered) {
+        if (distractors.length >= DISTRACTOR_COUNT) break;
+        if (usedImages.has(c.image) || forbiddenTexts.has(c.text)) continue;
+        if (!allowUsedPair && usedPairs.has(c.pairId)) continue;
+        take(c);
+      }
+    }
+    const options = shuffle([{ text: pair.opposite, image: pair.oppositeImage.url, isCorrect: true }, ...distractors], rng);
+    return {
+      type: QuestionType.PICTURE_TO_PICTURE,
       wordPairId: pair.id,
       prompt: pair.word,
       promptImage: pair.wordImage.url,

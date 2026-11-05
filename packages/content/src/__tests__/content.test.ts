@@ -2,7 +2,10 @@ import { describe, expect, it } from 'vitest';
 import { AVATARS, Category, Difficulty, QuestionType } from '@oc/shared';
 import type { WordPairContent } from '@oc/shared';
 import {
+  ABSTRACT_QUESTION_TYPES,
   ASSET_MANIFEST,
+  IMAGEABLE_PAIRS,
+  IMAGEABLE_QUESTION_TYPES,
   IMAGE_PAIR_SLUGS,
   WORD_PAIRS,
   getActivePairs,
@@ -121,18 +124,28 @@ describe('WORD_PAIRS – images', () => {
     expect(WORD_PAIRS.filter((p) => p.imageable).length).toBe(IMAGE_PAIR_SLUGS.length);
   });
 
-  it('imageable pairs have both image paths and support all four per-pair question types', () => {
+  it('imageable pairs have both image paths and support all five per-pair question types', () => {
     for (const p of WORD_PAIRS) {
       if (p.imageable) {
         expect(p.wordImage).toBe(`/images/pairs/${p.id}/word.svg`);
         expect(p.oppositeImage).toBe(`/images/pairs/${p.id}/opposite.svg`);
-        expect([...p.supportedTypes].sort()).toEqual(['CHOOSE_IMAGE', 'CHOOSE_OPPOSITE', 'COMPLETE_SENTENCE', 'MATCH_PAIRS']);
+        expect([...p.supportedTypes].sort()).toEqual(['CHOOSE_IMAGE', 'CHOOSE_OPPOSITE', 'COMPLETE_SENTENCE', 'MATCH_PAIRS', 'PICTURE_TO_PICTURE']);
       } else {
         expect(p.wordImage).toBeUndefined();
         expect(p.oppositeImage).toBeUndefined();
         expect([...p.supportedTypes].sort()).toEqual(['CHOOSE_OPPOSITE', 'COMPLETE_SENTENCE', 'MATCH_PAIRS']);
       }
     }
+  });
+});
+
+describe('question type lists', () => {
+  it('PICTURE_TO_PICTURE is an imageable-only type', () => {
+    expect(IMAGEABLE_QUESTION_TYPES).toContain('PICTURE_TO_PICTURE');
+    expect(ABSTRACT_QUESTION_TYPES).not.toContain('PICTURE_TO_PICTURE');
+    expect(IMAGEABLE_PAIRS.length).toBe(IMAGE_PAIR_SLUGS.length);
+    expect(IMAGEABLE_PAIRS.every((p) => p.supportedTypes.includes('PICTURE_TO_PICTURE'))).toBe(true);
+    expect(WORD_PAIRS.filter((p) => !p.imageable).some((p) => p.supportedTypes.includes('PICTURE_TO_PICTURE'))).toBe(false);
   });
 });
 
@@ -175,6 +188,9 @@ describe('getActivePairs', () => {
     }
     const images = getActivePairs({ types: ['CHOOSE_IMAGE'] });
     expect(images.length).toBe(IMAGE_PAIR_SLUGS.length);
+    const pictureOnly = getActivePairs({ types: ['PICTURE_TO_PICTURE'] });
+    expect(pictureOnly.length).toBe(IMAGE_PAIR_SLUGS.length);
+    expect(pictureOnly.every((p) => p.imageable && p.wordImage && p.oppositeImage)).toBe(true);
     expect(getActivePairs({ difficulty: 'MIXED' }).length).toBe(WORD_PAIRS.length);
     expect(getActivePairs({ categories: [] }).length).toBe(WORD_PAIRS.length);
     // TREASURE_CHALLENGE is not a per-pair type and must not exclude anything

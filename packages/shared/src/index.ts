@@ -5,4 +5,5 @@ export * from './ranking';
 export * from './nameFilter';
 export * from './stateMachine';
 export * from './types';
+export * from './presets';
 export * from './socket';

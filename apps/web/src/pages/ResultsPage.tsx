@@ -77,7 +77,7 @@ export function ResultsPage() {
   const myAnswered = me?.answeredCount ?? answeredCount;
 
   return (
-    <main className="relative flex min-h-dvh flex-col overflow-x-clip items-center safe-x safe-bottom pt-3 sm:pt-4">
+    <main data-testid="results-page" className="relative flex min-h-dvh flex-col overflow-x-clip items-center safe-x safe-bottom pt-3 sm:pt-4">
       <PageBackground variant="sunset" rainbow />
       <Confetti active={confetti && !reduce} />
 

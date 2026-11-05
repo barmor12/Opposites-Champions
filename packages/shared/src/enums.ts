@@ -22,6 +22,8 @@ export const QuestionType = {
   CHOOSE_IMAGE: 'CHOOSE_IMAGE',
   MATCH_PAIRS: 'MATCH_PAIRS',
   COMPLETE_SENTENCE: 'COMPLETE_SENTENCE',
+  /** רמה קלה ללא קריאה: השאלה וכל 4 האפשרויות הן איורים בלבד (זוגות imageable) */
+  PICTURE_TO_PICTURE: 'PICTURE_TO_PICTURE',
   TREASURE_CHALLENGE: 'TREASURE_CHALLENGE',
 } as const;
 export type QuestionType = (typeof QuestionType)[keyof typeof QuestionType];
@@ -69,7 +71,18 @@ export const QUESTION_TYPE_LABELS: Record<QuestionType, string> = {
   CHOOSE_IMAGE: 'בחירת תמונה',
   MATCH_PAIRS: 'התאמת זוגות',
   COMPLETE_SENTENCE: 'השלמת משפטים',
+  PICTURE_TO_PICTURE: 'תמונה מול תמונה (ללא קריאה)',
   TREASURE_CHALLENGE: 'אתגר האוצר',
+};
+
+/** תיאור קצר לכל סוג שאלה – מוצג למורה בעמוד יצירת משחק */
+export const QUESTION_TYPE_DESCRIPTIONS: Record<QuestionType, string> = {
+  CHOOSE_OPPOSITE: 'מוצגת מילה ויש לבחור את ההפך שלה מבין 4 מילים',
+  CHOOSE_IMAGE: 'מוצגת מילה ויש לבחור את האיור של ההפך שלה',
+  MATCH_PAIRS: 'מחברים 4 זוגות של מילים מנוגדות מתוך 8 כרטיסים',
+  COMPLETE_SENTENCE: 'משלימים משפט עם המילה המנוגדת המתאימה',
+  PICTURE_TO_PICTURE: 'השאלה והתשובות הן איורים בלבד – מתאים למי שעדיין לא קורא',
+  TREASURE_CHALLENGE: '5 שאלות אחרונות ברצף – תשובות נכונות בכולן מזכות בבונוס',
 };
 
 export const AchievementType = {

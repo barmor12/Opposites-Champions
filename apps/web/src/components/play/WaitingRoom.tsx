@@ -22,7 +22,7 @@ export interface WaitingRoomProps {
 export function WaitingRoom({ room, displayName, avatar, participantCount, leaderboard, participantId, afterRound }: WaitingRoomProps) {
   const reduce = useReducedMotion();
   return (
-    <div className="mx-auto flex w-full max-w-xl flex-col gap-5 lg:max-w-2xl">
+    <div data-testid="waiting-room" className="mx-auto flex w-full max-w-xl flex-col gap-5 lg:max-w-2xl">
       <Card variant="glass" className="flex flex-col items-center gap-4 overflow-hidden text-center shadow-float">
         <div className="flex items-center justify-center gap-3 sm:gap-5">
           <Character name="sun" mood="happy" size="sm" delay={0.3} className="hidden sm:block" />

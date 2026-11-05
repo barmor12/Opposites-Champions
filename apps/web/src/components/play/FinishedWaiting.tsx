@@ -21,7 +21,7 @@ export function FinishedWaiting({ score, correctAnswers, answeredCount, finished
   const reduce = useReducedMotion();
   const accuracy = answeredCount ? Math.round((correctAnswers / answeredCount) * 100) : 0;
   return (
-    <div className="mx-auto flex w-full max-w-xl flex-col gap-5 lg:max-w-2xl">
+    <div data-testid="finished-screen" className="mx-auto flex w-full max-w-xl flex-col gap-5 lg:max-w-2xl">
       <Card variant="glass" className="relative flex flex-col items-center gap-4 overflow-hidden text-center shadow-float">
         <div className="relative">
           <LightRays color="rgb(250 204 21)" intensity={0.4} className="w-[260%]" />

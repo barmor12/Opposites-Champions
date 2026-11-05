@@ -220,7 +220,7 @@ export function PlayPage() {
             )}
             {screen === 'preparing' && <CenterMessage spinner text="מכינים את השאלה הבאה…" />}
             {screen === 'question' && question && room && (
-              <div className="flex flex-1 flex-col gap-3 sm:gap-4">
+              <div data-testid="question-screen" className="flex flex-1 flex-col gap-3 sm:gap-4">
                 <QuestionHeader
                   question={question}
                   score={score}

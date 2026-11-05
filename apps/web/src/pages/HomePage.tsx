@@ -112,7 +112,7 @@ export function HomePage() {
       <FloatingStars count={reduce ? 0 : 10} />
 
       {/* סרגל עליון */}
-      <div className="flex w-full max-w-6xl items-center justify-between gap-2">
+      <div className="flex w-full max-w-6xl items-center justify-between gap-2 xl:max-w-7xl">
         <Link
           to="/teacher"
           className="inline-flex min-h-12 items-center gap-2 rounded-full glass px-4 text-sm font-bold text-slate-600 transition-transform hover:-translate-y-0.5"
@@ -122,7 +122,7 @@ export function HomePage() {
         <SoundToggle />
       </div>
 
-      <section className="mt-3 grid w-full max-w-6xl flex-1 grid-cols-1 items-start gap-6 sm:mt-6 lg:mt-8 lg:grid-cols-[1.05fr_minmax(0,34rem)] lg:gap-10 xl:gap-14">
+      <section className="mt-3 grid w-full max-w-6xl flex-1 grid-cols-1 items-start gap-6 sm:mt-6 lg:mt-8 lg:grid-cols-[1.05fr_minmax(0,30rem)] lg:gap-10 xl:max-w-7xl xl:gap-14">
         {/* Hero */}
         <div className="flex w-full flex-col items-center text-center lg:sticky lg:top-8 lg:pt-4">
           <GameLogo />
@@ -132,7 +132,7 @@ export function HomePage() {
               initial={reduce ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="max-w-[11rem] text-[1.2rem] font-black leading-snug text-violet-800 text-shadow-pop sm:max-w-xs sm:text-2xl lg:max-w-sm lg:text-3xl"
+              className="max-w-[11rem] flex-1 text-[1.2rem] font-black leading-snug text-violet-800 text-shadow-pop sm:max-w-xs sm:text-2xl lg:max-w-sm lg:text-[1.65rem] xl:text-3xl"
             >
               מי יהיה אלוף ההפכים של הכיתה?
             </motion.p>
@@ -270,7 +270,7 @@ function HeroCharacter({ name, mood, animate, delay }: { name: 'sun' | 'moon'; m
       <span aria-hidden className={cn('absolute inset-[10%] -z-10 rounded-full blur-2xl', name === 'sun' ? 'bg-yellow-300/70' : 'bg-indigo-300/60')} />
       <span aria-hidden className="pointer-events-none absolute -top-1 start-0 text-lg animate-sparkle sm:text-2xl" style={{ animationDelay: `${delay + 0.4}s` }}>✦</span>
       <span aria-hidden className="pointer-events-none absolute bottom-2 -end-1 text-sm animate-sparkle text-white sm:text-xl" style={{ animationDelay: `${delay + 1.1}s` }}>✦</span>
-      <Character name={name} mood={mood} animate={animate ?? 'float'} delay={delay} size="none" className="size-[4.6rem] sm:size-32 lg:size-40 xl:size-48" />
+      <Character name={name} mood={mood} animate={animate ?? 'float'} delay={delay} size="none" className="size-[4.6rem] sm:size-32 lg:size-32 xl:size-40" />
     </div>
   );
 }

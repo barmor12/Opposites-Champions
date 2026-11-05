@@ -19,7 +19,7 @@ export const IMAGE_PAIR_SLUGS = [
 const IMAGE_SLUG_SET: ReadonlySet<string> = new Set<string>(IMAGE_PAIR_SLUGS);
 
 export const ABSTRACT_QUESTION_TYPES: readonly QuestionType[] = ['CHOOSE_OPPOSITE', 'COMPLETE_SENTENCE', 'MATCH_PAIRS'];
-export const IMAGEABLE_QUESTION_TYPES: readonly QuestionType[] = ['CHOOSE_OPPOSITE', 'CHOOSE_IMAGE', 'MATCH_PAIRS', 'COMPLETE_SENTENCE'];
+export const IMAGEABLE_QUESTION_TYPES: readonly QuestionType[] = ['CHOOSE_OPPOSITE', 'CHOOSE_IMAGE', 'MATCH_PAIRS', 'COMPLETE_SENTENCE', 'PICTURE_TO_PICTURE'];
 
 export const wordImagePath = (slug: string): string => `/images/pairs/${slug}/word.svg`;
 export const oppositeImagePath = (slug: string): string => `/images/pairs/${slug}/opposite.svg`;
