@@ -456,10 +456,10 @@ export function LiveRoomPage() {
         </div>
       </div>
 
-      <div className="mt-5 grid gap-5 lg:grid-cols-3">
+      <div className="mt-5 grid gap-5 lg:grid-cols-5">
         {/* משתתפים */}
         <Panel
-          className="lg:col-span-2"
+          className="lg:col-span-3"
           icon={<Users className="size-5" aria-hidden />}
           title={
             <>
@@ -491,7 +491,7 @@ export function LiveRoomPage() {
         </Panel>
 
         {/* דירוג חי */}
-        <Panel icon={<Trophy className="size-5" aria-hidden />} tone="green" title="דירוג חי" description={live.leaderboard.length > 0 ? 'מתעדכן עם כל תשובה' : undefined}>
+        <Panel className="lg:col-span-2" icon={<Trophy className="size-5" aria-hidden />} tone="green" title="דירוג חי" description={live.leaderboard.length > 0 ? 'מתעדכן עם כל תשובה' : undefined}>
           {live.leaderboard.length === 0 ? (
             <p className="rounded-2xl bg-slate-50 px-4 py-6 text-center text-sm text-slate-400">הדירוג יופיע עם התשובות הראשונות.</p>
           ) : (
@@ -675,7 +675,7 @@ function LiveLeaderboard({ entries, limit = 8 }: { entries: LeaderboardEntry[]; 
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 320, damping: 30 }}
               className={cn(
-                'flex items-center gap-2.5 rounded-2xl bg-white/85 px-2.5 py-1.5 shadow-sm ring-1 ring-black/5',
+                'flex items-center gap-2 rounded-2xl bg-white/85 px-2.5 py-1.5 shadow-sm ring-1 ring-black/5',
                 e.rank === 1 && 'bg-linear-to-l from-amber-50 to-white ring-amber-200/70',
                 !e.connected && 'opacity-60',
               )}
@@ -685,7 +685,7 @@ function LiveLeaderboard({ entries, limit = 8 }: { entries: LeaderboardEntry[]; 
               </span>
               <Avatar id={e.avatar} size="xs" />
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-bold text-brand-navy">{e.displayName}</span>
+                <span className="block truncate text-sm font-bold text-brand-navy" title={e.displayName}>{e.displayName}</span>
                 <span className="block text-[11px] text-slate-400 tabular-nums">
                   {e.correctAnswers}/{e.answeredCount} נכונות
                 </span>
@@ -697,7 +697,7 @@ function LiveLeaderboard({ entries, limit = 8 }: { entries: LeaderboardEntry[]; 
                 {delta > 0 ? <ChevronUp className="size-3.5" aria-hidden /> : delta < 0 ? <ChevronDown className="size-3.5" aria-hidden /> : <Minus className="size-3" aria-hidden />}
                 {delta !== 0 && Math.abs(delta)}
               </span>
-              <span className="shrink-0 text-base font-black text-brand-violet tabular-nums">{formatNumber(e.score)}</span>
+              <span className="shrink-0 text-sm font-black text-brand-violet tabular-nums sm:text-base">{formatNumber(e.score)}</span>
             </motion.li>
           );
         })}
