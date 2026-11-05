@@ -5,7 +5,7 @@
  * Tiles adapted from 21st.dev — Pop Button by tom_ui (thick bottom deck that collapses on press).
  */
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowLeftRight, Check, Volume2, X } from 'lucide-react';
+import { ArrowLeftRight, Check, Image as ImageIcon, Volume2, X } from 'lucide-react';
 import { useEffect, useRef, type MouseEvent } from 'react';
 import type { AnswerResult, QuestionOptionView, QuestionView } from '@oc/shared';
 import { Shake } from '@/animations';
@@ -166,7 +166,7 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
   }, [disabled, onSelect, options]);
 
   return (
-    <div className="flex flex-col items-center gap-4 sm:gap-5 lg:grid lg:grid-cols-2 lg:items-start lg:gap-8">
+    <div className="flex flex-col items-center gap-4 sm:gap-5 lg:grid lg:grid-cols-2 lg:items-center lg:gap-8">
       {/* ===== כרטיס השאלה: איור גדול במסגרת מבריקה ===== */}
       <motion.section
         aria-label={`השאלה: ${word}`}
@@ -192,7 +192,7 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
           >
             <span aria-hidden="true" className="flex items-center gap-1.5">
               <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-b from-sky-300 to-sky-500 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
-                <span className="h-3.5 w-3.5 rounded-sm bg-white/90" />
+                <ImageIcon className="h-4.5 w-4.5" strokeWidth={2.75} />
               </span>
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-b from-violet-400 to-violet-700 text-white shadow-[0_4px_8px_-3px_rgba(109,40,217,0.7),inset_0_1px_0_rgba(255,255,255,0.5)]">
                 <ArrowLeftRight className="h-5 w-5" strokeWidth={3.5} />
@@ -210,7 +210,7 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
         <div
           data-testid="prompt-image"
           className={cn(
-            'relative mx-auto aspect-square w-full max-w-[min(100%,46dvh)] overflow-hidden rounded-[1.75rem] sm:max-w-[min(100%,22rem)] md:max-w-[min(100%,24rem)]',
+            'relative mx-auto aspect-square w-full max-w-[min(100%,46dvh)] overflow-hidden rounded-[1.75rem] sm:max-w-[min(100%,46dvh,360px)] md:max-w-[min(100%,400px)]',
             'bg-gradient-to-b from-white to-slate-100 p-2 ring-1 ring-white',
             'shadow-[inset_0_2px_0_#fff,inset_0_-4px_8px_rgba(30,41,59,0.08),0_14px_30px_-14px_rgba(30,41,59,0.45)]',
           )}
@@ -228,7 +228,7 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
         role="group"
         aria-label="אפשרויות תשובה – בחרו את התמונה ההפוכה"
         data-testid="options"
-        className="grid w-full max-w-[29rem] grid-cols-2 gap-3 sm:gap-4"
+        className="grid w-full max-w-[464px] grid-cols-2 gap-3 sm:gap-4"
       >
         {options.map((opt, i) => {
           const style = TILE_STYLES[i % TILE_STYLES.length] ?? TILE_STYLES[0];
@@ -283,7 +283,8 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
                   <span
                     data-testid="option-caption"
                     className={cn(
-                      'pointer-events-none absolute inset-x-3 bottom-2 rounded-full px-2 py-0.5 text-center text-sm font-black ring-1 sm:text-base',
+                      'pointer-events-none absolute bottom-3 start-3 end-3 rounded-full px-2 py-0.5 text-center text-sm font-black ring-1 sm:text-base',
+                      speechSupported && 'end-[3.6rem] sm:end-16',
                       isWrong ? 'bg-white/90 text-rose-700 ring-rose-200' : 'bg-white/90 text-green-800 ring-green-200',
                     )}
                   >
@@ -314,7 +315,7 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
                   onSpeak={() => speak(opt.text)}
                   size="sm"
                   testId={`speak-option-${i + 1}`}
-                  className="absolute bottom-4 end-2.5 z-10 sm:bottom-5 sm:end-3"
+                  className="absolute bottom-[1.15rem] end-2.5 z-10 sm:bottom-6 sm:end-3"
                 />
               )}
             </Shake>
