@@ -73,6 +73,26 @@ Namespace: `/` (default). Path `/socket.io`. Auth handshake: `{ token: sessionTo
 ### אתגר האוצר
 כשהוא פעיל בהגדרות, 5 השאלות האחרונות בסט מסומנות `isTreasure` עם `treasureStep` 1..5 (`QuestionType` מתוך הסוגים הפעילים, ללא MATCH_PAIRS). בסיום 5 נכונות ברצף → בונוס `TREASURE_BONUS` (150) ב־`AnswerResult.treasureBonus`, `treasureCompleted: true`.
 
+### סוגי שאלות (`QuestionType`)
+| סוג | prompt | options | הערות |
+|---|---|---|---|
+| `CHOOSE_OPPOSITE` | המילה | 4 מילים | `promptImage` אם לזוג יש איור |
+| `CHOOSE_IMAGE` | המילה (+`promptImage`) | 4 איורים (`image` + `text`) | זוגות imageable בלבד |
+| `MATCH_PAIRS` | הנחיה | – | `matchCards` (8) + `matchPairsCount` (4) |
+| `COMPLETE_SENTENCE` | משפט עם `____` | 4 מילים | |
+| `PICTURE_TO_PICTURE` | המילה (להקראה/דוחות בלבד) + `promptImage` **חובה** | 4 איורים – `image` **חובה** בכל אפשרות, `text` = המילה (alt/הקראה בלבד) | **רמה קלה ללא קריאה**. זוגות imageable בלבד; המסיחים הם איורים של מילים אחרות (עדיפות לאותה קטגוריה), לעולם לא איור המילה עצמה / הפך תקף שלה, ואין איור כפול. בדיקת תשובה וניקוד זהים ל־`CHOOSE_IMAGE` (`answer:submit` עם `optionId`). |
+| `TREASURE_CHALLENGE` | – | – | לא סוג לכשעצמו – סימון `isTreasure` על שאלות מהסוגים הפעילים |
+
+- הלקוח לא אמור להציג את `prompt`/`options[].text` במצב `PICTURE_TO_PICTURE` (רק כ־alt ולכפתור הקראה).
+- אם הקטגוריות/רמת הקושי שנבחרו משאירות פחות מ־4 זוגות עם איורים, השרת נופל לכל הזוגות עם איורים (קודם באותה רמת קושי, ואם אין – ללא סינון) כדי שהמשחק יתמלא ב־`questionCount` שאלות. בדוחות `correctAnswerText` = המילה המנוגדת, וההתפלגות לפי שם המילה.
+
+### פריסט "רמה קלה – תמונות בלבד"
+`EASY_PICTURE_PRESET` (ב־`@oc/shared`) הוא `Partial<GameSettings>` שהלקוח ממזג לתוך הטופס לפני `POST /api/games`:
+```json
+{ "questionTypes": ["PICTURE_TO_PICTURE"], "difficulty": "EASY", "timePerQuestionSec": 0, "showCorrectAnswers": true, "treasureChallenge": false }
+```
+`isPictureOnlySettings(settings)` מזהה חדר "ללא קריאה" (כל סוגי השאלות הם `PICTURE_TO_PICTURE`) לצורך תג בממשק המורה. `QUESTION_TYPE_LABELS` / `QUESTION_TYPE_DESCRIPTIONS` מספקים תווית ותיאור קצר לכל סוג.
+
 ### אבטחה
 - אין לשלוח `isCorrect` ללקוח לפני סגירת שאלה. `QuestionView.options` מעורבבים ללא דגל נכונות.
 - ניקוד רק בשרת. `elapsedMs = now - questionStartedAt(server)`, clamp ל־[0, timeLimit].

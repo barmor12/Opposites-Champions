@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import request from 'supertest';
 import {
-  AchievementType, Category, GameMode, GameState, QuestionType, SESSION_TOKEN_HEADER, TREASURE_BONUS,
+  AchievementType, Category, EASY_PICTURE_PRESET, GameMode, GameState, QuestionType, SESSION_TOKEN_HEADER, TREASURE_BONUS,
   type AnswerPayload, type AnswerResult, type GameResults, type GameSettings, type GameSummary, type JoinRoomResponse,
   type PlayerSession, type RoomPublicView, type TeacherRoomLive,
 } from '@oc/shared';
@@ -376,5 +376,139 @@ describe('game flow (integration, teacher-paced)', () => {
     const results = (await api().get(`/api/games/${game.roomId}/results`).set('Cookie', cookie).expect(200)).body as GameResults;
     expect(results.leaderboard[0]?.participantId).toBe(players[1]?.participantId);
     await api().post(`/api/games/${game.roomId}/next`).set('Cookie', cookie).set(CSRF).expect(409);
+  });
+});
+
+describe('game flow (integration, picture-only / PICTURE_TO_PICTURE)', () => {
+  let app: INestApplication;
+  let prisma: PrismaService;
+  let scoring: ScoringService;
+  let cookie: string;
+  let teacherId: string;
+  const api = () => request(app.getHttpServer());
+  const PICTURE_SETTINGS: GameSettings = { ...SETTINGS, ...EASY_PICTURE_PRESET, className: 'כיתה א׳ – תמונות בלבד' };
+
+  async function createGame(settings: GameSettings): Promise<GameSummary> {
+    return (await api().post('/api/games').set('Cookie', cookie).set(CSRF).send(settings).expect(201)).body as GameSummary;
+  }
+
+  async function join(game: GameSummary, name: string): Promise<JoinRoomResponse> {
+    return (await api().post('/api/rooms/join').send({ code: game.code, displayName: name, avatar: 'frog' }).expect(200)).body as JoinRoomResponse;
+  }
+
+  async function startAndWait(game: GameSummary): Promise<void> {
+    await api().post(`/api/games/${game.roomId}/start`).set('Cookie', cookie).set(CSRF).expect(200);
+    await sleep(COUNTDOWN_MS + 700);
+  }
+
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({ imports: [AppConfigModule, PrismaModule, GameFeatureModule] }).compile();
+    app = moduleRef.createNestApplication();
+    setupApp(app, { corsOrigins: ['http://localhost:5173'], cookieSecret: 'int-test-cookie-secret-32-chars-long!!', isProd: false, http: false });
+    await app.init();
+    prisma = app.get(PrismaService);
+    scoring = app.get(ScoringService);
+    await prisma.teacher.deleteMany({ where: { email: 'game-int-pic@example.com' } });
+    const teacher = await prisma.teacher.create({ data: { email: 'game-int-pic@example.com', name: 'מורה כיתה א', passwordHash: 'x' } });
+    teacherId = teacher.id;
+    cookie = `${TEACHER_COOKIE}=${await app.get(JwtService).signAsync({ sub: teacher.id, email: teacher.email, name: teacher.name })}`;
+  });
+
+  afterAll(async () => {
+    const rooms = await prisma.gameRoom.findMany({ where: { teacherId }, select: { id: true } });
+    for (const r of rooms) await api().delete(`/api/games/${r.id}`).set('Cookie', cookie).set(CSRF);
+    await prisma.teacher.deleteMany({ where: { id: teacherId } });
+    await app.close();
+  });
+
+  it('accepts the easy-picture preset and generates only picture questions from imageable pairs', async () => {
+    const game = await createGame(PICTURE_SETTINGS);
+    expect(game.settings.questionTypes).toEqual([QuestionType.PICTURE_TO_PICTURE]);
+    expect(game.settings.timePerQuestionSec).toBe(0);
+    const sqs = await prisma.sessionQuestion.findMany({
+      where: { sessionId: game.currentSessionId as string },
+      include: { question: { include: { options: true, wordPair: true } } },
+      orderBy: { index: 'asc' },
+    });
+    expect(sqs).toHaveLength(10);
+    for (const sq of sqs) {
+      expect(sq.question.type).toBe(QuestionType.PICTURE_TO_PICTURE);
+      expect(sq.question.wordPair?.imageable).toBe(true);
+      expect(sq.question.wordPair?.difficulty).toBe('EASY');
+      expect(sq.question.prompt).toBe(sq.question.wordPair?.word);
+      expect(sq.question.promptImage).toMatch(/^\/images\/pairs\/.+\/word\.svg$/);
+      expect(sq.question.options).toHaveLength(4);
+      expect(sq.question.options.every((o) => typeof o.image === 'string' && o.image.length > 0)).toBe(true);
+      expect(new Set(sq.question.options.map((o) => o.image)).size).toBe(4);
+      expect(sq.question.options.map((o) => o.image)).not.toContain(sq.question.promptImage);
+      const correct = sq.question.options.filter((o) => o.isCorrect);
+      expect(correct).toHaveLength(1);
+      expect(correct[0]?.text).toBe(sq.question.wordPair?.opposite);
+      expect(sq.timeLimitMs).toBe(0);
+    }
+  });
+
+  it('plays a picture-only game end-to-end: image-only QuestionView, correct option id → correct=true, reports show the opposite word', async () => {
+    const game = await createGame(PICTURE_SETTINGS);
+    const player = await join(game, 'תמר');
+    await startAndWait(game);
+
+    const session = (await api().get('/api/player/session').set(SESSION_TOKEN_HEADER, player.sessionToken).expect(200)).body as PlayerSession;
+    const q = session.currentQuestion;
+    expect(q?.type).toBe(QuestionType.PICTURE_TO_PICTURE);
+    expect(q?.promptImage).toBeTruthy();
+    expect(q?.options).toHaveLength(4);
+    expect(q?.options.every((o) => typeof o.image === 'string' && o.text.length > 0)).toBe(true);
+    expect(q?.timeLimitMs).toBe(0);
+    expect(q?.endsAt).toBeNull();
+    expect(JSON.stringify(q)).not.toContain('isCorrect');
+
+    const expectedOpposites: string[] = [];
+    let last: AnswerResult | null = null;
+    for (let i = 0; i < 10; i += 1) {
+      const progress = await prisma.participantProgress.findUniqueOrThrow({ where: { sessionId_participantId: { sessionId: game.currentSessionId as string, participantId: player.participantId } } });
+      const sq = await prisma.sessionQuestion.findUniqueOrThrow({ where: { sessionId_index: { sessionId: game.currentSessionId as string, index: progress.currentIndex } }, include: SESSION_QUESTION_INCLUDE });
+      const correct = sq.question.options.find((o) => o.isCorrect);
+      const wrong = sq.question.options.find((o) => !o.isCorrect);
+      if (!correct || !wrong) throw new Error('bad question');
+      expectedOpposites.push(correct.text);
+      // שאלה אחת (השלישית) נענית לא נכון – כדי לוודא שהניקוד מבחין
+      const chosen = i === 2 ? wrong : correct;
+      last = await scoring.submitAnswer(player.participantId, { sessionQuestionId: sq.id, optionId: chosen.id });
+      expect(last.correct).toBe(i !== 2);
+      expect(last.correctOptionId).toBe(correct.id);
+      expect(last.scoreAwarded).toBe(i === 2 ? 0 : 100); // ללא הגבלת זמן → ללא בונוס מהירות
+      const adv = await scoring.advance(player.participantId, last.sessionQuestionId);
+      expect(adv.finished).toBe(i === 9);
+      if (adv.question) {
+        expect(adv.question.type).toBe(QuestionType.PICTURE_TO_PICTURE);
+        expect(adv.question.promptImage).toBeTruthy();
+      }
+    }
+    expect(last?.totalScore).toBe(900);
+    expect(last?.treasureCompleted).toBeUndefined();
+
+    const finished = (await api().post(`/api/games/${game.roomId}/finish`).set('Cookie', cookie).set(CSRF).expect(200)).body as TeacherRoomLive;
+    expect(finished.room.state).toBe(GameState.COMPLETED);
+    const results = (await api().get(`/api/games/${game.roomId}/results`).set('Cookie', cookie).expect(200)).body as GameResults;
+    expect(results.questionStats).toHaveLength(10);
+    expect(results.questionStats.map((s) => s.correctAnswerText)).toEqual(expectedOpposites);
+    expect(results.questionStats.every((s) => s.type === QuestionType.PICTURE_TO_PICTURE)).toBe(true);
+    expect(results.questionStats[2]?.correct).toBe(0);
+    expect(results.questionStats[0]?.distribution.find((d) => d.isCorrect)?.count).toBe(1);
+    expect(results.leaderboard[0]).toMatchObject({ participantId: player.participantId, score: 900, correctAnswers: 9, accuracy: 90 });
+  });
+
+  it('falls back to all imageable pairs when the chosen categories have too few illustrated pairs', async () => {
+    // ל"מילים מאתגרות" אין איורים בכלל – המשחק עדיין חייב להתמלא ב־10 שאלות תמונה
+    const game = await createGame({ ...PICTURE_SETTINGS, categories: [Category.CHALLENGING] });
+    const sqs = await prisma.sessionQuestion.findMany({
+      where: { sessionId: game.currentSessionId as string },
+      include: { question: { include: { options: true, wordPair: true } } },
+    });
+    expect(sqs).toHaveLength(10);
+    expect(sqs.every((sq) => sq.question.type === QuestionType.PICTURE_TO_PICTURE)).toBe(true);
+    expect(sqs.every((sq) => sq.question.wordPair?.imageable && sq.question.options.every((o) => o.image))).toBe(true);
+    expect(sqs.every((sq) => sq.question.wordPair?.difficulty === 'EASY')).toBe(true);
   });
 });
