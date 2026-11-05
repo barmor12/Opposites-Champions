@@ -226,6 +226,8 @@ describe('security hardening (integration)', () => {
     await once(socket, 'connect');
     const sq = await currentQuestion(playerA.participantId, roomA.sessionId);
     const optionId = sq.question.options.find((o) => o.isCorrect)?.id ?? '';
+    const answered = () => prisma.studentAnswer.count({ where: { participantId: playerA.participantId } });
+    const before = await answered(); // earlier tests may have recorded a skip via question:next
     const invalid = { ok: false, error: { code: 'INVALID_PAYLOAD', message: expect.any(String) } };
     expect(await emitAck(socket, 'answer:submit', { sessionQuestionId: sq.id, optionId, score: 9999 })).toEqual(invalid);
     expect(await emitAck(socket, 'answer:submit', { sessionQuestionId: sq.id, optionId, elapsedMs: 0, isCorrect: true })).toEqual(invalid);
@@ -233,7 +235,7 @@ describe('security hardening (integration)', () => {
     expect(await emitAck(socket, 'answer:submit', { sessionQuestionId: sq.id, matches: Array.from({ length: 40 }, (_, i) => ({ cardA: `a${i}`, cardB: `b${i}` })) })).toEqual(invalid);
     expect(await emitAck(socket, 'answer:submit', 'garbage')).toEqual(invalid);
     expect(await emitAck(socket, 'question:next', { sessionQuestionId: sq.id, skip: true })).toEqual(invalid);
-    expect(await prisma.studentAnswer.count({ where: { participantId: playerA.participantId } })).toBe(0);
+    expect(await answered()).toBe(before);
     const teacherSocket = connect({}, { Cookie: teacherA.cookie });
     await once(teacherSocket, 'connect');
     expect(await emitAck(teacherSocket, 'teacher:join', { roomId: 'not-a-uuid' })).toEqual(invalid);
