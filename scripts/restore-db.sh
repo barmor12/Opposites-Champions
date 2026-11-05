@@ -30,7 +30,7 @@ COMPOSE=("${COMPOSE_PROD[@]}")
 warn "השחזור ידרוס את כל הנתונים הנוכחיים במסד '${POSTGRES_DB}'!"
 confirm "להמשיך בשחזור מ-${file}?" || die "בוטל / aborted"
 
-"${COMPOSE[@]}" ps --status running db >/dev/null 2>&1 || die "קונטיינר db לא רץ"
+service_running COMPOSE db || die "קונטיינר db לא רץ / db container is not running"
 
 log "עוצר את השרת…"
 "${COMPOSE[@]}" stop server >/dev/null 2>&1 || true

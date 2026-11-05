@@ -47,7 +47,7 @@ fi
 log "גרסה: $(git rev-parse --short HEAD) ($(git log -1 --pretty=%s))"
 
 if [[ "$DO_BACKUP" == "1" ]]; then
-  if "${COMPOSE[@]}" ps --status running db >/dev/null 2>&1; then
+  if service_running COMPOSE db; then
     log "גיבוי לפני עדכון…"
     "${ROOT_DIR}/scripts/backup-db.sh"
   else
@@ -81,7 +81,11 @@ log "מנקה אימג'ים ישנים…"
 docker image prune -f >/dev/null
 
 log "בדיקה סופית: https://${DOMAIN}/api/health"
-curl -fsS --max-time 10 "https://${DOMAIN}/api/health" && echo || warn "הבדיקה החיצונית נכשלה – בדקו nginx/תעודה/DNS"
+if command -v curl >/dev/null 2>&1; then
+  curl -fsS --max-time 10 "https://${DOMAIN}/api/health" && echo || warn "הבדיקה החיצונית נכשלה – בדקו nginx/תעודה/DNS"
+else
+  warn "curl לא מותקן – דלגו על הבדיקה החיצונית (sudo apt install curl)"
+fi
 
 "${COMPOSE[@]}" ps
 log "הפריסה הושלמה / deploy complete"

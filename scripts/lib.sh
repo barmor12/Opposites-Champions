@@ -53,3 +53,10 @@ confirm() {
 }
 
 need_cmd() { command -v "$1" >/dev/null 2>&1 || die "הפקודה '$1' לא נמצאה / command not found: $1"; }
+
+# service_running <compose-array-name> <service> – האם לשירות יש קונטיינר במצב running
+# (docker compose ps מחזיר 0 גם כשאין תוצאות, לכן בודקים את הפלט)
+service_running() {
+  local -n _compose="$1"
+  [[ -n "$("${_compose[@]}" ps -q --status running "$2" 2>/dev/null)" ]]
+}
