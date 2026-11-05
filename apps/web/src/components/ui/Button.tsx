@@ -31,7 +31,7 @@ interface VariantStyle {
 
 const VARIANTS: Record<ButtonVariant, VariantStyle> = {
   primary: {
-    face: 'bg-gradient-to-b from-violet-400 via-violet-500 to-violet-600 text-white',
+    face: 'bg-gradient-to-b from-violet-500 via-violet-600 to-violet-700 text-white',
     deck: 'bg-violet-900',
     shadow: 'shadow-[0_14px_28px_-10px_rgba(109,40,217,0.6)]',
     spot: 'bg-violet-950/25',
@@ -43,13 +43,13 @@ const VARIANTS: Record<ButtonVariant, VariantStyle> = {
     spot: 'bg-slate-500/15',
   },
   success: {
-    face: 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white',
+    face: 'bg-gradient-to-b from-green-500 via-green-600 to-green-700 text-white',
     deck: 'bg-green-800',
     shadow: 'shadow-[0_14px_28px_-10px_rgba(21,128,61,0.6)]',
     spot: 'bg-green-950/25',
   },
   danger: {
-    face: 'bg-gradient-to-b from-rose-400 via-rose-500 to-rose-600 text-white',
+    face: 'bg-gradient-to-b from-rose-500 via-rose-600 to-rose-700 text-white',
     deck: 'bg-rose-800',
     shadow: 'shadow-[0_14px_28px_-10px_rgba(190,18,60,0.55)]',
     spot: 'bg-rose-950/25',

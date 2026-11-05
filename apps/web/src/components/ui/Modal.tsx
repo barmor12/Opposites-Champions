@@ -32,6 +32,23 @@ export function Modal({ open, onClose, title, children, footer, size = 'md', dis
     (first ?? panel)?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && dismissible) onClose?.();
+      // לכידת פוקוס בתוך החלון (Tab / Shift+Tab)
+      if (e.key === 'Tab' && panel) {
+        const focusables = Array.from(
+          panel.querySelectorAll<HTMLElement>('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+        ).filter((el) => el.offsetParent !== null || el === document.activeElement);
+        if (focusables.length === 0) return;
+        const firstEl = focusables[0]!;
+        const lastEl = focusables[focusables.length - 1]!;
+        const active = document.activeElement as HTMLElement | null;
+        if (e.shiftKey && (active === firstEl || !panel.contains(active))) {
+          e.preventDefault();
+          lastEl.focus();
+        } else if (!e.shiftKey && (active === lastEl || !panel.contains(active))) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
     };
     document.addEventListener('keydown', onKey);
     const prevOverflow = document.body.style.overflow;
