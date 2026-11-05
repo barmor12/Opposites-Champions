@@ -11,10 +11,10 @@ import type { RoomsService } from '../rooms/rooms.service';
 import type { AppConfigService } from '../config/app-config.service';
 
 function build(sessionState: GameState) {
-  const session = { id: 's1', roomId: 'r1', state: sessionState, mode: 'SELF_PACED', settings: {} };
+  const session: Record<string, unknown> = { id: 's1', roomId: 'r1', state: sessionState, mode: 'SELF_PACED', settings: {} };
   const prisma = mockPrisma({
     gameSession: {
-      findUnique: vi.fn(async () => session),
+      findUnique: vi.fn(async (): Promise<Record<string, unknown> | null> => session),
       updateMany: vi.fn(async () => ({ count: 1 })),
       findUniqueOrThrow: vi.fn(async () => ({ ...session, state: 'UPDATED' })),
     },

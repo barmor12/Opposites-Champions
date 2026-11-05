@@ -29,15 +29,7 @@ function sessionQuestion(over: Partial<SessionQuestionFull> = {}): SessionQuesti
   return { ...base, ...over } as SessionQuestionFull;
 }
 
-interface Fixture {
-  service: ScoringService;
-  prisma: ReturnType<typeof mockPrisma>;
-  progress: Record<string, unknown>;
-  leaderboard: { broadcast: ReturnType<typeof vi.fn>; };
-  games: { closeQuestionIfAllAnswered: ReturnType<typeof vi.fn>; maybeFinishIfAllDone: ReturnType<typeof vi.fn> };
-}
-
-function build(opts: { sq?: SessionQuestionFull; startedAgoMs?: number; progress?: Record<string, unknown>; settings?: Record<string, unknown> } = {}): Fixture {
+function build(opts: { sq?: SessionQuestionFull; startedAgoMs?: number; progress?: Record<string, unknown>; settings?: Record<string, unknown> } = {}) {
   const sq = opts.sq ?? sessionQuestion();
   const startedAt = new Date(Date.now() - (opts.startedAgoMs ?? 5_000));
   const progress = {
@@ -45,10 +37,10 @@ function build(opts: { sq?: SessionQuestionFull; startedAgoMs?: number; progress
     score: 0, correctAnswers: 0, answeredCount: 0, totalResponseMs: 0, streak: 0, bestStreak: 0, treasureCorrect: 0, finished: false, finishedAt: null,
     ...opts.progress,
   };
-  const session = { id: 's1', roomId: 'r1', state: GameState.QUESTION_ACTIVE, mode: GameMode.SELF_PACED, settings: { showCorrectAnswers: true, ...opts.settings }, currentQuestionIndex: null };
+  const session: Record<string, unknown> = { id: 's1', roomId: 'r1', state: GameState.QUESTION_ACTIVE, mode: GameMode.SELF_PACED, settings: { showCorrectAnswers: true, ...opts.settings }, currentQuestionIndex: null };
   const prisma = mockPrisma({
     gameParticipant: { findFirst: vi.fn(async () => ({ id: 'pa1', roomId: 'r1', removedAt: null, room: { id: 'r1', currentSessionId: 's1', deletedAt: null } })) },
-    gameSession: { findUnique: vi.fn(async () => session) },
+    gameSession: { findUnique: vi.fn(async (): Promise<Record<string, unknown> | null> => session) },
     participantProgress: {
       upsert: vi.fn(async () => progress),
       update: vi.fn(async ({ data }: { data: Record<string, { increment?: number } | number> }) => {
@@ -63,7 +55,7 @@ function build(opts: { sq?: SessionQuestionFull; startedAgoMs?: number; progress
         return { ...progress };
       }),
     },
-    studentAnswer: { create: vi.fn(async ({ data }: { data: unknown }) => ({ id: 'a1', ...(data as object) })) },
+    studentAnswer: { create: vi.fn(async ({ data }: { data: unknown }): Promise<Record<string, unknown>> => ({ id: 'a1', ...(data as object) })) },
     scoreEvent: { create: vi.fn(async () => ({})) },
     sessionQuestion: { findUnique: vi.fn(async () => sq) },
   });
