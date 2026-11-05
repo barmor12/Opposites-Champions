@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" role="img" aria-labelledby="t"><title id="t">אלופי ההפכים</title>
+<defs><clipPath id="b"><rect x="8" y="8" width="384" height="144" rx="72"/></clipPath></defs>
+<rect x="8" y="8" width="384" height="144" rx="72" fill="#fff"/>
+<g clip-path="url(#b)" fill="none">
+<path d="M110 160A90 90 0 0 1 290 160" stroke="#2D3748" stroke-width="62"/>
+<path d="M114 160A86 86 0 0 1 286 160" stroke="#F87171" stroke-width="12"/>
+<path d="M126 160A74 74 0 0 1 274 160" stroke="#FDBA74" stroke-width="12"/>
+<path d="M138 160A62 62 0 0 1 262 160" stroke="#FDE047" stroke-width="12"/>
+<path d="M150 160A50 50 0 0 1 250 160" stroke="#86EFAC" stroke-width="12"/>
+<path d="M162 160A38 38 0 0 1 238 160" stroke="#7DD3FC" stroke-width="12"/>
+<path d="M174 160A26 26 0 0 1 226 160" stroke="#A78BFA" stroke-width="12"/>
+</g>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M168 64Q150 64 152 86Q154 104 176 108L178 96Q164 94 164 82Q164 74 170 74Z" fill="#F59E0B"/>
+<path d="M232 64Q250 64 248 86Q246 104 224 108L222 96Q236 94 236 82Q236 74 230 74Z" fill="#F59E0B"/>
+<path d="M166 50H234V92Q234 118 200 122Q166 118 166 92Z" fill="#FDE047"/>
+<path d="M212 54H234V92Q234 110 214 118Q226 100 222 80Z" fill="#F59E0B" stroke="none"/>
+<path d="M174 58Q174 92 184 110" fill="none" stroke="#FEF9C3" stroke-width="6"/>
+<path d="M162 50H238" fill="none" stroke-width="6"/>
+<path d="M200 122V136" fill="none" stroke-width="12"/>
+<rect x="172" y="134" width="56" height="12" rx="6" fill="#2D3748"/>
+<path d="M200 68L205 80L218 81L208 89L211 102L200 95L189 102L192 89L182 81L195 80Z" fill="#F9A8D4" stroke-width="3"/>
+<path d="M118 80H70L70 60L34 90L70 120L70 100H118Z" fill="#7DD3FC"/>
+<path d="M282 80H330L330 60L366 90L330 120L330 100H282Z" fill="#F9A8D4"/>
+<path d="M60 36L63 44L71 47L63 50L60 58L57 50L49 47L57 44Z" fill="#FDE047" stroke-width="3"/>
+<path d="M340 36L343 44L351 47L343 50L340 58L337 50L329 47L337 44Z" fill="#FDE047" stroke-width="3"/>
+</g>
+<rect x="8" y="8" width="384" height="144" rx="72" fill="none" stroke="#2D3748" stroke-width="6"/>
+</svg>

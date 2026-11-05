@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">חתול ישן</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="100" cy="166" rx="84" ry="14" fill="#E0F2FE" stroke="none"/>
+<path d="M150 150Q186 150 184 120Q182 100 164 104Q152 108 158 126Q162 138 150 138Z" fill="#CBD5E1"/>
+<path d="M40 150Q30 110 60 96Q96 82 140 98Q168 112 160 150Z" fill="#CBD5E1"/>
+<path d="M84 110Q100 100 118 112M74 126Q96 118 120 130" fill="none" stroke="#94A3B8" stroke-width="4"/>
+<path d="M44 108L38 70L68 86Z" fill="#CBD5E1"/><path d="M110 108L116 70L86 86Z" fill="#CBD5E1"/>
+<path d="M48 100L46 80L62 88Z" fill="#F9A8D4" stroke="none"/><path d="M106 100L108 80L92 88Z" fill="#F9A8D4" stroke="none"/>
+<path d="M36 128Q36 84 78 84Q120 84 120 128Q120 156 78 156Q36 156 36 128Z" fill="#CBD5E1"/>
+<path d="M50 118Q58 110 66 118M90 118Q98 110 106 118" fill="none"/>
+<circle cx="48" cy="134" r="6" fill="#F9A8D4" stroke="none"/><circle cx="108" cy="134" r="6" fill="#F9A8D4" stroke="none"/>
+<path d="M74 130L82 130L78 136Z" fill="#F9A8D4"/>
+<path d="M78 136V140M78 140Q72 146 68 142M78 140Q84 146 88 142" fill="none"/>
+<path d="M22 126L46 130M22 140L46 136M110 130L134 126M110 136L134 140" fill="none" stroke-width="3.5"/>
+<path d="M130 70H146L130 86H146" fill="none" stroke="#A78BFA" stroke-width="5"/>
+<path d="M150 44H168L150 62H168" fill="none" stroke="#A78BFA" stroke-width="6"/>
+<path d="M174 14H196L174 36H196" fill="none" stroke="#A78BFA" stroke-width="7"/>
+</g>
+</svg>

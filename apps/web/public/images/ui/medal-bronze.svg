@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">מדליית ארד</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M66 8L100 72L62 96L34 8Z" fill="#F87171"/>
+<path d="M134 8L100 72L138 96L166 8Z" fill="#7DD3FC"/>
+<circle cx="100" cy="124" r="56" fill="#FDBA74"/>
+<circle cx="100" cy="124" r="42" fill="none" stroke="#C2410C" stroke-width="5"/>
+<path d="M66 100Q74 82 94 80" fill="none" stroke="#fff" stroke-width="7"/>
+<path d="M88 100Q100 88 112 100Q112 116 100 118Q114 122 112 138Q100 154 86 142" fill="none" stroke="#C2410C" stroke-width="9"/>
+</g>
+</svg>

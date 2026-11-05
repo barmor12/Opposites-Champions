@@ -1,0 +1,39 @@
+# ===== .dockerignore – build context של שני ה-Dockerfiles (context = שורש הריפו) =====
+# מה שלא נחוץ לבנייה לא נשלח ל-daemon: מהיר יותר, ובטוח יותר (אין דליפת סודות לתוך האימג').
+
+# תלויות ותוצרי בנייה – נבנים בתוך ה-Docker
+**/node_modules
+**/dist
+**/build
+**/coverage
+**/*.tsbuildinfo
+.pnpm-store
+apps/server/generated
+
+# Git / IDE / OS
+.git
+.gitignore
+.github
+.claude
+.vscode
+.idea
+**/.DS_Store
+**/Thumbs.db
+
+# סודות – לעולם לא לתוך אימג'. .env.example נשמר כתיעוד.
+.env
+.env.*
+!.env.example
+
+# לוגים, בדיקות E2E, גיבויים, תעודות
+**/*.log
+tests/e2e/test-results
+tests/e2e/playwright-report
+backups
+infrastructure/certbot
+
+# תיעוד ותשתית שאינם נדרשים בבנייה (קבצי nginx של web נדרשים – לכן infrastructure/nginx לא מוחרג)
+docs
+infrastructure/docker
+scripts
+docker-compose*.yml

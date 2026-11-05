@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-labelledby="t"><title id="t">קשת בענן</title>
+<g fill="none" stroke-linecap="butt">
+<path d="M25 200A175 175 0 0 1 375 200" stroke="#2D3748" stroke-width="125"/>
+<path d="M30 200A170 170 0 0 1 370 200" stroke="#F87171" stroke-width="19"/>
+<path d="M49 200A151 151 0 0 1 351 200" stroke="#FDBA74" stroke-width="19"/>
+<path d="M68 200A132 132 0 0 1 332 200" stroke="#FDE047" stroke-width="19"/>
+<path d="M87 200A113 113 0 0 1 313 200" stroke="#86EFAC" stroke-width="19"/>
+<path d="M106 200A94 94 0 0 1 294 200" stroke="#7DD3FC" stroke-width="19"/>
+<path d="M125 200A75 75 0 0 1 275 200" stroke="#A78BFA" stroke-width="19"/>
+</g>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M22 184Q6 184 6 170Q6 158 20 158Q22 138 44 140Q58 128 76 140Q92 138 94 158Q110 158 110 172Q110 184 96 184Z" fill="#fff"/>
+<path d="M304 184Q290 184 290 170Q290 158 304 158Q306 138 328 140Q342 128 360 140Q376 138 378 158Q394 158 394 172Q394 184 380 184Z" fill="#fff"/>
+</g>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">תיבת אוצר פתוחה</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M30 70Q22 12 100 24Q176 34 170 56L166 68Q110 40 34 76Z" fill="#B45309"/>
+<path d="M34 76Q100 44 166 68L172 80Q104 58 38 88Z" fill="#FDE047"/>
+<path d="M44 44Q70 28 110 30" fill="none" stroke="#FDBA74" stroke-width="7"/>
+<path d="M54 30V84M146 42V84" fill="none" stroke-width="13"/>
+<path d="M54 32V82M146 44V82" fill="none" stroke="#FDE047" stroke-width="5"/>
+<circle cx="70" cy="86" r="14" fill="#FDE047"/><circle cx="130" cy="84" r="14" fill="#FDE047"/>
+<circle cx="100" cy="76" r="15" fill="#FDE047"/><circle cx="48" cy="100" r="13" fill="#FDE047"/><circle cx="152" cy="100" r="13" fill="#FDE047"/>
+<circle cx="100" cy="76" r="7" fill="none" stroke="#F59E0B" stroke-width="4"/><circle cx="70" cy="86" r="6" fill="none" stroke="#F59E0B" stroke-width="4"/><circle cx="130" cy="84" r="6" fill="none" stroke="#F59E0B" stroke-width="4"/>
+<path d="M86 108L100 96L114 108L100 124Z" fill="#F9A8D4"/>
+<path d="M118 112L132 100L146 112L132 128Z" fill="#7DD3FC"/>
+<path d="M54 112L68 100L82 112L68 128Z" fill="#86EFAC"/>
+<circle cx="88" cy="108" r="12" fill="#FDE047"/><circle cx="116" cy="110" r="12" fill="#FDE047"/>
+<rect x="26" y="100" width="148" height="74" rx="10" fill="#D97706"/>
+<rect x="36" y="154" width="128" height="20" rx="6" fill="#B45309" stroke="none"/>
+<path d="M54 102V172M146 102V172" fill="none" stroke-width="14"/>
+<path d="M54 104V170M146 104V170" fill="none" stroke="#FDE047" stroke-width="6"/>
+<path d="M84 100H116V124Q116 132 108 132H92Q84 132 84 124Z" fill="#FDE047"/>
+<circle cx="100" cy="112" r="5" fill="#2D3748" stroke="none"/><path d="M100 112V124" stroke-width="4"/>
+<rect x="26" y="100" width="148" height="74" rx="10" fill="none"/>
+<path d="M22 60L25 68L33 71L25 74L22 82L19 74L11 71L19 68Z" fill="#FDE047" stroke-width="3"/>
+<path d="M182 30L185 38L193 41L185 44L182 52L179 44L171 41L179 38Z" fill="#F9A8D4" stroke-width="3"/>
+</g>
+</svg>

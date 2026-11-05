@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">קונפטי</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M40 170Q30 120 80 110Q130 100 110 60Q100 36 130 30L164 24Q180 50 150 60Q120 70 140 104Q156 140 110 150Q70 160 72 190Z" fill="#F9A8D4"/>
+<path d="M88 124Q118 118 122 100" fill="none" stroke="#FCE7F3" stroke-width="6"/>
+<path d="M30 40L33 48L41 51L33 54L30 62L27 54L19 51L27 48Z" fill="#FDE047" stroke-width="3"/>
+<circle cx="170" cy="150" r="9" fill="#7DD3FC" stroke-width="4"/>
+<path d="M150 170L164 182L150 194Z" fill="#86EFAC" stroke-width="4"/>
+</g>
+</svg>

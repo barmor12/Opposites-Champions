@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">כוכב נוצץ</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M100 18L122.3 71.3L179.9 76L136.1 113.7L149.4 170L100 140L50.6 170L63.9 113.7L20.1 76L77.7 71.3Z" fill="#FDE047"/>
+<path d="M100 48L110 86L96 92Z" fill="#FEF9C3" stroke="none"/>
+<path d="M50 84Q74 82 84 72" fill="none" stroke="#FEF9C3" stroke-width="7"/>
+<path d="M136.1 113.7L149.4 170L100 140L118 126Z" fill="#F59E0B" stroke="none"/>
+<path d="M100 18L122.3 71.3L179.9 76L136.1 113.7L149.4 170L100 140L50.6 170L63.9 113.7L20.1 76L77.7 71.3Z" fill="none"/>
+<path d="M164 24L167 33L176 36L167 39L164 48L161 39L152 36L161 33Z" fill="#fff" stroke-width="3"/>
+<path d="M30 150L32 156L38 158L32 160L30 166L28 160L22 158L28 156Z" fill="#fff" stroke-width="3"/>
+</g>
+</svg>

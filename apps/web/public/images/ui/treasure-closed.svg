@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">תיבת אוצר סגורה</title>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="26" y="90" width="148" height="84" rx="10" fill="#D97706"/>
+<path d="M26 98Q26 48 100 48Q174 48 174 98Z" fill="#B45309"/>
+<path d="M40 90Q46 62 100 60" fill="none" stroke="#FDBA74" stroke-width="7"/>
+<path d="M26 90H174V106H26Z" fill="#FDE047"/>
+<path d="M54 48V174M146 48V174" fill="none" stroke-width="14"/>
+<path d="M54 50V172M146 50V172" fill="none" stroke="#FDE047" stroke-width="6"/>
+<path d="M84 92H116V128Q116 136 108 136H92Q84 136 84 128Z" fill="#FDE047"/>
+<circle cx="100" cy="112" r="6" fill="#2D3748" stroke="none"/><path d="M100 112V126" stroke-width="4"/>
+<rect x="36" y="154" width="128" height="20" rx="6" fill="#B45309" stroke="none"/>
+<rect x="26" y="90" width="148" height="84" rx="10" fill="none"/>
+</g>
+</svg>
