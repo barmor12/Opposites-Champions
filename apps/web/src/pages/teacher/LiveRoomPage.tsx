@@ -447,11 +447,8 @@ export function LiveRoomPage() {
               <Counter label="שאלות בסבב" value={questionCount} tone="violet" />
             </div>
             <div className="mt-5">
-              <div className="mb-1.5 flex justify-between text-xs font-semibold text-slate-600">
-                <span>התקדמות הסבב</span>
-                <span className="tabular-nums">{roundProgress.label}</span>
-              </div>
               <ProgressBar value={roundProgress.value} max={roundProgress.max} size="sm" color="rainbow" label="התקדמות הסבב" />
+              <p className="mt-1.5 text-end text-xs font-semibold text-slate-600 tabular-nums">{roundProgress.label}</p>
             </div>
           </Card>
         </div>
