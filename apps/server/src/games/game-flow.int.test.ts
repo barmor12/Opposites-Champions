@@ -488,8 +488,14 @@ describe('game flow (integration, picture-only / PICTURE_TO_PICTURE)', () => {
     expect(last?.totalScore).toBe(900);
     expect(last?.treasureCompleted).toBeUndefined();
 
-    const finished = (await api().post(`/api/games/${game.roomId}/finish`).set('Cookie', cookie).set(CSRF).expect(200)).body as TeacherRoomLive;
-    expect(finished.room.state).toBe(GameState.COMPLETED);
+    // כשהמשתתף היחיד סיים המשחק מסתיים אוטומטית; אחרת המורה מסיימת
+    await sleep(300);
+    let live = (await api().get(`/api/games/${game.roomId}`).set('Cookie', cookie).expect(200)).body as TeacherRoomLive;
+    if (live.room.state !== GameState.COMPLETED) {
+      live = (await api().post(`/api/games/${game.roomId}/finish`).set('Cookie', cookie).set(CSRF).expect(200)).body as TeacherRoomLive;
+    }
+    expect(live.room.state).toBe(GameState.COMPLETED);
+    expect(live.finishedCount).toBe(1);
     const results = (await api().get(`/api/games/${game.roomId}/results`).set('Cookie', cookie).expect(200)).body as GameResults;
     expect(results.questionStats).toHaveLength(10);
     expect(results.questionStats.map((s) => s.correctAnswerText)).toEqual(expectedOpposites);
