@@ -1,5 +1,7 @@
+import { useId } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/cn';
+import { HIT_AREA } from './a11y';
 
 export interface ToggleProps {
   checked: boolean;
@@ -14,6 +16,7 @@ export interface ToggleProps {
 /** מתג הפעלה/כיבוי נגיש, בסגנון switch עם עומק. */
 export function Toggle({ checked, onChange, label, description, disabled, name, icon }: ToggleProps) {
   const reduce = useReducedMotion();
+  const descId = useId();
   return (
     <label
       className={cn(
@@ -30,7 +33,11 @@ export function Toggle({ checked, onChange, label, description, disabled, name, 
         )}
         <span className="min-w-0">
           <span className="block text-sm font-semibold text-brand-navy">{label}</span>
-          {description && <span className="block text-xs leading-5 text-slate-600">{description}</span>}
+          {description && (
+            <span id={descId} className="block text-xs leading-5 text-slate-600">
+              {description}
+            </span>
+          )}
         </span>
       </span>
       <button
@@ -39,10 +46,12 @@ export function Toggle({ checked, onChange, label, description, disabled, name, 
         name={name}
         aria-checked={checked}
         aria-label={label}
+        aria-describedby={description ? descId : undefined}
         disabled={disabled}
         onClick={() => onChange(!checked)}
         className={cn(
           'relative inline-flex h-7 w-12 min-h-0 shrink-0 items-center rounded-full p-0.5 transition-colors duration-200',
+          HIT_AREA.y8,
           'shadow-[inset_0_2px_4px_rgba(30,41,59,.18)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
           checked ? 'bg-linear-to-b from-emerald-400 to-green-500' : 'bg-slate-300',
         )}

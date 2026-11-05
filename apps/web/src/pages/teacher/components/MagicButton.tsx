@@ -28,7 +28,8 @@ const TONES: Record<MagicButtonTone, { face: string; edge: string; glow: string 
     glow: 'from-violet-400 via-fuchsia-300 to-sky-300',
   },
   green: {
-    face: 'bg-linear-to-b from-emerald-400 to-green-600 text-white',
+    // טקסט כהה על ירוק בהיר (כמו הצהוב) – לבן על emerald-400 לא עומד ב־AA
+    face: 'bg-linear-to-b from-emerald-300 to-green-500 text-brand-navy',
     edge: 'bg-linear-to-l from-green-900 via-green-800 to-green-900',
     glow: 'from-emerald-300 via-lime-200 to-cyan-300',
   },
@@ -69,7 +70,8 @@ export const MagicButton = forwardRef<HTMLButtonElement, MagicButtonProps>(funct
         <motion.span
           aria-hidden
           className={cn('absolute -inset-1 -z-10 rounded-[1.25rem] bg-linear-to-r blur-md', t.glow)}
-          animate={reduce ? { opacity: 0.55 } : { opacity: [0.35, 0.75, 0.35], scale: [1, 1.03, 1] }}
+          style={reduce ? { opacity: 0.55 } : undefined}
+          animate={reduce ? undefined : { opacity: [0.35, 0.75, 0.35], scale: [1, 1.03, 1] }}
           transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
         />
       )}

@@ -1,6 +1,7 @@
 import { Check } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/cn';
+import { HIT_AREA, radioGroupKeyDown } from './a11y';
 
 export interface ChipOption<T extends string | number> {
   value: T;
@@ -14,12 +15,17 @@ interface BaseProps<T extends string | number> {
   options: ReadonlyArray<ChipOption<T>>;
   name: string;
   size?: 'sm' | 'md';
+  /** מזהה אלמנט שמתאר את הקבוצה (למשל הודעת שגיאה) */
+  describedBy?: string;
+  /** הקבוצה במצב שגיאה */
+  invalid?: boolean;
 }
 
 const base =
   'relative inline-flex min-h-0 items-center gap-1.5 rounded-full font-semibold transition-[color,background-color,box-shadow,border-color] duration-200 select-none ' +
   'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30 disabled:cursor-not-allowed disabled:opacity-50';
-const sizes = { sm: 'h-9 px-3.5 text-[13px]', md: 'h-10 px-4 text-sm' };
+// גובה נראה 36/40px + הרחבת שטח לחיצה ל־44px
+const sizes = { sm: cn('h-9 px-3.5 text-[13px]', HIT_AREA.y4), md: cn('h-10 px-4 text-sm', HIT_AREA.y2) };
 const on =
   'border border-violet-600/80 bg-linear-to-b from-violet-600 to-violet-700 text-white ' +
   'shadow-[0_6px_16px_-6px_rgba(139,92,246,.75),inset_0_1px_0_rgba(255,255,255,.35)] ring-2 ring-violet-300/50';
@@ -75,9 +81,11 @@ export function SingleChips<T extends string | number>({
   onChange,
   name,
   size = 'md',
+  describedBy,
+  invalid,
 }: BaseProps<T> & { value: T; onChange: (v: T) => void }) {
   return (
-    <div role="radiogroup" aria-label={name} className="flex flex-wrap gap-2">
+    <div role="radiogroup" aria-label={name} aria-describedby={describedBy} aria-invalid={invalid || undefined} onKeyDown={radioGroupKeyDown} className="flex flex-wrap gap-2">
       {options.map((opt) => (
         <Chip
           key={String(opt.value)}
@@ -103,13 +111,15 @@ export function MultiChips<T extends string | number>({
   name,
   size = 'md',
   allLabel,
+  describedBy,
+  invalid,
 }: BaseProps<T> & { value: readonly T[]; onChange: (v: T[]) => void; allLabel?: string }) {
   const allSelected = options.every((o) => value.includes(o.value));
   const toggle = (v: T) => {
     onChange(value.includes(v) ? value.filter((x) => x !== v) : [...value, v]);
   };
   return (
-    <div role="group" aria-label={name} className="flex flex-wrap gap-2">
+    <div role="group" aria-label={name} aria-describedby={describedBy} aria-invalid={invalid || undefined} className="flex flex-wrap gap-2">
       {allLabel && (
         <Chip
           role={undefined}

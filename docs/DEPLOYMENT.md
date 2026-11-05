@@ -343,3 +343,10 @@ docker compose down -v          # למחוק גם את ה-volume של ה-DB
 ```
 
 לפיתוח יומיומי (hot reload) עדיף להריץ `pnpm dev` במארח ורק את ה-DB ב-Docker: `scripts/dev-db.sh` (ראו [`docs/WINDOWS_DEV.md`](WINDOWS_DEV.md) – ההוראות תקפות גם ל-Linux/macOS).
+
+## הערה: עדכון מאגר התוכן אחרי שדרוג
+שדרוגים שמוסיפים סוגי שאלות (למשל "תמונה מול תמונה – ללא קריאה") דורשים **הרצת seed מחדש** אחרי `prisma migrate deploy`, כדי שזוגות ההפכים הקיימים יקבלו את סוגי השאלות החדשים ב־`supportedTypes`. ה־seed אידמפוטנטי (upsert) ואינו דורס עריכות של שדות אחרים שבוצעו דרך ממשק המורה? – שימו לב: הוא מעדכן את השדות לפי קובץ התוכן, ולכן אם ערכתם זוגות ידנית, גבו קודם. הרצה:
+```bash
+docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm -e RUN_SEED=true server true
+```
+או באופן ידני: `pnpm --filter @oc/server prisma:seed`.

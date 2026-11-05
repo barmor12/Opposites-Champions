@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Card } from '@/components/ui';
@@ -31,7 +32,8 @@ export interface StatCardProps {
 
 /** עקומה דקורטיבית (ללא נתונים) – מרמזת על "מגמה" בפינת הכרטיס. */
 function SparkAccent({ color }: { color: string }) {
-  const id = `spark-${color.replace('#', '')}`;
+  // useId – כמה כרטיסים באותו גוון לא יחלקו מזהה gradient כפול
+  const id = `spark-${useId()}`;
   return (
     <svg aria-hidden viewBox="0 0 140 48" className="pointer-events-none absolute bottom-0 start-0 h-12 w-36 opacity-80" preserveAspectRatio="none">
       <defs>

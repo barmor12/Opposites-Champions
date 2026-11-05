@@ -4,6 +4,7 @@ import type { LucideIcon } from 'lucide-react';
 import { Check } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/cn';
+import { HIT_AREA } from './a11y';
 
 export interface StepperStep {
   key: string;
@@ -35,9 +36,11 @@ export function Stepper({ steps, current, muted, onSelect, tone = 'violet', clas
   const activeBg = tone === 'green' ? 'from-emerald-400 to-green-600 shadow-emerald-500/50' : 'from-violet-500 to-fuchsia-500 shadow-violet-500/50';
   const activeRing = tone === 'green' ? 'ring-emerald-400/50' : 'ring-violet-400/50';
   const Wrapper = onSelect ? 'button' : 'div';
+  // עם onSelect זהו ניווט (nav); בלי – תצוגת מצב בלבד (group), כדי לא להציף landmarks
+  const Root = onSelect ? 'nav' : 'div';
 
   return (
-    <nav aria-label={label} className={cn('relative', muted && 'opacity-50 grayscale', className)}>
+    <Root role={onSelect ? undefined : 'group'} aria-label={label} className={cn('relative', muted && 'opacity-50 grayscale', className)}>
       {/* מסילה */}
       <div className="absolute top-5 h-1 rounded-full bg-slate-200/90 sm:top-6" style={{ left: inset, right: inset }} aria-hidden />
       <motion.div
@@ -61,7 +64,7 @@ export function Stepper({ steps, current, muted, onSelect, tone = 'violet', clas
                 aria-label={onSelect ? `מעבר לשלב ${i + 1}: ${s.label}` : undefined}
                 className={cn(
                   'relative z-10 grid size-10 min-h-0 place-items-center rounded-full sm:size-12',
-                  onSelect && 'cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
+                  onSelect && cn('cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30', HIT_AREA.lg),
                 )}
               >
                 <span
@@ -80,7 +83,7 @@ export function Stepper({ steps, current, muted, onSelect, tone = 'violet', clas
                     transition={{ duration: 2.2, repeat: Infinity, repeatType: 'mirror' }}
                   />
                 )}
-                <motion.span className="relative" animate={{ scale: active ? 1.1 : 1 }} transition={{ type: 'spring', stiffness: 320, damping: 18 }}>
+                <motion.span className="relative" animate={{ scale: active ? 1.1 : 1 }} transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 320, damping: 18 }}>
                   <AnimatePresence mode="wait" initial={false}>
                     {done ? (
                       <motion.span
@@ -113,6 +116,6 @@ export function Stepper({ steps, current, muted, onSelect, tone = 'violet', clas
           );
         })}
       </ol>
-    </nav>
+    </Root>
   );
 }

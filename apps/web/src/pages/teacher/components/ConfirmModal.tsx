@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AlertTriangle, HelpCircle } from 'lucide-react';
 import { Button, Modal } from '@/components/ui';
 import { cn } from '@/lib/cn';
+import { BUTTON_FOCUS_RING, useFocusTrap } from './a11y';
 
 export interface ConfirmModalProps {
   open: boolean;
@@ -25,6 +26,9 @@ export function ConfirmModal({
   onClose,
 }: ConfirmModalProps) {
   const [busy, setBusy] = useState(false);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  // ה־Modal המשותף מטפל בפוקוס ראשוני, Esc והחזרת פוקוס; כאן רק לוכדים Tab בתוך הדיאלוג
+  useFocusTrap(bodyRef, open, { initialFocus: false, returnFocus: false, containerSelector: '[role="dialog"]' });
 
   const handleConfirm = async () => {
     setBusy(true);
@@ -40,7 +44,7 @@ export function ConfirmModal({
 
   return (
     <Modal open={open} onClose={onClose} dismissible={!busy} title={title} size="sm">
-      <div className="flex flex-col gap-5">
+      <div ref={bodyRef} className={cn('flex flex-col gap-5', BUTTON_FOCUS_RING)}>
         <div className="flex items-start gap-3">
           <div
             className={cn(
@@ -50,7 +54,7 @@ export function ConfirmModal({
           >
             <Icon className="size-5" aria-hidden />
           </div>
-          <div className="text-sm leading-6 text-slate-600">{description}</div>
+          <p className="text-sm leading-6 text-slate-600">{description}</p>
         </div>
         <div className="flex justify-start gap-2">
           <Button variant={variant} size="md" onClick={handleConfirm} loading={busy} disabled={busy}>

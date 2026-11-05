@@ -13,3 +13,4 @@ export * from './Spotlight';
 export * from './MagicButton';
 export * from './SegmentedTabs';
 export * from './chrome';
+export * from './a11y';
