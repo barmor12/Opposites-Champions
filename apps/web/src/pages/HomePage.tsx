@@ -260,7 +260,6 @@ function GameLogo() {
       </span>
       {/* שכבת גרדיאנט (מלפנים) */}
       <span className="col-start-1 row-start-1 text-gradient-brand">{text}</span>
-      <span className="sr-only">{text}</span>
     </motion.h1>
   );
 }
@@ -271,7 +270,7 @@ function HeroCharacter({ name, mood, animate, delay }: { name: 'sun' | 'moon'; m
       <span aria-hidden className={cn('absolute inset-[10%] -z-10 rounded-full blur-2xl', name === 'sun' ? 'bg-yellow-300/70' : 'bg-indigo-300/60')} />
       <span aria-hidden className="pointer-events-none absolute -top-1 start-0 text-lg animate-sparkle sm:text-2xl" style={{ animationDelay: `${delay + 0.4}s` }}>✦</span>
       <span aria-hidden className="pointer-events-none absolute bottom-2 -end-1 text-sm animate-sparkle text-white sm:text-xl" style={{ animationDelay: `${delay + 1.1}s` }}>✦</span>
-      <Character name={name} mood={mood} animate={animate ?? 'float'} delay={delay} size="auto" className="size-[4.6rem] sm:size-32 lg:size-40 xl:size-48" />
+      <Character name={name} mood={mood} animate={animate ?? 'float'} delay={delay} size="none" className="size-[4.6rem] sm:size-32 lg:size-40 xl:size-48" />
     </div>
   );
 }

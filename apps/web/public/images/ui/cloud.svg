@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" role="img" aria-labelledby="t"><title id="t">ענן רך</title>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M44 104Q14 104 14 78Q14 54 40 54Q40 22 74 24Q92 6 118 20Q150 10 156 48Q188 46 188 76Q188 104 158 104Z" fill="#fff"/>
-<path d="M36 70Q46 40 78 36" fill="none" stroke="#E0F2FE" stroke-width="7"/>
-<path d="M60 92Q100 100 140 92" fill="none" stroke="#E0F2FE" stroke-width="6"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" role="img" aria-labelledby="cloud-t"><title id="cloud-t">ענן רך</title>
+<defs><filter id="cloud-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="4"/></filter><radialGradient id="cloud-puff" cx="0.4" cy="0.3" r="0.6"><stop offset="0" stop-color="#fff" stop-opacity="0.95"/><stop offset="0.6" stop-color="#fff" stop-opacity="0.4"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><path id="cloud-cloud" d="M44 104Q14 104 14 78Q14 54 40 54Q40 22 74 24Q92 6 118 20Q150 10 156 48Q188 46 188 76Q188 104 158 104Z"/><radialGradient id="cloud-cloudg" cx="0.35" cy="0.2" r="0.9"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.5" stop-color="#F0F7FF"/><stop offset="1" stop-color="#BFDBFE"/></radialGradient><clipPath id="cloud-cloudc"><use href="#cloud-cloud"/></clipPath></defs>
+<ellipse cx="100" cy="108" rx="66" ry="7" fill="#1E293B" opacity="0.18" filter="url(#cloud-blur)"/>
+<use href="#cloud-cloud" fill="url(#cloud-cloudg)"/><g clip-path="url(#cloud-cloudc)"><ellipse cx="100" cy="108" rx="80" ry="18" fill="#BFDBFE" opacity="0.45"/><use href="#cloud-cloud" fill="none" stroke="#fff" stroke-width="8" opacity="0.8" transform="translate(-3 -3)"/><circle cx="74" cy="46" r="26" fill="url(#cloud-puff)"/><circle cx="118" cy="40" r="30" fill="url(#cloud-puff)"/><circle cx="40" cy="74" r="22" fill="url(#cloud-puff)"/><circle cx="158" cy="70" r="26" fill="url(#cloud-puff)"/><ellipse cx="100" cy="100" rx="70" ry="10" fill="#BFDBFE" opacity=".35"/></g>
+<path d="M44 104Q14 104 14 78Q14 54 40 54Q40 22 74 24Q92 6 118 20Q150 10 156 48Q188 46 188 76Q188 104 158 104Z" fill="none" stroke="#DBEAFE" stroke-width="2" stroke-linejoin="round"/>
 </svg>

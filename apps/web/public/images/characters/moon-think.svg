@@ -1,22 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">ירח חושב</title>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<circle cx="150" cy="154" r="5" fill="#7DD3FC" stroke-width="3"/>
-<path d="M125 28A76 76 0 1 0 125 172A80 80 0 0 1 125 28Z" fill="#FDE047"/>
-<path d="M44 74Q36 96 44 122" fill="none" stroke="#FEF9C3" stroke-width="7"/>
-<circle cx="40" cy="110" r="8" fill="#F9A8D4" stroke="none"/><circle cx="76" cy="114" r="8" fill="#F9A8D4" stroke="none"/>
-<path d="M48 126Q60 120 72 126" fill="none"/>
-<circle cx="48" cy="94" r="7" fill="#2D3748" stroke="none"/><circle cx="70" cy="92" r="7" fill="#2D3748" stroke="none"/>
-<circle cx="51" cy="91" r="2.5" fill="#fff" stroke="none"/><circle cx="73" cy="89" r="2.5" fill="#fff" stroke="none"/>
-<path d="M40 84Q48 80 56 82M62 72Q70 66 80 72" fill="none" stroke-width="4"/>
-<path d="M86 48Q108 6 156 22Q150 34 160 44Q138 30 128 52Z" fill="#A78BFA"/>
-<path d="M84 50Q106 34 130 54Q110 48 90 64Z" fill="#fff"/>
-<circle cx="160" cy="30" r="11" fill="#F9A8D4"/>
-<path d="M60 160Q74 170 86 156" fill="none" stroke-width="12"/>
-<path d="M60 160Q74 170 86 156" fill="none" stroke="#FDE047" stroke-width="5"/>
-<path d="M82 140Q96 130 100 142L104 136Q110 132 112 140L108 156Q102 166 90 164Q78 160 82 140Z" fill="#FDE047"/>
-<circle cx="118" cy="118" r="6" fill="#fff"/><circle cx="134" cy="100" r="9" fill="#fff"/>
-<circle cx="162" cy="72" r="26" fill="#fff"/>
-<path d="M152 64Q154 52 164 54Q172 56 168 66Q164 70 164 76" fill="none" stroke="#A78BFA" stroke-width="6"/>
-<circle cx="164" cy="86" r="4" fill="#A78BFA" stroke="none"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="moon-think-t"><title id="moon-think-t">ירח חושב</title>
+<defs><filter id="moon-think-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><radialGradient id="moon-think-blush" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FB7185" stop-opacity="0.75"/><stop offset="1" stop-color="#FB7185" stop-opacity="0"/></radialGradient><radialGradient id="moon-think-eye" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#0F172A"/></radialGradient><radialGradient id="moon-think-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FDE047" stop-opacity="0.5"/><stop offset="0.6" stop-color="#FDE047" stop-opacity="0.2"/><stop offset="1" stop-color="#FDE047" stop-opacity="0"/></radialGradient><radialGradient id="moon-think-bl" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#A7E1FD"/><stop offset="0.5" stop-color="#7DD3FC"/><stop offset="1" stop-color="#61A0C2"/></radialGradient><radialGradient id="moon-think-bub" cx="0.4" cy="0.35" r="0.75"><stop offset="0" stop-color="#fff"/><stop offset="0.7" stop-color="#fff"/><stop offset="1" stop-color="#E2E8F0"/></radialGradient><path id="moon-think-moon" d="M125 28A76 76 0 1 0 125 172A80 80 0 0 1 125 28Z"/><radialGradient id="moon-think-moong" cx="0.3" cy="0.3" r="0.9"><stop offset="0" stop-color="#FEEA82"/><stop offset="0.5" stop-color="#FDE047"/><stop offset="1" stop-color="#BAA943"/></radialGradient><clipPath id="moon-think-moonc"><use href="#moon-think-moon"/></clipPath><path id="moon-think-hand" d="M82 140Q96 130 100 142L104 136Q110 132 112 140L108 156Q102 166 90 164Q78 160 82 140Z"/><radialGradient id="moon-think-handg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#FEEA82"/><stop offset="0.5" stop-color="#FDE047"/><stop offset="1" stop-color="#BAA943"/></radialGradient><clipPath id="moon-think-handc"><use href="#moon-think-hand"/></clipPath><path id="moon-think-cap" d="M86 48Q108 6 156 22Q150 34 160 44Q138 30 128 52Z"/><radialGradient id="moon-think-capg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#C3B0FC"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#7E6EC1"/></radialGradient><clipPath id="moon-think-capc"><use href="#moon-think-cap"/></clipPath><path id="moon-think-brim" d="M84 50Q106 34 130 54Q110 48 90 64Z"/><radialGradient id="moon-think-brimg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.5" stop-color="#FFFFFF"/><stop offset="1" stop-color="#CBD5E1"/></radialGradient><clipPath id="moon-think-brimc"><use href="#moon-think-brim"/></clipPath><radialGradient id="moon-think-pom" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#FBC4E2"/><stop offset="0.5" stop-color="#F9A8D4"/><stop offset="1" stop-color="#B782A6"/></radialGradient></defs>
+<circle cx="76" cy="100" r="96" fill="url(#moon-think-glow)"/>
+<circle cx="150" cy="154" r="5" fill="url(#moon-think-bl)"/><ellipse cx="148.5" cy="152" rx="2.1" ry="1.1" fill="#fff" opacity="0.5" transform="rotate(-30 148.5 152)"/>
+<circle cx="118" cy="118" r="6" fill="url(#moon-think-bub)"/><circle cx="134" cy="100" r="9" fill="url(#moon-think-bub)"/><circle cx="162" cy="72" r="26" fill="url(#moon-think-bub)"/>
+<ellipse cx="152" cy="60" rx="10" ry="5" fill="#fff" opacity="0.9" transform="rotate(-30 152 60)"/>
+<path d="M152 64Q154 52 164 54Q172 56 168 66Q164 70 164 76" fill="none" stroke="#A78BFA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="164" cy="86" r="4" fill="#A78BFA"/>
+<ellipse cx="72" cy="106" rx="60" ry="72" fill="#1E293B" opacity="0.18" filter="url(#moon-think-blur)"/>
+<use href="#moon-think-moon" fill="url(#moon-think-moong)"/><g clip-path="url(#moon-think-moonc)"><ellipse cx="60" cy="160" rx="56" ry="26" fill="#BAA943" opacity="0.28"/><use href="#moon-think-moon" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g><ellipse cx="40" cy="78" rx="10" ry="26" fill="#fff" opacity="0.5" transform="rotate(-8 40 78)"/>
+<ellipse cx="40" cy="110" rx="10" ry="6.5" fill="url(#moon-think-blush)"/>
+<ellipse cx="76" cy="114" rx="10" ry="6.5" fill="url(#moon-think-blush)"/>
+<circle cx="48" cy="92" r="7.5" fill="url(#moon-think-eye)"/><circle cx="45.5" cy="89.3" r="3" fill="#fff"/><circle cx="50.6" cy="94.4" r="1.5" fill="#fff" opacity=".85"/>
+<circle cx="70" cy="92" r="7.5" fill="url(#moon-think-eye)"/><circle cx="67.5" cy="89.3" r="3" fill="#fff"/><circle cx="72.6" cy="94.4" r="1.5" fill="#fff" opacity=".85"/>
+<path d="M48 126Q60 120 72 126" fill="none" stroke="#B45309" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+<path d="M40 84Q48 80 56 82M62 72Q70 66 80 72" fill="none" stroke="#B45309" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+<path d="M60 160Q74 170 86 156" fill="none" stroke="#D97706" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 160Q74 170 86 156" fill="none" stroke="#FDE047" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 160Q74 170 86 156" fill="none" stroke="#FEF3B5" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" opacity=".6" transform="translate(-1.5 -1.5)"/>
+<use href="#moon-think-hand" fill="url(#moon-think-handg)" stroke="#D97706" stroke-width="1.5" stroke-opacity=".5"/><g clip-path="url(#moon-think-handc)"><use href="#moon-think-hand" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g>
+<use href="#moon-think-cap" fill="url(#moon-think-capg)"/><g clip-path="url(#moon-think-capc)"><ellipse cx="140" cy="46" rx="24" ry="10" fill="#7E6EC1" opacity="0.32"/><use href="#moon-think-cap" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g><ellipse cx="106" cy="32" rx="12" ry="6" fill="#fff" opacity="0.4" transform="rotate(-35 106 32)"/>
+<use href="#moon-think-brim" fill="url(#moon-think-brimg)"/><g clip-path="url(#moon-think-brimc)"></g><ellipse cx="100" cy="46" rx="8" ry="3" fill="#fff" opacity="0.6" transform="rotate(-25 100 46)"/>
+<circle cx="160" cy="30" r="11" fill="url(#moon-think-pom)"/><ellipse cx="156.7" cy="25.6" rx="4.6" ry="2.4" fill="#fff" opacity="0.5" transform="rotate(-30 156.7 25.6)"/>
 </svg>

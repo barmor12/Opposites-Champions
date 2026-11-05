@@ -1,15 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">גביע זהב</title>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M48 44Q18 44 20 76Q22 108 60 112L62 98Q36 96 34 72Q34 58 48 58Z" fill="#F59E0B"/>
-<path d="M152 44Q182 44 180 76Q178 108 140 112L138 98Q164 96 166 72Q166 58 152 58Z" fill="#F59E0B"/>
-<path d="M46 26H154V84Q154 128 100 134Q46 128 46 84Z" fill="#FDE047"/>
-<path d="M116 32H154V84Q154 118 118 130Q140 110 136 82Z" fill="#F59E0B" stroke="none"/>
-<path d="M56 36Q56 90 76 118" fill="none" stroke="#FEF9C3" stroke-width="8"/>
-<path d="M40 26H160" fill="none" stroke-width="7"/>
-<path d="M100 134V154" fill="none" stroke-width="16"/>
-<path d="M100 134V154" fill="none" stroke="#F59E0B" stroke-width="7"/>
-<path d="M66 176Q66 156 100 156Q134 156 134 176Z" fill="#F59E0B"/>
-<rect x="50" y="174" width="100" height="16" rx="8" fill="#2D3748"/>
-<path d="M100 60L107.6 79.5L128.5 80.7L112.4 94L117.6 114.3L100 103L82.4 114.3L87.6 104L71.5 90.7L92.4 89.5Z" fill="#F9A8D4" stroke-width="4"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="trophy-t"><title id="trophy-t">גביע זהב</title>
+<defs><filter id="trophy-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="4"/></filter><linearGradient id="trophy-gold" x1="40" y1="20" x2="160" y2="150" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#D97706"/><stop offset="0.22" stop-color="#F59E0B"/><stop offset="0.38" stop-color="#FDE68A"/><stop offset="0.46" stop-color="#FFFBEB"/><stop offset="0.54" stop-color="#FDE68A"/><stop offset="0.7" stop-color="#F59E0B"/><stop offset="0.88" stop-color="#D97706"/><stop offset="1" stop-color="#92400E"/></linearGradient><linearGradient id="trophy-dark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#64748B"/><stop offset="0.4" stop-color="#334155"/><stop offset="1" stop-color="#0F172A"/></linearGradient><linearGradient id="trophy-rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFBEB"/><stop offset="0.5" stop-color="#F59E0B"/><stop offset="1" stop-color="#B45309"/></linearGradient><radialGradient id="trophy-pink" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#FBCFE8"/><stop offset="0.6" stop-color="#F472B6"/><stop offset="1" stop-color="#DB2777"/></radialGradient></defs>
+<ellipse cx="100" cy="192" rx="56" ry="7" fill="#1E293B" opacity="0.25" filter="url(#trophy-blur)"/>
+<path d="M48 44Q18 44 20 76Q22 108 60 112L62 98Q36 96 34 72Q34 58 48 58Z" fill="url(#trophy-gold)"/><path d="M152 44Q182 44 180 76Q178 108 140 112L138 98Q164 96 166 72Q166 58 152 58Z" fill="url(#trophy-gold)"/>
+<path d="M48 44Q18 44 20 76Q22 108 60 112L62 98Q36 96 34 72Q34 58 48 58Z M152 44Q182 44 180 76Q178 108 140 112L138 98Q164 96 166 72Q166 58 152 58Z" fill="none" stroke="#B45309" stroke-width="1.5" stroke-opacity=".45"/>
+<path d="M38 60Q30 70 34 86" fill="none" stroke="#FFFBEB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+<path d="M46 26H154V84Q154 128 100 134Q46 128 46 84Z" fill="url(#trophy-gold)"/>
+<path d="M116 32H154V84Q154 118 118 130Q140 110 136 82Z" fill="#92400E" opacity=".3"/><path d="M46 84Q50 122 100 134Q70 124 60 100Z" fill="#92400E" opacity=".2"/>
+<path d="M58 38Q56 90 76 118" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M60 40Q58 88 76 116" fill="none" stroke="#FFFBEB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+<path d="M46 26H154V84Q154 128 100 134Q46 128 46 84Z" fill="none" stroke="#B45309" stroke-width="1.5" stroke-opacity=".45"/>
+<rect x="40" y="21" width="120" height="10" rx="5" fill="url(#trophy-rim)"/><rect x="46" y="23" width="80" height="2.5" rx="1.2" fill="#fff" opacity=".7"/>
+<rect x="93" y="132" width="14" height="26" rx="4" fill="url(#trophy-gold)"/><path d="M103 134V156" stroke="#92400E" stroke-width="2" opacity=".35"/>
+<path d="M66 176Q66 156 100 156Q134 156 134 176Z" fill="url(#trophy-gold)"/><path d="M66 176Q66 156 100 156Q134 156 134 176Z" fill="none" stroke="#B45309" stroke-width="1.5" stroke-opacity=".45"/>
+<path d="M74 170Q78 160 96 158" fill="none" stroke="#FFFBEB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+<rect x="50" y="174" width="100" height="16" rx="8" fill="url(#trophy-dark)"/><rect x="58" y="176" width="70" height="3" rx="1.5" fill="#fff" opacity=".35"/>
+<path d="M100 56L108.8 73.9L128.5 76.7L114.3 90.6L117.6 110.3L100 101L82.4 110.3L85.7 90.6L71.5 76.7L91.2 73.9Z" fill="url(#trophy-pink)" stroke="#BE185D" stroke-width="1.5" stroke-opacity=".5" stroke-linejoin="round"/>
+<path d="M100 60L104 72L92 76Z" fill="#fff" opacity=".6"/>
 </svg>

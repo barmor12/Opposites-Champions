@@ -1,14 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">תיבת אוצר סגורה</title>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<rect x="26" y="90" width="148" height="84" rx="10" fill="#D97706"/>
-<path d="M26 98Q26 48 100 48Q174 48 174 98Z" fill="#B45309"/>
-<path d="M40 90Q46 62 100 60" fill="none" stroke="#FDBA74" stroke-width="7"/>
-<path d="M26 90H174V106H26Z" fill="#FDE047"/>
-<path d="M54 48V174M146 48V174" fill="none" stroke-width="14"/>
-<path d="M54 50V172M146 50V172" fill="none" stroke="#FDE047" stroke-width="6"/>
-<path d="M84 92H116V128Q116 136 108 136H92Q84 136 84 128Z" fill="#FDE047"/>
-<circle cx="100" cy="112" r="6" fill="#2D3748" stroke="none"/><path d="M100 112V126" stroke-width="4"/>
-<rect x="36" y="154" width="128" height="20" rx="6" fill="#B45309" stroke="none"/>
-<rect x="26" y="90" width="148" height="84" rx="10" fill="none"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="treasure-closed-t"><title id="treasure-closed-t">תיבת אוצר סגורה</title>
+<defs><filter id="treasure-closed-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="4"/></filter><linearGradient id="treasure-closed-gold" x1="0" y1="0" x2="1" y2="0.2"><stop offset="0" stop-color="#B45309"/><stop offset="0.3" stop-color="#FDE68A"/><stop offset="0.45" stop-color="#FFFBEB"/><stop offset="0.6" stop-color="#F59E0B"/><stop offset="1" stop-color="#B45309"/></linearGradient><linearGradient id="treasure-closed-wood" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0" stop-color="#F59E0B"/><stop offset="0.35" stop-color="#D97706"/><stop offset="1" stop-color="#92400E"/></linearGradient><linearGradient id="treasure-closed-lid" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#F59E0B"/><stop offset="0.4" stop-color="#B45309"/><stop offset="1" stop-color="#78350F"/></linearGradient></defs>
+<ellipse cx="100" cy="180" rx="82" ry="8" fill="#1E293B" opacity="0.25" filter="url(#treasure-closed-blur)"/>
+<rect x="26" y="100" width="148" height="74" rx="10" fill="url(#treasure-closed-wood)"/>
+<path d="M28 124H172M28 148H172" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><path d="M34 112Q60 110 70 114M100 136Q120 134 140 138M40 160Q70 158 90 162" fill="none" stroke="#FDE68A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+<rect x="26" y="100" width="148" height="74" rx="10" fill="none" stroke="#78350F" stroke-width="1.5" stroke-opacity=".5"/>
+<path d="M26 160Q100 168 174 160V164Q174 174 164 174H36Q26 174 26 164Z" fill="#78350F" opacity=".35"/>
+<rect x="47" y="100" width="14" height="74" fill="url(#treasure-closed-gold)"/><rect x="139" y="100" width="14" height="74" fill="url(#treasure-closed-gold)"/>
+<rect x="47" y="100" width="14" height="74" fill="none" stroke="#92400E" stroke-width="1.2" stroke-opacity=".5"/><rect x="139" y="100" width="14" height="74" fill="none" stroke="#92400E" stroke-width="1.2" stroke-opacity=".5"/>
+<circle cx="54" cy="112" r="2.5" fill="#92400E" opacity=".6"/><circle cx="54" cy="162" r="2.5" fill="#92400E" opacity=".6"/><circle cx="146" cy="112" r="2.5" fill="#92400E" opacity=".6"/><circle cx="146" cy="162" r="2.5" fill="#92400E" opacity=".6"/>
+<path d="M26 98Q26 48 100 48Q174 48 174 98Z" fill="url(#treasure-closed-lid)"/>
+<path d="M30 86Q40 62 100 60Q160 62 170 86" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><path d="M34 74Q60 54 100 54Q140 54 166 74" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+<path d="M40 90Q46 62 100 60" fill="none" stroke="#FDBA74" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/><path d="M44 86Q50 66 96 63" fill="none" stroke="#FEF3C7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+<path d="M26 98Q26 48 100 48Q174 48 174 98Z" fill="none" stroke="#78350F" stroke-width="1.5" stroke-opacity=".5"/>
+<rect x="26" y="90" width="148" height="16" fill="url(#treasure-closed-gold)" stroke="#92400E" stroke-width="1.5" stroke-opacity=".5"/><rect x="30" y="92" width="100" height="3" rx="1.5" fill="#fff" opacity=".6"/>
+<path d="M47 48V90M61 48V90M139 48V90M153 48V90" fill="none"/><path d="M47 50Q47 58 48 90H61Q60 58 61 50Z" fill="url(#treasure-closed-gold)" stroke="#92400E" stroke-width="1.2" stroke-opacity=".5"/><path d="M139 50Q140 58 139 90H153Q152 58 153 50Z" fill="url(#treasure-closed-gold)" stroke="#92400E" stroke-width="1.2" stroke-opacity=".5"/>
+<path d="M84 92H116V124Q116 132 108 132H92Q84 132 84 124Z" fill="url(#treasure-closed-gold)" stroke="#92400E" stroke-width="1.5" stroke-opacity=".5"/>
+<path d="M88 96Q96 94 100 98" fill="none" stroke="#fff" stroke-width="2.5" opacity=".7" stroke-linecap="round"/>
+<circle cx="100" cy="110" r="5.5" fill="#1E293B"/><path d="M98 112L96 124H104L102 112Z" fill="#1E293B"/><circle cx="98.5" cy="108.5" r="1.6" fill="#fff" opacity=".6"/>
 </svg>

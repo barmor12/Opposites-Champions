@@ -1,16 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">שמש שמחה</title>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M100 4L116 40.1L148 16.9L143.8 56.2L183.1 52L159.9 84L196 100L159.9 116L183.1 148L143.8 143.8L148 183.1L116 159.9L100 196L84 159.9L52 183.1L56.2 143.8L16.9 148L40.1 116L4 100L40.1 84L16.9 52L56.2 56.2L52 16.9L84 40.1Z" fill="#FDBA74"/>
-<circle cx="100" cy="100" r="58" fill="#FDE047"/>
-<path d="M62 70Q80 50 108 52" fill="none" stroke="#FEF9C3" stroke-width="7"/>
-<circle cx="70" cy="110" r="9" fill="#F9A8D4" stroke="none"/><circle cx="130" cy="110" r="9" fill="#F9A8D4" stroke="none"/>
-<path d="M76 118Q100 142 124 118" fill="#F87171"/>
-<path d="M76 118Q100 128 124 118" fill="none"/>
-<circle cx="82" cy="92" r="8" fill="#2D3748" stroke="none"/><circle cx="118" cy="92" r="8" fill="#2D3748" stroke="none"/>
-<circle cx="85" cy="89" r="3" fill="#fff" stroke="none"/><circle cx="121" cy="89" r="3" fill="#fff" stroke="none"/>
-<path d="M70 80Q82 72 92 78M108 78Q118 72 130 80" fill="none" stroke-width="4"/>
-<path d="M150 122Q172 118 178 92" fill="none" stroke-width="12"/>
-<path d="M150 122Q172 118 178 92" fill="none" stroke="#FDE047" stroke-width="5"/>
-<path d="M166 92Q160 72 172 66Q178 64 180 72L182 60Q186 54 192 60L194 76Q196 80 198 72L200 94Q196 102 184 102Q170 102 166 92Z" fill="#FDE047"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="sun-t"><title id="sun-t">שמש שמחה</title>
+<defs><filter id="sun-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><radialGradient id="sun-blush" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FB7185" stop-opacity="0.75"/><stop offset="1" stop-color="#FB7185" stop-opacity="0"/></radialGradient><radialGradient id="sun-eye" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#0F172A"/></radialGradient><radialGradient id="sun-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FDE047" stop-opacity="0.6"/><stop offset="0.55" stop-color="#FDE047" stop-opacity="0.28"/><stop offset="1" stop-color="#FDE047" stop-opacity="0"/></radialGradient><radialGradient id="sun-rays" cx="0.42" cy="0.38" r="0.6"><stop offset="0" stop-color="#FDE68A"/><stop offset="0.55" stop-color="#FDBA74"/><stop offset="1" stop-color="#F97316"/></radialGradient><clipPath id="sun-rc"><path d="M100 4L116 40.1L148 16.9L143.8 56.2L183.1 52L159.9 84L196 100L159.9 116L183.1 148L143.8 143.8L148 183.1L116 159.9L100 196L84 159.9L52 183.1L56.2 143.8L16.9 148L40.1 116L4 100L40.1 84L16.9 52L56.2 56.2L52 16.9L84 40.1Z"/></clipPath><path id="sun-disc" d="M158 100A58 58 0 1 0 42 100A58 58 0 1 0 158 100Z"/><radialGradient id="sun-discg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#FEEA82"/><stop offset="0.5" stop-color="#FDE047"/><stop offset="1" stop-color="#BAA943"/></radialGradient><clipPath id="sun-discc"><use href="#sun-disc"/></clipPath><radialGradient id="sun-red" cx="0.5" cy="0.2" r="0.78"><stop offset="0" stop-color="#F48080"/><stop offset="0.5" stop-color="#EF4444"/><stop offset="1" stop-color="#B03C41"/></radialGradient><path id="sun-hand" d="M166 92Q160 72 172 66Q178 64 180 72L182 60Q186 54 192 60L194 76Q196 80 198 72L200 94Q196 102 184 102Q170 102 166 92Z"/><radialGradient id="sun-handg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#FEEA82"/><stop offset="0.5" stop-color="#FDE047"/><stop offset="1" stop-color="#BAA943"/></radialGradient><clipPath id="sun-handc"><use href="#sun-hand"/></clipPath></defs>
+<circle cx="100" cy="100" r="100" fill="url(#sun-glow)"/>
+<path d="M100 4L116 40.1L148 16.9L143.8 56.2L183.1 52L159.9 84L196 100L159.9 116L183.1 148L143.8 143.8L148 183.1L116 159.9L100 196L84 159.9L52 183.1L56.2 143.8L16.9 148L40.1 116L4 100L40.1 84L16.9 52L56.2 56.2L52 16.9L84 40.1Z" fill="url(#sun-rays)"/>
+<path d="M100 4L116 40.1L148 16.9L143.8 56.2L183.1 52L159.9 84L196 100L159.9 116L183.1 148L143.8 143.8L148 183.1L116 159.9L100 196L84 159.9L52 183.1L56.2 143.8L16.9 148L40.1 116L4 100L40.1 84L16.9 52L56.2 56.2L52 16.9L84 40.1Z" fill="none" stroke="#fff" stroke-width="3" opacity=".35" transform="translate(-1.5 -1.5)" clip-path="url(#sun-rc)"/>
+<ellipse cx="104" cy="108" rx="58" ry="58" fill="#1E293B" opacity="0.18" filter="url(#sun-blur)"/>
+<use href="#sun-disc" fill="url(#sun-discg)"/><g clip-path="url(#sun-discc)"><ellipse cx="100" cy="150" rx="56" ry="22" fill="#BAA943" opacity="0.28"/><use href="#sun-disc" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g><ellipse cx="80" cy="72" rx="26" ry="13" fill="#fff" opacity="0.55" transform="rotate(-25 80 72)"/>
+<ellipse cx="70" cy="110" rx="12" ry="7.5" fill="url(#sun-blush)"/>
+<ellipse cx="130" cy="110" rx="12" ry="7.5" fill="url(#sun-blush)"/>
+<path d="M76 118Q100 142 124 118Z" fill="url(#sun-red)"/><path d="M76 118Q100 128 124 118Q100 124 76 118Z" fill="#fff" opacity=".92"/>
+<path d="M76 118Q100 128 124 118" fill="none" stroke="#B45309" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+<circle cx="82" cy="92" r="8.5" fill="url(#sun-eye)"/><circle cx="79.2" cy="88.9" r="3.4" fill="#fff"/><circle cx="85" cy="94.7" r="1.7" fill="#fff" opacity=".85"/>
+<circle cx="118" cy="92" r="8.5" fill="url(#sun-eye)"/><circle cx="115.2" cy="88.9" r="3.4" fill="#fff"/><circle cx="121" cy="94.7" r="1.7" fill="#fff" opacity=".85"/>
+<path d="M70 80Q82 72 92 78M108 78Q118 72 130 80" fill="none" stroke="#B45309" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+<path d="M150 122Q172 118 178 92" fill="none" stroke="#D97706" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M150 122Q172 118 178 92" fill="none" stroke="#FDE047" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M150 122Q172 118 178 92" fill="none" stroke="#FEF3B5" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" opacity=".6" transform="translate(-1.5 -1.5)"/>
+<use href="#sun-hand" fill="url(#sun-handg)" stroke="#D97706" stroke-width="1.5" stroke-opacity=".5"/><g clip-path="url(#sun-handc)"><use href="#sun-hand" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g>
 </svg>

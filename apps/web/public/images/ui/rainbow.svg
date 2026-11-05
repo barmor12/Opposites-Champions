@@ -1,15 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-labelledby="t"><title id="t">קשת בענן</title>
-<g fill="none" stroke-linecap="butt">
-<path d="M25 200A175 175 0 0 1 375 200" stroke="#2D3748" stroke-width="125"/>
-<path d="M30 200A170 170 0 0 1 370 200" stroke="#F87171" stroke-width="19"/>
-<path d="M49 200A151 151 0 0 1 351 200" stroke="#FDBA74" stroke-width="19"/>
-<path d="M68 200A132 132 0 0 1 332 200" stroke="#FDE047" stroke-width="19"/>
-<path d="M87 200A113 113 0 0 1 313 200" stroke="#86EFAC" stroke-width="19"/>
-<path d="M106 200A94 94 0 0 1 294 200" stroke="#7DD3FC" stroke-width="19"/>
-<path d="M125 200A75 75 0 0 1 275 200" stroke="#A78BFA" stroke-width="19"/>
-</g>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M22 184Q6 184 6 170Q6 158 20 158Q22 138 44 140Q58 128 76 140Q92 138 94 158Q110 158 110 172Q110 184 96 184Z" fill="#fff"/>
-<path d="M304 184Q290 184 290 170Q290 158 304 158Q306 138 328 140Q342 128 360 140Q376 138 378 158Q394 158 394 172Q394 184 380 184Z" fill="#fff"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-labelledby="rainbow-t"><title id="rainbow-t">קשת בענן</title>
+<defs><filter id="rainbow-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><linearGradient id="rainbow-b0" x1="0" y1="30" x2="0" y2="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FCA5A5"/><stop offset="0.5" stop-color="#EF4444"/><stop offset="1" stop-color="#BB3D42"/></linearGradient><linearGradient id="rainbow-b1" x1="0" y1="49" x2="0" y2="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FED7AA"/><stop offset="0.5" stop-color="#F97316"/><stop offset="1" stop-color="#C2611F"/></linearGradient><linearGradient id="rainbow-b2" x1="0" y1="68" x2="0" y2="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FEF08A"/><stop offset="0.5" stop-color="#EAB308"/><stop offset="1" stop-color="#B79115"/></linearGradient><linearGradient id="rainbow-b3" x1="0" y1="87" x2="0" y2="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#BBF7D0"/><stop offset="0.5" stop-color="#22C55E"/><stop offset="1" stop-color="#219E55"/></linearGradient><linearGradient id="rainbow-b4" x1="0" y1="106" x2="0" y2="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#BAE6FD"/><stop offset="0.5" stop-color="#0EA5E9"/><stop offset="1" stop-color="#1286BE"/></linearGradient><linearGradient id="rainbow-b5" x1="0" y1="125" x2="0" y2="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#DDD6FE"/><stop offset="0.5" stop-color="#8B5CF6"/><stop offset="1" stop-color="#704FC7"/></linearGradient><radialGradient id="rainbow-puff" cx="0.4" cy="0.3" r="0.6"><stop offset="0" stop-color="#fff" stop-opacity="0.95"/><stop offset="0.6" stop-color="#fff" stop-opacity="0.4"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><path id="rainbow-cl1" d="M22 184Q6 184 6 170Q6 158 20 158Q22 138 44 140Q58 128 76 140Q92 138 94 158Q110 158 110 172Q110 184 96 184Z"/><radialGradient id="rainbow-cl1g" cx="0.35" cy="0.2" r="0.9"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.5" stop-color="#F0F7FF"/><stop offset="1" stop-color="#BFDBFE"/></radialGradient><clipPath id="rainbow-cl1c"><use href="#rainbow-cl1"/></clipPath><path id="rainbow-cl2" d="M304 184Q290 184 290 170Q290 158 304 158Q306 138 328 140Q342 128 360 140Q376 138 378 158Q394 158 394 172Q394 184 380 184Z"/><radialGradient id="rainbow-cl2g" cx="0.35" cy="0.2" r="0.9"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.5" stop-color="#F0F7FF"/><stop offset="1" stop-color="#BFDBFE"/></radialGradient><clipPath id="rainbow-cl2c"><use href="#rainbow-cl2"/></clipPath></defs>
+<path d="M30 200A170 170 0 0 1 370 200" fill="none" stroke="#1E293B" stroke-width="130" opacity=".12" filter="url(#rainbow-blur)" transform="translate(0 6)"/>
+<path d="M30 200A170 170 0 0 1 370 200" fill="none" stroke="url(#rainbow-b0)" stroke-width="19"/>
+<path d="M49 200A151 151 0 0 1 351 200" fill="none" stroke="url(#rainbow-b1)" stroke-width="19"/>
+<path d="M68 200A132 132 0 0 1 332 200" fill="none" stroke="url(#rainbow-b2)" stroke-width="19"/>
+<path d="M87 200A113 113 0 0 1 313 200" fill="none" stroke="url(#rainbow-b3)" stroke-width="19"/>
+<path d="M106 200A94 94 0 0 1 294 200" fill="none" stroke="url(#rainbow-b4)" stroke-width="19"/>
+<path d="M125 200A75 75 0 0 1 275 200" fill="none" stroke="url(#rainbow-b5)" stroke-width="19"/>
+<path d="M36 200A164 164 0 0 1 364 200" fill="none" stroke="#fff" stroke-width="3" opacity=".55"/>
+<use href="#rainbow-cl1" fill="url(#rainbow-cl1g)"/><g clip-path="url(#rainbow-cl1c)"><ellipse cx="58" cy="186" rx="50" ry="10" fill="#BFDBFE" opacity="0.45"/><use href="#rainbow-cl1" fill="none" stroke="#fff" stroke-width="6" opacity="0.8" transform="translate(-3 -3)"/><circle cx="30" cy="150" r="18" fill="url(#rainbow-puff)"/><circle cx="62" cy="146" r="22" fill="url(#rainbow-puff)"/></g>
+<use href="#rainbow-cl2" fill="url(#rainbow-cl2g)"/><g clip-path="url(#rainbow-cl2c)"><ellipse cx="342" cy="186" rx="50" ry="10" fill="#BFDBFE" opacity="0.45"/><use href="#rainbow-cl2" fill="none" stroke="#fff" stroke-width="6" opacity="0.8" transform="translate(-3 -3)"/><circle cx="314" cy="150" r="18" fill="url(#rainbow-puff)"/><circle cx="346" cy="146" r="22" fill="url(#rainbow-puff)"/></g>
 </svg>

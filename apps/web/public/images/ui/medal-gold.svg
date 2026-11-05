@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">מדליית זהב</title>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M66 8L100 72L62 96L34 8Z" fill="#F87171"/>
-<path d="M134 8L100 72L138 96L166 8Z" fill="#7DD3FC"/>
-<circle cx="100" cy="124" r="56" fill="#FDE047"/>
-<circle cx="100" cy="124" r="42" fill="none" stroke="#F59E0B" stroke-width="5"/>
-<path d="M66 100Q74 82 94 80" fill="none" stroke="#fff" stroke-width="7"/>
-<path d="M92 102L102 92V148M90 148H114" fill="none" stroke="#F59E0B" stroke-width="9"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="medal-gold-t"><title id="medal-gold-t">מדליית זהב</title>
+<defs><filter id="medal-gold-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="4"/></filter><linearGradient id="medal-gold-red" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#FCA5A5"/><stop offset="0.6" stop-color="#EF4444"/><stop offset="1" stop-color="#B91C1C"/></linearGradient><linearGradient id="medal-gold-blue" x1="0" y1="0" x2="-0.3" y2="1"><stop offset="0" stop-color="#BAE6FD"/><stop offset="0.6" stop-color="#38BDF8"/><stop offset="1" stop-color="#0369A1"/></linearGradient><linearGradient id="medal-gold-metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B45309"/><stop offset="0.2" stop-color="#FBBF24"/><stop offset="0.36" stop-color="#FEF3C7"/><stop offset="0.46" stop-color="#FFFFFF"/><stop offset="0.56" stop-color="#FEF3C7"/><stop offset="0.72" stop-color="#FBBF24"/><stop offset="1" stop-color="#B45309"/></linearGradient><radialGradient id="medal-gold-inner" cx="0.4" cy="0.35" r="0.8"><stop offset="0" stop-color="#FEF3C7"/><stop offset="0.6" stop-color="#FBBF24"/><stop offset="1" stop-color="#B45309"/></radialGradient></defs>
+<ellipse cx="100" cy="186" rx="50" ry="6" fill="#1E293B" opacity="0.25" filter="url(#medal-gold-blur)"/>
+<path d="M66 8L100 72L62 96L34 8Z" fill="url(#medal-gold-red)"/><path d="M66 8L100 72L62 96L34 8Z" fill="none" stroke="#991B1B" stroke-width="1.5" stroke-opacity=".4" stroke-linejoin="round"/><path d="M48 14L80 74" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+<path d="M134 8L100 72L138 96L166 8Z" fill="url(#medal-gold-blue)"/><path d="M134 8L100 72L138 96L166 8Z" fill="none" stroke="#075985" stroke-width="1.5" stroke-opacity=".4" stroke-linejoin="round"/><path d="M150 14L118 74" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+<path d="M100 72L138 96L124 84Z" fill="#0F172A" opacity=".18"/>
+<circle cx="100" cy="124" r="56" fill="url(#medal-gold-metal)"/><circle cx="100" cy="124" r="56" fill="none" stroke="#B45309" stroke-width="1.5" stroke-opacity=".5"/>
+<circle cx="100" cy="124" r="44" fill="url(#medal-gold-inner)"/><circle cx="100" cy="124" r="44" fill="none" stroke="#B45309" stroke-width="2.5" stroke-opacity=".55"/><circle cx="100" cy="124" r="40" fill="none" stroke="#fff" stroke-width="1.5" stroke-opacity=".5"/>
+<path d="M64 112Q70 90 92 82" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+<path d="M68 156L132 92L140 102L78 164Z" fill="#fff" opacity=".18"/>
+<path d="M92 102L102 92V148M90 148H114" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" transform="translate(-1.5 -1.5)"/><path d="M92 102L102 92V148M90 148H114" fill="none" stroke="#B45309" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -1,18 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">קוף</title>
-<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
-<circle cx="100" cy="100" r="96" fill="#ECFCCB"/>
-<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M38 210Q38 158 100 158Q162 158 162 210Z" fill="#7DD3FC"/>
-<circle cx="46" cy="100" r="20" fill="#B45309"/><circle cx="154" cy="100" r="20" fill="#B45309"/>
-<circle cx="46" cy="100" r="10" fill="#FDE68A" stroke="none"/><circle cx="154" cy="100" r="10" fill="#FDE68A" stroke="none"/>
-<path d="M50 104Q50 54 100 54Q150 54 150 104Q150 160 100 160Q50 160 50 104Z" fill="#B45309"/>
-<path d="M66 100Q66 78 86 78Q100 72 114 78Q134 78 134 100Q140 150 100 152Q60 150 66 100Z" fill="#FDE68A"/>
-<path d="M90 56Q100 44 110 56" fill="none"/>
-<circle cx="70" cy="122" r="6" fill="#F9A8D4" stroke="none"/><circle cx="130" cy="122" r="6" fill="#F9A8D4" stroke="none"/>
-<circle cx="94" cy="118" r="2.8" fill="#2D3748" stroke="none"/><circle cx="106" cy="118" r="2.8" fill="#2D3748" stroke="none"/>
-<path d="M84 132Q100 146 116 132" fill="none"/>
-<circle cx="82" cy="98" r="7" fill="#2D3748" stroke="none"/><circle cx="118" cy="98" r="7" fill="#2D3748" stroke="none"/>
-<circle cx="85" cy="95" r="2.5" fill="#fff" stroke="none"/><circle cx="121" cy="95" r="2.5" fill="#fff" stroke="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="monkey-t"><title id="monkey-t">קוף</title>
+<defs><radialGradient id="monkey-bg" cx="0.35" cy="0.28" r="0.95"><stop offset="0" stop-color="#F7FEEA"/><stop offset="0.6" stop-color="#ECFCCB"/><stop offset="1" stop-color="#C3D2AE"/></radialGradient><clipPath id="monkey-clip"><circle cx="100" cy="100" r="96"/></clipPath><filter id="monkey-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="4"/></filter><radialGradient id="monkey-blush" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FB7185" stop-opacity="0.75"/><stop offset="1" stop-color="#FB7185" stop-opacity="0"/></radialGradient><radialGradient id="monkey-eye" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#0F172A"/></radialGradient><path id="monkey-body" d="M38 210Q38 158 100 158Q162 158 162 210Z"/><radialGradient id="monkey-bodyg" cx="0.4" cy="0.1" r="0.95"><stop offset="0" stop-color="#A7E1FD"/><stop offset="0.5" stop-color="#7DD3FC"/><stop offset="1" stop-color="#61A0C2"/></radialGradient><clipPath id="monkey-bodyc"><use href="#monkey-body"/></clipPath><radialGradient id="monkey-inner" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#FEEEAF"/><stop offset="0.5" stop-color="#FDE68A"/><stop offset="1" stop-color="#BAAD72"/></radialGradient><path id="monkey-earL" d="M66 100A20 20 0 1 0 26 100A20 20 0 1 0 66 100Z"/><radialGradient id="monkey-earLg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#CC8A58"/><stop offset="0.5" stop-color="#B45309"/><stop offset="1" stop-color="#874618"/></radialGradient><clipPath id="monkey-earLc"><use href="#monkey-earL"/></clipPath><path id="monkey-earR" d="M174 100A20 20 0 1 0 134 100A20 20 0 1 0 174 100Z"/><radialGradient id="monkey-earRg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#CC8A58"/><stop offset="0.5" stop-color="#B45309"/><stop offset="1" stop-color="#874618"/></radialGradient><clipPath id="monkey-earRc"><use href="#monkey-earR"/></clipPath><path id="monkey-head" d="M50 104Q50 54 100 54Q150 54 150 104Q150 160 100 160Q50 160 50 104Z"/><radialGradient id="monkey-headg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#CC8A58"/><stop offset="0.5" stop-color="#B45309"/><stop offset="1" stop-color="#874618"/></radialGradient><clipPath id="monkey-headc"><use href="#monkey-head"/></clipPath><path id="monkey-facep" d="M66 100Q66 78 86 78Q100 72 114 78Q134 78 134 100Q140 150 100 152Q60 150 66 100Z"/><radialGradient id="monkey-facepg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#FEEEAF"/><stop offset="0.5" stop-color="#FDE68A"/><stop offset="1" stop-color="#BAAD72"/></radialGradient><clipPath id="monkey-facepc"><use href="#monkey-facep"/></clipPath></defs>
+<circle cx="100" cy="100" r="96" fill="url(#monkey-bg)"/>
+<g clip-path="url(#monkey-clip)">
+<ellipse cx="100" cy="190" rx="82" ry="14" fill="#1E293B" opacity="0.18" filter="url(#monkey-blur)"/>
+<use href="#monkey-body" fill="url(#monkey-bodyg)"/><g clip-path="url(#monkey-bodyc)"><ellipse cx="100" cy="214" rx="80" ry="40" fill="#61A0C2" opacity="0.3"/><use href="#monkey-body" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g><ellipse cx="70" cy="172" rx="18" ry="6" fill="#fff" opacity="0.3" transform="rotate(-30 70 172)"/>
+<ellipse cx="100" cy="166" rx="58" ry="11" fill="#1E293B" opacity="0.28" filter="url(#monkey-blur)"/>
+<use href="#monkey-earL" fill="url(#monkey-earLg)"/><g clip-path="url(#monkey-earLc)"><ellipse cx="46" cy="116" rx="18" ry="8" fill="#874618" opacity="0.32"/><use href="#monkey-earL" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g>
+<use href="#monkey-earR" fill="url(#monkey-earRg)"/><g clip-path="url(#monkey-earRc)"><ellipse cx="154" cy="116" rx="18" ry="8" fill="#874618" opacity="0.32"/><use href="#monkey-earR" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g>
+<circle cx="46" cy="100" r="10" fill="url(#monkey-inner)"/><circle cx="154" cy="100" r="10" fill="url(#monkey-inner)"/>
+<use href="#monkey-head" fill="url(#monkey-headg)"/><g clip-path="url(#monkey-headc)"><ellipse cx="100" cy="164" rx="62" ry="22" fill="#874618" opacity="0.32"/><use href="#monkey-head" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g><ellipse cx="78" cy="76" rx="24" ry="12" fill="#fff" opacity="0.5" transform="rotate(-25 78 76)"/>
+<use href="#monkey-facep" fill="url(#monkey-facepg)"/><g clip-path="url(#monkey-facepc)"><ellipse cx="100" cy="152" rx="36" ry="12" fill="#BAAD72" opacity="0.32"/><use href="#monkey-facep" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g><ellipse cx="82" cy="88" rx="12" ry="6" fill="#fff" opacity="0.55" transform="rotate(-25 82 88)"/>
+<path d="M90 56Q100 44 110 56" fill="none" stroke="#7C2D12" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="70" cy="122" rx="10" ry="6.5" fill="url(#monkey-blush)"/>
+<ellipse cx="130" cy="122" rx="10" ry="6.5" fill="url(#monkey-blush)"/>
+<circle cx="94" cy="118" r="2.8" fill="#92400E"/><circle cx="106" cy="118" r="2.8" fill="#92400E"/>
+<path d="M84 132Q100 146 116 132" fill="none" stroke="#92400E" stroke-width="3.5" stroke-linecap="round" opacity=".8"/><path d="M84 132Q100 146 116 132" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" opacity=".45" transform="translate(0 3.2)"/>
+<circle cx="82" cy="98" r="8" fill="url(#monkey-eye)"/><circle cx="79.4" cy="95.1" r="3.2" fill="#fff"/><circle cx="84.8" cy="100.6" r="1.6" fill="#fff" opacity=".85"/>
+<circle cx="118" cy="98" r="8" fill="url(#monkey-eye)"/><circle cx="115.4" cy="95.1" r="3.2" fill="#fff"/><circle cx="120.8" cy="100.6" r="1.6" fill="#fff" opacity=".85"/>
 </g>
-<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+<circle cx="100" cy="100" r="94" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3"/>
+<path d="M30 160A94 94 0 0 1 60 22" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="5" stroke-linecap="round"/>
 </svg>

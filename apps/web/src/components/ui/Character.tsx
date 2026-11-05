@@ -7,7 +7,8 @@ import { characterSrc, type CharacterMood, type CharacterName } from '@/lib/asse
 export interface CharacterProps {
   name: CharacterName;
   mood?: CharacterMood;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'auto';
+  /** 'none' – הגודל נקבע ע״י className בלבד */
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'auto' | 'none';
   animate?: 'float' | 'bounce' | 'wiggle' | 'none';
   className?: string;
   /** השהיה (שניות) כדי שדמויות לא ינועו בסנכרון */

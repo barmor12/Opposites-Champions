@@ -1,11 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">כוכב נוצץ</title>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M100 18L122.3 71.3L179.9 76L136.1 113.7L149.4 170L100 140L50.6 170L63.9 113.7L20.1 76L77.7 71.3Z" fill="#FDE047"/>
-<path d="M100 48L110 86L96 92Z" fill="#FEF9C3" stroke="none"/>
-<path d="M50 84Q74 82 84 72" fill="none" stroke="#FEF9C3" stroke-width="7"/>
-<path d="M136.1 113.7L149.4 170L100 140L118 126Z" fill="#F59E0B" stroke="none"/>
-<path d="M100 18L122.3 71.3L179.9 76L136.1 113.7L149.4 170L100 140L50.6 170L63.9 113.7L20.1 76L77.7 71.3Z" fill="none"/>
-<path d="M164 24L167 33L176 36L167 39L164 48L161 39L152 36L161 33Z" fill="#fff" stroke-width="3"/>
-<path d="M30 150L32 156L38 158L32 160L30 166L28 160L22 158L28 156Z" fill="#fff" stroke-width="3"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="star-t"><title id="star-t">כוכב נוצץ</title>
+<defs><filter id="star-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="5"/></filter><radialGradient id="star-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FDE047" stop-opacity="0.45"/><stop offset="1" stop-color="#FDE047" stop-opacity="0"/></radialGradient><radialGradient id="star-fill" cx="0.35" cy="0.3" r="0.85"><stop offset="0" stop-color="#FEF9C3"/><stop offset="0.45" stop-color="#FDE047"/><stop offset="1" stop-color="#F59E0B"/></radialGradient></defs>
+<ellipse cx="100" cy="178" rx="52" ry="8" fill="#1E293B" opacity="0.2" filter="url(#star-blur)"/>
+<circle cx="100" cy="100" r="96" fill="url(#star-glow)"/>
+<path d="M100 18L122.3 71.3L179.9 76L136.1 113.7L149.4 170L100 140L50.6 170L63.9 113.7L20.1 76L77.7 71.3Z" fill="url(#star-fill)"/>
+<path d="M136.1 113.7L149.4 170L100 140L118 126Z M100 140L50.6 170L63.9 113.7L82 128Z" fill="#D97706" opacity=".35"/>
+<path d="M100 48L110 86L96 92Z" fill="#fff" opacity=".55"/><path d="M50 84Q74 82 84 72" fill="none" stroke="#FFFBEB" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+<path d="M100 18L122.3 71.3L179.9 76L136.1 113.7L149.4 170L100 140L50.6 170L63.9 113.7L20.1 76L77.7 71.3Z" fill="none" stroke="#D97706" stroke-width="2" stroke-opacity=".5" stroke-linejoin="round"/>
+<path d="M164 23L167.5 32.5L177 36L167.5 39.5L164 49L160.5 39.5L151 36L160.5 32.5Z" fill="#fff" opacity=".95"/><path d="M30 149L32.4 155.6L39 158L32.4 160.4L30 167L27.6 160.4L21 158L27.6 155.6Z" fill="#fff" opacity=".95"/><circle cx="150" cy="150" r="4" fill="#fff" opacity=".8"/>
 </svg>

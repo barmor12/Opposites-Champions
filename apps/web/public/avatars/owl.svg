@@ -1,19 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">ינשוף</title>
-<defs><clipPath id="c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
-<circle cx="100" cy="100" r="96" fill="#E9D5FF"/>
-<g clip-path="url(#c)" stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M48 70Q40 44 58 36Q72 44 78 58Z" fill="#A78BFA"/>
-<path d="M152 70Q160 44 142 36Q128 44 122 58Z" fill="#A78BFA"/>
-<path d="M40 110Q40 48 100 48Q160 48 160 110V210H40Z" fill="#A78BFA"/>
-<path d="M62 140Q62 112 100 112Q138 112 138 140V210H62Z" fill="#DDD6FE"/>
-<path d="M72 150Q81 140 90 150M90 150Q100 140 110 150M110 150Q119 140 128 150M81 168Q90 158 100 168M100 168Q110 158 119 168" fill="none" stroke="#A78BFA" stroke-width="4"/>
-<path d="M22 100Q34 96 46 116L30 160Q14 140 22 100Z" fill="#A78BFA"/>
-<path d="M178 100Q166 96 154 116L170 160Q186 140 178 100Z" fill="#A78BFA"/>
-<circle cx="77" cy="92" r="23" fill="#fff"/><circle cx="123" cy="92" r="23" fill="#fff"/>
-<circle cx="78" cy="94" r="11" fill="#2D3748" stroke="none"/><circle cx="124" cy="94" r="11" fill="#2D3748" stroke="none"/>
-<circle cx="83" cy="89" r="4" fill="#fff" stroke="none"/><circle cx="129" cy="89" r="4" fill="#fff" stroke="none"/>
-<path d="M92 112L108 112L100 128Z" fill="#FDBA74"/>
-<circle cx="58" cy="118" r="6" fill="#F9A8D4" stroke="none"/><circle cx="142" cy="118" r="6" fill="#F9A8D4" stroke="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="owl-t"><title id="owl-t">ינשוף</title>
+<defs><radialGradient id="owl-bg" cx="0.35" cy="0.28" r="0.95"><stop offset="0" stop-color="#F6EEFF"/><stop offset="0.6" stop-color="#E9D5FF"/><stop offset="1" stop-color="#C0B3D8"/></radialGradient><clipPath id="owl-clip"><circle cx="100" cy="100" r="96"/></clipPath><filter id="owl-blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="4"/></filter><radialGradient id="owl-blush" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FB7185" stop-opacity="0.75"/><stop offset="1" stop-color="#FB7185" stop-opacity="0"/></radialGradient><radialGradient id="owl-eye" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#0F172A"/></radialGradient><path id="owl-tuftL" d="M48 70Q40 44 58 36Q72 44 78 58Z"/><radialGradient id="owl-tuftLg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#C3B0FC"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#7E6EC1"/></radialGradient><clipPath id="owl-tuftLc"><use href="#owl-tuftL"/></clipPath><path id="owl-tuftR" d="M152 70Q160 44 142 36Q128 44 122 58Z"/><radialGradient id="owl-tuftRg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#C3B0FC"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#7E6EC1"/></radialGradient><clipPath id="owl-tuftRc"><use href="#owl-tuftR"/></clipPath><path id="owl-body" d="M40 110Q40 48 100 48Q160 48 160 110V210H40Z"/><radialGradient id="owl-bodyg" cx="0.35" cy="0.2" r="0.9"><stop offset="0" stop-color="#C3B0FC"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#7E6EC1"/></radialGradient><clipPath id="owl-bodyc"><use href="#owl-body"/></clipPath><path id="owl-belly" d="M62 140Q62 112 100 112Q138 112 138 140V210H62Z"/><radialGradient id="owl-bellyg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#E8E3FE"/><stop offset="0.5" stop-color="#DDD6FE"/><stop offset="1" stop-color="#A4A2C4"/></radialGradient><clipPath id="owl-bellyc"><use href="#owl-belly"/></clipPath><path id="owl-wingL" d="M22 100Q34 96 46 116L30 160Q14 140 22 100Z"/><radialGradient id="owl-wingLg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#C3B0FC"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#7E6EC1"/></radialGradient><clipPath id="owl-wingLc"><use href="#owl-wingL"/></clipPath><path id="owl-wingR" d="M178 100Q166 96 154 116L170 160Q186 140 178 100Z"/><radialGradient id="owl-wingRg" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#C3B0FC"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#7E6EC1"/></radialGradient><clipPath id="owl-wingRc"><use href="#owl-wingR"/></clipPath><radialGradient id="owl-white" cx="0.4" cy="0.35" r="0.75"><stop offset="0" stop-color="#fff"/><stop offset="0.7" stop-color="#fff"/><stop offset="1" stop-color="#DDD6FE"/></radialGradient><radialGradient id="owl-beak" cx="0.38" cy="0.32" r="0.78"><stop offset="0" stop-color="#FED0A0"/><stop offset="0.5" stop-color="#FDBA74"/><stop offset="1" stop-color="#BA8F63"/></radialGradient></defs>
+<circle cx="100" cy="100" r="96" fill="url(#owl-bg)"/>
+<g clip-path="url(#owl-clip)">
+<ellipse cx="100" cy="190" rx="82" ry="14" fill="#1E293B" opacity="0.18" filter="url(#owl-blur)"/>
+<use href="#owl-tuftL" fill="url(#owl-tuftLg)"/><g clip-path="url(#owl-tuftLc)"></g>
+<use href="#owl-tuftR" fill="url(#owl-tuftRg)"/><g clip-path="url(#owl-tuftRc)"></g>
+<use href="#owl-body" fill="url(#owl-bodyg)"/><g clip-path="url(#owl-bodyc)"><ellipse cx="100" cy="200" rx="64" ry="50" fill="#7E6EC1" opacity="0.32"/><use href="#owl-body" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g><ellipse cx="70" cy="66" rx="22" ry="10" fill="#fff" opacity="0.45" transform="rotate(-25 70 66)"/>
+<use href="#owl-belly" fill="url(#owl-bellyg)"/><g clip-path="url(#owl-bellyc)"><ellipse cx="100" cy="200" rx="40" ry="30" fill="#A4A2C4" opacity="0.32"/><use href="#owl-belly" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/><path d="M72 150Q81 140 90 150M90 150Q100 140 110 150M110 150Q119 140 128 150M81 168Q90 158 100 168M100 168Q110 158 119 168" fill="none" stroke="#A78BFA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/></g>
+<use href="#owl-wingL" fill="url(#owl-wingLg)"/><g clip-path="url(#owl-wingLc)"><ellipse cx="30" cy="150" rx="16" ry="14" fill="#7E6EC1" opacity="0.32"/><use href="#owl-wingL" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g>
+<use href="#owl-wingR" fill="url(#owl-wingRg)"/><g clip-path="url(#owl-wingRc)"><ellipse cx="170" cy="150" rx="16" ry="14" fill="#7E6EC1" opacity="0.32"/><use href="#owl-wingR" fill="none" stroke="#fff" stroke-width="7" opacity="0.3" transform="translate(-3 -3)"/></g>
+<ellipse cx="100" cy="118" rx="50" ry="10" fill="#1E293B" opacity="0.2" filter="url(#owl-blur)"/>
+<circle cx="77" cy="92" r="23" fill="url(#owl-white)"/><circle cx="123" cy="92" r="23" fill="url(#owl-white)"/>
+<circle cx="78" cy="94" r="11" fill="url(#owl-eye)"/><circle cx="74.4" cy="90" r="4.4" fill="#fff"/><circle cx="81.9" cy="97.5" r="2.2" fill="#fff" opacity=".85"/>
+<circle cx="124" cy="94" r="11" fill="url(#owl-eye)"/><circle cx="120.4" cy="90" r="4.4" fill="#fff"/><circle cx="127.9" cy="97.5" r="2.2" fill="#fff" opacity=".85"/>
+<path d="M92 112L108 112L100 128Z" fill="url(#owl-beak)"/>
+<ellipse cx="58" cy="118" rx="9" ry="6" fill="url(#owl-blush)"/>
+<ellipse cx="142" cy="118" rx="9" ry="6" fill="url(#owl-blush)"/>
 </g>
-<circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
+<circle cx="100" cy="100" r="94" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3"/>
+<path d="M30 160A94 94 0 0 1 60 22" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="5" stroke-linecap="round"/>
 </svg>
