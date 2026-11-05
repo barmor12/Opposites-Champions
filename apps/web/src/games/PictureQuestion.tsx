@@ -118,7 +118,8 @@ function SpeakerButton({ label, onSpeak, speaking = false, size = 'sm', classNam
       data-testid={testId}
       data-speaking={speaking ? 'true' : 'false'}
       className={cn(
-        'group relative isolate inline-flex shrink-0 items-center justify-center rounded-full border-b-4 border-violet-800 bg-gradient-to-b from-violet-400 via-violet-500 to-violet-600 text-white',
+        // המיקום (relative / absolute) נקבע על ידי הקורא דרך className
+        'group isolate inline-flex shrink-0 items-center justify-center rounded-full border-b-4 border-violet-800 bg-gradient-to-b from-violet-400 via-violet-500 to-violet-600 text-white',
         'shadow-[0_10px_20px_-8px_rgba(109,40,217,0.7),inset_0_2px_0_rgba(255,255,255,0.5)] ring-2 ring-white/90',
         'transition-[transform,border-width,box-shadow] duration-100 hover:from-violet-300 hover:to-violet-500 active:translate-y-[3px] active:border-b-2',
         'focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-400 focus-visible:ring-offset-2',
@@ -202,7 +203,7 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
             <span className="text-sm font-bold text-violet-700 sm:text-base">ההפך</span>
           </p>
           {speechSupported && (
-            <SpeakerButton label="השמע את המילה" onSpeak={() => speak(word)} speaking={speaking} size="lg" testId="speak-prompt" />
+            <SpeakerButton label="השמע את המילה" onSpeak={() => speak(word)} speaking={speaking} size="lg" testId="speak-prompt" className="relative" />
           )}
         </div>
 
