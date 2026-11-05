@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+apps/server/generated/
+tests/e2e/test-results/
+tests/e2e/playwright-report/
+infrastructure/certbot/
+*.tsbuildinfo
+.pnpm-store/

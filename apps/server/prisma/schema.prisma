@@ -1,0 +1,364 @@
+// אלופי ההפכים – סכמת מסד הנתונים
+// הפרדה בין פרטי תלמיד (Student/GameParticipant) לבין תוצאות סבב (StudentAnswer/ScoreEvent)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum GameState {
+  CREATED
+  WAITING_FOR_PLAYERS
+  COUNTDOWN
+  QUESTION_ACTIVE
+  QUESTION_RESULTS
+  NEXT_QUESTION
+  FINAL_RESULTS
+  COMPLETED
+  PAUSED
+  CANCELLED
+  EXPIRED
+}
+
+enum GameMode {
+  SELF_PACED
+  TEACHER_PACED
+}
+
+enum QuestionType {
+  CHOOSE_OPPOSITE
+  CHOOSE_IMAGE
+  MATCH_PAIRS
+  COMPLETE_SENTENCE
+  TREASURE_CHALLENGE
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum Category {
+  SIZES
+  COLORS_LIGHT
+  EMOTIONS
+  ACTIONS
+  TIME_SPEED
+  DIRECTIONS_PLACES
+  ANIMALS_NATURE
+  TRAITS_STATES
+  OBJECTS_ENVIRONMENT
+  CHALLENGING
+}
+
+enum AchievementType {
+  OPPOSITES_CHAMPION
+  PERSISTENCE_CHAMPION
+  TEN_CORRECT
+  FIVE_STREAK
+  ACCURACY_CHAMPION
+  PERSONAL_BEST
+}
+
+enum MediaKind {
+  WORD_IMAGE
+  AVATAR
+  CHARACTER
+  AUDIO
+}
+
+model Teacher {
+  id           String      @id @default(uuid()) @db.Uuid
+  email        String      @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  deletedAt    DateTime?
+  classrooms   Classroom[]
+  rooms        GameRoom[]
+  auditLogs    AuditLog[]
+}
+
+model Classroom {
+  id        String     @id @default(uuid()) @db.Uuid
+  teacherId String     @db.Uuid
+  teacher   Teacher    @relation(fields: [teacherId], references: [id])
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
+  rooms     GameRoom[]
+
+  @@index([teacherId])
+}
+
+/// תלמיד – שם תצוגה בלבד, ללא פרטים מזהים. נקשר לחדר יחיד.
+model Student {
+  id           String            @id @default(uuid()) @db.Uuid
+  displayName  String
+  nameKey      String
+  avatar       String
+  createdAt    DateTime          @default(now())
+  deletedAt    DateTime?
+  participants GameParticipant[]
+}
+
+model GameRoom {
+  id           String            @id @default(uuid()) @db.Uuid
+  code         String            @unique
+  teacherId    String            @db.Uuid
+  teacher      Teacher           @relation(fields: [teacherId], references: [id])
+  classroomId  String?           @db.Uuid
+  classroom    Classroom?        @relation(fields: [classroomId], references: [id])
+  className    String
+  state        GameState         @default(CREATED)
+  joinOpen     Boolean           @default(true)
+  settings     Json
+  mode         GameMode          @default(SELF_PACED)
+  currentSessionId String?       @db.Uuid
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  expiresAt    DateTime?
+  deletedAt    DateTime?
+  participants GameParticipant[]
+  sessions     GameSession[]
+  auditLogs    AuditLog[]
+
+  @@index([teacherId, createdAt])
+  @@index([state])
+}
+
+/// סבב משחק בתוך חדר (ניתן לפתוח כמה סבבים באותו חדר)
+model GameSession {
+  id           String            @id @default(uuid()) @db.Uuid
+  roomId       String            @db.Uuid
+  room         GameRoom          @relation(fields: [roomId], references: [id])
+  roundNumber  Int               @default(1)
+  state        GameState         @default(WAITING_FOR_PLAYERS)
+  mode         GameMode          @default(SELF_PACED)
+  settings     Json
+  currentQuestionIndex Int?
+  questionStartedAt    DateTime?
+  questionEndsAt       DateTime?
+  pausedAt             DateTime?
+  pausedRemainingMs    Int?
+  startedAt    DateTime?
+  finishedAt   DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  questions    SessionQuestion[]
+  answers      StudentAnswer[]
+  scoreEvents  ScoreEvent[]
+  achievements StudentAchievement[]
+  progress     ParticipantProgress[]
+
+  @@unique([roomId, roundNumber])
+  @@index([roomId, state])
+}
+
+/// משתתף בחדר – מזהה ייחודי + session token (hash). שם התלמיד אינו מזהה אבטחה.
+model GameParticipant {
+  id               String    @id @default(uuid()) @db.Uuid
+  roomId           String    @db.Uuid
+  room             GameRoom  @relation(fields: [roomId], references: [id])
+  studentId        String    @db.Uuid
+  student          Student   @relation(fields: [studentId], references: [id])
+  sessionTokenHash String    @unique
+  connected        Boolean   @default(false)
+  lastSeenAt       DateTime  @default(now())
+  removedAt        DateTime?
+  joinedAt         DateTime  @default(now())
+  answers          StudentAnswer[]
+  scoreEvents      ScoreEvent[]
+  achievements     StudentAchievement[]
+  progress         ParticipantProgress[]
+
+  @@unique([roomId, studentId])
+  @@index([roomId, removedAt])
+}
+
+/// התקדמות משתתף בסבב (self-paced): שאלה נוכחית, סטטוס סיום, סטרייק
+model ParticipantProgress {
+  id             String          @id @default(uuid()) @db.Uuid
+  sessionId      String          @db.Uuid
+  session        GameSession     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  participantId  String          @db.Uuid
+  participant    GameParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  currentIndex   Int             @default(0)
+  questionStartedAt DateTime?
+  score          Int             @default(0)
+  correctAnswers Int             @default(0)
+  answeredCount  Int             @default(0)
+  totalResponseMs Int            @default(0)
+  streak         Int             @default(0)
+  bestStreak     Int             @default(0)
+  treasureCorrect Int            @default(0)
+  finished       Boolean         @default(false)
+  finishedAt     DateTime?
+  updatedAt      DateTime        @updatedAt
+
+  @@unique([sessionId, participantId])
+  @@index([sessionId, score(sort: Desc), correctAnswers(sort: Desc), totalResponseMs])
+}
+
+model WordPair {
+  id             String        @id @default(uuid()) @db.Uuid
+  slug           String        @unique
+  word           String
+  opposite       String
+  category       Category
+  difficulty     Difficulty
+  sentence       String
+  sentenceAnswer String        @default("opposite")
+  explanation    String?
+  imageable      Boolean       @default(false)
+  wordImageId    String?       @db.Uuid
+  wordImage      MediaAsset?   @relation("WordImage", fields: [wordImageId], references: [id])
+  oppositeImageId String?      @db.Uuid
+  oppositeImage  MediaAsset?   @relation("OppositeImage", fields: [oppositeImageId], references: [id])
+  supportedTypes QuestionType[]
+  active         Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  deletedAt      DateTime?
+  questions      Question[]
+
+  @@index([category, difficulty, active])
+}
+
+/// שאלה שנבנתה ממאגר הזוגות (תבנית לשימוש חוזר)
+model Question {
+  id          String           @id @default(uuid()) @db.Uuid
+  type        QuestionType
+  wordPairId  String?          @db.Uuid
+  wordPair    WordPair?        @relation(fields: [wordPairId], references: [id])
+  prompt      String
+  promptImage String?
+  explanation String?
+  payload     Json             // מבנה תלוי סוג (קלפים לזוגות וכו')
+  createdAt   DateTime         @default(now())
+  options     QuestionOption[]
+  sessionQuestions SessionQuestion[]
+
+  @@index([type])
+}
+
+model QuestionOption {
+  id         String   @id @default(uuid()) @db.Uuid
+  questionId String   @db.Uuid
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text       String
+  image      String?
+  isCorrect  Boolean  @default(false)
+  order      Int
+
+  @@index([questionId])
+}
+
+model SessionQuestion {
+  id          String       @id @default(uuid()) @db.Uuid
+  sessionId   String       @db.Uuid
+  session     GameSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  questionId  String       @db.Uuid
+  question    Question     @relation(fields: [questionId], references: [id])
+  index       Int
+  isTreasure  Boolean      @default(false)
+  treasureStep Int?
+  timeLimitMs Int          @default(0)
+  startedAt   DateTime?    // teacher-paced בלבד
+  endsAt      DateTime?
+  closedAt    DateTime?
+  answers     StudentAnswer[]
+
+  @@unique([sessionId, index])
+  @@index([sessionId])
+}
+
+/// תשובת תלמיד – unique למניעת תשובה כפולה לאותה שאלה
+model StudentAnswer {
+  id                String          @id @default(uuid()) @db.Uuid
+  sessionId         String          @db.Uuid
+  session           GameSession     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionQuestionId String          @db.Uuid
+  sessionQuestion   SessionQuestion @relation(fields: [sessionQuestionId], references: [id], onDelete: Cascade)
+  participantId     String          @db.Uuid
+  participant       GameParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  selectedOptionId  String?         @db.Uuid
+  answerPayload     Json?
+  isCorrect         Boolean
+  elapsedMs         Int
+  scoreAwarded      Int
+  answeredAt        DateTime        @default(now())
+
+  @@unique([sessionQuestionId, participantId])
+  @@index([sessionId, participantId])
+}
+
+model ScoreEvent {
+  id            String          @id @default(uuid()) @db.Uuid
+  sessionId     String          @db.Uuid
+  session       GameSession     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  participantId String          @db.Uuid
+  participant   GameParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  reason        String
+  points        Int
+  createdAt     DateTime        @default(now())
+
+  @@index([sessionId, participantId])
+}
+
+model Achievement {
+  id          String          @id @default(uuid()) @db.Uuid
+  type        AchievementType @unique
+  title       String
+  description String
+  emoji       String
+  awards      StudentAchievement[]
+}
+
+model StudentAchievement {
+  id            String          @id @default(uuid()) @db.Uuid
+  sessionId     String          @db.Uuid
+  session       GameSession     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  participantId String          @db.Uuid
+  participant   GameParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  achievementId String          @db.Uuid
+  achievement   Achievement     @relation(fields: [achievementId], references: [id])
+  awardedAt     DateTime        @default(now())
+
+  @@unique([sessionId, participantId, achievementId])
+}
+
+model MediaAsset {
+  id          String     @id @default(uuid()) @db.Uuid
+  key         String     @unique
+  kind        MediaKind
+  url         String
+  alt         String
+  width       Int?
+  height      Int?
+  createdAt   DateTime   @default(now())
+  deletedAt   DateTime?
+  wordImages     WordPair[] @relation("WordImage")
+  oppositeImages WordPair[] @relation("OppositeImage")
+}
+
+model AuditLog {
+  id        String    @id @default(uuid()) @db.Uuid
+  teacherId String?   @db.Uuid
+  teacher   Teacher?  @relation(fields: [teacherId], references: [id])
+  roomId    String?   @db.Uuid
+  room      GameRoom? @relation(fields: [roomId], references: [id])
+  action    String
+  details   Json?
+  createdAt DateTime  @default(now())
+
+  @@index([roomId, createdAt])
+  @@index([teacherId, createdAt])
+}
