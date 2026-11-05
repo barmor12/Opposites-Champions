@@ -45,7 +45,7 @@ test.describe('זרימת משחק מלאה', () => {
 
     await page.goto(`/teacher/rooms/${roomId}/results`);
     await expect(page.getByText(/ממוצע/)).toBeVisible();
-    await expect(page.getByText('נועה')).toBeVisible();
+    await expect(page.getByText('נועה', { exact: true }).first()).toBeVisible();
   });
 
   test('קוד חדר שגוי מציג שגיאה ידידותית', async ({ page }) => {
