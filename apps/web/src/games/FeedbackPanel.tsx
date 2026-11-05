@@ -63,6 +63,7 @@ export function FeedbackPanel({ kind, result, correctText, explanation, onNext, 
                   <Smile className="h-8 w-8" aria-hidden="true" />
                   {pick(ENCOURAGE_WRONG, seed)}
                 </p>
+                {result && result.scoreAwarded > 0 && <ScoreBadge points={result.scoreAwarded} />}
                 {correctText && (
                   <p className="text-xl font-bold text-slate-700" data-testid="correct-answer-text">
                     התשובה הנכונה: <span className="rounded-lg bg-green-100 px-2 text-green-800">{correctText}</span>

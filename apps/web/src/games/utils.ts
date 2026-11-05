@@ -30,8 +30,9 @@ export function optionState(
   selectedId: string | null,
   result: AnswerResult | null,
   showCorrectAnswers: boolean,
+  expired = false,
 ): OptionState {
-  if (!result) return selectedId === option.id ? 'pending' : 'idle';
+  if (!result) return selectedId === option.id ? 'pending' : expired ? 'dim' : 'idle';
   const isChosen = selectedId === option.id;
   const isCorrectOption = result.correctOptionId ? result.correctOptionId === option.id : isChosen && result.correct;
   if (isChosen && result.correct) return 'correct';

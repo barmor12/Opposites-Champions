@@ -16,6 +16,7 @@ const BLANK_RE = /_{3,}/;
 /** כרטיס ה"שאלה": מילה גדולה / משפט עם חלל, ותמונה אופציונלית */
 export function PromptCard({ question, filled = null, children }: PromptCardProps) {
   const isSentence = question.type === QuestionType.COMPLETE_SENTENCE || BLANK_RE.test(question.prompt);
+  const isMatch = question.type === QuestionType.MATCH_PAIRS;
 
   const sentenceParts = useMemo(() => {
     if (!isSentence) return null;
@@ -33,9 +34,19 @@ export function PromptCard({ question, filled = null, children }: PromptCardProp
       initial={{ y: -16, opacity: 0, scale: 0.98 }}
       animate={{ y: 0, opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-      className="relative overflow-hidden rounded-3xl bg-white px-4 py-5 text-center shadow-lg ring-4 ring-white/70 sm:px-8 sm:py-7"
+      className={cn(
+        'relative overflow-hidden rounded-3xl bg-white text-center shadow-lg ring-4 ring-white/70',
+        isMatch ? 'px-4 py-3 sm:px-6 sm:py-4' : 'px-4 py-5 sm:px-8 sm:py-7',
+      )}
     >
-      <p className="mb-2 text-base font-bold text-slate-500 sm:text-lg">{promptInstruction(question.type)}</p>
+      {isMatch ? (
+        <h1 data-testid="prompt-word" className="flex items-center justify-center gap-2 text-2xl font-black text-violet-700 sm:text-3xl">
+          <span aria-hidden="true">🔗</span>
+          {question.prompt || promptInstruction(question.type)}
+        </h1>
+      ) : (
+        <p className="mb-2 text-base font-bold text-slate-500 sm:text-lg">{promptInstruction(question.type)}</p>
+      )}
 
       <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
         {question.promptImage && (
@@ -47,7 +58,7 @@ export function PromptCard({ question, filled = null, children }: PromptCardProp
           />
         )}
 
-        {isSentence && sentenceParts ? (
+        {isMatch ? null : isSentence && sentenceParts ? (
           <p className="text-3xl font-black leading-relaxed text-slate-800 sm:text-4xl md:text-5xl" dir="rtl">
             {sentenceParts[0]}
             <span

@@ -11,6 +11,8 @@ export interface ChoiceQuestionProps {
   result: AnswerResult | null;
   selectedId: string | null;
   disabled: boolean;
+  /** הזמן נגמר – האפשרויות מוצגות מעומעמות */
+  expired?: boolean;
   showCorrectAnswers: boolean;
   onSelect: (option: QuestionOptionView) => void;
 }
@@ -64,7 +66,7 @@ function srStateText(state: OptionState): string {
   }
 }
 
-export function ChoiceQuestion({ question, result, selectedId, disabled, showCorrectAnswers, onSelect }: ChoiceQuestionProps) {
+export function ChoiceQuestion({ question, result, selectedId, disabled, expired = false, showCorrectAnswers, onSelect }: ChoiceQuestionProps) {
   const reduced = useReducedMotion();
   const isImage = question.type === QuestionType.CHOOSE_IMAGE;
   const options = question.options.slice(0, 4);
@@ -96,7 +98,7 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, showCor
     >
       {options.map((opt, i) => {
         const style = OPTION_STYLES[i % OPTION_STYLES.length] ?? OPTION_STYLES[0];
-        const state = optionState(opt, selectedId, result, showCorrectAnswers);
+        const state = optionState(opt, selectedId, result, showCorrectAnswers, expired);
         const isWrong = state === 'wrong';
         const isCorrect = state === 'correct';
         const classes = state === 'idle' ? style.idle : STATE_CLASSES[state];
@@ -112,6 +114,7 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, showCor
               onClick={() => !disabled && onSelect(opt)}
               disabled={disabled && !result}
               aria-disabled={disabled}
+              tabIndex={disabled && !result ? -1 : 0}
               aria-pressed={selectedId === opt.id}
               data-testid={`option-${i + 1}`}
               data-state={state}

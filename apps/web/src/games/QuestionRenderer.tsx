@@ -214,6 +214,7 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
             result={result}
             selectedId={selectedId}
             disabled={inputDisabled}
+            expired={expired}
             showCorrectAnswers={showCorrectAnswers}
             onSelect={handleSelect}
           />
