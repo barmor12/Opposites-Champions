@@ -29,7 +29,7 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
           {completed ? 'הושלם!' : 'ענו נכון כדי להתקדם'}
         </span>
       </div>
-      <ol className="flex items-center gap-1 sm:gap-2" dir="rtl">
+      <ol className="mt-6 flex items-center gap-1 sm:gap-2" dir="rtl">
         {Array.from({ length: total }, (_, i) => {
           const n = i + 1;
           const done = completed || n < safeStep;
@@ -56,7 +56,7 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
                   <motion.div
                     aria-hidden="true"
                     data-testid="treasure-marker"
-                    className="absolute -top-7 text-2xl drop-shadow"
+                    className="absolute -top-8 text-2xl leading-none drop-shadow"
                     animate={reduced ? undefined : { y: [0, -5, 0] }}
                     transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
                   >
