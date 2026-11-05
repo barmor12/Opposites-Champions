@@ -70,14 +70,15 @@ export function Leaderboard({ entries, highlightId, compact, showPodium, limit, 
                       )}
                     </span>
                     {!compact && (
-                      <span className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-500 sm:text-sm">
-                        <span className="inline-flex items-center gap-1">
+                      <span className="mt-0.5 flex items-center gap-x-2 text-xs text-slate-500 sm:text-sm">
+                        <span className="inline-flex items-center gap-1 whitespace-nowrap">
                           <CircleCheck className="size-4 text-brand-green" aria-hidden />
-                          {e.correctAnswers}/{e.answeredCount} נכונות
+                          {e.correctAnswers}/{e.answeredCount}
                         </span>
-                        <span dir="ltr">{Math.round(e.accuracy)}% דיוק</span>
+                        <span aria-hidden>·</span>
+                        <span className="whitespace-nowrap" dir="ltr">{Math.round(e.accuracy)}%</span>
                         {e.finished && (
-                          <span className="inline-flex items-center gap-1 text-violet-700">
+                          <span className="hidden items-center gap-1 whitespace-nowrap text-violet-700 sm:inline-flex">
                             <Flag className="size-4" aria-hidden /> סיים/ה
                           </span>
                         )}

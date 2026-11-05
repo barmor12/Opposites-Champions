@@ -7,14 +7,14 @@ import { characterSrc, type CharacterMood, type CharacterName } from '@/lib/asse
 export interface CharacterProps {
   name: CharacterName;
   mood?: CharacterMood;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'auto';
   animate?: 'float' | 'bounce' | 'wiggle' | 'none';
   className?: string;
   /** השהיה (שניות) כדי שדמויות לא ינועו בסנכרון */
   delay?: number;
 }
 
-const SIZES = { sm: 'size-20', md: 'size-28 sm:size-32', lg: 'size-36 sm:size-44', xl: 'size-44 sm:size-56' };
+const SIZES = { sm: 'size-20', md: 'size-28 sm:size-32', lg: 'size-36 sm:size-44', xl: 'size-44 sm:size-56', auto: 'size-20 sm:size-28 lg:size-32' };
 const EMOJI: Record<CharacterName, string> = { sun: '☀️', moon: '🌙' };
 const LABEL: Record<CharacterName, string> = { sun: 'שמש', moon: 'ירח' };
 

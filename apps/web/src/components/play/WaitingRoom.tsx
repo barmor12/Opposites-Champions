@@ -3,7 +3,6 @@ import { motion, useReducedMotion } from 'motion/react';
 import type { AvatarId, LeaderboardEntry, RoomPublicView } from '@oc/shared';
 import { Avatar, Badge, Card, Character } from '@/components/ui';
 import { Leaderboard } from '@/components/Leaderboard';
-import { ConnectionBadge } from './ConnectionBadge';
 import type { ConnectionStatus } from '@/stores/playerStore';
 
 export interface WaitingRoomProps {
@@ -11,14 +10,14 @@ export interface WaitingRoomProps {
   displayName: string;
   avatar: AvatarId;
   participantCount: number;
-  connection: ConnectionStatus;
+  connection?: ConnectionStatus;
   leaderboard?: LeaderboardEntry[];
   participantId?: string | null;
   /** אחרי סבב – "המורה פתחה סבב חדש" */
   afterRound?: boolean;
 }
 
-export function WaitingRoom({ room, displayName, avatar, participantCount, connection, leaderboard, participantId, afterRound }: WaitingRoomProps) {
+export function WaitingRoom({ room, displayName, avatar, participantCount, leaderboard, participantId, afterRound }: WaitingRoomProps) {
   const reduce = useReducedMotion();
   return (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-5">
@@ -47,7 +46,6 @@ export function WaitingRoom({ room, displayName, avatar, participantCount, conne
           <Badge color="slate" size="lg">
             קוד: <span dir="ltr" className="ms-1 tabular-nums tracking-widest">{room.code}</span>
           </Badge>
-          <ConnectionBadge status={connection} />
         </div>
 
         <motion.div

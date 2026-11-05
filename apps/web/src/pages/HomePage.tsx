@@ -127,16 +127,16 @@ export function HomePage() {
             <span aria-hidden> 🏆</span>
           </motion.h1>
           <div className="mt-2 flex w-full items-center justify-center gap-3 sm:gap-6">
-            <Character name="sun" mood="cheer" size="md" delay={0.2} />
+            <Character name="sun" mood="cheer" size="auto" delay={0.2} />
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="max-w-[12rem] text-xl font-bold text-violet-800 sm:max-w-xs sm:text-2xl"
+              className="max-w-[13rem] text-xl font-bold leading-snug text-violet-800 sm:max-w-xs sm:text-2xl"
             >
               מי יהיה אלוף ההפכים של הכיתה?
             </motion.p>
-            <Character name="moon" mood="happy" size="md" animate="bounce" delay={0.6} />
+            <Character name="moon" mood="happy" size="auto" animate="bounce" delay={0.6} />
           </div>
           <ul className="mt-4 flex flex-wrap justify-center gap-2 text-sm font-bold text-slate-700" aria-label="מה במשחק">
             {['גדול ↔ קטן', 'חם ↔ קר', 'יום ↔ לילה', 'מהר ↔ לאט'].map((t, i) => (
