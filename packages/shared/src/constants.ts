@@ -21,7 +21,7 @@ export const AVATARS = [
 ] as const;
 export type AvatarId = (typeof AVATARS)[number];
 export const AVATAR_LABELS: Record<AvatarId, string> = {
-  lion: 'אריה', fox: 'שועל', owl: 'ינשוף', panda: 'פנדה', frog: 'צפרדע', cat: 'חתול', dog: 'כלב',
-  rabbit: 'ארנב', koala: 'קואלה', penguin: 'פינגווין', monkey: 'קוף', elephant: 'פיל',
-  unicorn: 'חד־קרן', dino: 'דינוזאור', bee: 'דבורה', turtle: 'צב',
+  lion: 'אַרְיֵה', fox: 'שׁוּעָל', owl: 'יַנְשׁוּף', panda: 'פַּנְדָּה', frog: 'צְפַרְדֵּעַ', cat: 'חָתוּל', dog: 'כֶּלֶב',
+  rabbit: 'אַרְנָב', koala: 'קוֹאָלָה', penguin: 'פִּינְגְּוִוין', monkey: 'קוֹף', elephant: 'פִּיל',
+  unicorn: 'חַד־קֶרֶן', dino: 'דִּינוֹזָאוּר', bee: 'דְּבוֹרָה', turtle: 'צָב',
 };

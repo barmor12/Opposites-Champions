@@ -1,3 +1,8 @@
+import { nikudInsensitive } from '@oc/shared';
+
+/** טקסט עברי במסך מנוקד – ההתאמה בבדיקות מתעלמת מניקוד (| מפריד חלופות) */
+export const heb = (text: string): RegExp => new RegExp(text.split('|').map((t) => nikudInsensitive(t).source).join('|'));
+
 import { expect, type Browser, type Page } from '@playwright/test';
 
 export const TEACHER_EMAIL = process.env.TEACHER_INITIAL_EMAIL ?? 'teacher@example.com';
@@ -5,9 +10,9 @@ export const TEACHER_PASSWORD = process.env.TEACHER_INITIAL_PASSWORD ?? 'change-
 
 export async function teacherLogin(page: Page): Promise<void> {
   await page.goto('/teacher/login');
-  await page.getByLabel(/דוא|אימייל|מייל/).fill(TEACHER_EMAIL);
-  await page.getByLabel(/סיסמה/).fill(TEACHER_PASSWORD);
-  await page.getByRole('button', { name: /התחבר/ }).click();
+  await page.getByLabel(heb('דוא|אימייל|מייל')).fill(TEACHER_EMAIL);
+  await page.getByLabel(heb('סיסמה')).fill(TEACHER_PASSWORD);
+  await page.getByRole('button', { name: heb('התחבר') }).click();
   await expect(page).toHaveURL(/\/teacher(\/)?$/);
 }
 
@@ -49,18 +54,18 @@ export async function pickAvatar(page: Page): Promise<void> {
     await radio.click();
     return;
   }
-  await page.getByText('אריה', { exact: true }).first().click();
+  await page.getByText(heb('אריה'), { exact: true }).first().click();
 }
 
 export async function joinAsStudent(browser: Browser, code: string, name: string): Promise<Page> {
   const ctx = await browser.newContext({ locale: 'he-IL' });
   const page = await ctx.newPage();
   await page.goto(`/join/${code}`);
-  await page.getByLabel(/שם/).first().fill(name);
+  await page.getByLabel(heb('שם')).first().fill(name);
   await pickAvatar(page);
-  await page.getByRole('button', { name: /בואו נשחק/ }).click();
-  await expect(page.getByText(new RegExp(`שלום ${name}`))).toBeVisible();
-  await expect(page.getByText(/מחכים שהמורה/)).toBeVisible({ timeout: 15_000 });
+  await page.getByRole('button', { name: heb('בואו נשחק') }).click();
+  await expect(page.getByText(heb(`שלום ${name}`))).toBeVisible();
+  await expect(page.getByText(heb('מחכים שהמורה'))).toBeVisible({ timeout: 15_000 });
   return page;
 }
 
@@ -108,7 +113,7 @@ export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise
 
 /** לוחץ "סיים משחק" אם המשחק עדיין פעיל (כשכל התלמידים סיימו המשחק מסתיים אוטומטית) */
 export async function finishGameIfNeeded(page: Page): Promise<void> {
-  const btn = page.getByRole('button', { name: /סיים משחק/ });
+  const btn = page.getByRole('button', { name: heb('סיים משחק') });
   const visible = await btn.isVisible().catch(() => false);
   if (!visible) return;
   await btn.click({ timeout: 10_000 }).catch(() => undefined);

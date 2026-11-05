@@ -8,7 +8,7 @@ export interface SpinnerProps {
 
 const SIZES = { sm: 'size-5 border-[3px]', md: 'size-9 border-4', lg: 'size-14 border-[6px]' };
 
-export function Spinner({ size = 'md', label = 'טוען…', className }: SpinnerProps) {
+export function Spinner({ size = 'md', label = 'טוֹעֵן…', className }: SpinnerProps) {
   return (
     <span
       role="status"

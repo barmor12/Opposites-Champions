@@ -17,7 +17,7 @@ export interface CharacterProps {
 
 const SIZES = { sm: 'size-20', md: 'size-28 sm:size-32', lg: 'size-36 sm:size-44', xl: 'size-44 sm:size-56', auto: 'size-20 sm:size-28 lg:size-32', none: '' };
 const EMOJI: Record<CharacterName, string> = { sun: '☀️', moon: '🌙' };
-const LABEL: Record<CharacterName, string> = { sun: 'שמש', moon: 'ירח' };
+const LABEL: Record<CharacterName, string> = { sun: 'שֶׁמֶשׁ', moon: 'יָרֵחַ' };
 
 /** דמויות המשחק – שמש וירח (הפכים!) עם אנימציית ריחוף */
 export function Character({ name, mood = 'happy', size = 'md', animate = 'float', className, delay = 0 }: CharacterProps) {

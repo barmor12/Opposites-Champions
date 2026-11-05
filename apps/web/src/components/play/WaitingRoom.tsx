@@ -27,13 +27,13 @@ export function WaitingRoom({ room, displayName, avatar, participantCount, leade
         <div className="flex items-center justify-center gap-3 sm:gap-5">
           <Character name="sun" mood="happy" size="sm" delay={0.3} className="hidden sm:block" />
           <div>
-            <p className="text-sm font-bold text-slate-500">הכיתה</p>
+            <p className="text-sm font-bold text-slate-500">הַכִּיתָּה</p>
             <h1 className="text-fluid-title font-black text-brand-navy text-shadow-pop">{room.className}</h1>
           </div>
           <Character name="moon" mood="happy" size="sm" animate="bounce" className="hidden sm:block" />
         </div>
 
-        {/* במה תלת־ממדית */}
+        {/* בָּמָה תְּלַת־מְמַדִּית */}
         <div className="relative mt-2 flex w-full max-w-sm flex-col items-center">
           <div className="relative grid h-40 w-full place-items-end justify-center sm:h-48">
             <LightRays color="rgb(250 204 21)" intensity={0.3} className="w-[120%]" />
@@ -44,14 +44,14 @@ export function WaitingRoom({ room, displayName, avatar, participantCount, leade
             >
               <Avatar id={avatar} size="xl" ring ringColor="gold" glow />
             </motion.div>
-            {/* צל על הבמה */}
+            {/* צֵל עַל הַבָּמָה */}
             <motion.span
               aria-hidden
               className="absolute bottom-[1.15rem] left-1/2 z-[5] h-4 w-24 -translate-x-1/2 rounded-full bg-amber-900/25 blur-sm sm:bottom-[1.35rem]"
               animate={reduce ? undefined : { scaleX: [1, 0.78, 1], opacity: [0.35, 0.2, 0.35] }}
               transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
             />
-            {/* הבמה: פאה עליונה בהירה + צד כהה */}
+            {/* הַבָּמָה: פֵּאָה עֶלְיוֹנָה בְּהִירָה + צַד כֵּהֶה */}
             <div aria-hidden className="absolute bottom-0 left-1/2 w-60 -translate-x-1/2 sm:w-72">
               <div className="h-6 w-full rounded-[50%] bg-gradient-to-b from-amber-600 to-amber-800 shadow-[0_14px_24px_-8px_rgba(120,53,15,0.5)]" style={{ transform: 'translateY(10px)' }} />
               <div className="absolute inset-x-0 top-0 h-7 rounded-[50%] bg-gradient-to-b from-yellow-200 via-amber-300 to-amber-400 shadow-[inset_0_2px_0_rgba(255,255,255,0.8),inset_0_-3px_6px_rgba(180,83,9,0.35)]" />
@@ -59,7 +59,7 @@ export function WaitingRoom({ room, displayName, avatar, participantCount, leade
             </div>
           </div>
           <div className="mt-4 text-center">
-            <p className="text-sm font-bold text-slate-500">את/ה</p>
+            <p className="text-sm font-bold text-slate-500">אַתְּ/ה</p>
             <p className="text-2xl font-black text-brand-navy sm:text-3xl">{displayName}</p>
           </div>
         </div>
@@ -69,10 +69,10 @@ export function WaitingRoom({ room, displayName, avatar, participantCount, leade
             <span aria-live="polite" className="tabular-nums">
               <NumberTicker value={participantCount} />
             </span>{' '}
-            שחקנים בחדר
+            שַׂחְקָנִים בַּחֶדֶר
           </Badge>
           <Badge color="slate" size="lg" icon={<KeyRound className="size-5" />}>
-            קוד: <span dir="ltr" className="ms-1 tabular-nums tracking-[0.2em]">{room.code}</span>
+            קוֹד: <span dir="ltr" className="ms-1 tabular-nums tracking-[0.2em]">{room.code}</span>
           </Badge>
         </div>
 
@@ -86,14 +86,14 @@ export function WaitingRoom({ room, displayName, avatar, participantCount, leade
           role="status"
         >
           <Hourglass className="size-7 shrink-0 text-brand-violet animate-[spin_3s_linear_infinite]" aria-hidden />
-          {afterRound ? 'המורה פתחה סבב חדש! מחכים להתחלה…' : 'מחכים שהמורה תתחיל את המשחק!'}
+          {afterRound ? 'הַמּוֹרָה פָּתְחָה סֶבֶב חָדָשׁ! מְחַכִּים לַהַתְחָלָה…' : 'מְחַכִּים שֶׁהַמּוֹרָה תַּתְחִיל אֶת הַמִּשְׂחָק!'}
         </motion.div>
         <WaitingDots />
       </Card>
 
       {leaderboard && leaderboard.length > 0 && room.settings.showLeaderboard && (
         <Card padding="sm" variant="glass">
-          <h2 className="mb-3 text-center text-xl font-black">התוצאות מהסבב הקודם</h2>
+          <h2 className="mb-3 text-center text-xl font-black">הַתּוֹצָאוֹת מֵהַסֶּבֶב הַקּוֹדֵם</h2>
           <Leaderboard entries={leaderboard} highlightId={participantId ?? undefined} compact limit={5} />
         </Card>
       )}

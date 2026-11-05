@@ -59,10 +59,10 @@ const question: QuestionView = {
   index: 0,
   total: 10,
   type: 'CHOOSE_OPPOSITE',
-  prompt: 'גדול',
+  prompt: 'גָּדוֹל',
   options: [
-    { id: 'a', text: 'קטן' },
-    { id: 'b', text: 'חם' },
+    { id: 'a', text: 'קָטָן' },
+    { id: 'b', text: 'חַם' },
   ],
   isTreasure: false,
   timeLimitMs: 20000,
@@ -80,11 +80,11 @@ describe('playerStore', () => {
   });
 
   it('join stores token + participant info', async () => {
-    const res: JoinRoomResponse = { participantId: 'p1', sessionToken: 'tok-1', displayName: 'נועה', avatar: 'fox', room };
+    const res: JoinRoomResponse = { participantId: 'p1', sessionToken: 'tok-1', displayName: 'נוֹעָה', avatar: 'fox', room };
     vi.mocked(apiClient.post).mockResolvedValueOnce(res);
-    await usePlayerStore.getState().join({ code: '123456', displayName: 'נועה', avatar: 'fox' });
+    await usePlayerStore.getState().join({ code: '123456', displayName: 'נוֹעָה', avatar: 'fox' });
     const s = usePlayerStore.getState();
-    expect(apiClient.post).toHaveBeenCalledWith('/rooms/join', { code: '123456', displayName: 'נועה', avatar: 'fox' });
+    expect(apiClient.post).toHaveBeenCalledWith('/rooms/join', { code: '123456', displayName: 'נוֹעָה', avatar: 'fox' });
     expect(s.token).toBe('tok-1');
     expect(getPlayerToken()).toBe('tok-1');
     expect(s.participantId).toBe('p1');
@@ -96,7 +96,7 @@ describe('playerStore', () => {
     usePlayerStore.setState({ token: 'tok-1' });
     const session: PlayerSession = {
       participantId: 'p1',
-      displayName: 'נועה',
+      displayName: 'נוֹעָה',
       avatar: 'fox',
       room: { ...room, state: GameState.QUESTION_ACTIVE },
       gameSessionId: 'gs1',
@@ -120,7 +120,7 @@ describe('playerStore', () => {
   it('restoreSession clears token on 401', async () => {
     const { ApiError } = await vi.importActual<typeof ApiModule>('@/services/api');
     usePlayerStore.setState({ token: 'tok-dead' });
-    vi.mocked(apiClient.get).mockRejectedValueOnce(new ApiError(401, 'לא מחובר'));
+    vi.mocked(apiClient.get).mockRejectedValueOnce(new ApiError(401, 'לֹא מְחוּבָּר'));
     await usePlayerStore.getState().restoreSession();
     expect(usePlayerStore.getState().token).toBeNull();
     expect(getPlayerToken()).toBeNull();
@@ -166,7 +166,7 @@ describe('playerStore', () => {
     });
 
     it('leaderboard:updated replaces entries', () => {
-      const entry = { participantId: 'p1', displayName: 'נועה', avatar: 'fox' as const, score: 10, correctAnswers: 1, answeredCount: 1, accuracy: 100, totalResponseMs: 1, rank: 1, connected: true, finished: false };
+      const entry = { participantId: 'p1', displayName: 'נוֹעָה', avatar: 'fox' as const, score: 10, correctAnswers: 1, answeredCount: 1, accuracy: 100, totalResponseMs: 1, rank: 1, connected: true, finished: false };
       fire('leaderboard:updated', { gameSessionId: 'gs', entries: [entry], updatedAt: 1 });
       expect(usePlayerStore.getState().leaderboard).toEqual([entry]);
     });
@@ -193,10 +193,10 @@ describe('playerStore', () => {
     });
 
     it('player:removed clears session and records reason', () => {
-      fire('player:removed', { participantId: 'p1', reason: 'המורה הסירה אותך' });
+      fire('player:removed', { participantId: 'p1', reason: 'הַמּוֹרָה הֵסִירָה אוֹתְךָ' });
       const s = usePlayerStore.getState();
       expect(s.token).toBeNull();
-      expect(s.removedReason).toBe('המורה הסירה אותך');
+      expect(s.removedReason).toBe('הַמּוֹרָה הֵסִירָה אוֹתְךָ');
     });
 
     it('room:updated with new round resets progress', () => {
@@ -211,7 +211,7 @@ describe('playerStore', () => {
 
     it('question:ended without an answer synthesizes a result with the correct option', () => {
       usePlayerStore.setState({ currentQuestion: question, lastResult: null, score: 40 });
-      fire('question:ended', { sessionQuestionId: 'sq1', correctOptionId: 'a', explanation: 'ההפך של גדול הוא קטן' });
+      fire('question:ended', { sessionQuestionId: 'sq1', correctOptionId: 'a', explanation: 'הַהֶפֶךְ שֶׁל גָּדוֹל הוּא קָטָן' });
       const s = usePlayerStore.getState();
       expect(s.lastResult?.correct).toBe(false);
       expect(s.lastResult?.correctOptionId).toBe('a');

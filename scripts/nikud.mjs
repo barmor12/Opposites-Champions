@@ -1,0 +1,102 @@
+#!/usr/bin/env node
+// =====================================================================
+// אלופי ההפכים – ניקוד אוטומטי של התוכן (Dicta Nakdan)
+// Opposites Champions – vocalize content with the Dicta Nakdan API
+//
+//   node scripts/nikud.mjs            # מייצר packages/content/src/nikud.generated.ts
+//
+// הקלט: כל המילים/המשפטים/ההסברים ב-wordPairs.ts (RAW_PAIRS) + alt של הדמויות.
+// הפלט: מפה plain → מנוקד. מפתחות שכבר קיימים ומנוקדים ידנית נשמרים (ראו KEEP).
+// =====================================================================
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const OUT = path.join(ROOT, 'packages/content/src/nikud.generated.ts');
+const API = 'https://nakdan-5-3.loadbalancer.dicta.org.il/api';
+
+export async function vocalize(text) {
+  const res = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+    body: JSON.stringify({ task: 'nakdan', data: text, genre: 'modern', addmorph: false, keepmetagim: false, keepqq: false, nodageshdefmem: false, patachma: false, keepnikud: true }),
+  });
+  if (!res.ok) throw new Error(`nakdan ${res.status}`);
+  const tokens = await res.json();
+  return tokens.map((t) => (t.sep || !t.options?.length ? t.word : align(t.word, t.options[0].replace(/\|/g, '')) ?? t.word)).join('');
+}
+
+const MARK = /[\u0591-\u05BD\u05BF-\u05C7]/;
+const HOLAM = '\u05B9', QUBUTS = '\u05BB', KAMATZ = '\u05B8', DAGESH = '\u05BC';
+
+/**
+ * הנקדן מחזיר כתיב חסר (רטוב → רָטֹב). מיישרים את הניקוד על האותיות המקוריות (כתיב מלא),
+ * כך ש-stripNikud(מנוקד) === מקורי. אם האותיות לא ניתנות ליישור – מחזיר null.
+ */
+export function align(original, vocalized) {
+  let out = '';
+  let j = 0;
+  const takeMarks = () => { let m = ''; while (j < vocalized.length && MARK.test(vocalized[j])) m += vocalized[j++]; return m; };
+  for (let i = 0; i < original.length; i += 1) {
+    const ch = original[i];
+    if (j < vocalized.length && vocalized[j] === ch) {
+      j += 1;
+      let marks = takeMarks();
+      const next = original[i + 1];
+      const vNext = vocalized[j];
+      if (next && next !== vNext && (next === 'ו' || next === 'י')) {
+        // אות אם־קריאה שהנקדן השמיט
+        if (next === 'ו' && marks.includes(HOLAM)) { out += ch + marks.replace(HOLAM, '') + 'ו' + HOLAM; i += 1; continue; }
+        if (next === 'ו' && marks.includes(QUBUTS)) { out += ch + marks.replace(QUBUTS, '') + 'ו' + DAGESH; i += 1; continue; }
+        if (next === 'ו' && marks.includes(KAMATZ)) { out += ch + marks.replace(KAMATZ, '') + 'ו' + HOLAM; i += 1; continue; } // קמץ קטן
+        out += ch + marks + next; i += 1; continue;
+      }
+      out += ch + marks;
+    } else if (j < vocalized.length && MARK.test(vocalized[j])) {
+      out += takeMarks(); i -= 1;
+    } else {
+      return null;
+    }
+  }
+  out += takeMarks();
+  return j === vocalized.length ? out : null;
+}
+
+async function mapLimit(items, limit, fn) {
+  const out = new Array(items.length);
+  let i = 0;
+  await Promise.all(Array.from({ length: limit }, async () => {
+    while (i < items.length) { const k = i++; out[k] = await fn(items[k], k); }
+  }));
+  return out;
+}
+
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) {
+  const src = readFileSync(path.join(ROOT, 'packages/content/src/wordPairs.ts'), 'utf8');
+  const strings = new Set();
+  // כל מחרוזת עברית בין גרשיים בודדים ב-RAW_PAIRS (מילה, הפך, משפט, הסבר)
+  for (const m of src.matchAll(/'([^'\n]*[א-ת][^'\n]*)'/g)) strings.add(m[1]);
+  const manifest = readFileSync(path.join(ROOT, 'packages/content/src/assetManifest.ts'), 'utf8');
+  for (const m of manifest.matchAll(/alt:\s*'([^'\n]*[א-ת][^'\n]*)'/g)) strings.add(m[1]);
+  const constants = readFileSync(path.join(ROOT, 'packages/shared/src/constants.ts'), 'utf8');
+  for (const m of constants.matchAll(/:\s*'([^'\n]*[א-ת][^'\n]*)'/g)) strings.add(m[1]);
+
+  const keep = new Map();
+  if (existsSync(OUT)) {
+    for (const m of readFileSync(OUT, 'utf8').matchAll(/^  '((?:[^'\\]|\\.)*)': '((?:[^'\\]|\\.)*)', \/\/ KEEP$/gm)) keep.set(m[1], m[2]);
+  }
+  const list = [...strings].sort();
+  console.log(`vocalizing ${list.length} strings…`);
+  const pairs = await mapLimit(list, 4, async (s, i) => {
+    if (keep.has(s)) return [s, keep.get(s), true];
+    const v = await vocalize(s);
+    if (i % 50 === 0) process.stdout.write(`${i}… `);
+    return [s, v, false];
+  });
+  const esc = (s) => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  const body = pairs.map(([k, v, kept]) => `  '${esc(k)}': '${esc(v)}',${kept ? ' // KEEP' : ''}`).join('\n');
+  writeFileSync(OUT, `// נוצר אוטומטית ע"י scripts/nikud.mjs (Dicta Nakdan) – אפשר לתקן ידנית ולסמן שורה ב-"// KEEP" כדי שלא תידרס.\n// Generated by scripts/nikud.mjs – hand-fixed lines marked "// KEEP" survive regeneration.\nexport const NIKUD: Record<string, string> = {\n${body}\n};\n`);
+  console.log(`\nwrote ${OUT} (${pairs.length} entries)`);
+}

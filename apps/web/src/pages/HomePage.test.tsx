@@ -38,55 +38,55 @@ describe('HomePage', () => {
 
   it('renders title and join form', () => {
     renderHome();
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain('אלופי');
-    expect(screen.getByText('מי יהיה אלוף ההפכים של הכיתה?')).toBeTruthy();
-    expect(screen.getByLabelText('מה השם שלך?')).toBeTruthy();
-    expect(screen.getByLabelText('קוד המשחק')).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain('אַלּוּפֵי');
+    expect(screen.getByText('מִי יִהְיֶה אַלּוּף הַהֲפָכִים שֶׁל הַכִּיתָּה?')).toBeTruthy();
+    expect(screen.getByLabelText('מָה הַשֵּׁם שֶׁלְּךָ?')).toBeTruthy();
+    expect(screen.getByLabelText('קוֹד הַמִּשְׂחָק')).toBeTruthy();
     expect(screen.getAllByRole('radio')).toHaveLength(16);
-    expect(screen.getByRole('button', { name: /בואו נשחק/ })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /בּוֹאוּ נְשַׂחֵק/ })).toBeTruthy();
   });
 
   it('requires a name, a 6-digit code and an avatar', async () => {
     renderHome();
-    fireEvent.click(screen.getByRole('button', { name: /בואו נשחק/ }));
+    fireEvent.click(screen.getByRole('button', { name: /בּוֹאוּ נְשַׂחֵק/ }));
     const alerts = await screen.findAllByRole('alert');
     const text = alerts.map((a) => a.textContent).join(' | ');
-    expect(text).toContain('כתבו שם');
-    expect(text).toContain('קוד המשחק');
-    expect(text).toContain('בחרו דמות');
+    expect(text).toContain('כָּתְבוּ שֵׁם');
+    expect(text).toContain('קוֹד הַמִּשְׂחָק');
+    expect(text).toContain('בַּחֲרוּ דְּמוּת');
     expect(apiClient.post).not.toHaveBeenCalled();
   });
 
   it('rejects a short code and strips non-digits', async () => {
     renderHome();
-    fireEvent.change(screen.getByLabelText('מה השם שלך?'), { target: { value: 'נועה' } });
-    const code = screen.getByLabelText('קוד המשחק') as HTMLInputElement;
+    fireEvent.change(screen.getByLabelText('מָה הַשֵּׁם שֶׁלְּךָ?'), { target: { value: 'נוֹעָה' } });
+    const code = screen.getByLabelText('קוֹד הַמִּשְׂחָק') as HTMLInputElement;
     fireEvent.change(code, { target: { value: '12a3' } });
     expect(code.value).toBe('123');
     expect(code.getAttribute('dir')).toBe('ltr');
-    fireEvent.click(screen.getByRole('radio', { name: 'שועל' }));
-    fireEvent.click(screen.getByRole('button', { name: /בואו נשחק/ }));
-    await screen.findByText('הקוד צריך להיות 6 ספרות');
+    fireEvent.click(screen.getByRole('radio', { name: 'שׁוּעָל' }));
+    fireEvent.click(screen.getByRole('button', { name: /בּוֹאוּ נְשַׂחֵק/ }));
+    await screen.findByText('הַקּוֹד צָרִיךְ לִהְיוֹת 6 סְפָרוֹת');
     expect(apiClient.post).not.toHaveBeenCalled();
   });
 
   it('rejects a one-letter name', async () => {
     renderHome();
-    fireEvent.change(screen.getByLabelText('מה השם שלך?'), { target: { value: 'א' } });
-    fireEvent.click(screen.getByRole('button', { name: /בואו נשחק/ }));
-    await screen.findByText('השם קצר מדי');
+    fireEvent.change(screen.getByLabelText('מָה הַשֵּׁם שֶׁלְּךָ?'), { target: { value: 'א' } });
+    fireEvent.click(screen.getByRole('button', { name: /בּוֹאוּ נְשַׂחֵק/ }));
+    await screen.findByText('הַשֵּׁם קָצָר מִדַּי');
   });
 
   it('prefills the code from /join/:code', () => {
     renderHome('/join/654321');
-    expect((screen.getByLabelText('קוד המשחק') as HTMLInputElement).value).toBe('654321');
+    expect((screen.getByLabelText('קוֹד הַמִּשְׂחָק') as HTMLInputElement).value).toBe('654321');
   });
 
   it('joins, greets and navigates to /play', async () => {
     vi.mocked(apiClient.post).mockResolvedValueOnce({
       participantId: 'p1',
       sessionToken: 'tok',
-      displayName: 'נועה',
+      displayName: 'נוֹעָה',
       avatar: 'fox',
       room: {
         roomId: 'r', code: '123456', className: 'ג׳1', state: 'WAITING_FOR_PLAYERS', joinOpen: true, mode: 'SELF_PACED',
@@ -95,12 +95,12 @@ describe('HomePage', () => {
       },
     });
     renderHome();
-    fireEvent.change(screen.getByLabelText('מה השם שלך?'), { target: { value: 'נועה' } });
-    fireEvent.change(screen.getByLabelText('קוד המשחק'), { target: { value: '123456' } });
-    fireEvent.click(screen.getByRole('radio', { name: 'שועל' }));
-    fireEvent.click(screen.getByRole('button', { name: /בואו נשחק/ }));
-    await waitFor(() => expect(apiClient.post).toHaveBeenCalledWith('/rooms/join', { code: '123456', displayName: 'נועה', avatar: 'fox' }));
-    await screen.findByText(/שלום נועה/);
+    fireEvent.change(screen.getByLabelText('מָה הַשֵּׁם שֶׁלְּךָ?'), { target: { value: 'נוֹעָה' } });
+    fireEvent.change(screen.getByLabelText('קוֹד הַמִּשְׂחָק'), { target: { value: '123456' } });
+    fireEvent.click(screen.getByRole('radio', { name: 'שׁוּעָל' }));
+    fireEvent.click(screen.getByRole('button', { name: /בּוֹאוּ נְשַׂחֵק/ }));
+    await waitFor(() => expect(apiClient.post).toHaveBeenCalledWith('/rooms/join', { code: '123456', displayName: 'נוֹעָה', avatar: 'fox' }));
+    await screen.findByText(/שָׁלוֹם נוֹעָה/);
     await waitFor(() => expect(screen.queryByText('PLAY')).toBeTruthy(), { timeout: 4000 });
   }, 8000);
 });

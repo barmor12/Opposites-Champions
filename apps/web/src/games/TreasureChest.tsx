@@ -37,7 +37,7 @@ export function TreasureChestImage({ open, className }: { open: boolean; classNa
   return (
     <LazyImage
       src={src}
-      alt={open ? 'תיבת אוצר פתוחה' : 'תיבת אוצר סגורה'}
+      alt={open ? 'תֵּיבַת אוֹצָר פְּתוּחָה' : 'תֵּיבַת אוֹצָר סְגוּרָה'}
       className={className}
       fallback={<ChestSvg open={open} className="h-full w-full" />}
     />

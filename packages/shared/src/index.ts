@@ -6,4 +6,5 @@ export * from './nameFilter';
 export * from './stateMachine';
 export * from './types';
 export * from './presets';
+export * from './hebrew';
 export * from './socket';

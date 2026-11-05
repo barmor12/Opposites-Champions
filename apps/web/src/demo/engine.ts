@@ -59,21 +59,21 @@ const common = {
 export const DEMO_ROOMS: DemoRoomPreset[] = [
   {
     code: '111111',
-    title: 'משחק מעורב',
-    blurb: 'כל סוגי השאלות, 20 שניות לשאלה, אתגר האוצר בסוף',
-    settings: { ...common, className: 'כיתה ג׳1', questionCount: 10, difficulty: 'MIXED', timePerQuestionSec: 20, questionTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE], treasureChallenge: true },
+    title: 'מִשְׂחָק מְעוֹרָב',
+    blurb: 'כָּל סוּגֵי הַשְּׁאֵלוֹת, 20 שְׁנִיּוֹת לִשְׁאֵלָה, אֶתְגַּר הָאוֹצָר בַּסּוֹף',
+    settings: { ...common, className: 'כִּיתָּה ג׳1', questionCount: 10, difficulty: 'MIXED', timePerQuestionSec: 20, questionTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE], treasureChallenge: true },
   },
   {
     code: '222222',
-    title: 'רמה קלה – תמונות בלבד',
-    blurb: 'בלי קריאה בכלל: איור מול איורים, ללא הגבלת זמן',
-    settings: { ...common, className: 'כיתה ב׳2', questionCount: 8, difficulty: 'EASY', timePerQuestionSec: 0, questionTypes: [QuestionType.PICTURE_TO_PICTURE], treasureChallenge: false },
+    title: 'רָמָה קַלָּה – תְּמוּנוֹת בִּלְבַד',
+    blurb: 'בְּלִי קְרִיאָה בִּכְלָל: אִיּוּר מוּל אִיּוּרִים, לְלֹא הַגְבָּלַת זְמַן',
+    settings: { ...common, className: 'כִּיתָּה ב׳2', questionCount: 8, difficulty: 'EASY', timePerQuestionSec: 0, questionTypes: [QuestionType.PICTURE_TO_PICTURE], treasureChallenge: false },
   },
   {
     code: '333333',
-    title: 'אתגר קשה',
-    blurb: 'מילים מאתגרות, 15 שניות לשאלה, אתגר האוצר',
-    settings: { ...common, className: 'כיתה ג׳3', questionCount: 10, difficulty: 'HARD', timePerQuestionSec: 15, questionTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.COMPLETE_SENTENCE], treasureChallenge: true },
+    title: 'אֶתְגָּר קָשֶׁה',
+    blurb: 'מִילִּים מְאַתְגְּרוֹת, 15 שְׁנִיּוֹת לִשְׁאֵלָה, אֶתְגַּר הָאוֹצָר',
+    settings: { ...common, className: 'כִּיתָּה ג׳3', questionCount: 10, difficulty: 'HARD', timePerQuestionSec: 15, questionTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.COMPLETE_SENTENCE], treasureChallenge: true },
   },
 ];
 
@@ -114,12 +114,12 @@ export class DemoError extends Error {
 type Emit = <E extends keyof ServerToClientEvents>(event: E, ...args: Parameters<ServerToClientEvents[E]>) => void;
 
 const BOT_POOL: Array<{ name: string; avatar: AvatarId; accuracy: number; pace: number }> = [
-  { name: 'נועה', avatar: 'fox', accuracy: 0.85, pace: 0.8 },
-  { name: 'איתי', avatar: 'dino', accuracy: 0.6, pace: 1.3 },
-  { name: 'מאיה', avatar: 'panda', accuracy: 0.75, pace: 1 },
-  { name: 'יונתן', avatar: 'lion', accuracy: 0.7, pace: 0.9 },
-  { name: 'תמר', avatar: 'owl', accuracy: 0.9, pace: 1.2 },
-  { name: 'דניאל', avatar: 'frog', accuracy: 0.55, pace: 0.7 },
+  { name: 'נוֹעָה', avatar: 'fox', accuracy: 0.85, pace: 0.8 },
+  { name: 'אִיתַי', avatar: 'dino', accuracy: 0.6, pace: 1.3 },
+  { name: 'מָאיָה', avatar: 'panda', accuracy: 0.75, pace: 1 },
+  { name: 'יוֹנָתָן', avatar: 'lion', accuracy: 0.7, pace: 0.9 },
+  { name: 'תָּמָר', avatar: 'owl', accuracy: 0.9, pace: 1.2 },
+  { name: 'דָּנִיֵּאל', avatar: 'frog', accuracy: 0.55, pace: 0.7 },
 ];
 
 const BEST_KEY = 'oc.demo.personalBest';
@@ -174,7 +174,7 @@ export class DemoEngine {
   }
 
   roomView(): RoomPublicView {
-    if (!this.preset) throw new DemoError(404, 'לא מצאנו חדר עם הקוד הזה. בדקו את הקוד ונסו שוב');
+    if (!this.preset) throw new DemoError(404, 'לֹא מָצָאנוּ חֶדֶר עִם הַקּוֹד הַזֶּה. בִּדְקוּ אֶת הַקּוֹד וְנַסּוּ שׁוּב');
     const s = this.preset.settings;
     return {
       roomId: this.roomId,
@@ -192,11 +192,11 @@ export class DemoEngine {
 
   join(req: { code?: string; displayName?: string; avatar?: string }): { participantId: string; sessionToken: string; displayName: string; avatar: AvatarId; room: RoomPublicView } {
     const preset = this.presetByCode(String(req.code ?? '').trim());
-    if (!preset) throw new DemoError(404, 'לא מצאנו חדר עם הקוד הזה. נסו אחד מקודי הדמו');
+    if (!preset) throw new DemoError(404, 'לֹא מָצָאנוּ חֶדֶר עִם הַקּוֹד הַזֶּה. נַסּוּ אֶחָד מִקּוֹדֵי הַדֶּמוֹ');
     const name = validateDisplayName(String(req.displayName ?? ''));
-    if (!name.ok) throw new DemoError(400, name.reason ?? `השם צריך להיות באורך ${MIN_DISPLAY_NAME}–${MAX_DISPLAY_NAME} תווים`);
+    if (!name.ok) throw new DemoError(400, name.reason ?? `הַשֵּׁם צָרִיךְ לִהְיוֹת בְּאוֹרֶךְ ${MIN_DISPLAY_NAME}–${MAX_DISPLAY_NAME} תָּוִוים`);
     const avatar = String(req.avatar ?? '') as AvatarId;
-    if (!AVATARS.includes(avatar)) throw new DemoError(400, 'בחרו דמות');
+    if (!AVATARS.includes(avatar)) throw new DemoError(400, 'בַּחֲרוּ דְּמוּת');
 
     this.resetAll();
     this.preset = preset;
@@ -269,11 +269,11 @@ export class DemoEngine {
           ok(this.next((payload as { sessionQuestionId?: string }).sessionQuestionId ?? ''));
           return;
         default:
-          fail('UNKNOWN_EVENT', 'אירוע לא מוכר');
+          fail('UNKNOWN_EVENT', 'אֵירוּעַ לֹא מוּכָּר');
       }
     } catch (err) {
       if (err instanceof DemoError) fail(err.code, err.message);
-      else fail('INTERNAL', 'אופס! משהו השתבש');
+      else fail('INTERNAL', 'אוּפְּס! מַשֶּׁהוּ הִשְׁתַּבֵּשׁ');
     }
   }
 
@@ -327,10 +327,10 @@ export class DemoEngine {
 
   private submit(payload: AnswerPayload): AnswerResult {
     const me = this.requireMe();
-    if (this.state !== GameState.QUESTION_ACTIVE) throw new DemoError(409, 'המשחק לא פעיל כרגע', 'GAME_NOT_ACTIVE');
+    if (this.state !== GameState.QUESTION_ACTIVE) throw new DemoError(409, 'הַמִּשְׂחָק לֹא פָּעִיל כָּרֶגַע', 'GAME_NOT_ACTIVE');
     const q = this.questions[me.progress.currentIndex];
-    if (!q || q.id !== payload.sessionQuestionId) throw new DemoError(400, 'השאלה הזו כבר לא פעילה', 'QUESTION_MISMATCH');
-    if (me.progress.answeredIds.has(q.id)) throw new DemoError(409, 'כבר ענית על השאלה הזו', 'ALREADY_ANSWERED');
+    if (!q || q.id !== payload.sessionQuestionId) throw new DemoError(400, 'הַשְּׁאֵלָה הַזּוֹ כְּבָר לֹא פְּעִילָה', 'QUESTION_MISMATCH');
+    if (me.progress.answeredIds.has(q.id)) throw new DemoError(409, 'כְּבָר עָנִיתָ עַל הַשְּׁאֵלָה הַזּוֹ', 'ALREADY_ANSWERED');
     const elapsedRaw = Date.now() - me.progress.questionStartedAt;
     const elapsed = q.timeLimitMs > 0 ? Math.min(Math.max(0, elapsedRaw), q.timeLimitMs) : Math.max(0, elapsedRaw);
     const check = this.check(q, payload);
@@ -342,7 +342,7 @@ export class DemoEngine {
 
   private check(q: DemoQuestion, payload: AnswerPayload): { correct: boolean; matched: number; total: number; mistakes: number; correctOptionId?: string; correctMatches?: Array<{ cardA: string; cardB: string }> } {
     if (q.type === QuestionType.MATCH_PAIRS && q.pairs) {
-      if (!('matches' in payload) || !Array.isArray(payload.matches)) throw new DemoError(400, 'תשובה לא תקינה לשאלת התאמה', 'INVALID_ANSWER');
+      if (!('matches' in payload) || !Array.isArray(payload.matches)) throw new DemoError(400, 'תְּשׁוּבָה לֹא תַּקִּינָה לִשְׁאֵלַת הַתְאָמָה', 'INVALID_ANSWER');
       const key = (a: string, b: string) => (a < b ? `${a}|${b}` : `${b}|${a}`);
       const correctKeys = new Set(q.pairs.map((p) => key(p.cardA, p.cardB)));
       const seen = new Set<string>();
@@ -361,9 +361,9 @@ export class DemoEngine {
       }
       return { correct: matched === q.pairs.length, matched, total: q.pairs.length, mistakes, correctMatches: q.pairs.map((p) => ({ ...p })) };
     }
-    if (!('optionId' in payload) || typeof payload.optionId !== 'string') throw new DemoError(400, 'יש לבחור תשובה', 'INVALID_ANSWER');
+    if (!('optionId' in payload) || typeof payload.optionId !== 'string') throw new DemoError(400, 'יֵשׁ לִבְחוֹר תְּשׁוּבָה', 'INVALID_ANSWER');
     const option = q.options.find((o) => o.id === payload.optionId);
-    if (!option) throw new DemoError(400, 'התשובה שנבחרה אינה שייכת לשאלה', 'INVALID_OPTION');
+    if (!option) throw new DemoError(400, 'הַתְּשׁוּבָה שֶׁנִּבְחֲרָה אֵינָהּ שַׁיֶּיכֶת לַשְּׁאֵלָה', 'INVALID_OPTION');
     const correctOptionId = q.options.find((o) => o.isCorrect)?.id;
     return { correct: option.isCorrect, matched: option.isCorrect ? 1 : 0, total: 1, mistakes: option.isCorrect ? 0 : 1, ...(correctOptionId ? { correctOptionId } : {}) };
   }
@@ -405,7 +405,7 @@ export class DemoEngine {
 
   private next(sessionQuestionId: string): { question: QuestionView | null; finished: boolean } {
     const me = this.requireMe();
-    if (this.state !== GameState.QUESTION_ACTIVE) throw new DemoError(409, 'המשחק לא פעיל כרגע', 'GAME_NOT_ACTIVE');
+    if (this.state !== GameState.QUESTION_ACTIVE) throw new DemoError(409, 'הַמִּשְׂחָק לֹא פָּעִיל כָּרֶגַע', 'GAME_NOT_ACTIVE');
     const q = this.questions[me.progress.currentIndex];
     if (!q) return { question: null, finished: true };
     if (q.id !== sessionQuestionId) {
@@ -545,7 +545,7 @@ export class DemoEngine {
     return this.me ? [this.me, ...this.bots] : [];
   }
   private requireMe(): Participant {
-    if (!this.me || !this.preset) throw new DemoError(404, 'אין משחק פעיל. הצטרפו שוב עם קוד', 'NO_SESSION');
+    if (!this.me || !this.preset) throw new DemoError(404, 'אֵין מִשְׂחָק פָּעִיל. הִצְטָרְפוּ שׁוּב עִם קוֹד', 'NO_SESSION');
     return this.me;
   }
   private after(ms: number, fn: () => void): void {

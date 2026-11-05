@@ -34,80 +34,80 @@ function makeDemoQuestions(): DemoQuestion[] {
   const base = { startedAt: now(), serverNow: now(), timeLimitMs: 0, endsAt: null, isTreasure: false, total: 8 };
   return [
     {
-      label: 'בחירת ההפך',
+      label: 'בְּחִירַת הַהֶפֶךְ',
       correctOptionId: 'o-small',
-      explanation: 'גדול וקטן הם הפכים – פיל הוא גדול, עכבר הוא קטן.',
+      explanation: 'גָּדוֹל וְקָטָן הֵם הֲפָכִים – פִּיל הוּא גָּדוֹל, עַכְבָּר הוּא קָטָן.',
       view: {
         ...base,
         sessionQuestionId: 'q1',
         index: 0,
         type: QuestionType.CHOOSE_OPPOSITE,
-        prompt: 'גדול',
+        prompt: 'גָּדוֹל',
         promptImage: '/images/pairs/big-small/word.svg',
         options: [
-          { id: 'o-long', text: 'ארוך' },
-          { id: 'o-small', text: 'קטן' },
-          { id: 'o-hot', text: 'חם' },
-          { id: 'o-fast', text: 'מהיר' },
+          { id: 'o-long', text: 'אָרוֹךְ' },
+          { id: 'o-small', text: 'קָטָן' },
+          { id: 'o-hot', text: 'חַם' },
+          { id: 'o-fast', text: 'מָהִיר' },
         ],
       },
     },
     {
-      label: 'השלמת משפט',
+      label: 'הַשְׁלָמַת מִשְׁפָּט',
       correctOptionId: 'o-cold',
-      explanation: 'חם וקר הם הפכים. בחורף קר ובקיץ חם.',
+      explanation: 'חַם וְקַר הֵם הֲפָכִים. בַּחוֹרֶף קַר וּבַקַּיִץ חַם.',
       view: {
         ...base,
         sessionQuestionId: 'q2',
         index: 1,
         type: QuestionType.COMPLETE_SENTENCE,
-        prompt: 'בקיץ חם, ובחורף ____',
+        prompt: 'בַּקַּיִץ חַם, וּבַחוֹרֶף ____',
         options: [
-          { id: 'o-cold', text: 'קר' },
-          { id: 'o-wet', text: 'רטוב' },
-          { id: 'o-dark', text: 'חשוך' },
-          { id: 'o-slow', text: 'איטי' },
+          { id: 'o-cold', text: 'קַר' },
+          { id: 'o-wet', text: 'רָטוֹב' },
+          { id: 'o-dark', text: 'חָשׁוּךְ' },
+          { id: 'o-slow', text: 'אִיטִּי' },
         ],
       },
     },
     {
-      label: 'בחירת תמונה',
+      label: 'בְּחִירַת תְּמוּנָה',
       correctOptionId: 'o-sad',
       view: {
         ...base,
         sessionQuestionId: 'q3',
         index: 2,
         type: QuestionType.CHOOSE_IMAGE,
-        prompt: 'שמח',
+        prompt: 'שָׂמֵחַ',
         promptImage: '/images/pairs/happy-sad/word.svg',
         options: [
-          { id: 'o-day', text: 'יום', image: '/images/pairs/day-night/word.svg' },
-          { id: 'o-sad', text: 'עצוב', image: '/images/pairs/happy-sad/opposite.svg' },
-          { id: 'o-full', text: 'מלא', image: '/images/pairs/full-empty/word.svg' },
-          { id: 'o-cold2', text: 'קר', image: '/images/pairs/hot-cold/opposite.svg' },
+          { id: 'o-day', text: 'יוֹם', image: '/images/pairs/day-night/word.svg' },
+          { id: 'o-sad', text: 'עָצוּב', image: '/images/pairs/happy-sad/opposite.svg' },
+          { id: 'o-full', text: 'מָלֵא', image: '/images/pairs/full-empty/word.svg' },
+          { id: 'o-cold2', text: 'קַר', image: '/images/pairs/hot-cold/opposite.svg' },
         ],
       },
     },
     {
-      label: 'תמונה מול תמונה',
+      label: 'תְּמוּנָה מוּל תְּמוּנָה',
       correctOptionId: 'p-small',
       view: {
         ...base,
         sessionQuestionId: 'q8',
         index: 7,
         type: QuestionType.PICTURE_TO_PICTURE,
-        prompt: 'גדול',
+        prompt: 'גָּדוֹל',
         promptImage: '/images/pairs/big-small/word.svg',
         options: [
-          { id: 'p-cold', text: 'קר', image: '/images/pairs/hot-cold/opposite.svg' },
-          { id: 'p-small', text: 'קטן', image: '/images/pairs/big-small/opposite.svg' },
-          { id: 'p-fast', text: 'מהיר', image: '/images/pairs/fast-slow/word.svg' },
-          { id: 'p-night', text: 'לילה', image: '/images/pairs/day-night/opposite.svg' },
+          { id: 'p-cold', text: 'קַר', image: '/images/pairs/hot-cold/opposite.svg' },
+          { id: 'p-small', text: 'קָטָן', image: '/images/pairs/big-small/opposite.svg' },
+          { id: 'p-fast', text: 'מָהִיר', image: '/images/pairs/fast-slow/word.svg' },
+          { id: 'p-night', text: 'לַיְלָה', image: '/images/pairs/day-night/opposite.svg' },
         ],
       },
     },
     {
-      label: 'התאמת זוגות',
+      label: 'הַתְאָמַת זוּגוֹת',
       correctMatches: [
         { cardA: 'c-big', cardB: 'c-small' },
         { cardA: 'c-hot', cardB: 'c-cold' },
@@ -119,30 +119,30 @@ function makeDemoQuestions(): DemoQuestion[] {
         sessionQuestionId: 'q4',
         index: 3,
         type: QuestionType.MATCH_PAIRS,
-        prompt: 'חברו כל מילה להפך שלה',
+        prompt: 'חָבְרוּ כָּל מִילָּה לְהֶפֶךְ שֶׁלָּהּ',
         options: [],
         matchPairsCount: 4,
         matchCards: [
-          { id: 'c-cold', text: 'קר' },
-          { id: 'c-big', text: 'גדול' },
-          { id: 'c-sad', text: 'עצוב' },
-          { id: 'c-fast', text: 'מהיר' },
-          { id: 'c-small', text: 'קטן' },
-          { id: 'c-happy', text: 'שמח' },
-          { id: 'c-slow', text: 'איטי' },
-          { id: 'c-hot', text: 'חם' },
+          { id: 'c-cold', text: 'קַר' },
+          { id: 'c-big', text: 'גָּדוֹל' },
+          { id: 'c-sad', text: 'עָצוּב' },
+          { id: 'c-fast', text: 'מָהִיר' },
+          { id: 'c-small', text: 'קָטָן' },
+          { id: 'c-happy', text: 'שָׂמֵחַ' },
+          { id: 'c-slow', text: 'אִיטִּי' },
+          { id: 'c-hot', text: 'חַם' },
         ],
       },
     },
     {
-      label: 'אוצר – שלב 3',
+      label: 'אוֹצָר – שָׁלָב 3',
       correctOptionId: 'o-down',
       view: {
         ...base,
         sessionQuestionId: 'q5',
         index: 4,
         type: QuestionType.CHOOSE_OPPOSITE,
-        prompt: 'למעלה',
+        prompt: 'לְמַעְלָה',
         promptImage: '/images/pairs/up-down/word.svg',
         isTreasure: true,
         treasureStep: 3,
@@ -150,15 +150,15 @@ function makeDemoQuestions(): DemoQuestion[] {
         timeLimitMs: 20000,
         endsAt: now() + 20000,
         options: [
-          { id: 'o-down', text: 'למטה' },
-          { id: 'o-near', text: 'קרוב' },
-          { id: 'o-in', text: 'בפנים' },
-          { id: 'o-right', text: 'ימין' },
+          { id: 'o-down', text: 'לְמַטָּה' },
+          { id: 'o-near', text: 'קָרוֹב' },
+          { id: 'o-in', text: 'בִּפְנִים' },
+          { id: 'o-right', text: 'יָמִין' },
         ],
       },
     },
     {
-      label: 'אוצר – שלב 5 (סיום)',
+      label: 'אוֹצָר – שָׁלָב 5 (סִיּוּם)',
       correctOptionId: 'o-empty',
       treasureCompletes: true,
       view: {
@@ -166,37 +166,37 @@ function makeDemoQuestions(): DemoQuestion[] {
         sessionQuestionId: 'q6',
         index: 5,
         type: QuestionType.COMPLETE_SENTENCE,
-        prompt: 'הכוס הייתה מלאה ועכשיו היא ____',
+        prompt: 'הַכּוֹס הָיְיתָה מְלֵאָה וְעַכְשָׁיו הִיא ____',
         isTreasure: true,
         treasureStep: 5,
         treasureTotal: 5,
         timeLimitMs: 30000,
         endsAt: now() + 30000,
         options: [
-          { id: 'o-dirty', text: 'מלוכלכת' },
-          { id: 'o-empty', text: 'ריקה' },
-          { id: 'o-old', text: 'ישנה' },
-          { id: 'o-heavy', text: 'כבדה' },
+          { id: 'o-dirty', text: 'מְלוּכְלֶכֶת' },
+          { id: 'o-empty', text: 'רֵיקָה' },
+          { id: 'o-old', text: 'יֶשְׁנָהּ' },
+          { id: 'o-heavy', text: 'כְּבֵדָה' },
         ],
       },
     },
     {
-      label: 'פג הזמן',
+      label: 'פָּג הַזְּמַן',
       correctOptionId: 'o-night',
       view: {
         ...base,
         sessionQuestionId: 'q7',
         index: 6,
         type: QuestionType.CHOOSE_OPPOSITE,
-        prompt: 'יום',
+        prompt: 'יוֹם',
         timeLimitMs: 15000,
         startedAt: now() - 20000,
         endsAt: now() - 5000,
         options: [
-          { id: 'o-night', text: 'לילה' },
-          { id: 'o-morning', text: 'בוקר' },
-          { id: 'o-summer', text: 'קיץ' },
-          { id: 'o-early', text: 'מוקדם' },
+          { id: 'o-night', text: 'לַיְלָה' },
+          { id: 'o-morning', text: 'בּוֹקֶר' },
+          { id: 'o-summer', text: 'קַיִץ' },
+          { id: 'o-early', text: 'מוּקְדָּם' },
         ],
       },
     },
@@ -282,8 +282,8 @@ export function GamesDemo() {
       <PageBackground variant="day" rainbow={false} balloons={false} />
       <header className="z-40 border-b border-white/70 glass px-3 py-2 sm:sticky sm:top-0">
         <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-2">
-          <h1 className="me-2 text-lg font-black text-violet-700">🎮 דמו משחקים</h1>
-          <div className="flex flex-wrap gap-1" role="tablist" aria-label="סוגי שאלות">
+          <h1 className="me-2 text-lg font-black text-violet-700">🎮 דָּמוֹ מִשְׂחָקִים</h1>
+          <div className="flex flex-wrap gap-1" role="tablist" aria-label="סוּגֵי שְׁאֵלוֹת">
             {questions.map((q, i) => (
               <button
                 key={q.view.sessionQuestionId}
@@ -304,7 +304,7 @@ export function GamesDemo() {
           <div className="ms-auto flex items-center gap-2 text-sm font-bold text-slate-600">
             <label className="flex items-center gap-1">
               <input type="checkbox" checked={showCorrect} onChange={(e) => setShowCorrect(e.target.checked)} />
-              הצג תשובה נכונה
+              הַצֵּג תְּשׁוּבָה נְכוֹנָה
             </label>
             <button
               type="button"
@@ -313,11 +313,11 @@ export function GamesDemo() {
               className="flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 hover:bg-slate-200"
             >
               {sounds ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
-              {sounds ? 'צלילים פועלים' : 'צלילים כבויים'}
+              {sounds ? 'צְלִילִים פּוֹעֲלִים' : 'צְלִילִים כְּבוּיִים'}
             </button>
             <button type="button" onClick={() => goTo(index)} className="flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 hover:bg-slate-200">
               <RotateCcw className="h-4 w-4" />
-              איפוס
+              אִיפּוּס
             </button>
             <span className="rounded-full bg-yellow-200 px-3 py-1 text-yellow-900">⭐ {totalScore}</span>
           </div>
@@ -325,7 +325,7 @@ export function GamesDemo() {
       </header>
 
       <p className="mx-auto mt-3 max-w-3xl px-4 text-center text-sm font-bold text-slate-500">
-        {QUESTION_TYPE_LABELS[current.view.type]} · שאלה {current.view.index + 1} מתוך {current.view.total}
+        {QUESTION_TYPE_LABELS[current.view.type]} · שָׁאֲלָה {current.view.index + 1} מִתּוֹךְ {current.view.total}
       </p>
 
       <QuestionRenderer

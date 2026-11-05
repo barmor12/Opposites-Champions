@@ -57,7 +57,7 @@ const PLAYABLE: readonly QuestionType[] = [
 
 const hasImages = (p: WordPairContent): p is ImagedPair => p.imageable && Boolean(p.wordImage) && Boolean(p.oppositeImage);
 const supports = (p: WordPairContent, t: QuestionType): boolean => p.supportedTypes.length === 0 || p.supportedTypes.includes(t);
-const explanationFor = (p: WordPairContent): string => p.explanation ?? `ההפך של "${p.word}" הוא "${p.opposite}"`;
+const explanationFor = (p: WordPairContent): string => p.explanation ?? `הַהֶפֶךְ שֶׁל "${p.word}" הוּא "${p.opposite}"`;
 
 let counter = 0;
 function nextId(rng: Rng): string {
@@ -241,7 +241,7 @@ function matchPairs(chosen: WordPairContent[], rng: Rng): Spec {
   return {
     id: nextId(rng),
     type: QuestionType.MATCH_PAIRS,
-    prompt: 'התאימו כל מילה להפך שלה',
+    prompt: 'הִתְאִימוּ כָּל מִילָּה לְהֶפֶךְ שֶׁלָּהּ',
     explanation: chosen.map((p) => `${p.word} ↔ ${p.opposite}`).join(', '),
     options: [],
     cards: shuffle(cards, rng),

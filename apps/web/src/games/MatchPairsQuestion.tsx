@@ -102,12 +102,12 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
         <p className="flex items-center gap-2 text-base font-bold sm:text-lg">
           <ArrowLeftRight className="h-5 w-5 text-violet-500" aria-hidden="true" />
           {result
-            ? `${correctCount} מתוך ${pairsCount} זוגות נכונים`
+            ? `${correctCount} מִתּוֹךְ ${pairsCount} זוּגוֹת נְכוֹנִים`
             : selected
-              ? 'עכשיו לחצו על ההפך שלה'
-              : 'לחצו על מילה, ואז על ההפך שלה'}
+              ? 'עַכְשָׁיו לַחֲצוּ עַל הַהֶפֶךְ שֶׁלָּהּ'
+              : 'לַחֲצוּ עַל מִילָּה, וְאָז עַל הַהֶפֶךְ שֶׁלָּהּ'}
         </p>
-        <div className="flex items-center gap-1.5" aria-label={`זוגות שחוברו: ${links.length} מתוך ${pairsCount}`} role="img">
+        <div className="flex items-center gap-1.5" aria-label={`זוּגוֹת שֶׁחוּבְּרוּ: ${links.length} מִתּוֹךְ ${pairsCount}`} role="img">
           {Array.from({ length: pairsCount }, (_, i) => {
             const l = links[i];
             const ok = l ? linkCorrect(l) : null;
@@ -133,7 +133,7 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
 
       <ul
         role="list"
-        aria-label="קלפים"
+        aria-label="קְלָפִים"
         className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
       >
         {cards.map((card, i) => {
@@ -144,7 +144,7 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
           const pairIndex = link ? links.indexOf(link) + 1 : null;
           const isShaking = shaking.includes(card.id);
           const interactive = !disabled && !result;
-          const stateLabel = ok === true ? ' – זוג נכון' : ok === false ? ' – זוג שגוי' : link ? ` – מחובר בזוג ${pairIndex}` : isSelected ? ' – נבחר' : '';
+          const stateLabel = ok === true ? ' – זוּג נָכוֹן' : ok === false ? ' – זוּג שָׁגוּי' : link ? ` – מְחוּבָּר בְּזוּג ${pairIndex}` : isSelected ? ' – נִבְחַר' : '';
 
           const content = (
             <>
@@ -217,7 +217,7 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
                         ok === false && 'from-red-400 via-red-500 to-red-600 border-red-800 text-white',
                       )}
                     >
-                      {/* דוגמת גב הקלף */}
+                      {/* דּוּגְמַת גַּב הַקְּלָף */}
                       <span aria-hidden="true" className="pointer-events-none absolute inset-0 pattern-dots opacity-50" />
                       <span aria-hidden="true" className="pointer-events-none absolute inset-2 rounded-2xl border-2 border-white/40" />
                       <span aria-hidden="true" className="pointer-events-none absolute inset-x-3 top-0 h-[40%] rounded-full bg-gradient-to-b from-white/40 to-transparent" />
@@ -257,7 +257,7 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
             className="flex justify-center"
           >
             <Button variant="success" size="xl" glow onClick={submit} disabled={disabled} className="w-full sm:w-auto sm:min-w-64" icon={<Check className="h-7 w-7" strokeWidth={3.5} aria-hidden="true" />} data-testid="check-button">
-              בדיקה
+              בְּדִיקָה
             </Button>
           </motion.div>
         )}
@@ -270,7 +270,7 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
           className="rounded-2xl glass px-4 py-3"
           data-testid="correct-pairs"
         >
-          <p className="mb-2 text-base font-bold text-slate-600">הזוגות הנכונים:</p>
+          <p className="mb-2 text-base font-bold text-slate-600">הַזּוּגוֹת הַנְּכוֹנִים:</p>
           <ul className="flex flex-wrap justify-center gap-2">
             {missedPairs.map((p) => (
               <li key={`${p.cardA}-${p.cardB}`} className="flex items-center gap-1 rounded-full bg-gradient-to-b from-green-100 to-green-200 px-3 py-1 text-lg font-black text-green-800 ring-1 ring-green-300 shadow-[inset_0_1px_0_#fff]">

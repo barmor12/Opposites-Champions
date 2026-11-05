@@ -98,7 +98,7 @@ export function Modal({ open, onClose, title, children, footer, size = 'md', dis
                   <button
                     type="button"
                     onClick={onClose}
-                    aria-label="סגירה"
+                    aria-label="סְגִירָה"
                     className="-me-2 -mt-2 grid size-12 place-items-center rounded-full text-slate-500 transition-colors hover:bg-slate-100"
                   >
                     <X className="size-6" />

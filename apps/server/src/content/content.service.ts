@@ -1,7 +1,7 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'node:crypto';
 import type { Prisma } from '@prisma/client';
-import { Category, CATEGORY_LABELS, type Difficulty, QuestionType } from '@oc/shared';
+import { Category, CATEGORY_LABELS, type Difficulty, QuestionType, stripNikud } from '@oc/shared';
 import { PrismaService } from '../prisma/prisma.service';
 import { HE } from '../common/hebrew-messages';
 import type { CreateWordPairDto, ListWordPairsQueryDto, UpdateWordPairDto } from './dto/word-pair.dto';
@@ -53,14 +53,19 @@ export class ContentService {
     if (query.category) where.category = query.category;
     if (query.difficulty) where.difficulty = query.difficulty;
     if (query.activeOnly) where.active = true;
-    if (query.search) {
-      where.OR = [
-        { word: { contains: query.search, mode: 'insensitive' } },
-        { opposite: { contains: query.search, mode: 'insensitive' } },
-      ];
-    }
     const page = query.page ?? 1;
     const limit = query.limit ?? 50;
+    const search = query.search ? stripNikud(query.search).trim().toLowerCase() : '';
+    if (search) {
+      // המילים במאגר מנוקדות – חיפוש ללא תלות בניקוד נעשה בזיכרון (המאגר קטן: מאות זוגות)
+      const all = await this.prisma.wordPair.findMany({
+        where,
+        include: WORD_PAIR_INCLUDE,
+        orderBy: [{ category: 'asc' }, { difficulty: 'asc' }, { word: 'asc' }],
+      });
+      const matches = all.filter((r) => stripNikud(r.word).toLowerCase().includes(search) || stripNikud(r.opposite).toLowerCase().includes(search));
+      return { items: matches.slice((page - 1) * limit, page * limit).map(toWordPairRecord), total: matches.length };
+    }
     const [rows, total] = await this.prisma.$transaction([
       this.prisma.wordPair.findMany({
         where,

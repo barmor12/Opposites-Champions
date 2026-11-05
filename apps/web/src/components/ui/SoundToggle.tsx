@@ -20,15 +20,15 @@ export function SoundToggle({ className, showLabel }: SoundToggleProps) {
       type="button"
       onClick={toggle}
       aria-pressed={enabled}
-      aria-label={enabled ? 'השתקת צלילים' : 'הפעלת צלילים'}
-      title={enabled ? 'השתקת צלילים' : 'הפעלת צלילים'}
+      aria-label={enabled ? 'הַשְׁתָּקַת צְלִילִים' : 'הַפְעָלַת צְלִילִים'}
+      title={enabled ? 'הַשְׁתָּקַת צְלִילִים' : 'הַפְעָלַת צְלִילִים'}
       className={cn(
         'inline-flex min-h-12 min-w-12 items-center justify-center gap-2 rounded-full glass px-3 font-bold text-brand-navy transition-transform hover:-translate-y-0.5 active:translate-y-0',
         className,
       )}
     >
       {enabled ? <Volume2 className="size-6" aria-hidden /> : <VolumeX className="size-6 text-slate-400" aria-hidden />}
-      {showLabel && <span className="text-sm">{enabled ? 'צלילים' : 'מושתק'}</span>}
+      {showLabel && <span className="text-sm">{enabled ? 'צְלִילִים' : 'מוּשְׁתָּק'}</span>}
     </button>
   );
 }

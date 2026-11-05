@@ -12,7 +12,7 @@ export interface MedalProps {
 }
 
 const EMOJI: Record<MedalKind, string> = { gold: '🥇', silver: '🥈', bronze: '🥉' };
-const LABEL: Record<MedalKind, string> = { gold: 'מדליית זהב', silver: 'מדליית כסף', bronze: 'מדליית ארד' };
+const LABEL: Record<MedalKind, string> = { gold: 'מֵדַלְיַית זָהָב', silver: 'מֵדַלְיַית כֶּסֶף', bronze: 'מֵדַלְיַית אָרָד' };
 const SIZES = { sm: 'size-10 text-3xl', md: 'size-16 text-5xl', lg: 'size-24 text-7xl' };
 const GLOW: Record<MedalKind, string> = {
   gold: 'drop-shadow-[0_6px_12px_rgba(245,158,11,0.55)]',

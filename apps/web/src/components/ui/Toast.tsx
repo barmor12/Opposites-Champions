@@ -4,9 +4,9 @@ import { cn } from '@/lib/cn';
 import { useToastStore, type ToastType } from '@/stores/toastStore';
 
 const STYLES: Record<ToastType, { box: string; Icon: typeof Info; label: string }> = {
-  success: { box: 'bg-green-600 text-white', Icon: CircleCheck, label: 'הצלחה' },
-  error: { box: 'bg-rose-600 text-white', Icon: CircleX, label: 'שגיאה' },
-  info: { box: 'bg-brand-navy text-white', Icon: Info, label: 'הודעה' },
+  success: { box: 'bg-green-600 text-white', Icon: CircleCheck, label: 'הַצְלָחָה' },
+  error: { box: 'bg-rose-600 text-white', Icon: CircleX, label: 'שְׁגִיאָה' },
+  info: { box: 'bg-brand-navy text-white', Icon: Info, label: 'הוֹדָעָה' },
 };
 
 /** מיכל ההודעות – למקם פעם אחת ב־App */
@@ -42,7 +42,7 @@ export function Toaster() {
               <button
                 type="button"
                 onClick={() => dismiss(t.id)}
-                aria-label="סגירת הודעה"
+                aria-label="סְגִירַת הוֹדָעָה"
                 className="grid size-10 shrink-0 place-items-center rounded-full hover:bg-white/20"
               >
                 <X className="size-5" />

@@ -96,10 +96,10 @@ export const AchievementType = {
 export type AchievementType = (typeof AchievementType)[keyof typeof AchievementType];
 
 export const ACHIEVEMENT_LABELS: Record<AchievementType, { title: string; description: string; emoji: string }> = {
-  OPPOSITES_CHAMPION: { title: 'אלוף ההפכים', description: 'המקום הראשון בכיתה!', emoji: '🏆' },
-  PERSISTENCE_CHAMPION: { title: 'אלוף ההתמדה', description: 'ענית על כל השאלות עד הסוף', emoji: '💪' },
-  TEN_CORRECT: { title: 'עשר תשובות נכונות', description: 'עשר תשובות נכונות במשחק אחד', emoji: '🔟' },
-  FIVE_STREAK: { title: 'חמש ברצף', description: 'חמש תשובות נכונות ברצף', emoji: '🔥' },
-  ACCURACY_CHAMPION: { title: 'אלוף הדיוק', description: 'לפחות 90% תשובות נכונות', emoji: '🎯' },
-  PERSONAL_BEST: { title: 'שיא אישי', description: 'הניקוד הגבוה ביותר שלך עד היום', emoji: '⭐' },
+  OPPOSITES_CHAMPION: { title: 'אַלּוּף הַהֲפָכִים', description: 'הַמָּקוֹם הָרִאשׁוֹן בַּכִּיתָּה!', emoji: '🏆' },
+  PERSISTENCE_CHAMPION: { title: 'אַלּוּף הַהַתְמָדָה', description: 'עָנִיתָ עַל כָּל הַשְּׁאֵלוֹת עַד הַסּוֹף', emoji: '💪' },
+  TEN_CORRECT: { title: 'עָשָׂר תְּשׁוּבוֹת נְכוֹנוֹת', description: 'עָשָׂר תְּשׁוּבוֹת נְכוֹנוֹת בְּמִשְׂחָק אֶחָד', emoji: '🔟' },
+  FIVE_STREAK: { title: 'חָמֵשׁ בְּרֶצֶף', description: 'חָמֵשׁ תְּשׁוּבוֹת נְכוֹנוֹת בְּרֶצֶף', emoji: '🔥' },
+  ACCURACY_CHAMPION: { title: 'אַלּוּף הַדִּיּוּק', description: 'לְפָחוֹת 90% תְּשׁוּבוֹת נְכוֹנוֹת', emoji: '🎯' },
+  PERSONAL_BEST: { title: 'שִׂיא אִישִׁי', description: 'הַנִּיקּוּד הַגָּבוֹהַּ בְּיוֹתֵר שֶׁלְּךָ עַד הַיּוֹם', emoji: '⭐' },
 };

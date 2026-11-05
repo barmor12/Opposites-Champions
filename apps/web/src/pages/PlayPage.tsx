@@ -152,7 +152,7 @@ export function PlayPage() {
   }, []);
 
   const onLeave = () => {
-    if (window.confirm('לצאת מהמשחק?')) {
+    if (window.confirm('לָצֵאת מֵהַמִּשְׂחָק?')) {
       leave();
       navigate('/', { replace: true });
     }
@@ -164,7 +164,7 @@ export function PlayPage() {
     <main className="relative flex min-h-dvh flex-col overflow-x-clip safe-x safe-bottom pt-2 sm:pt-4">
       <PageBackground variant="day" rainbow={screen === 'waiting'} balloons={screen !== 'question'} />
 
-      {/* סרגל עליון */}
+      {/* סַרְגֵּל עֶלְיוֹן */}
       <div className={`mx-auto mb-3 flex w-full items-center justify-between gap-2 ${wide ? 'max-w-4xl' : 'max-w-3xl'}`}>
         <div className="flex min-w-0 items-center gap-2 rounded-full glass py-1 pe-3 ps-1">
           {avatar && <Avatar id={avatar} size="sm" ring ringColor="violet" />}
@@ -173,8 +173,8 @@ export function PlayPage() {
         </div>
         <div className="flex items-center gap-2">
           <SoundToggle />
-          <Button variant="ghost" size="md" aria-label="יציאה מהמשחק" onClick={onLeave} icon={<LogOut className="size-5" />} className="rounded-full glass">
-            <span className="hidden sm:inline">יציאה</span>
+          <Button variant="ghost" size="md" aria-label="יְצִיאָה מֵהַמִּשְׂחָק" onClick={onLeave} icon={<LogOut className="size-5" />} className="rounded-full glass">
+            <span className="hidden sm:inline">יְצִיאָה</span>
           </Button>
         </div>
       </div>
@@ -189,12 +189,12 @@ export function PlayPage() {
             transition={{ type: 'spring', stiffness: 260, damping: 26 }}
             className="flex flex-1 flex-col"
           >
-            {screen === 'loading' && <CenterMessage spinner text="מתחברים למשחק…" />}
+            {screen === 'loading' && <CenterMessage spinner text="מִתְחַבְּרִים לַמִּשְׂחָק…" />}
             {screen === 'error' && (
-              <CenterMessage text={error ?? 'לא הצלחנו להתחבר'}>
+              <CenterMessage text={error ?? 'לֹא הִצְלַחְנוּ לְהִתְחַבֵּר'}>
                 <div className="flex flex-wrap justify-center gap-3">
-                  <Button onClick={() => restoreSession().then((s) => s && bindSocket())}>לנסות שוב</Button>
-                  <Button variant="secondary" onClick={() => { leave(); navigate('/'); }}>לדף הבית</Button>
+                  <Button onClick={() => restoreSession().then((s) => s && bindSocket())}>לְנַסּוֹת שׁוּב</Button>
+                  <Button variant="secondary" onClick={() => { leave(); navigate('/'); }}>לְדַף הַבַּיִת</Button>
                 </div>
               </CenterMessage>
             )}
@@ -218,7 +218,7 @@ export function PlayPage() {
                 </div>
               </div>
             )}
-            {screen === 'preparing' && <CenterMessage spinner text="מכינים את השאלה הבאה…" />}
+            {screen === 'preparing' && <CenterMessage spinner text="מְכִינִים אֶת הַשְּׁאֵלָה הַבָּאָה…" />}
             {screen === 'question' && question && room && (
               <div data-testid="question-screen" className="flex flex-1 flex-col gap-3 sm:gap-4">
                 <QuestionHeader
@@ -244,7 +244,7 @@ export function PlayPage() {
                 </div>
                 {isTeacherPaced && awaitingTeacher && (
                   <Card variant="glass" padding="sm" className="flex items-center justify-center gap-3 text-lg font-bold text-violet-800" role="status">
-                    <Hourglass className="size-6 animate-[spin_3s_linear_infinite]" aria-hidden /> מחכים שהמורה תעבור לשאלה הבאה…
+                    <Hourglass className="size-6 animate-[spin_3s_linear_infinite]" aria-hidden /> מְחַכִּים שֶׁהַמּוֹרָה תַּעֲבוֹר לַשְּׁאֵלָה הַבָּאָה…
                   </Card>
                 )}
               </div>
@@ -262,8 +262,8 @@ export function PlayPage() {
               />
             )}
             {screen === 'cancelled' && (
-              <CenterMessage text="המשחק הסתיים או בוטל על ידי המורה">
-                <Button onClick={() => { leave(); navigate('/'); }}>חזרה לדף הבית</Button>
+              <CenterMessage text="הַמִּשְׂחָק הִסְתַּיֵּים אוֹ בּוּטַּל עַל יְדֵי הַמּוֹרָה">
+                <Button onClick={() => { leave(); navigate('/'); }}>חֲזָרָה לְדַף הַבַּיִת</Button>
               </CenterMessage>
             )}
           </motion.div>

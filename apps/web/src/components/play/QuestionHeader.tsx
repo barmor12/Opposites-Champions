@@ -26,17 +26,17 @@ export function QuestionHeader({ question, score, streak, serverOffsetMs, answer
       <div className="flex items-center gap-2.5 sm:gap-4">
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
           <span className="whitespace-nowrap text-base font-black text-brand-navy sm:text-lg">
-            שאלה {n} <span className="font-bold text-slate-500">מתוך {question.total}</span>
+            שָׁאֲלָה {n} <span className="font-bold text-slate-500">מִתּוֹךְ {question.total}</span>
           </span>
           {question.isTreasure && (
             <Badge color="yellow" icon={<span aria-hidden>💎</span>}>
-              אוצר {question.treasureStep}/{question.treasureTotal ?? 5}
+              אוֹצָר {question.treasureStep}/{question.treasureTotal ?? 5}
             </Badge>
           )}
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* גלולת ניקוד מבריקה */}
+          {/* גְּלוּלַת נִיקּוּד מַבְרִיקָה */}
           <div
             aria-live="polite"
             aria-atomic
@@ -56,14 +56,14 @@ export function QuestionHeader({ question, score, streak, serverOffsetMs, answer
               <Star className="size-5 fill-brand-yellow text-yellow-500 drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]" aria-hidden />
             </motion.span>
             <NumberTicker value={score} className="relative tabular-nums text-lg text-shadow-soft sm:text-xl" />
-            <span className="sr-only">נקודות: {formatNumber(score)}</span>
+            <span className="sr-only">נְקוּדּוֹת: {formatNumber(score)}</span>
             {hot && (
               <motion.span
                 initial={reduce ? false : { scale: 0.4, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 14 }}
                 className="relative ms-1 inline-flex items-center gap-0.5 rounded-full bg-gradient-to-b from-orange-300 to-orange-500 px-1.5 py-0.5 text-xs text-orange-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] sm:text-sm"
-                title="רצף תשובות נכונות"
+                title="רֶצֶף תְּשׁוּבוֹת נְכוֹנוֹת"
               >
                 <motion.span
                   animate={reduce ? undefined : { scale: [1, 1.2, 0.95, 1.15, 1], rotate: [0, -8, 6, -4, 0] }}
@@ -73,7 +73,7 @@ export function QuestionHeader({ question, score, streak, serverOffsetMs, answer
                   <Flame className="size-4 fill-yellow-300 text-orange-700" aria-hidden />
                 </motion.span>
                 <span dir="ltr">{streak}</span>
-                <span className="sr-only">ברצף</span>
+                <span className="sr-only">בְּרֶצֶף</span>
               </motion.span>
             )}
           </div>

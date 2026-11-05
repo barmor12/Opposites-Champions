@@ -82,7 +82,7 @@ export function ResultsPage() {
       <Confetti active={confetti && !reduce} />
 
       <div className="flex w-full max-w-4xl items-center justify-between">
-        <Badge color="navy" size="lg" icon={<Trophy className="size-5" />}>תוצאות</Badge>
+        <Badge color="navy" size="lg" icon={<Trophy className="size-5" />}>תּוֹצָאוֹת</Badge>
         <SoundToggle />
       </div>
 
@@ -98,9 +98,9 @@ export function ResultsPage() {
             className="col-start-1 row-start-1 text-transparent [paint-order:stroke_fill] [-webkit-text-stroke:0.22em_white]"
             style={{ filter: 'drop-shadow(0 6px 0 rgb(109 40 217 / 0.35)) drop-shadow(0 16px 24px rgb(30 41 59 / 0.3))' }}
           >
-            אלופי ההפכים
+            אַלּוּפֵי הַהֲפָכִים
           </span>
-          <span className="relative z-10 col-start-1 row-start-1 text-gradient-brand">אלופי ההפכים</span>
+          <span className="relative z-10 col-start-1 row-start-1 text-gradient-brand">אַלּוּפֵי הַהֲפָכִים</span>
         </h1>
         {room && <p className="relative mt-1 text-lg font-black text-violet-900 text-shadow-pop sm:text-xl">{room.className}</p>}
       </motion.header>
@@ -110,41 +110,41 @@ export function ResultsPage() {
       ) : (
         <div className="mt-5 grid w-full max-w-4xl grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-start">
           <div className="flex flex-col gap-5 lg:sticky lg:top-6">
-            {/* כרטיס אישי */}
+            {/* כַּרְטִיס אִישִׁי */}
             <Card variant="glass" spotlight className="relative flex flex-col items-center gap-3 overflow-hidden text-center shadow-float sm:flex-row sm:text-start lg:flex-col lg:text-center">
               <div className="relative shrink-0">
                 <LightRays color="rgb(250 204 21)" intensity={0.5} className="w-[260%]" />
                 <Character name={myRank === 1 ? 'sun' : 'moon'} mood={myRank === 1 ? 'cheer' : 'happy'} size="sm" animate="bounce" className="relative" />
               </div>
               <div className="relative flex-1">
-                <p className="text-sm font-bold text-slate-500">כל הכבוד,</p>
+                <p className="text-sm font-bold text-slate-500">כָּל הַכָּבוֹד,</p>
                 <p className="text-fluid-title font-black text-brand-navy">{displayName}</p>
                 <div className="mt-2 flex flex-wrap items-center justify-center gap-2 sm:justify-start lg:justify-center">
                   {myRank && (
                     <Badge color={myRank <= 3 ? 'yellow' : 'violet'} size="lg" solid icon={<Trophy className="size-5" />}>
-                      מקום {myRank} בכיתה
+                      מָקוֹם {myRank} בַּכִּיתָּה
                     </Badge>
                   )}
-                  {!myRank && <Badge color="violet" size="lg" solid>סיימת את המשחק!</Badge>}
+                  {!myRank && <Badge color="violet" size="lg" solid>סִיַּימְתָּ אֶת הַמִּשְׂחָק!</Badge>}
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  <StatTile label="נקודות" color="from-violet-400 to-violet-700 border-violet-900">
+                  <StatTile label="נְקוּדּוֹת" color="from-violet-400 to-violet-700 border-violet-900">
                     <NumberTicker value={myScore} fromZero transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }} />
                   </StatTile>
-                  <StatTile label="תשובות נכונות" color="from-green-400 to-green-700 border-green-900">
+                  <StatTile label="תְּשׁוּבוֹת נְכוֹנוֹת" color="from-green-400 to-green-700 border-green-900">
                     <span dir="ltr">
                       {myCorrect}/{myAnswered}
                     </span>
                   </StatTile>
                 </div>
-                <span className="sr-only">{formatNumber(myScore)} נקודות</span>
+                <span className="sr-only">{formatNumber(myScore)} נְקוּדּוֹת</span>
               </div>
             </Card>
 
-            {/* הישגים */}
+            {/* הֶישֵּׂגִים */}
             {achievements.length > 0 && (
               <section aria-labelledby="ach-title">
-                <h2 id="ach-title" className="mb-2 text-center text-xl font-black text-brand-navy text-shadow-pop">ההישגים שלך</h2>
+                <h2 id="ach-title" className="mb-2 text-center text-xl font-black text-brand-navy text-shadow-pop">הַהֶישֵּׂגִים שֶׁלְּךָ</h2>
                 <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2">
                   {achievements.map((a, i) => {
                     const info = ACHIEVEMENT_LABELS[a];
@@ -173,22 +173,22 @@ export function ResultsPage() {
           </div>
 
           <div className="flex flex-col gap-5">
-            {/* פודיום + דירוג */}
+            {/* פּוֹדְיוּם + דֵּירוּג */}
             {showLeaderboard ? (
               leaderboard.length > 0 ? (
                 <Card padding="sm" variant="glass" className="overflow-hidden shadow-float sm:p-5">
                   <Leaderboard entries={leaderboard} highlightId={participantId ?? undefined} showPodium />
                 </Card>
               ) : (
-                <Card variant="glass" className="text-center text-slate-600">הדירוג המלא יוצג אצל המורה</Card>
+                <Card variant="glass" className="text-center text-slate-600">הַדֵּירוּג הַמָּלֵא יוּצַּג אֵצֶל הַמּוֹרָה</Card>
               )
             ) : (
-              <Card variant="glass" className="text-center text-lg font-bold text-slate-600">המורה בחרה להציג את הדירוג על הלוח 🎓</Card>
+              <Card variant="glass" className="text-center text-lg font-bold text-slate-600">הַמּוֹרָה בָּחֲרָה לְהַצִּיג אֶת הַדֵּירוּג עַל הַלּוּחַ 🎓</Card>
             )}
 
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button size="xl" fullWidth glow icon={<RotateCcw className="size-6" />} onClick={() => navigate('/play')}>
-                חזרה לחדר ההמתנה
+                חֲזָרָה לַחֲדַר הַהַמְתָּנָה
               </Button>
               <Button
                 size="xl"
@@ -200,7 +200,7 @@ export function ResultsPage() {
                   navigate('/', { replace: true });
                 }}
               >
-                יציאה
+                יְצִיאָה
               </Button>
             </div>
           </div>

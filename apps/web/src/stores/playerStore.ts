@@ -182,7 +182,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       });
       return res;
     } catch (err) {
-      set({ status: 'error', error: err instanceof ApiError ? err.message : 'ההצטרפות נכשלה. נסו שוב' });
+      set({ status: 'error', error: err instanceof ApiError ? err.message : 'הַהִצְטָרְפוּת נִכְשְׁלָה. נַסּוּ שׁוּב' });
       throw err;
     }
   },
@@ -207,7 +207,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
         setPlayerToken(null);
         set({ ...initialPlayerState, token: null, leaderboard: [], status: 'idle', error: null });
       } else if (!silent) {
-        set({ status: 'error', error: err instanceof ApiError ? err.message : 'לא הצלחנו לחזור למשחק' });
+        set({ status: 'error', error: err instanceof ApiError ? err.message : 'לֹא הִצְלַחְנוּ לַחְזוֹר לַמִּשְׂחָק' });
       }
       return null;
     }
@@ -261,7 +261,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       if (p.participantId !== get().participantId) return;
       setPlayerToken(null);
       get().unbindSocket();
-      set({ ...initialPlayerState, token: null, leaderboard: [], removedReason: p.reason || 'המורה הסירה אותך מהמשחק', status: 'idle' });
+      set({ ...initialPlayerState, token: null, leaderboard: [], removedReason: p.reason || 'הַמּוֹרָה הֵסִירָה אוֹתְךָ מֵהַמִּשְׂחָק', status: 'idle' });
     });
     s.on('room:updated', ({ room, participants }) => {
       const prev = get();
@@ -387,7 +387,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
   },
 
   async submitAnswer(payload) {
-    if (!boundSocket) throw new Error('אין חיבור למשחק');
+    if (!boundSocket) throw new Error('אֵין חִיבּוּר לְמִשְׂחָק');
     set({ submitting: true });
     try {
       const result = await emitWithAck(boundSocket, 'answer:submit', payload);
@@ -405,7 +405,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
       set({ awaitingTeacher: true });
       return;
     }
-    if (!boundSocket) throw new Error('אין חיבור למשחק');
+    if (!boundSocket) throw new Error('אֵין חִיבּוּר לְמִשְׂחָק');
     const res = await emitWithAck(boundSocket, 'question:next', { sessionQuestionId: currentQuestion.sessionQuestionId });
     if (res.finished || !res.question) {
       set({ finished: true, currentQuestion: null, lastResult: null, questionEnded: null });

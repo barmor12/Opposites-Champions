@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { ArrowLeft, Check, Flame, Lightbulb, PartyPopper, Smile, Clock, X } from 'lucide-react';
 import type { AnswerResult } from '@oc/shared';
 import { useConfettiBursts } from '@/animations';
@@ -25,10 +26,10 @@ export interface FeedbackPanelProps {
   variant?: 'default' | 'picture';
 }
 
-const ENCOURAGE_WRONG = ['לא נורא, בפעם הבאה!', 'כמעט! ממשיכים קדימה 💪', 'יופי שניסית! עוד מעט זה יצליח'];
-const ENCOURAGE_WRONG_SHORT = ['לא נורא!', 'כמעט!', 'יופי שניסית!'];
-const PRAISE = ['כל הכבוד!', 'מעולה!', 'וואו, אלוף!', 'תשובה מצוינת!'];
-const PRAISE_SHORT = ['כל הכבוד!', 'מעולה!', 'אלוף!', 'יש!'];
+const ENCOURAGE_WRONG = ['לֹא נוֹרָא, בַּפַּעַם הַבָּאָה!', 'כִּמְעַט! מַמְשִׁיכִים קָדִימָה 💪', 'יוֹפִי שֶׁנִּיסִּיתָ! עוֹד מְעַט זֶה יַצְלִיחַ'];
+const ENCOURAGE_WRONG_SHORT = ['לֹא נוֹרָא!', 'כִּמְעַט!', 'יוֹפִי שֶׁנִּיסִּיתָ!'];
+const PRAISE = ['כָּל הַכָּבוֹד!', 'מְעוּלֶּה!', 'ווֹאוּ, אַלּוּף!', 'תְּשׁוּבָה מְצוּיֶּנֶת!'];
+const PRAISE_SHORT = ['כָּל הַכָּבוֹד!', 'מְעוּלֶּה!', 'אַלּוּף!', 'יֵשׁ!'];
 
 const PANEL: Record<FeedbackKind, string> = {
   correct: 'from-green-50 via-emerald-50 to-green-100 ring-green-300/80 shadow-[0_24px_50px_-20px_rgba(21,128,61,0.5)]',
@@ -36,25 +37,27 @@ const PANEL: Record<FeedbackKind, string> = {
   timeout: 'from-sky-50 via-sky-50 to-sky-100 ring-sky-300/80 shadow-[0_24px_50px_-20px_rgba(2,132,199,0.4)]',
 };
 
-export function FeedbackPanel({ kind, result, correctText, correctImage, explanation, onNext, nextLabel = 'המשך', variant = 'default' }: FeedbackPanelProps) {
+export function FeedbackPanel({ kind, result, correctText, correctImage, explanation, onNext, nextLabel = 'הֶמְשֵׁךְ', variant = 'default' }: FeedbackPanelProps) {
   const seed = result?.sessionQuestionId ?? 'x';
   if (variant === 'picture') {
     return <PictureFeedback kind={kind} result={result} correctText={correctText} correctImage={correctImage} onNext={onNext} nextLabel={nextLabel} seed={seed} />;
   }
   return (
-    <AnimatePresence>
+    <FeedbackModal open={Boolean(kind)}>
       {kind && (
         <motion.section
           key={kind}
-          role="status"
+          role="dialog"
+          aria-modal="true"
+          aria-label={FEEDBACK_LABEL[kind]}
           aria-live="polite"
           data-testid="feedback-panel"
           data-kind={kind}
-          initial={{ y: 24, opacity: 0, scale: 0.96 }}
+          initial={{ y: 40, opacity: 0, scale: 0.9 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-          className={cn('relative rounded-[2rem] bg-gradient-to-b px-4 py-5 text-center ring-4 sm:px-6 sm:py-6', 'shadow-[inset_0_2px_0_#fff]', PANEL[kind])}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 320, damping: 26 }}
+          className={cn('relative w-full max-w-lg rounded-[2rem] bg-gradient-to-b px-4 py-5 text-center ring-4 sm:px-6 sm:py-6', 'shadow-[inset_0_2px_0_#fff]', PANEL[kind])}
         >
           {kind === 'correct' && <CelebrationBurst />}
           <div className="relative flex flex-col items-center gap-2.5">
@@ -65,7 +68,7 @@ export function FeedbackPanel({ kind, result, correctText, correctImage, explana
                 {result && result.streak >= 2 && (
                   <p className="flex items-center gap-1 rounded-full bg-gradient-to-b from-orange-100 to-orange-200 px-3 py-1 text-lg font-bold text-orange-800 ring-1 ring-orange-300 shadow-[inset_0_1px_0_#fff]">
                     <Flame className="h-5 w-5 fill-orange-400 text-orange-600" aria-hidden="true" />
-                    {result.streak} ברצף!
+                    {result.streak} בְּרֶצֶף!
                   </p>
                 )}
               </>
@@ -79,7 +82,7 @@ export function FeedbackPanel({ kind, result, correctText, correctImage, explana
                 {result && result.scoreAwarded > 0 && <ScoreBadge points={result.scoreAwarded} />}
                 {correctText && (
                   <p className="text-xl font-bold text-slate-700" data-testid="correct-answer-text">
-                    התשובה הנכונה: <span className="rounded-lg bg-gradient-to-b from-green-100 to-green-200 px-2 text-green-800 ring-1 ring-green-300">{correctText}</span>
+                    הַתְּשׁוּבָה הַנְּכוֹנָה: <span className="rounded-lg bg-gradient-to-b from-green-100 to-green-200 px-2 text-green-800 ring-1 ring-green-300">{correctText}</span>
                   </p>
                 )}
               </>
@@ -87,7 +90,7 @@ export function FeedbackPanel({ kind, result, correctText, correctImage, explana
             {kind === 'timeout' && (
               <p className="flex items-center gap-2 text-2xl font-black text-sky-700 text-shadow-pop sm:text-3xl">
                 <Clock className="h-8 w-8" aria-hidden="true" />
-                נגמר הזמן – לא נורא, ממשיכים!
+                נִגְמַר הַזְּמַן – לֹא נוֹרָא, מַמְשִׁיכִים!
               </p>
             )}
             {explanation && (
@@ -107,11 +110,11 @@ export function FeedbackPanel({ kind, result, correctText, correctImage, explana
             >
               {nextLabel}
             </Button>
-            <p className="text-xs font-semibold text-slate-400">אפשר ללחוץ Enter</p>
+            <p className="text-xs font-semibold text-slate-400">אֶפְשָׁר לִלְחוֹץ Enter</p>
           </div>
         </motion.section>
       )}
-    </AnimatePresence>
+    </FeedbackModal>
   );
 }
 
@@ -128,20 +131,22 @@ interface PictureFeedbackProps {
 /** משוב "ללא קריאה": אייקון ענק, ניקוד, איור התשובה הנכונה (אם מותר) וחץ המשך גדול */
 function PictureFeedback({ kind, result, correctText, correctImage, onNext, nextLabel, seed }: PictureFeedbackProps) {
   return (
-    <AnimatePresence>
+    <FeedbackModal open={Boolean(kind)}>
       {kind && (
         <motion.section
           key={kind}
-          role="status"
+          role="dialog"
+          aria-modal="true"
+          aria-label={FEEDBACK_LABEL[kind]}
           aria-live="polite"
           data-testid="feedback-panel"
           data-kind={kind}
           data-variant="picture"
-          initial={{ y: 24, opacity: 0, scale: 0.96 }}
+          initial={{ y: 40, opacity: 0, scale: 0.9 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-          className={cn('relative rounded-[2rem] bg-gradient-to-b px-4 py-4 text-center ring-4 sm:px-6 sm:py-5', 'shadow-[inset_0_2px_0_#fff]', PANEL[kind])}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 320, damping: 26 }}
+          className={cn('relative w-full max-w-lg rounded-[2rem] bg-gradient-to-b px-4 py-4 text-center ring-4 sm:px-6 sm:py-5', 'shadow-[inset_0_2px_0_#fff]', PANEL[kind])}
         >
           {kind === 'correct' && <CelebrationBurst />}
           <div className="relative flex flex-col items-center gap-3">
@@ -152,12 +157,12 @@ function PictureFeedback({ kind, result, correctText, correctImage, onNext, next
                 {kind === 'wrong' && (
                   <p className="text-2xl font-black text-orange-700 text-shadow-pop sm:text-3xl">{pick(ENCOURAGE_WRONG_SHORT, seed)}</p>
                 )}
-                {kind === 'timeout' && <p className="text-2xl font-black text-sky-700 text-shadow-pop sm:text-3xl">נגמר הזמן</p>}
+                {kind === 'timeout' && <p className="text-2xl font-black text-sky-700 text-shadow-pop sm:text-3xl">נִגְמַר הַזְּמַן</p>}
                 {result && (kind === 'correct' || result.scoreAwarded > 0) && <ScoreBadge points={result.scoreAwarded} />}
                 {kind === 'correct' && result && result.streak >= 2 && (
                   <p className="flex items-center gap-1 rounded-full bg-gradient-to-b from-orange-100 to-orange-200 px-3 py-1 text-lg font-bold text-orange-800 ring-1 ring-orange-300 shadow-[inset_0_1px_0_#fff]">
                     <Flame className="h-5 w-5 fill-orange-400 text-orange-600" aria-hidden="true" />
-                    {result.streak} ברצף!
+                    {result.streak} בְּרֶצֶף!
                   </p>
                 )}
               </div>
@@ -169,7 +174,7 @@ function PictureFeedback({ kind, result, correctText, correctImage, onNext, next
                   <span aria-hidden="true" className="absolute -top-2 -end-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-b from-green-400 to-green-600 text-white shadow ring-2 ring-white">
                     <Check className="h-5 w-5" strokeWidth={4} />
                   </span>
-                  <LazyImage src={correctImage} alt={correctText ?? 'התשובה הנכונה'} glossy className="h-20 w-20 sm:h-24 sm:w-24" imgClassName="p-1" />
+                  <LazyImage src={correctImage} alt={correctText ?? 'הַתְּשׁוּבָה הַנְּכוֹנָה'} glossy className="h-20 w-20 sm:h-24 sm:w-24" imgClassName="p-1" />
                   {correctText && (
                     <figcaption className="text-sm font-black text-green-800" data-testid="correct-answer-text">
                       {correctText}
@@ -192,8 +197,48 @@ function PictureFeedback({ kind, result, correctText, correctImage, onNext, next
           </div>
         </motion.section>
       )}
+    </FeedbackModal>
+  );
+}
+
+const FEEDBACK_LABEL: Record<FeedbackKind, string> = { correct: 'תְּשׁוּבָה נְכוֹנָה', wrong: 'תְּשׁוּבָה שְׁגוּיָה', timeout: 'נִגְמַר הַזְּמַן' };
+
+/**
+ * המשוב קופץ כחלון מודאלי מעל השאלה (במקום פאנל בתחתית הדף שדורש גלילה):
+ * רקע מוחשך, מרכוז, פוקוס על כפתור "המשך" (Enter ממשיך). מוצג דרך portal ל-body
+ * כדי שלא יושפע מ-transform של ההורים.
+ */
+function FeedbackModal({ open, children }: { open: boolean; children: ReactNode }) {
+  const reduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const t = window.setTimeout(() => {
+      const btn = ref.current?.querySelector<HTMLElement>('[data-testid="next-button"]');
+      (btn ?? ref.current)?.focus({ preventScroll: true });
+    }, 50);
+    return () => window.clearTimeout(t);
+  }, [open]);
+  const node = (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          key="feedback-modal"
+          ref={ref}
+          data-testid="feedback-modal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: reduced ? 0 : 0.18 }}
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/55 p-4 backdrop-blur-sm sm:p-6"
+          dir="rtl"
+        >
+          {children}
+        </motion.div>
+      )}
     </AnimatePresence>
   );
+  return typeof document === 'undefined' ? node : createPortal(node, document.body);
 }
 
 /** ✓ / ✗ / ⏰ ענק – עיגול חימר קופץ */

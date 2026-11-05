@@ -48,8 +48,8 @@ export function TimerRing({ endsAt, totalMs, serverOffsetMs, onExpire, paused, s
 
   if (!endsAt || totalMs <= 0) {
     return (
-      <span className={cn('inline-flex items-center gap-1 text-slate-500', className)} aria-label="ללא הגבלת זמן">
-        <Clock className="size-6" aria-hidden /> <span className="text-sm font-bold">ללא הגבלה</span>
+      <span className={cn('inline-flex items-center gap-1 text-slate-500', className)} aria-label="לְלֹא הַגְבָּלַת זְמַן">
+        <Clock className="size-6" aria-hidden /> <span className="text-sm font-bold">לְלֹא הַגְבָּלָה</span>
       </span>
     );
   }
@@ -68,7 +68,7 @@ export function TimerRing({ endsAt, totalMs, serverOffsetMs, onExpire, paused, s
     <div
       role="timer"
       aria-live={urgent ? 'assertive' : 'off'}
-      aria-label={`נשארו ${seconds} שניות`}
+      aria-label={`נִשְׁאֲרוּ ${seconds} שְׁנִיּוֹת`}
       className={cn('relative grid shrink-0 place-items-center', className)}
       style={{ width: size, height: size }}
     >
@@ -82,7 +82,7 @@ export function TimerRing({ endsAt, totalMs, serverOffsetMs, onExpire, paused, s
             <stop offset="1" stopColor={pal.to} />
           </linearGradient>
         </defs>
-        {/* דיסקה לבנה עם הבלטה */}
+        {/* דִּיסְקָה לְבָנָה עִם הַבְלָטָה */}
         <circle cx={size / 2} cy={size / 2} r={r + stroke / 2} fill="url(#timer-disc)" />
         <defs>
           <radialGradient id="timer-disc" cx="0.4" cy="0.35" r="0.8">
@@ -90,9 +90,9 @@ export function TimerRing({ endsAt, totalMs, serverOffsetMs, onExpire, paused, s
             <stop offset="1" stopColor="#e2e8f0" />
           </radialGradient>
         </defs>
-        {/* מסילה שקועה */}
+        {/* מְסִילָּה שְׁקוּעָה */}
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#cbd5e1" strokeOpacity="0.7" strokeWidth={stroke} />
-        {/* קשת */}
+        {/* קֶשֶׁת */}
         <circle
           cx={size / 2}
           cy={size / 2}

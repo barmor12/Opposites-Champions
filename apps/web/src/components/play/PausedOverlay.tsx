@@ -28,7 +28,7 @@ export function PausedOverlay({ open }: { open: boolean }) {
             <span className="grid size-16 place-items-center rounded-full bg-gradient-to-b from-orange-200 to-orange-400 text-orange-900 shadow-[inset_0_2px_0_rgba(255,255,255,0.7),0_8px_16px_-6px_rgba(194,65,12,0.5)] ring-4 ring-white">
               <Pause className="size-9" aria-hidden />
             </span>
-            <h2 id="paused-title" className="text-fluid-title font-black text-brand-navy">המורה עצרה את המשחק לרגע</h2>
+            <h2 id="paused-title" className="text-fluid-title font-black text-brand-navy">הַמּוֹרָה עָצְרָה אֶת הַמִּשְׂחָק לְרֶגַע</h2>
             <p className="text-lg text-slate-600">נשימה עמוקה… ממשיכים בקרוב!</p>
           </motion.div>
         </motion.div>

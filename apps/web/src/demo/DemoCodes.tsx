@@ -7,9 +7,9 @@ export function DemoCodes({ value, onPick }: { value: string; onPick: (code: str
   return (
     <div className="flex flex-col gap-2 rounded-2xl bg-gradient-to-b from-violet-50 to-sky-50 p-3 ring-1 ring-violet-200/70">
       <p className="flex items-center gap-1.5 text-sm font-bold text-violet-800">
-        <Sparkles className="size-4" aria-hidden /> גרסת דמו – בחרו חדר (אין צורך במורה):
+        <Sparkles className="size-4" aria-hidden /> גִּרְסַת דָּמוֹ – בַּחֲרוּ חֶדֶר (אֵין צוֹרֶךְ בְּמוֹרֵה):
       </p>
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3" role="group" aria-label="חדרי דמו">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3" role="group" aria-label="חַדְרֵי דָּמוֹ">
         {DEMO_ROOMS.map((room) => {
           const active = value === room.code;
           return (

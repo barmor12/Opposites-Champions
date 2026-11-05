@@ -1,4 +1,4 @@
-import type { Category, WordPairContent } from '@oc/shared';
+import { stripNikud, type Category, type WordPairContent } from '@oc/shared';
 
 /**
  * קבוצות מילים נרדפות / צורות שונות של אותו מושג.
@@ -136,7 +136,8 @@ const SYNONYM_INDEX: ReadonlyMap<string, ReadonlySet<string>> = (() => {
 
 /** המילה עצמה + כל המילים הנרדפות לה. */
 export function synonymsOf(word: string): ReadonlySet<string> {
-  return SYNONYM_INDEX.get(word) ?? new Set([word]);
+  const plain = stripNikud(word);
+  return SYNONYM_INDEX.get(plain) ?? new Set([plain]);
 }
 
 /** האש (FNV-1a) של מחרוזת למספר שלם 32 ביט. */
@@ -206,12 +207,17 @@ export function pickDistractors(
   const ban = (w: string): void => {
     for (const s of synonymsOf(w)) forbidden.add(s);
   };
-  ban(pair.word);
-  ban(pair.opposite);
+  // ההשוואות נעשות ללא ניקוד (הטקסטים המוצגים מנוקדים, קבוצות הנרדפות לא)
+  const word = stripNikud(pair.word);
+  const opposite = stripNikud(pair.opposite);
+  ban(word);
+  ban(opposite);
   // הפכים תקפים של כל אחת ממילות הזוג בזוגות אחרים (למשל "קשה" ↔ "רך" וגם "קשה" ↔ "קל")
   for (const other of all) {
-    if (other.word === pair.word || other.word === pair.opposite) ban(other.opposite);
-    if (other.opposite === pair.word || other.opposite === pair.opposite) ban(other.word);
+    const ow = stripNikud(other.word);
+    const oo = stripNikud(other.opposite);
+    if (ow === word || ow === opposite) ban(oo);
+    if (oo === word || oo === opposite) ban(ow);
   }
 
   const seen = new Set<string>();
@@ -219,8 +225,9 @@ export function pickDistractors(
   for (const other of all) {
     if (other.id === pair.id || !other.active) continue;
     for (const text of [other.word, other.opposite]) {
-      if (forbidden.has(text) || seen.has(text)) continue;
-      seen.add(text);
+      const plain = stripNikud(text);
+      if (forbidden.has(plain) || seen.has(plain)) continue;
+      seen.add(plain);
       candidates.push({ text, category: other.category, kind: kindOf(text, other.category) });
     }
   }

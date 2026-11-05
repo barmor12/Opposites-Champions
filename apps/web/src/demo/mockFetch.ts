@@ -28,14 +28,14 @@ async function route(method: string, path: string, init: RequestInit | undefined
   const body = init?.body ? (JSON.parse(String(init.body)) as Record<string, unknown>) : {};
   const token = headerOf(init, SESSION_TOKEN_HEADER);
   const requireToken = () => {
-    if (!demoEngine.isValidToken(token)) throw new DemoError(401, 'המשחק הזה כבר לא פעיל. הצטרפו שוב', 'NO_SESSION');
+    if (!demoEngine.isValidToken(token)) throw new DemoError(401, 'הַמִּשְׂחָק הַזֶּה כְּבָר לֹא פָּעִיל. הִצְטָרְפוּ שׁוּב', 'NO_SESSION');
   };
 
   if (method === 'GET' && path === '/health') return json(200, { status: 'ok', db: 'demo', uptime: Math.round(performance.now() / 1000) });
   if (method === 'POST' && path === '/rooms/join') return json(201, demoEngine.join(body) as unknown as Record<string, unknown>);
   if (method === 'GET' && /^\/rooms\/\d{6}$/.test(path)) {
     const code = path.slice('/rooms/'.length);
-    if (!demoEngine.presetByCode(code)) return error(404, 'לא מצאנו חדר עם הקוד הזה');
+    if (!demoEngine.presetByCode(code)) return error(404, 'לֹא מָצָאנוּ חֶדֶר עִם הַקּוֹד הַזֶּה');
     return json(200, demoEngine.roomView() as unknown as Record<string, unknown>);
   }
   if (method === 'GET' && path === '/player/session') {
@@ -47,9 +47,9 @@ async function route(method: string, path: string, init: RequestInit | undefined
     return json(200, demoEngine.progress());
   }
   if (path.startsWith('/auth') || path.startsWith('/games') || path.startsWith('/word-pairs') || path.startsWith('/categories') || path.startsWith('/media')) {
-    return error(503, 'ממשק המורה אינו זמין בגרסת הדמו – הוא דורש שרת אמיתי', 'DEMO_ONLY');
+    return error(503, 'מִמְשַׁק הַמּוֹרָה אֵינוֹ זָמִין בְּגִרְסַת הַדֶּמוֹ – הוּא דּוֹרֵשׁ שָׁרָת אֲמִיתִּי', 'DEMO_ONLY');
   }
-  return error(404, 'לא מצאנו את מה שחיפשתם');
+  return error(404, 'לֹא מָצָאנוּ אֶת מָה שֶׁחִיפַּשְׂתֶּם');
 }
 
 export function installMockFetch(): void {
@@ -67,7 +67,7 @@ export function installMockFetch(): void {
     } catch (err) {
       if (err instanceof DemoError) return error(err.status, err.message, err.code);
       console.error('demo api error', err);
-      return error(500, 'אופס! משהו השתבש בדמו');
+      return error(500, 'אוּפְּס! מַשֶּׁהוּ הִשְׁתַּבֵּשׁ בְּדָמוֹ');
     }
   };
 }

@@ -11,19 +11,19 @@ afterEach(() => {
   delete (window as unknown as { SpeechSynthesisUtterance?: unknown }).SpeechSynthesisUtterance;
 });
 
-const WORDS = ['קר', 'קטן', 'מהיר', 'לילה'];
+const WORDS = ['קַר', 'קָטָן', 'מָהִיר', 'לַיְלָה'];
 
 function pictureQuestion(over: Partial<QuestionView> = {}): QuestionView {
   return choiceQuestion({
     sessionQuestionId: 'sq-p',
     type: QuestionType.PICTURE_TO_PICTURE,
-    prompt: 'גדול',
+    prompt: 'גָּדוֹל',
     promptImage: '/images/pairs/big-small/word.svg',
     options: [
-      { id: 'a', text: 'קר', image: '/images/pairs/hot-cold/opposite.svg' },
-      { id: 'b', text: 'קטן', image: '/images/pairs/big-small/opposite.svg' },
-      { id: 'c', text: 'מהיר', image: '/images/pairs/fast-slow/word.svg' },
-      { id: 'd', text: 'לילה', image: '/images/pairs/day-night/opposite.svg' },
+      { id: 'a', text: 'קַר', image: '/images/pairs/hot-cold/opposite.svg' },
+      { id: 'b', text: 'קָטָן', image: '/images/pairs/big-small/opposite.svg' },
+      { id: 'c', text: 'מָהִיר', image: '/images/pairs/fast-slow/word.svg' },
+      { id: 'd', text: 'לַיְלָה', image: '/images/pairs/day-night/opposite.svg' },
     ],
     ...over,
   });
@@ -94,7 +94,7 @@ describe('QuestionRenderer – PICTURE_TO_PICTURE', () => {
     expect(renderer.dataset.type).toBe('PICTURE_TO_PICTURE');
 
     // prompt image with the word as alt only
-    const promptImg = within(screen.getByTestId('prompt-image')).getByRole('img', { name: 'גדול' });
+    const promptImg = within(screen.getByTestId('prompt-image')).getByRole('img', { name: 'גָּדוֹל' });
     expect(promptImg.getAttribute('src')).toBe('/images/pairs/big-small/word.svg');
     expect(screen.queryByTestId('prompt-word')).toBeNull();
 
@@ -108,7 +108,7 @@ describe('QuestionRenderer – PICTURE_TO_PICTURE', () => {
 
     // no visible word anywhere (prompt or options)
     const text = visibleText(container as HTMLElement);
-    expect(text).not.toContain('גדול');
+    expect(text).not.toContain('גָּדוֹל');
     for (const w of WORDS) expect(text).not.toContain(w);
     // number badges 1..4 are kept for keyboard digits
     expect(visibleText(screen.getByTestId('option-3'))).toContain('3');
@@ -124,7 +124,7 @@ describe('QuestionRenderer – PICTURE_TO_PICTURE', () => {
     expect(screen.getByTestId('option-2').dataset.state).toBe('correct');
     expect(screen.getByTestId('next-button')).toBeTruthy();
     // caption revealed only after the result
-    expect(within(screen.getByTestId('option-2')).getByTestId('option-caption').textContent).toBe('קטן');
+    expect(within(screen.getByTestId('option-2')).getByTestId('option-caption').textContent).toBe('קָטָן');
   });
 
   it('selects tiles with digit keys 1-4', async () => {
@@ -145,8 +145,8 @@ describe('QuestionRenderer – PICTURE_TO_PICTURE', () => {
     expect(screen.getByTestId('option-2').dataset.state).toBe('reveal');
     const fig = screen.getByTestId('correct-answer-image');
     expect(fig.querySelector('img')?.getAttribute('src')).toBe('/images/pairs/big-small/opposite.svg');
-    expect(screen.getByTestId('correct-answer-text').textContent).toBe('קטן');
-    expect(screen.getByTestId('feedback-panel').textContent).not.toMatch(/טעות|נכשל|לא נכון/);
+    expect(screen.getByTestId('correct-answer-text').textContent).toBe('קָטָן');
+    expect(screen.getByTestId('feedback-panel').textContent).not.toMatch(/טָעוּת|נִכְשַׁל|לֹא נָכוֹן/);
   });
 
   it('hides speaker buttons when speechSynthesis is unavailable', () => {
@@ -160,11 +160,11 @@ describe('QuestionRenderer – PICTURE_TO_PICTURE', () => {
     const { onAnswer } = setup();
 
     fireEvent.click(screen.getByTestId('speak-prompt'));
-    expect(spoken.at(-1)).toMatchObject({ text: 'גדול', lang: 'he-IL' });
+    expect(spoken.at(-1)).toMatchObject({ text: 'גָּדוֹל', lang: 'he-IL' });
     expect(spoken.at(-1)?.voice?.lang).toBe('he-IL');
 
     fireEvent.click(screen.getByTestId('speak-option-3'));
-    expect(spoken.at(-1)).toMatchObject({ text: 'מהיר', lang: 'he-IL' });
+    expect(spoken.at(-1)).toMatchObject({ text: 'מָהִיר', lang: 'he-IL' });
     expect(synth.cancel).toHaveBeenCalled();
 
     // the speaker never submits an answer
@@ -180,7 +180,7 @@ describe('QuestionRenderer – PICTURE_TO_PICTURE', () => {
       act(() => {
         vi.advanceTimersByTime(1000);
       });
-      expect(spoken.map((s) => s.text)).toEqual(['גדול']);
+      expect(spoken.map((s) => s.text)).toEqual(['גָּדוֹל']);
       first.unmount();
 
       spoken.length = 0;

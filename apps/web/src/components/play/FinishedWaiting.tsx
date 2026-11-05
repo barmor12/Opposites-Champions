@@ -33,31 +33,31 @@ export function FinishedWaiting({ score, correctAnswers, answeredCount, finished
           transition={{ type: 'spring', stiffness: 300, damping: 18 }}
           className="flex items-center gap-2 text-fluid-hero font-black text-gradient-sun"
         >
-          <PartyPopper className="size-9 text-brand-orange sm:size-11" aria-hidden /> סיימת!
+          <PartyPopper className="size-9 text-brand-orange sm:size-11" aria-hidden /> סִיַּימְתָּ!
         </motion.h1>
-        <p className="text-xl font-bold text-violet-800">כל הכבוד! מחכים לשאר הכיתה…</p>
+        <p className="text-xl font-bold text-violet-800">כָּל הַכָּבוֹד! מְחַכִּים לִשְׁאַר הַכִּיתָּה…</p>
         <div className="grid w-full grid-cols-3 gap-2 sm:gap-3">
-          <Stat label="נקודות" color="from-violet-400 to-violet-700 border-violet-900 text-white" delay={0.1}>
+          <Stat label="נְקוּדּוֹת" color="from-violet-400 to-violet-700 border-violet-900 text-white" delay={0.1}>
             <NumberTicker value={score} fromZero transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }} />
           </Stat>
-          <Stat label="נכונות" color="from-green-400 to-green-700 border-green-900 text-white" delay={0.2}>
+          <Stat label="נְכוֹנוּת" color="from-green-400 to-green-700 border-green-900 text-white" delay={0.2}>
             <span dir="ltr">
               {correctAnswers}/{answeredCount}
             </span>
           </Stat>
-          <Stat label="דיוק" color="from-sky-300 to-sky-600 border-sky-800 text-white" delay={0.3}>
+          <Stat label="דִּיּוּק" color="from-sky-300 to-sky-600 border-sky-800 text-white" delay={0.3}>
             <span dir="ltr">
               <NumberTicker value={accuracy} fromZero transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }} />%
             </span>
           </Stat>
         </div>
         <Badge color="slate" size="lg" icon={<Users className="size-5" />} role="status">
-          סיימו {finishedCount} מתוך {participantCount}
+          סִיְּימוּ {finishedCount} מִתּוֹךְ {participantCount}
         </Badge>
       </Card>
       {showLeaderboard && leaderboard.length > 0 && (
         <Card padding="sm" variant="glass">
-          <h2 className="mb-3 text-center text-xl font-black">הדירוג בינתיים</h2>
+          <h2 className="mb-3 text-center text-xl font-black">הַדֵּירוּג בֵּינְתַיִים</h2>
           <Leaderboard entries={leaderboard} highlightId={participantId ?? undefined} compact limit={8} />
         </Card>
       )}

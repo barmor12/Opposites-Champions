@@ -66,8 +66,8 @@ describe('QuestionRenderer – MATCH_PAIRS', () => {
     expect(card('c-big').dataset.result).toBe('correct');
     expect(card('c-hot').dataset.result).toBe('wrong');
     // correct pairs revealed for the missed ones
-    expect(screen.getByTestId('correct-pairs').textContent).toContain('חם');
-    expect(screen.getByTestId('correct-pairs').textContent).toContain('קר');
+    expect(screen.getByTestId('correct-pairs').textContent).toContain('חַם');
+    expect(screen.getByTestId('correct-pairs').textContent).toContain('קַר');
   });
 
   it('ignores taps after submission', async () => {

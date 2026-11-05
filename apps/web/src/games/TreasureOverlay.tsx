@@ -79,7 +79,7 @@ export function TreasureOverlay({ bonus = TREASURE_BONUS, onContinue }: Treasure
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-indigo-950 via-violet-800 to-fuchsia-700 px-6 text-center text-white safe-bottom"
     >
-      {/* קרני אור גדולות */}
+      {/* קַרְנֵי אוֹר גְּדוֹלוֹת */}
       <LightRays color="rgb(253 224 71)" count={16} intensity={0.35} className="w-[220vmax] sm:w-[170vmax]" />
       <span aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(60% 50% at 50% 45%, rgb(250 204 21 / 0.35), transparent 70%)' }} />
       <Confetti active durationMs={4000} pieces={180} />
@@ -117,7 +117,7 @@ export function TreasureOverlay({ bonus = TREASURE_BONUS, onContinue }: Treasure
         transition={{ delay: 0.35 }}
         className="relative mt-4 text-fluid-hero font-black text-extrude"
       >
-        מצאת את האוצר!
+        מָצָאתָ אֶת הָאוֹצָר!
       </motion.h2>
       <motion.p
         initial={{ scale: 0.5, opacity: 0 }}
@@ -128,7 +128,7 @@ export function TreasureOverlay({ bonus = TREASURE_BONUS, onContinue }: Treasure
           'shadow-[0_20px_40px_-12px_rgba(245,158,11,0.8),inset_0_2px_0_rgba(255,255,255,0.8)]',
         )}
       >
-        +{bonus} בונוס
+        +{bonus} בּוֹנוּס
       </motion.p>
       <motion.p
         initial={{ opacity: 0 }}
@@ -136,11 +136,11 @@ export function TreasureOverlay({ bonus = TREASURE_BONUS, onContinue }: Treasure
         transition={{ delay: 0.9 }}
         className="relative mt-4 text-xl font-bold text-violet-100 text-shadow-soft sm:text-2xl"
       >
-        חמש תשובות נכונות ברצף – אלוף אמיתי!
+        חָמֵשׁ תְּשׁוּבוֹת נְכוֹנוֹת בְּרֶצֶף – אַלּוּף אֲמִיתִּי!
       </motion.p>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }} className="relative mt-8 w-full max-w-xs">
         <Button variant="success" size="xl" glow onClick={onContinue} className="w-full" icon={<ArrowLeft className="h-7 w-7" strokeWidth={3} />} autoFocus>
-          המשך
+          הֶמְשֵׁךְ
         </Button>
       </motion.div>
     </motion.div>

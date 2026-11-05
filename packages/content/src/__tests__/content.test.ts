@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AVATARS, Category, Difficulty, QuestionType } from '@oc/shared';
+import { AVATARS, Category, Difficulty, QuestionType, stripNikud } from '@oc/shared';
 import type { WordPairContent } from '@oc/shared';
 import {
   ABSTRACT_QUESTION_TYPES,
@@ -20,7 +20,7 @@ const QUESTION_TYPES = Object.values(QuestionType);
 
 /** השוואת מילים בלי להתחשב באותיות סופיות (כדי לזהות "קטן" בתוך "קטנה"). */
 const normalizeFinals = (s: string): string =>
-  s.replace(/ך/g, 'כ').replace(/ם/g, 'מ').replace(/ן/g, 'נ').replace(/ף/g, 'פ').replace(/ץ/g, 'צ');
+  stripNikud(s).replace(/ך/g, 'כ').replace(/ם/g, 'מ').replace(/ן/g, 'נ').replace(/ף/g, 'פ').replace(/ץ/g, 'צ');
 
 const REQUIRED_SPEC_PAIRS: Array<[string, string]> = [
   ['גדול', 'קטן'], ['גבוה', 'נמוך'], ['ארוך', 'קצר'], ['רחב', 'צר'], ['כבד', 'קל'], ['עבה', 'דק'], ['עמוק', 'רדוד'],
@@ -37,7 +37,8 @@ const REQUIRED_SPEC_PAIRS: Array<[string, string]> = [
   ['יתרון', 'חיסרון'], ['שפע', 'מחסור'],
 ];
 
-const pairKey = (a: string, b: string): string => [a, b].sort().join('|');
+// המילים בתוכן מנוקדות – ההשוואות נעשות ללא ניקוד
+const pairKey = (a: string, b: string): string => [stripNikud(a), stripNikud(b)].sort().join('|');
 
 describe('WORD_PAIRS – structure', () => {
   it('has at least 210 pairs', () => {

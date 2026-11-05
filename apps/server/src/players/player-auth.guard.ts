@@ -21,7 +21,7 @@ export class PlayerAuthGuard implements CanActivate {
       where: { sessionTokenHash: hashSessionToken(token), removedAt: null },
       select: { id: true, roomId: true, studentId: true },
     });
-    if (!participant) throw new UnauthorizedException('ההתחברות לא נמצאה, הצטרפו מחדש');
+    if (!participant) throw new UnauthorizedException('הַהִתְחַבְּרוּת לֹא נִמְצְאָה, הִצְטָרְפוּ מֵחָדָשׁ');
     req.player = { participantId: participant.id, roomId: participant.roomId, studentId: participant.studentId };
     return true;
   }

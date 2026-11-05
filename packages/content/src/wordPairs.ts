@@ -1,4 +1,8 @@
 import type { Category, Difficulty, QuestionType, WordPairContent } from '@oc/shared';
+import { NIKUD } from './nikud.generated';
+
+/** מחזיר את הגרסה המנוקדת של טקסט (אם קיימת במפה שנוצרה ע"י scripts/nikud.mjs) */
+export const vocalize = (text: string): string => NIKUD[text] ?? text;
 
 /**
  * ה־slugs של 61 הזוגות שיש להם איור (ראו docs/IMAGE_PAIRS.md).
@@ -281,7 +285,12 @@ const RAW_PAIRS: readonly RawPair[] = [
 ];
 
 function buildPair(raw: RawPair): WordPairContent {
-  const [id, word, opposite, category, difficulty, sentence, answerSide, explanation] = raw;
+  const [id, rawWord, rawOpposite, category, difficulty, rawSentence, answerSide, rawExplanation] = raw;
+  // כל הטקסטים מוצגים לילדים מנוקדים; המקור ב-RAW_PAIRS נשאר ללא ניקוד (קריא ונוח לעריכה)
+  const word = vocalize(rawWord);
+  const opposite = vocalize(rawOpposite);
+  const sentence = vocalize(rawSentence);
+  const explanation = rawExplanation ? vocalize(rawExplanation) : undefined;
   const imageable = IMAGE_SLUG_SET.has(id);
   const pair: WordPairContent = {
     id,

@@ -9,13 +9,13 @@ export function NotFoundPage() {
       <Card variant="glass" className="flex w-full max-w-md flex-col items-center gap-4 text-center shadow-float">
         <Character name="moon" mood="think" size="md" animate="wiggle" />
         <p className="text-fluid-hero font-black leading-none text-gradient-candy" aria-hidden>404</p>
-        <h1 className="text-2xl font-black sm:text-3xl">אופס! הדף הזה הלך לאיבוד</h1>
+        <h1 className="text-2xl font-black sm:text-3xl">אוּפְּס! הַדַּף הַזֶּה הָלַךְ לְאִיבּוּד</h1>
         <p className="text-lg text-slate-600">
-          כמו ההפך של "נמצא"… הדף שחיפשתם לא קיים. בואו נחזור למשחק!
+          כְּמוֹ הַהֶפֶךְ שֶׁל "נִמְצָא"… הַדַּף שֶׁחִיפַּשְׂתֶּם לֹא קַיָּים. בּוֹאוּ נַחֲזוֹר לַמִּשְׂחָק!
         </p>
         <Link to="/" className="w-full">
           <Button fullWidth size="xl" icon={<Home className="size-6" />} tabIndex={-1}>
-            חזרה לדף הבית
+            חֲזָרָה לְדַף הַבַּיִת
           </Button>
         </Link>
       </Card>

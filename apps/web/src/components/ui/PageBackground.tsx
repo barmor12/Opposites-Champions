@@ -43,22 +43,22 @@ function Cloud({ className, style, depth = 1, dark = false }: { className?: stri
           <stop offset="1" stopColor="#93c5fd" stopOpacity="0.55" />
         </linearGradient>
       </defs>
-      {/* צל נופל רך */}
+      {/* צֵל נוֹפֵל רַךְ */}
       <ellipse cx="112" cy="104" rx="80" ry="11" fill="#1e3a8a" opacity="0.08" />
-      {/* נפח */}
+      {/* נֶפַח */}
       <g fill="url(#cloud-fill)">
         <ellipse cx="60" cy="76" rx="54" ry="34" />
         <ellipse cx="112" cy="56" rx="52" ry="44" />
         <ellipse cx="160" cy="76" rx="46" ry="32" />
         <rect x="20" y="74" width="180" height="36" rx="18" />
       </g>
-      {/* צל פנימי בתחתית */}
+      {/* צֵל פְּנִימִי בְּתַחְתִּית */}
       <g fill="url(#cloud-shade)">
         <ellipse cx="60" cy="88" rx="50" ry="22" />
         <ellipse cx="160" cy="88" rx="44" ry="20" />
         <rect x="20" y="86" width="180" height="24" rx="12" />
       </g>
-      {/* highlight עליון */}
+      {/* highlight עֶלְיוֹן */}
       <ellipse cx="104" cy="34" rx="30" ry="14" fill="#fff" opacity="0.7" />
       <ellipse cx="54" cy="58" rx="18" ry="9" fill="#fff" opacity="0.5" />
     </svg>
@@ -180,7 +180,7 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
 
   return (
     <div ref={ref} aria-hidden className={cn('pointer-events-none fixed inset-0 -z-10 overflow-hidden', className)} style={{ background: SKY[variant] }}>
-      {/* שמש / ירח + קרניים */}
+      {/* שֶׁמֶשׁ / יָרֵחַ + קַרְנַיִים */}
       <div className="parallax-layer absolute -top-[12%] -start-[12%] aspect-square w-[64vw] max-w-[560px] sm:-top-[18%] sm:w-[44vw]" style={{ ['--depth' as string]: 0.3 }}>
         <div
           className={cn('absolute inset-0 rounded-full will-change-transform', !reduce && 'animate-rays')}
@@ -199,7 +199,7 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
         />
       </div>
 
-      {/* כתמי צבע מרחפים */}
+      {/* כִּתְמֵי צֶבַע מְרַחֲפִים */}
       {blobs.map((b, i) => (
         <motion.div
           key={b}
@@ -213,7 +213,7 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
         />
       ))}
 
-      {/* עננים נפחיים (אחוריים – מטושטשים, קדמיים – חדים) */}
+      {/* עֲנָנִים נִפְחִיִּים (אֲחוֹרַיִים – מְטוּשְׁטָשִׁים, קִדְמִיִּים – חַדִּים) */}
       {!night && (
         <>
           <Cloud className="top-[7%] -start-16 w-56 opacity-70 sm:w-72" depth={0.5} dark />
@@ -224,12 +224,12 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
         </>
       )}
 
-      {/* כוכבים נוצצים */}
+      {/* כּוֹכָבִים נוֹצְצִים */}
       {stars.map((s) => (
         <Star key={s.c} className={s.c} delay={s.d} depth={0.4 + (s.d % 1)} />
       ))}
 
-      {/* בלונים */}
+      {/* בָּלוֹנִים */}
       {balloons && !night && !reduce && (
         <>
           <Balloon color="pink" className="top-[34%] -start-3 w-12 sm:start-[1%] sm:w-16 lg:w-20" delay={0} />
@@ -239,12 +239,12 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
         </>
       )}
 
-      {/* קשת */}
+      {/* קֶשֶׁת */}
       {rainbow && <Rainbow className="-bottom-10 start-1/2 w-[150vw] max-w-[980px] -translate-x-1/2 sm:w-[92vw]" />}
 
-      {/* אובך קרקע – עומק */}
+      {/* אוֹבֶךְ קַרְקַע – עוֹמֶק */}
       <div className={cn('absolute inset-x-0 bottom-0 h-[28%]', night ? 'bg-gradient-to-t from-indigo-950/40 to-transparent' : 'bg-gradient-to-t from-white/55 to-transparent')} />
-      {/* ויניטה עדינה */}
+      {/* וִינְיֵטָה עֲדִינָה */}
       <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 50% 40%, transparent 55%, rgb(30 41 59 / 0.08) 100%)' }} />
     </div>
   );

@@ -12,16 +12,16 @@ export function pick<T>(arr: readonly T[], seed: string): T {
 }
 
 const TYPE_INSTRUCTION: Record<string, string> = {
-  [QuestionType.CHOOSE_OPPOSITE]: 'מה ההפך של המילה?',
-  [QuestionType.CHOOSE_IMAGE]: 'איזו תמונה מראה את ההפך?',
-  [QuestionType.COMPLETE_SENTENCE]: 'איזו מילה משלימה את המשפט?',
-  [QuestionType.MATCH_PAIRS]: 'חברו כל מילה להפך שלה',
-  [QuestionType.PICTURE_TO_PICTURE]: 'מצאו את התמונה ההפוכה',
-  [QuestionType.TREASURE_CHALLENGE]: 'מה ההפך של המילה?',
+  [QuestionType.CHOOSE_OPPOSITE]: 'מָה הַהֶפֶךְ שֶׁל הַמִּילָּה?',
+  [QuestionType.CHOOSE_IMAGE]: 'אֵיזוֹ תְּמוּנָה מַרְאָה אֶת הַהֶפֶךְ?',
+  [QuestionType.COMPLETE_SENTENCE]: 'אֵיזוֹ מִילָּה מַשְׁלִימָה אֶת הַמִּשְׁפָּט?',
+  [QuestionType.MATCH_PAIRS]: 'חָבְרוּ כָּל מִילָּה לְהֶפֶךְ שֶׁלָּהּ',
+  [QuestionType.PICTURE_TO_PICTURE]: 'מָצְאוּ אֶת הַתְּמוּנָה הַהֲפוּכָה',
+  [QuestionType.TREASURE_CHALLENGE]: 'מָה הַהֶפֶךְ שֶׁל הַמִּילָּה?',
 };
 
 export function promptInstruction(type: QuestionType): string {
-  return TYPE_INSTRUCTION[type] ?? 'בחרו את התשובה הנכונה';
+  return TYPE_INSTRUCTION[type] ?? 'בָּחֲרוּ אֶת הַתְּשׁוּבָה הַנְּכוֹנָה';
 }
 
 export type OptionState = 'idle' | 'pending' | 'correct' | 'wrong' | 'reveal' | 'dim';

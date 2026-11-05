@@ -47,7 +47,7 @@ export function PromptCard({ question, filled = null, children }: PromptCardProp
   return (
     <motion.section
       ref={ref}
-      aria-label="השאלה"
+      aria-label="הַשְּׁאֵלָה"
       data-testid="prompt-card"
       initial={{ y: -16, opacity: 0, scale: 0.98 }}
       animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -60,13 +60,13 @@ export function PromptCard({ question, filled = null, children }: PromptCardProp
         isMatch ? 'px-4 py-3 sm:px-6 sm:py-4' : 'px-4 py-5 sm:px-8 sm:py-7',
       )}
     >
-      {/* זרקור */}
+      {/* זַרְקוֹר */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 transition-opacity duration-500"
         style={{ opacity: 'var(--spot-o, 0)' as unknown as number, background: 'radial-gradient(360px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgb(139 92 246 / 0.14), transparent 70%)' }}
       />
-      {/* עיטור פינות */}
+      {/* עִיטּוּר פִּינּוֹת */}
       <span aria-hidden="true" className="pointer-events-none absolute -start-10 -top-10 size-32 rounded-full bg-gradient-to-br from-sky-200/70 to-transparent blur-2xl" />
       <span aria-hidden="true" className="pointer-events-none absolute -bottom-12 -end-10 size-36 rounded-full bg-gradient-to-tl from-violet-200/70 to-transparent blur-2xl" />
 

@@ -51,12 +51,12 @@ export function Countdown({ startsAt, seconds = COUNTDOWN_SECONDS, serverOffsetM
   }, [value, fire]);
 
   const go = value <= 0;
-  const label = go ? 'יאללה!' : String(value);
+  const label = go ? 'יַאלְלָה!' : String(value);
   const orb = ORBS[Math.min(ORBS.length - 1, go ? ORBS.length - 1 : seconds - value)] ?? ORBS[0];
 
   return (
     <div role="timer" aria-live="assertive" aria-atomic className={cn('relative flex flex-col items-center justify-center gap-5 sm:gap-7', className)}>
-      <p className="text-fluid-title font-black text-brand-navy/80 text-shadow-pop">{go ? 'מתחילים!' : 'המשחק מתחיל בעוד…'}</p>
+      <p className="text-fluid-title font-black text-brand-navy/80 text-shadow-pop">{go ? 'מַתְחִילִים!' : 'הַמִּשְׂחָק מַתְחִיל בְּעוֹד…'}</p>
       <div className="relative grid place-items-center">
         <LightRays color="rgb(255 255 255)" intensity={0.5} className="w-[230%]" />
         {!reduce && <span aria-hidden className="absolute inset-0 rounded-full bg-white/60 animate-pulse-ring" />}

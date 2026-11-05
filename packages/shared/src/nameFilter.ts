@@ -16,13 +16,13 @@ export interface NameValidation {
 /** מנקה ומאמת שם תצוגה של תלמיד */
 export function validateDisplayName(raw: string): NameValidation {
   const normalized = raw.normalize('NFC').replace(/\s+/g, ' ').trim();
-  if (normalized.length < MIN_DISPLAY_NAME) return { ok: false, normalized, reason: 'השם קצר מדי' };
-  if (normalized.length > MAX_DISPLAY_NAME) return { ok: false, normalized, reason: 'השם ארוך מדי' };
-  if (!ALLOWED_RE.test(normalized)) return { ok: false, normalized, reason: 'השם מכיל תווים לא מותרים' };
+  if (normalized.length < MIN_DISPLAY_NAME) return { ok: false, normalized, reason: 'הַשֵּׁם קָצָר מִדַּי' };
+  if (normalized.length > MAX_DISPLAY_NAME) return { ok: false, normalized, reason: 'הַשֵּׁם אָרוֹךְ מִדַּי' };
+  if (!ALLOWED_RE.test(normalized)) return { ok: false, normalized, reason: 'הַשֵּׁם מֵכִיל תָּוִוים לֹא מוּתָּרִים' };
   const lowered = normalized.toLowerCase().replace(/[\s\-'’"״׳.]/g, '');
   for (const word of BLOCKED_WORDS) {
     if (lowered.includes(word.replace(/\s/g, '').toLowerCase())) {
-      return { ok: false, normalized, reason: 'בחרו שם אחר בבקשה' };
+      return { ok: false, normalized, reason: 'בַּחֲרוּ שֵׁם אַחֵר בְּבַקָּשָׁה' };
     }
   }
   return { ok: true, normalized };

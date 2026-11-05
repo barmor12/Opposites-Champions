@@ -13,7 +13,7 @@ export interface AvatarPickerProps {
 }
 
 /** רשת 16 דמויות לבחירה – אריחים תלת־ממדיים (pop-button) עם טבעת זוהרת סביב הנבחרת */
-export function AvatarPicker({ value, onChange, label = 'בחרו דמות', error, className }: AvatarPickerProps) {
+export function AvatarPicker({ value, onChange, label = 'בַּחֲרוּ דְּמוּת', error, className }: AvatarPickerProps) {
   const reduce = useReducedMotion();
   return (
     <fieldset className={cn('flex flex-col gap-2', className)}>

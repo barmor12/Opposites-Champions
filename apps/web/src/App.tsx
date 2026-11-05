@@ -34,9 +34,9 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { error: Error
         <PageBackground variant="sunset" rainbow={false} />
         <Card variant="glass" className="flex max-w-md flex-col items-center gap-4 text-center">
           <Character name="moon" mood="think" size="md" animate="wiggle" />
-          <h1 className="text-2xl font-black">אופס! משהו השתבש</h1>
-          <p className="text-slate-600">נסו לרענן את הדף. אם זה חוזר, ספרו למורה.</p>
-          <Button onClick={() => window.location.reload()}>רענון</Button>
+          <h1 className="text-2xl font-black">אוּפְּס! מַשֶּׁהוּ הִשְׁתַּבֵּשׁ</h1>
+          <p className="text-slate-600">נַסּוּ לְרַעֲנֵן אֶת הַדַּף. אִם זֶה חוֹזֵר, סַפְּרוּ לַמּוֹרָה.</p>
+          <Button onClick={() => window.location.reload()}>רִעֲנוּן</Button>
         </Card>
       </main>
     );

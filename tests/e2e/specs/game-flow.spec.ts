@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { answerAllQuestions, createGameViaApi, finishGameIfNeeded, joinAsStudent, pickAvatar, teacherLogin } from './helpers';
+import { answerAllQuestions, createGameViaApi, finishGameIfNeeded, heb, joinAsStudent, pickAvatar, teacherLogin } from './helpers';
 
 test.describe('זרימת משחק מלאה', () => {
   test('מורה יוצרת חדר, תלמידים מצטרפים, משחקים ורואים דירוג', async ({ page, browser }) => {
@@ -18,10 +18,10 @@ test.describe('זרימת משחק מלאה', () => {
     const dupCtx = await browser.newContext();
     const dup = await dupCtx.newPage();
     await dup.goto(`/join/${code}`);
-    await dup.getByLabel(/שם/).first().fill('נועה');
+    await dup.getByLabel(heb('שם')).first().fill('נועה');
     await pickAvatar(dup);
-    await dup.getByRole('button', { name: /בואו נשחק/ }).click();
-    await expect(dup.getByText(/תפוס/)).toBeVisible();
+    await dup.getByRole('button', { name: heb('בואו נשחק') }).click();
+    await expect(dup.getByText(heb('תפוס'))).toBeVisible();
     await dupCtx.close();
 
     // המורה רואה 2 תלמידים (האריחים נטענים באנימציה כשהם נכנסים לתצוגה)
@@ -32,7 +32,7 @@ test.describe('זרימת משחק מלאה', () => {
       await expect(tile).toBeVisible();
     }
 
-    await page.getByRole('button', { name: /התחל משחק/ }).click();
+    await page.getByRole('button', { name: heb('התחל משחק') }).click();
 
     // רענון באמצע משחק לא מאבד את ההתחברות
     await student2.reload();
@@ -43,20 +43,20 @@ test.describe('זרימת משחק מלאה', () => {
     // כל התלמידים עוברים למסך התוצאות עם מדליות
     await student1.waitForURL(/\/results/, { timeout: 20_000 });
     await student2.waitForURL(/\/results/, { timeout: 20_000 });
-    await expect(student1.getByAltText(/זהב/).first()).toBeVisible({ timeout: 15_000 });
+    await expect(student1.getByAltText(heb('זהב')).first()).toBeVisible({ timeout: 15_000 });
 
     await page.goto(`/teacher/rooms/${roomId}/results`);
-    await expect(page.getByText(/ממוצע/)).toBeVisible();
-    await expect(page.getByText('נועה', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText(heb('ממוצע'))).toBeVisible();
+    await expect(page.getByText(heb('נועה'), { exact: true }).first()).toBeVisible();
   });
 
   test('קוד חדר שגוי מציג שגיאה ידידותית', async ({ page }) => {
     await page.goto('/');
-    await page.getByLabel(/שם/).first().fill('דנה');
-    await page.getByLabel(/קוד/).first().fill('000000');
+    await page.getByLabel(heb('שם')).first().fill('דנה');
+    await page.getByLabel(heb('קוד')).first().fill('000000');
     await pickAvatar(page);
-    await page.getByRole('button', { name: /בואו נשחק/ }).click();
-    await expect(page.getByText(/לא נמצא|לא קיים/)).toBeVisible();
+    await page.getByRole('button', { name: heb('בואו נשחק') }).click();
+    await expect(page.getByText(heb('לא נמצא|לא קיים'))).toBeVisible();
   });
 
   test('RTL ותמונות נטענות במסך הפתיחה', async ({ page }) => {
@@ -82,7 +82,7 @@ test.describe('רמה קלה – תמונות בלבד', () => {
     });
     const student = await joinAsStudent(browser, code, 'איתן');
     await page.goto(`/teacher/rooms/${roomId}`);
-    await page.getByRole('button', { name: /התחל משחק/ }).click();
+    await page.getByRole('button', { name: heb('התחל משחק') }).click();
 
     // האפשרויות הן תמונות בלבד – לכל כרטיס יש תמונה ואין טקסט גלוי של המילה
     const firstTile = student.locator('[data-testid="option-1"]:not([aria-disabled="true"])');

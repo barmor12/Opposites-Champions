@@ -48,13 +48,13 @@ const STATE_CLASSES: Record<Exclude<OptionState, 'idle'>, string> = {
 function srStateText(state: OptionState): string {
   switch (state) {
     case 'correct':
-      return ' – תשובה נכונה';
+      return ' – תְּשׁוּבָה נְכוֹנָה';
     case 'wrong':
-      return ' – תשובה שגויה';
+      return ' – תְּשׁוּבָה שְׁגוּיָה';
     case 'reveal':
-      return ' – זו התשובה הנכונה';
+      return ' – זוֹ הַתְּשׁוּבָה הַנְּכוֹנָה';
     case 'pending':
-      return ' – נבחר';
+      return ' – נִבְחַר';
     default:
       return '';
   }
@@ -168,9 +168,9 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
 
   return (
     <div className="flex flex-col items-center gap-4 sm:gap-5 lg:grid lg:grid-cols-2 lg:items-center lg:gap-8">
-      {/* ===== כרטיס השאלה: איור גדול במסגרת מבריקה ===== */}
+      {/* ===== כַּרְטִיס הַשְּׁאֵלָה: אִיּוּר גָּדוֹל בְּמִסְגֶּרֶת מַבְרִיקָה ===== */}
       <motion.section
-        aria-label={`השאלה: ${word}`}
+        aria-label={`הַשְּׁאֵלָה: ${word}`}
         data-testid="prompt-card"
         initial={{ y: -16, opacity: 0, scale: 0.98 }}
         animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -181,15 +181,15 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
           'lg:sticky lg:top-4',
         )}
       >
-        {/* עיטור פינות */}
+        {/* עִיטּוּר פִּינּוֹת */}
         <span aria-hidden="true" className="pointer-events-none absolute -start-10 -top-10 size-32 rounded-full bg-gradient-to-br from-sky-200/70 to-transparent blur-2xl" />
         <span aria-hidden="true" className="pointer-events-none absolute -bottom-12 -end-10 size-36 rounded-full bg-gradient-to-tl from-violet-200/70 to-transparent blur-2xl" />
 
-        {/* שורת הוראה ללא קריאה: [תמונה] ↔ [?] + רמקול */}
+        {/* שׁוּרַת הוֹרָאָה לְלֹא קְרִיאָה: [תְּמוּנָה] ↔ [?] + רַמְקוֹל */}
         <div className="relative mb-3 flex items-center justify-center gap-3">
           <p
             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-b from-violet-50 to-violet-100 px-4 py-1.5 text-base font-black text-violet-800 ring-1 ring-violet-200 shadow-[inset_0_1px_0_#fff] sm:text-lg"
-            aria-label="מצאו את התמונה ההפוכה"
+            aria-label="מָצְאוּ אֶת הַתְּמוּנָה הַהֲפוּכָה"
           >
             <span aria-hidden="true" className="flex items-center gap-1.5">
               <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-b from-sky-300 to-sky-500 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
@@ -200,14 +200,14 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
               </span>
               <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-b from-amber-300 to-amber-500 text-lg font-black leading-none text-amber-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">?</span>
             </span>
-            <span className="text-sm font-bold text-violet-700 sm:text-base">ההפך</span>
+            <span className="text-sm font-bold text-violet-700 sm:text-base">הַהֶפֶךְ</span>
           </p>
           {speechSupported && (
-            <SpeakerButton label="השמע את המילה" onSpeak={() => speak(word)} speaking={speaking} size="lg" testId="speak-prompt" className="relative" />
+            <SpeakerButton label="הַשֵּׁמַע אֶת הַמִּילָּה" onSpeak={() => speak(word)} speaking={speaking} size="lg" testId="speak-prompt" className="relative" />
           )}
         </div>
 
-        {/* מסגרת האיור – ≥40% מגובה המסך בטלפון */}
+        {/* מִסְגֶּרֶת הָאִיּוּר – ≥40% מִגּוֹבַהּ הַמָּסָךְ בַּטֵּלֵפוֹן */}
         <div
           data-testid="prompt-image"
           className={cn(
@@ -219,15 +219,15 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
           {question.promptImage && (
             <LazyImage src={question.promptImage} alt={word} className="h-full w-full rounded-[1.4rem]" imgClassName="p-1" />
           )}
-          {/* גלוס עליון */}
+          {/* גְּלוֹס עֶלְיוֹן */}
           <span aria-hidden="true" className="pointer-events-none absolute inset-x-4 top-0 h-[36%] rounded-full bg-gradient-to-b from-white/70 to-transparent" />
         </div>
       </motion.section>
 
-      {/* ===== 4 אריחי תמונה 2×2 ===== */}
+      {/* ===== 4 אֲרִיחֵי תְּמוּנָה 2×2 ===== */}
       <div
         role="group"
-        aria-label="אפשרויות תשובה – בחרו את התמונה ההפוכה"
+        aria-label="אֶפְשָׁרוּיוֹת תְּשׁוּבָה – בַּחֲרוּ אֶת הַתְּמוּנָה הַהֲפוּכָה"
         data-testid="options"
         className="grid w-full max-w-[464px] grid-cols-2 gap-3 sm:gap-4"
       >
@@ -264,10 +264,10 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
                   classes,
                 )}
               >
-                {/* גלוס עליון */}
+                {/* גְּלוֹס עֶלְיוֹן */}
                 <span aria-hidden="true" className="pointer-events-none absolute inset-x-3 top-0 h-[40%] rounded-full bg-gradient-to-b from-white/60 to-transparent" />
 
-                {/* מסגרת פנימית לבנה לאיור */}
+                {/* מִסְגֶּרֶת פְּנִימִית לְבָנָה לְאִיּוּר */}
                 <span
                   aria-hidden="true"
                   className={cn(
@@ -279,7 +279,7 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
                   {opt.image && <LazyImage src={opt.image} alt="" className="h-full w-full" imgClassName="p-1" />}
                 </span>
 
-                {/* כיתוב זעיר – רק בחשיפת התשובה */}
+                {/* כִּיתּוּב זָעִיר – רַק בַּחֲשִׂיפַת הַתְּשׁוּבָה */}
                 {showCaption && (
                   <span
                     data-testid="option-caption"
@@ -293,7 +293,7 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
                   </span>
                 )}
 
-                {/* מספר מקש */}
+                {/* מִסְפַּר מַקָּשׁ */}
                 <span
                   aria-hidden="true"
                   className={cn(
@@ -309,10 +309,10 @@ export function PictureQuestion({ question, result, selectedId, disabled, expire
                 </span>
               </motion.button>
 
-              {/* רמקול של האפשרות – אח של הכפתור (לא בתוכו) כדי לא לבחור את האריח */}
+              {/* רַמְקוֹל שֶׁל הָאֶפְשָׁרוּת – אָח שֶׁל הַכַּפְתּוֹר (לֹא בְּתוֹכוֹ) כְּדֵי לֹא לִבְחוֹר אֶת הָאָרִיחַ */}
               {speechSupported && opt.text && (
                 <SpeakerButton
-                  label={`השמע: ${opt.text}`}
+                  label={`הַשֵּׁמַע: ${opt.text}`}
                   onSpeak={() => speak(opt.text)}
                   size="sm"
                   testId={`speak-option-${i + 1}`}

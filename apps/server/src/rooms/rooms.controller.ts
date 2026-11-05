@@ -27,7 +27,7 @@ export class RoomsController {
   @Get(':code')
   @Throttle({ default: { limit: ROOM_LOOKUP_RATE_LIMIT_PER_MINUTE, ttl: 60_000 } })
   getRoom(@Param('code') code: string): Promise<RoomPublicView> {
-    if (!/^\d{6}$/.test(code)) throw GameError.badRequest('INVALID_CODE', 'קוד החדר חייב להכיל 6 ספרות');
+    if (!/^\d{6}$/.test(code)) throw GameError.badRequest('INVALID_CODE', 'קוֹד הַחֶדֶר חַיָּיב לְהָכִיל 6 סְפָרוֹת');
     return this.rooms.getPublicView(code);
   }
 }

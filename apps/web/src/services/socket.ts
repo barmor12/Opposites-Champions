@@ -109,14 +109,14 @@ export function emitWithAck<E extends AckEvents>(
 ): Promise<AckData<E>> {
   return new Promise((resolve, reject) => {
     if (!s.connected) {
-      reject(new SocketError('DISCONNECTED', 'אין חיבור למשחק. מנסים להתחבר מחדש…'));
+      reject(new SocketError('DISCONNECTED', 'אֵין חִיבּוּר לְמִשְׂחָק. מְנַסִּים לְהִתְחַבֵּר מֵחָדָשׁ…'));
       return;
     }
     let settled = false;
     const timer = setTimeout(() => {
       if (settled) return;
       settled = true;
-      reject(new SocketError('TIMEOUT', 'השרת לא ענה בזמן. נסו שוב'));
+      reject(new SocketError('TIMEOUT', 'הַשָּׁרָת לֹא עָנָה בַּזְּמַן. נַסּוּ שׁוּב'));
     }, timeoutMs);
     const emit = s.emit as unknown as (ev: E, p: PayloadOf<E>, ack: (r: SocketAck<AckData<E>>) => void) => void;
     emit.call(s, event, payload, (r) => {
@@ -124,7 +124,7 @@ export function emitWithAck<E extends AckEvents>(
       settled = true;
       clearTimeout(timer);
       if (r && r.ok) resolve(r.data);
-      else reject(new SocketError(r?.error?.code ?? 'UNKNOWN', r?.error?.message ?? 'אופס! משהו השתבש'));
+      else reject(new SocketError(r?.error?.code ?? 'UNKNOWN', r?.error?.message ?? 'אוּפְּס! מַשֶּׁהוּ הִשְׁתַּבֵּשׁ'));
     });
   });
 }

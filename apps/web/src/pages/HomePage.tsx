@@ -23,10 +23,10 @@ interface FormErrors {
 }
 
 const CHIPS = [
-  { t: 'גדול ↔ קטן', c: 'from-sky-100 to-sky-200 text-sky-900 border-sky-300' },
-  { t: 'חם ↔ קר', c: 'from-orange-100 to-orange-200 text-orange-900 border-orange-300' },
-  { t: 'יום ↔ לילה', c: 'from-violet-100 to-violet-200 text-violet-900 border-violet-300' },
-  { t: 'מהר ↔ לאט', c: 'from-green-100 to-green-200 text-green-900 border-green-300' },
+  { t: 'גָּדוֹל ↔ קָטָן', c: 'from-sky-100 to-sky-200 text-sky-900 border-sky-300' },
+  { t: 'חַם ↔ קַר', c: 'from-orange-100 to-orange-200 text-orange-900 border-orange-300' },
+  { t: 'יוֹם ↔ לַיְלָה', c: 'from-violet-100 to-violet-200 text-violet-900 border-violet-300' },
+  { t: 'מַהֵר ↔ לְאַט', c: 'from-green-100 to-green-200 text-green-900 border-green-300' },
 ];
 
 export function HomePage() {
@@ -86,12 +86,12 @@ export function HomePage() {
     e.preventDefault();
     const nextErrors: FormErrors = {};
     const name = validateDisplayName(displayName);
-    if (!displayName.trim()) nextErrors.displayName = 'איך קוראים לך? כתבו שם';
-    else if (!name.ok) nextErrors.displayName = name.reason ?? 'השם לא תקין';
+    if (!displayName.trim()) nextErrors.displayName = 'אֵיךְ קוֹרְאִים לְךָ? כָּתְבוּ שֵׁם';
+    else if (!name.ok) nextErrors.displayName = name.reason ?? 'הַשֵּׁם לֹא תַּקִּין';
     const cleanCode = sanitizeCode(code);
-    if (!cleanCode) nextErrors.code = 'כתבו את קוד המשחק שהמורה נתנה';
-    else if (cleanCode.length !== ROOM_CODE_LENGTH) nextErrors.code = `הקוד צריך להיות ${ROOM_CODE_LENGTH} ספרות`;
-    if (!avatar) nextErrors.avatar = 'בחרו דמות שתייצג אתכם במשחק';
+    if (!cleanCode) nextErrors.code = 'כָּתְבוּ אֶת קוֹד הַמִּשְׂחָק שֶׁהַמּוֹרָה נָתְנָה';
+    else if (cleanCode.length !== ROOM_CODE_LENGTH) nextErrors.code = `הַקּוֹד צָרִיךְ לִהְיוֹת ${ROOM_CODE_LENGTH} סְפָרוֹת`;
+    if (!avatar) nextErrors.avatar = 'בַּחֲרוּ דְּמוּת שֶׁתְּיַיצֵּג אֶתְכֶם בַּמִּשְׂחָק';
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
       if (nextErrors.displayName) nameRef.current?.focus();
@@ -114,18 +114,18 @@ export function HomePage() {
       <PageBackground variant="day" rainbow />
       <FloatingStars count={reduce ? 0 : 10} />
 
-      {/* סרגל עליון */}
+      {/* סַרְגֵּל עֶלְיוֹן */}
       <div className="flex w-full max-w-6xl items-center justify-between gap-2 xl:max-w-7xl">
         {IS_DEMO ? (
           <span className="inline-flex min-h-12 items-center gap-2 rounded-full glass px-4 text-sm font-bold text-violet-700">
-            <Sparkles className="size-5" aria-hidden /> גרסת דמו – המשחק רץ כולו בדפדפן
+            <Sparkles className="size-5" aria-hidden /> גִּרְסַת דָּמוֹ – הַמִּשְׂחָק רָץ כּוּלּוֹ בַּדַּפְדְּפָן
           </span>
         ) : (
           <Link
             to="/teacher"
             className="inline-flex min-h-12 items-center gap-2 rounded-full glass px-4 text-sm font-bold text-slate-600 transition-transform hover:-translate-y-0.5"
           >
-            <GraduationCap className="size-5" aria-hidden /> כניסת מורה
+            <GraduationCap className="size-5" aria-hidden /> כְּנִיסַת מוֹרֶה
           </Link>
         )}
         <SoundToggle />
@@ -143,11 +143,11 @@ export function HomePage() {
               transition={{ delay: 0.3 }}
               className="max-w-[11rem] flex-1 text-[1.2rem] font-black leading-snug text-violet-800 text-shadow-pop sm:max-w-xs sm:text-2xl lg:max-w-sm lg:text-[1.65rem] xl:text-3xl"
             >
-              מי יהיה אלוף ההפכים של הכיתה?
+              מִי יִהְיֶה אַלּוּף הַהֲפָכִים שֶׁל הַכִּיתָּה?
             </motion.p>
             <HeroCharacter name="moon" mood="happy" animate="bounce" delay={0.6} />
           </div>
-          <ul className="mt-4 flex flex-wrap justify-center gap-2 sm:mt-6 sm:gap-3" aria-label="מה במשחק">
+          <ul className="mt-4 flex flex-wrap justify-center gap-2 sm:mt-6 sm:gap-3" aria-label="מָה בַּמִּשְׂחָק">
             {CHIPS.map((chip, i) => (
               <motion.li
                 key={chip.t}
@@ -177,22 +177,22 @@ export function HomePage() {
             {resumable && (
               <div className="flex flex-col items-center gap-3 rounded-2xl bg-gradient-to-b from-green-50 to-emerald-100/80 p-4 text-center ring-2 ring-green-300/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] sm:flex-row sm:text-start">
                 <p className="flex-1 font-bold text-green-800">
-                  יש לך משחק פעיל{existingName ? ` בשם ${existingName}` : ''}. רוצה להמשיך?
+                  יֵשׁ לְךָ מִשְׂחָק פָּעִיל{existingName ? ` בְּשֵׁם ${existingName}` : ''}. רוֹצֶה לְהַמְשִׁיךְ?
                 </p>
                 <Button variant="success" size="md" icon={<Play className="size-5" />} onClick={() => navigate('/play')}>
-                  להמשיך
+                  לְהַמְשִׁיךְ
                 </Button>
               </div>
             )}
             <h2 className="flex items-center justify-center gap-2 text-center text-2xl font-black sm:text-3xl">
               <Sparkles className="size-6 text-brand-violet" aria-hidden />
-              הצטרפו למשחק
+              הִצְטָרְפוּ לַמִּשְׂחָק
             </h2>
             <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
               <Input
                 ref={nameRef}
-                label="מה השם שלך?"
-                placeholder="לדוגמה: נועה"
+                label="מָה הַשֵּׁם שֶׁלְּךָ?"
+                placeholder="לְדוּגְמָה: נוֹעָה"
                 value={displayName}
                 maxLength={MAX_DISPLAY_NAME}
                 autoComplete="nickname"
@@ -204,7 +204,7 @@ export function HomePage() {
                 }}
               />
               <Input
-                label="קוד המשחק"
+                label="קוֹד הַמִּשְׂחָק"
                 placeholder="● ● ● ● ● ●"
                 value={code}
                 dir="ltr"
@@ -215,7 +215,7 @@ export function HomePage() {
                 size="xl"
                 icon={<Hash className="size-6" />}
                 className="text-center font-black tracking-[0.45em] tabular-nums"
-                hint={`${ROOM_CODE_LENGTH} ספרות שהמורה מציגה על הלוח`}
+                hint={`${ROOM_CODE_LENGTH} סְפָרוֹת שֶׁהַמּוֹרָה מַצִּיגָה עַל הַלּוּחַ`}
                 error={errors.code}
                 onChange={(e) => {
                   setCode(sanitizeCode(e.target.value));
@@ -244,7 +244,7 @@ export function HomePage() {
                 error={errors.avatar}
               />
               <Button type="submit" size="xl" fullWidth glow loading={submitting} icon={<Rocket className="size-7" />}>
-                בואו נשחק!
+                בּוֹאוּ נְשַׂחֵק!
               </Button>
             </form>
           </Card>
@@ -261,7 +261,7 @@ export function HomePage() {
 /** לוגו המשחק – טיפוגרפיית משחק: מילוי גרדיאנט, קו־מתאר לבן רך וצל עומק */
 function GameLogo() {
   const reduce = useReducedMotion();
-  const text = 'אלופי ההפכים';
+  const text = 'אַלּוּפֵי הַהֲפָכִים';
   return (
     <motion.h1
       initial={reduce ? false : { y: -30, opacity: 0, scale: 0.9 }}
@@ -271,7 +271,7 @@ function GameLogo() {
     >
       <span aria-hidden className="pointer-events-none absolute -top-2 start-2 text-[0.55em] animate-sparkle">✨</span>
       <span aria-hidden className="pointer-events-none absolute -bottom-1 end-1 text-[0.45em] animate-sparkle" style={{ animationDelay: '0.9s' }}>✨</span>
-      {/* שכבת קו־מתאר + צל (מאחור) */}
+      {/* שִׁכְבַת קַו־מְתָאֵר + צֵל (מֵאָחוֹר) */}
       <span
         aria-hidden
         className="col-start-1 row-start-1 text-transparent [paint-order:stroke_fill] [-webkit-text-stroke:0.2em_white]"
@@ -279,7 +279,7 @@ function GameLogo() {
       >
         {text}
       </span>
-      {/* שכבת גרדיאנט (מלפנים) */}
+      {/* שִׁכְבַת גַּרְדִּיאָנְט (מִלְּפָנִים) */}
       <span className="relative z-10 col-start-1 row-start-1 text-gradient-brand">{text}</span>
     </motion.h1>
   );
@@ -319,8 +319,8 @@ function Greeting({ name }: { name: string }) {
         className="relative flex flex-col items-center gap-4"
       >
         <Character name="sun" mood="cheer" size="lg" animate="bounce" />
-        <h2 className="text-fluid-hero font-black text-extrude">שלום {name}!</h2>
-        <p className="text-2xl font-bold text-shadow-soft sm:text-3xl">איזה כיף שהצטרפת! 🎉</p>
+        <h2 className="text-fluid-hero font-black text-extrude">שָׁלוֹם {name}!</h2>
+        <p className="text-2xl font-bold text-shadow-soft sm:text-3xl">אֵיזֶה כֵּיף שֶׁהִצְטָרַפְתָּ! 🎉</p>
       </motion.div>
     </motion.div>
   );

@@ -52,7 +52,7 @@ describe('useSpeech', () => {
     expect(result.current.speaking).toBe(false);
     expect(() => {
       act(() => {
-        result.current.speak('שלום');
+        result.current.speak('שָׁלוֹם');
         result.current.cancel();
       });
     }).not.toThrow();
@@ -64,16 +64,16 @@ describe('useSpeech', () => {
     const { result } = renderHook(() => useSpeech());
     expect(result.current.supported).toBe(true);
 
-    act(() => result.current.speak('גדול'));
+    act(() => result.current.speak('גָּדוֹל'));
     expect(synth.speak).toHaveBeenCalledTimes(1);
-    expect(queue[0]?.text).toBe('גדול');
+    expect(queue[0]?.text).toBe('גָּדוֹל');
     expect(queue[0]?.lang).toBe('he-IL');
     expect(queue[0]?.voice).toBe(he);
     expect(result.current.speaking).toBe(true);
 
-    act(() => result.current.speak('קטן'));
+    act(() => result.current.speak('קָטָן'));
     expect(synth.cancel).toHaveBeenCalled();
-    expect(queue[1]?.text).toBe('קטן');
+    expect(queue[1]?.text).toBe('קָטָן');
 
     act(() => queue[1]?.onend?.());
     expect(result.current.speaking).toBe(false);
@@ -82,7 +82,7 @@ describe('useSpeech', () => {
   it('falls back to the default voice but still sets lang he-IL when no Hebrew voice exists', () => {
     const { queue } = mockSpeech([voice('en-US')]);
     const { result } = renderHook(() => useSpeech());
-    act(() => result.current.speak('חם'));
+    act(() => result.current.speak('חַם'));
     expect(queue[0]?.lang).toBe('he-IL');
     expect(queue[0]?.voice).toBeNull();
   });
@@ -92,7 +92,7 @@ describe('useSpeech', () => {
     const { result } = renderHook(() => useSpeech());
     act(() => result.current.speak('   '));
     expect(synth.speak).not.toHaveBeenCalled();
-    act(() => result.current.speak('קר'));
+    act(() => result.current.speak('קַר'));
     expect(result.current.speaking).toBe(true);
     act(() => result.current.cancel());
     expect(synth.cancel).toHaveBeenCalled();

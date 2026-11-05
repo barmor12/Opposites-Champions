@@ -168,7 +168,7 @@ export function ScoreBadge({ points, className }: { points: number; className?: 
     >
       <span aria-hidden="true" className="pointer-events-none absolute inset-x-3 top-0 h-1/2 rounded-full bg-gradient-to-b from-white/60 to-transparent" />
       <span aria-hidden="true" className="relative drop-shadow">⭐</span>
-      <span className="relative">+{points} נקודות</span>
+      <span className="relative">+{points} נְקוּדּוֹת</span>
     </motion.span>
   );
 }

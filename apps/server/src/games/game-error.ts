@@ -36,7 +36,7 @@ export function toSocketError(err: unknown): { code: string; message: string } {
       : `HTTP_${err.getStatus()}`;
     return { code, message: extractMessage(res) };
   }
-  return { code: 'INTERNAL', message: 'אירעה שגיאה, נסו שוב' };
+  return { code: 'INTERNAL', message: 'אֵירְעָה שְׁגִיאָה, נַסּוּ שׁוּב' };
 }
 
 function extractMessage(res: string | object): string {
@@ -44,5 +44,5 @@ function extractMessage(res: string | object): string {
   const msg = (res as { message?: unknown }).message;
   if (typeof msg === 'string') return msg;
   if (Array.isArray(msg)) return msg.map(String).join(', ');
-  return 'אירעה שגיאה';
+  return 'אֵירְעָה שְׁגִיאָה';
 }

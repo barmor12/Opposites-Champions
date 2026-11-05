@@ -84,7 +84,7 @@ export class RoomsService {
         throw err;
       }
     }
-    throw GameError.conflict('CODE_GENERATION_FAILED', 'לא הצלחנו ליצור קוד חדר, נסו שוב');
+    throw GameError.conflict('CODE_GENERATION_FAILED', 'לֹא הִצְלַחְנוּ לִיצוֹר קוֹד חֶדֶר, נַסּוּ שׁוּב');
   }
 
   /** חיפוש לפי קוד – חדר שפג תוקפו מסומן EXPIRED בדרך (ולא ניתן להצטרף אליו) */
@@ -103,7 +103,7 @@ export class RoomsService {
     if (!isRoomStale(room, now)) return room;
     const expired = await this.markExpired(room.id, new Date(now));
     if (expired.roomIds.length > 0) {
-      this.events.toRoom(room.id, 'error:message', { code: 'ROOM_EXPIRED', message: 'תוקף החדר פג, יש לפתוח משחק חדש' });
+      this.events.toRoom(room.id, 'error:message', { code: 'ROOM_EXPIRED', message: 'תּוֹקֶף הַחֶדֶר פָּג, יֵשׁ לִפְתּוֹחַ מִשְׂחָק חָדָשׁ' });
       await this.emitRoomUpdated(room.id);
     }
     return { ...room, state: GameState.EXPIRED, joinOpen: false };
@@ -125,7 +125,7 @@ export class RoomsService {
       result.roomIds.push(...expired.roomIds);
       result.sessionIds.push(...expired.sessionIds);
       if (expired.roomIds.length > 0) {
-        this.events.toRoom(id, 'error:message', { code: 'ROOM_EXPIRED', message: 'תוקף החדר פג, יש לפתוח משחק חדש' });
+        this.events.toRoom(id, 'error:message', { code: 'ROOM_EXPIRED', message: 'תּוֹקֶף הַחֶדֶר פָּג, יֵשׁ לִפְתּוֹחַ מִשְׂחָק חָדָשׁ' });
       }
     }
     if (result.roomIds.length > 0) this.logger.log(`expired ${result.roomIds.length} stale room(s)`);
@@ -154,7 +154,7 @@ export class RoomsService {
 
   async getPublicView(code: string): Promise<RoomPublicView> {
     const room = await this.findByCode(code);
-    if (!room) throw GameError.notFound('ROOM_NOT_FOUND', 'החדר לא נמצא, בדקו את הקוד');
+    if (!room) throw GameError.notFound('ROOM_NOT_FOUND', 'הַחֶדֶר לֹא נִמְצָא, בִּדְקוּ אֶת הַקּוֹד');
     const [session, participantCount] = await Promise.all([
       this.currentSession(room),
       this.prisma.gameParticipant.count({ where: { roomId: room.id, removedAt: null } }),
@@ -197,23 +197,23 @@ export class RoomsService {
   /** הצטרפות תלמיד לחדר */
   async join(code: string, rawName: string, avatar: AvatarId): Promise<JoinRoomResponse> {
     const room = await this.findByCode(code);
-    if (!room) throw GameError.notFound('ROOM_NOT_FOUND', 'החדר לא נמצא, בדקו את הקוד');
-    if (room.state === GameState.EXPIRED) throw GameError.forbidden('ROOM_EXPIRED', 'תוקף החדר פג, בקשו מהמורה קוד חדש');
-    if (!isJoinable(room.state, room.joinOpen)) throw GameError.forbidden('JOIN_CLOSED', 'ההצטרפות לחדר סגורה כרגע');
+    if (!room) throw GameError.notFound('ROOM_NOT_FOUND', 'הַחֶדֶר לֹא נִמְצָא, בִּדְקוּ אֶת הַקּוֹד');
+    if (room.state === GameState.EXPIRED) throw GameError.forbidden('ROOM_EXPIRED', 'תּוֹקֶף הַחֶדֶר פָּג, בַּקְּשׁוּ מֵהַמּוֹרָה קוֹד חָדָשׁ');
+    if (!isJoinable(room.state, room.joinOpen)) throw GameError.forbidden('JOIN_CLOSED', 'הַהִצְטָרְפוּת לַחֶדֶר סְגוּרָה כָּרֶגַע');
 
     const validation = validateDisplayName(rawName);
-    if (!validation.ok) throw GameError.badRequest('INVALID_NAME', validation.reason ?? 'השם אינו תקין');
+    if (!validation.ok) throw GameError.badRequest('INVALID_NAME', validation.reason ?? 'הַשֵּׁם אֵינוֹ תַּקִּין');
     const displayName = validation.normalized;
     const key = nameKey(displayName);
 
     const activeCount = await this.prisma.gameParticipant.count({ where: { roomId: room.id, removedAt: null } });
-    if (activeCount >= MAX_PLAYERS_PER_ROOM) throw GameError.forbidden('ROOM_FULL', 'החדר מלא, לא ניתן להצטרף');
+    if (activeCount >= MAX_PLAYERS_PER_ROOM) throw GameError.forbidden('ROOM_FULL', 'הַחֶדֶר מָלֵא, לֹא נִיתָּן לְהִצְטָרֵף');
 
     const taken = await this.prisma.gameParticipant.findFirst({
       where: { roomId: room.id, removedAt: null, student: { nameKey: key } },
       select: { id: true },
     });
-    if (taken) throw GameError.badRequest('NAME_TAKEN', 'השם כבר תפוס בחדר, בחרו שם אחר');
+    if (taken) throw GameError.badRequest('NAME_TAKEN', 'הַשֵּׁם כְּבָר תָּפוּס בַּחֶדֶר, בָּחֲרוּ שֵׁם אַחֵר');
 
     const sessionToken = generateSessionToken();
     const session = await this.currentSession(room);

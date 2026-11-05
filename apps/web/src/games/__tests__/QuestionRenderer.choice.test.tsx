@@ -28,8 +28,8 @@ function setup(opts: { result?: AnswerResult | null; answer?: (p: AnswerPayload)
 describe('QuestionRenderer – choice types', () => {
   it('renders the prompt and 4 options with keyboard hints', () => {
     setup();
-    expect(screen.getByTestId('prompt-word').textContent).toBe('גדול');
-    const options = screen.getAllByRole('button', { name: /ארוך|קטן|חם|מהיר/ });
+    expect(screen.getByTestId('prompt-word').textContent).toBe('גָּדוֹל');
+    const options = screen.getAllByRole('button', { name: /אָרוֹךְ|קָטָן|חַם|מָהִיר/ });
     expect(options).toHaveLength(4);
   });
 
@@ -38,7 +38,7 @@ describe('QuestionRenderer – choice types', () => {
     fireEvent.click(screen.getByTestId('option-2'));
     expect(onAnswer).toHaveBeenCalledWith({ sessionQuestionId: 'sq-1', optionId: 'b' });
     await waitFor(() => expect(screen.getByTestId('feedback-panel').dataset.kind).toBe('correct'));
-    expect(screen.getByTestId('score-badge').textContent).toContain('+120 נקודות');
+    expect(screen.getByTestId('score-badge').textContent).toContain('+120 נְקוּדּוֹת');
     expect(screen.getByTestId('option-2').dataset.state).toBe('correct');
     expect(screen.getByTestId('next-button')).toBeTruthy();
   });
@@ -53,16 +53,16 @@ describe('QuestionRenderer – choice types', () => {
 
   it('shows encouraging wrong feedback, reveals the correct option and explanation', async () => {
     const q = choiceQuestion();
-    const wrong = resultFor(q, { correct: false, scoreAwarded: 0, streak: 0, correctOptionId: 'b', explanation: 'גדול וקטן הם הפכים' });
+    const wrong = resultFor(q, { correct: false, scoreAwarded: 0, streak: 0, correctOptionId: 'b', explanation: 'גָּדוֹל וְקָטָן הֵם הֲפָכִים' });
     setup({ q, answer: async () => wrong });
     fireEvent.click(screen.getByTestId('option-1'));
     await waitFor(() => expect(screen.getByTestId('feedback-panel').dataset.kind).toBe('wrong'));
     expect(screen.getByTestId('option-1').dataset.state).toBe('wrong');
     expect(screen.getByTestId('option-2').dataset.state).toBe('reveal');
-    expect(screen.getByTestId('correct-answer-text').textContent).toContain('קטן');
-    expect(screen.getByTestId('explanation').textContent).toContain('גדול וקטן הם הפכים');
+    expect(screen.getByTestId('correct-answer-text').textContent).toContain('קָטָן');
+    expect(screen.getByTestId('explanation').textContent).toContain('גָּדוֹל וְקָטָן הֵם הֲפָכִים');
     // never negative tone
-    expect(screen.getByTestId('feedback-panel').textContent).not.toMatch(/טעות|נכשל|לא נכון/);
+    expect(screen.getByTestId('feedback-panel').textContent).not.toMatch(/טָעוּת|נִכְשַׁל|לֹא נָכוֹן/);
   });
 
   it('does not reveal the correct option when showCorrectAnswers is false', async () => {
@@ -117,22 +117,22 @@ describe('QuestionRenderer – choice types', () => {
       render(
         <QuestionRenderer question={q} result={done} onAnswer={async () => done} onNext={() => undefined} soundsEnabled={false} showCorrectAnswers serverOffsetMs={0} />,
       );
-      expect(screen.getByTestId('treasure-path').getAttribute('aria-label')).toContain('שלב 5 מתוך 5');
+      expect(screen.getByTestId('treasure-path').getAttribute('aria-label')).toContain('שָׁלָב 5 מִתּוֹךְ 5');
       await act(async () => {
         vi.advanceTimersByTime(1000);
       });
-      expect(screen.getByTestId('treasure-overlay').textContent).toContain('מצאת את האוצר');
-      expect(screen.getByTestId('treasure-overlay').textContent).toContain('+150 בונוס');
+      expect(screen.getByTestId('treasure-overlay').textContent).toContain('מָצָאתָ אֶת הָאוֹצָר');
+      expect(screen.getByTestId('treasure-overlay').textContent).toContain('+150 בּוֹנוּס');
     } finally {
       vi.useRealTimers();
     }
   });
 
   it('fills the sentence blank with the chosen word (COMPLETE_SENTENCE)', async () => {
-    const q = choiceQuestion({ type: 'COMPLETE_SENTENCE', prompt: 'בקיץ חם ובחורף ____' });
+    const q = choiceQuestion({ type: 'COMPLETE_SENTENCE', prompt: 'בַּקַּיִץ חַם וּבַחוֹרֶף ____' });
     setup({ q });
     expect(screen.getByTestId('sentence-blank').textContent).toBe('____');
     fireEvent.click(screen.getByTestId('option-2'));
-    await waitFor(() => expect(screen.getByTestId('sentence-blank').textContent).toBe('קטן'));
+    await waitFor(() => expect(screen.getByTestId('sentence-blank').textContent).toBe('קָטָן'));
   });
 });

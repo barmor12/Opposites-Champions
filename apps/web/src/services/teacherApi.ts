@@ -147,7 +147,7 @@ export async function exportResults(
     headers: { 'X-Requested-With': 'XMLHttpRequest' },
   });
   if (!res.ok) {
-    let message = 'הייצוא נכשל, נסו שוב';
+    let message = 'הַיִּיצּוּא נִכְשַׁל, נַסּוּ שׁוּב';
     try {
       const body = (await res.json()) as { message?: string };
       if (typeof body.message === 'string') message = body.message;

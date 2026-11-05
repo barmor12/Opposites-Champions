@@ -43,15 +43,15 @@ describe('apiClient', () => {
   });
 
   it('maps NestJS error body to ApiError with Hebrew message', async () => {
-    fetchMock.mockResolvedValueOnce(jsonResponse(404, { statusCode: 404, message: 'החדר לא נמצא', error: 'Not Found' }));
-    await expect(apiClient.get('/rooms/000000')).rejects.toMatchObject({ status: 404, message: 'החדר לא נמצא' });
+    fetchMock.mockResolvedValueOnce(jsonResponse(404, { statusCode: 404, message: 'הַחֶדֶר לֹא נִמְצָא', error: 'Not Found' }));
+    await expect(apiClient.get('/rooms/000000')).rejects.toMatchObject({ status: 404, message: 'הַחֶדֶר לֹא נִמְצָא' });
   });
 
   it('joins validation message arrays', async () => {
-    fetchMock.mockResolvedValueOnce(jsonResponse(400, { statusCode: 400, message: ['השם קצר מדי', 'קוד לא תקין'] }));
+    fetchMock.mockResolvedValueOnce(jsonResponse(400, { statusCode: 400, message: ['הַשֵּׁם קָצָר מִדַּי', 'קוֹד לֹא תַּקִּין'] }));
     const err = await apiClient.post('/rooms/join', {}).catch((e: unknown) => e);
     expect(err).toBeInstanceOf(ApiError);
-    expect((err as ApiError).message).toBe('השם קצר מדי, קוד לא תקין');
+    expect((err as ApiError).message).toBe('הַשֵּׁם קָצָר מִדַּי, קוֹד לֹא תַּקִּין');
   });
 
   it('falls back to a Hebrew default message when body has none', async () => {
@@ -84,6 +84,6 @@ describe('apiClient', () => {
 
   it('errorMessage returns Hebrew text for unknown errors', () => {
     expect(errorMessage(new Error('boom'))).toMatch(/[֐-׿]/);
-    expect(errorMessage(new ApiError(403, 'אין הרשאה'))).toBe('אין הרשאה');
+    expect(errorMessage(new ApiError(403, 'אֵין הַרְשָׁאָה'))).toBe('אֵין הַרְשָׁאָה');
   });
 });

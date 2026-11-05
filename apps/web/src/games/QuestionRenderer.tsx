@@ -144,7 +144,7 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
         const r = await onAnswer(payload);
         if (r) setLocalResult(r);
       } catch {
-        setSubmitError('אופס, משהו השתבש. נסו שוב!');
+        setSubmitError('אוּפְּס, מַשֶּׁהוּ הִשְׁתַּבֵּשׁ. נַסּוּ שׁוּב!');
         setSelectedId(null);
       } finally {
         setSubmitting(false);
@@ -254,7 +254,7 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
               role="status"
               className="text-center text-lg font-bold text-slate-500"
             >
-              בודקים את התשובה…
+              בּוֹדְקִים אֶת הַתְּשׁוּבָה…
             </motion.p>
           )}
         </AnimatePresence>

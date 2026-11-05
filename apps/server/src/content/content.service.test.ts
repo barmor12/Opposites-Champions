@@ -71,22 +71,35 @@ describe('ContentService', () => {
     expect(record.sentenceAnswer).toBe('word');
   });
 
-  it('lists with search on word/opposite, filters and pagination', async () => {
+  it('lists with search on word/opposite (nikud-insensitive, in memory), filters and pagination', async () => {
+    wordPair.findMany.mockResolvedValue([{ ...baseRow, word: 'גָּדוֹל', opposite: 'קָטָן' }, { ...baseRow, id: 'other', slug: 'hot-cold', word: 'חַם', opposite: 'קַר' }]);
+    const query = Object.assign(new ListWordPairsQueryDto(), { search: 'גד', category: Category.SIZES, page: 1, limit: 10 });
+    const result = await service.list(query);
+    expect(result.total).toBe(1);
+    expect(result.items[0]?.word).toBe('גָּדוֹל');
+    const args = wordPair.findMany.mock.calls[0]?.[0] as { where: Record<string, unknown>; skip?: number; take?: number };
+    expect(args.where.deletedAt).toBeNull();
+    expect(args.where.category).toBe(Category.SIZES);
+    expect(args.where.OR).toBeUndefined();
+    expect(args.skip).toBeUndefined();
+    // חיפוש עם ניקוד מוצא מילים ללא ניקוד ולהפך
+    const q2 = Object.assign(new ListWordPairsQueryDto(), { search: 'קַר', page: 2, limit: 1 });
+    const r2 = await service.list(q2);
+    expect(r2.total).toBe(1);
+    expect(r2.items).toEqual([]);
+  });
+
+  it('lists without search via DB pagination', async () => {
     wordPair.findMany.mockResolvedValue([baseRow]);
     wordPair.count.mockResolvedValue(1);
-    const query = Object.assign(new ListWordPairsQueryDto(), { search: 'גד', category: Category.SIZES, page: 2, limit: 10 });
+    const query = Object.assign(new ListWordPairsQueryDto(), { category: Category.SIZES, page: 2, limit: 10 });
     const result = await service.list(query);
     expect(result.total).toBe(1);
     expect(result.items[0]?.word).toBe('גדול');
     const args = wordPair.findMany.mock.calls[0]?.[0] as { where: Record<string, unknown>; skip: number; take: number };
     expect(args.skip).toBe(10);
     expect(args.take).toBe(10);
-    expect(args.where.deletedAt).toBeNull();
     expect(args.where.category).toBe(Category.SIZES);
-    expect(args.where.OR).toEqual([
-      { word: { contains: 'גד', mode: 'insensitive' } },
-      { opposite: { contains: 'גד', mode: 'insensitive' } },
-    ]);
   });
 
   it('rejects creating a pair whose slug already exists', async () => {

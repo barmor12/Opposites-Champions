@@ -186,7 +186,7 @@ export const useTeacherStore = create<TeacherStoreState>()((set, get) => {
         const games = await teacherApi.games.list();
         set({ games, gamesLoading: false });
       } catch (err) {
-        set({ gamesLoading: false, gamesError: errorMessage(err, 'לא הצלחנו לטעון את רשימת המשחקים') });
+        set({ gamesLoading: false, gamesError: errorMessage(err, 'לֹא הִצְלַחְנוּ לִטְעוֹן אֶת רְשִׁימַת הַמִּשְׂחָקִים') });
         if (errorStatus(err) === 401) set({ authStatus: 'anonymous', profile: null });
       }
     },
@@ -215,7 +215,7 @@ export const useTeacherStore = create<TeacherStoreState>()((set, get) => {
         set({
           liveLoading: false,
           liveError:
-            status === 404 ? 'החדר לא נמצא – ייתכן שנמחק' : errorMessage(err, 'לא הצלחנו לטעון את החדר'),
+            status === 404 ? 'הַחֶדֶר לֹא נִמְצָא – יִיתָּכֵן שֶׁנִּמְחַק' : errorMessage(err, 'לֹא הִצְלַחְנוּ לִטְעוֹן אֶת הַחֶדֶר'),
         });
         if (status === 401) set({ authStatus: 'anonymous', profile: null });
       }

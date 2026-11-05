@@ -55,13 +55,13 @@ function StateIcon({ state }: { state: OptionState }) {
 function srStateText(state: OptionState): string {
   switch (state) {
     case 'correct':
-      return ' – תשובה נכונה';
+      return ' – תְּשׁוּבָה נְכוֹנָה';
     case 'wrong':
-      return ' – תשובה שגויה';
+      return ' – תְּשׁוּבָה שְׁגוּיָה';
     case 'reveal':
-      return ' – זו התשובה הנכונה';
+      return ' – זוֹ הַתְּשׁוּבָה הַנְּכוֹנָה';
     case 'pending':
-      return ' – נבחר';
+      return ' – נִבְחַר';
     default:
       return '';
   }
@@ -93,7 +93,7 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, expired
   return (
     <div
       role="group"
-      aria-label="אפשרויות תשובה"
+      aria-label="אֶפְשָׁרוּיוֹת תְּשׁוּבָה"
       data-testid="options"
       className={cn('grid gap-3 sm:gap-4', isImage ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-2')}
     >
@@ -129,9 +129,9 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, expired
                 classes,
               )}
             >
-              {/* גלוס עליון */}
+              {/* גְּלוֹס עֶלְיוֹן */}
               <span aria-hidden="true" className="pointer-events-none absolute inset-x-3 top-0 h-[42%] rounded-full bg-gradient-to-b from-white/60 to-transparent" />
-              {/* מספר מקש */}
+              {/* מִסְפַּר מַקָּשׁ */}
               <span
                 aria-hidden="true"
                 className={cn(

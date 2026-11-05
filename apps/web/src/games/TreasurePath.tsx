@@ -50,7 +50,7 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
 
   return (
     <section
-      aria-label={`אתגר האוצר – שלב ${safeStep} מתוך ${total}`}
+      aria-label={`אֶתְגַּר הָאוֹצָר – שָׁלָב ${safeStep} מִתּוֹךְ ${total}`}
       data-testid="treasure-path"
       className={cn(
         'relative overflow-hidden rounded-[2rem] bg-gradient-to-b from-amber-100 via-yellow-50 to-orange-100 px-4 pb-3 pt-3 ring-1 ring-amber-200',
@@ -61,15 +61,15 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
       <div className="relative mb-1 flex items-center justify-between gap-2">
         <h2 className="text-base font-black text-amber-900 sm:text-xl">
           <span aria-hidden="true">🗺️ </span>
-          אתגר האוצר – שלב {safeStep} מתוך {total}
+          אֶתְגַּר הָאוֹצָר – שָׁלָב {safeStep} מִתּוֹךְ {total}
         </h2>
         <span className="hidden whitespace-nowrap rounded-full bg-gradient-to-b from-amber-200 to-amber-300 px-3 py-0.5 text-xs font-bold text-amber-900 ring-1 ring-amber-400/60 shadow-[inset_0_1px_0_#fff] sm:inline-block sm:text-sm">
-          {completed ? 'הושלם!' : 'ענו נכון כדי להתקדם'}
+          {completed ? 'הוּשְׁלַם!' : 'עָנוּ נָכוֹן כְּדֵי לְהִתְקַדֵּם'}
         </span>
       </div>
 
       <div className="relative mt-1 h-[6.5rem] w-full sm:h-32" dir="ltr">
-        {/* הדרך */}
+        {/* הַדֶּרֶךְ */}
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
           <defs>
             <linearGradient id="road-lit" x1="0" x2="1" y1="0" y2="0">
@@ -77,23 +77,23 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
               <stop offset="1" stopColor="#f59e0b" />
             </linearGradient>
           </defs>
-          {/* צל הדרך */}
+          {/* צֵל הַדֶּרֶךְ */}
           <path d={d} fill="none" stroke="#92400e" strokeOpacity="0.22" strokeWidth={22} strokeLinecap="round" vectorEffect="non-scaling-stroke" transform="translate(0 2.2)" />
-          {/* קצה כהה */}
+          {/* קָצֶה כֵּהֶה */}
           <path d={d} fill="none" stroke="#b45309" strokeWidth={20} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-          {/* פני הדרך */}
+          {/* פְּנֵי הַדֶּרֶךְ */}
           <path d={d} fill="none" stroke="#fbbf24" strokeWidth={14} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-          {/* גלוס */}
+          {/* גְּלוֹס */}
           <path d={d} fill="none" stroke="#fff" strokeOpacity="0.35" strokeWidth={5} strokeLinecap="round" vectorEffect="non-scaling-stroke" transform="translate(0 -1.6)" />
-          {/* קו מקווקו */}
+          {/* קַו מְקֻוְוקָו */}
           <path d={d} fill="none" stroke="#fff7ed" strokeOpacity="0.8" strokeWidth={2} strokeDasharray="6 7" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-          {/* קטע שהושלם – זוהר */}
+          {/* קֶטַע שֶׁהוּשְׁלַם – זוֹהַר */}
           {doneCount > 0 && (
             <path d={litD} fill="none" stroke="url(#road-lit)" strokeWidth={14} strokeLinecap="round" vectorEffect="non-scaling-stroke" style={{ filter: 'drop-shadow(0 0 6px rgba(250,204,21,0.9))' }} />
           )}
         </svg>
 
-        {/* תחנות */}
+        {/* תַּחֲנוֹת */}
         <ol className="absolute inset-0 m-0 list-none p-0" dir="rtl">
           {steps.map((p, i) => {
             const n = i + 1;
@@ -114,7 +114,7 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
                       !done && !current && 'border-amber-400 bg-gradient-to-b from-amber-50 to-amber-200 text-amber-500',
                     )}
                     aria-current={current ? 'step' : undefined}
-                    aria-label={`שלב ${n}${done ? ' – הושלם' : current ? ' – נוכחי' : ''}`}
+                    aria-label={`שָׁלָב ${n}${done ? ' – הוּשְׁלַם' : current ? ' – נוֹכְחִי' : ''}`}
                   >
                     {done ? <Check className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={3.5} /> : current ? n : <Star className="h-4 w-4 sm:h-5 sm:w-5" />}
                   </motion.div>
@@ -135,7 +135,7 @@ export function TreasurePath({ step, total = TREASURE_QUESTIONS, completed = fal
           })}
         </ol>
 
-        {/* תיבת האוצר */}
+        {/* תֵּיבַת הָאוֹצָר */}
         <motion.div
           className="absolute h-16 w-20 -translate-x-1/2 -translate-y-1/2 sm:h-20 sm:w-24"
           style={{ left: `${chest.x + 4}%`, top: `${chest.y - 6}%` }}

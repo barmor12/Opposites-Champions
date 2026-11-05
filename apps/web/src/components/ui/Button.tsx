@@ -104,12 +104,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       style={{ minHeight: 0 }}
       {...rest}
     >
-      {/* הילה פועמת */}
+      {/* הִילָּה פּוֹעֶמֶת */}
       {glow && !ghost && !isDisabled && (
         <span aria-hidden className={cn('pointer-events-none absolute inset-0 -z-20 rounded-[inherit]', variant === 'success' ? 'animate-glow-gold' : 'animate-glow')} />
       )}
 
-      {/* סיפון (deck) – השכבה התחתונה */}
+      {/* סִיפּוּן (deck) – הַשִּׁכְבָה הַתַּחְתּוֹנָה */}
       {!ghost && (
         <motion.span
           aria-hidden
@@ -124,7 +124,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
         />
       )}
 
-      {/* פאה (face) – השכבה העליונה */}
+      {/* פֵּאָה (face) – הַשִּׁכְבָה הָעֶלְיוֹנָה */}
       <motion.span
         variants={{ rest: { y: 0 }, hover: { y: -2 }, tap: { y: DECK - 1 } }}
         transition={press}
@@ -136,7 +136,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
           s.face,
         )}
       >
-        {/* נקודת לחיצה */}
+        {/* נְקוּדַּת לְחִיצָה */}
         {!ghost && (
           <motion.span
             aria-hidden
@@ -145,7 +145,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             className={cn('pointer-events-none absolute inset-y-1 left-1/2 w-1/2 -translate-x-1/2 rounded-full blur-md', v.spot)}
           />
         )}
-        {/* ברק */}
+        {/* בָּרָק */}
         {!ghost && (
           <motion.span
             aria-hidden
@@ -154,7 +154,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             className="pointer-events-none absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-white/70 to-transparent"
           />
         )}
-        {/* גלוס עליון קבוע */}
+        {/* גְּלוֹס עֶלְיוֹן קָבוּעַ */}
         {!ghost && <span aria-hidden className="pointer-events-none absolute inset-x-2 top-0 h-1/2 rounded-full bg-gradient-to-b from-white/35 to-transparent" />}
 
         <motion.span variants={{ rest: { y: 0 }, hover: { y: -1 }, tap: { y: 1 } }} transition={press} className={cn('relative z-10 inline-flex items-center justify-center', s.gap)}>

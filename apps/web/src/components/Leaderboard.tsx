@@ -33,7 +33,7 @@ export function Leaderboard({ entries, highlightId, compact, showPodium, limit, 
     <div className={cn('flex flex-col gap-4', className)}>
       {showPodium && podium.length > 0 && <Podium entries={podium} highlightId={highlightId} />}
       {rows.length > 0 && (
-        <ol className={cn('flex flex-col', compact ? 'gap-2' : 'gap-2.5')} aria-label="טבלת דירוג">
+        <ol className={cn('flex flex-col', compact ? 'gap-2' : 'gap-2.5')} aria-label="טַבְלַת דֵּירוּג">
           <AnimatePresence initial={false}>
             {rows.map((e) => {
               const me = e.participantId === highlightId;
@@ -63,7 +63,7 @@ export function Leaderboard({ entries, highlightId, compact, showPodium, limit, 
                         ? 'bg-transparent'
                         : 'bg-gradient-to-b from-slate-100 to-slate-300 text-slate-700 ring-1 ring-slate-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_-1px_rgba(30,41,59,0.3)]',
                     )}
-                    aria-label={`מקום ${e.rank}`}
+                    aria-label={`מָקוֹם ${e.rank}`}
                   >
                     {medal ? <Medal kind={medal} size="sm" /> : e.rank}
                   </span>
@@ -72,7 +72,7 @@ export function Leaderboard({ entries, highlightId, compact, showPodium, limit, 
                     <span className={cn('block truncate font-bold', compact ? 'text-base' : 'text-lg')}>
                       {e.displayName}
                       {me && (
-                        <Badge color="yellow" size="sm" solid className="ms-2 align-middle">אני</Badge>
+                        <Badge color="yellow" size="sm" solid className="ms-2 align-middle">אֲנִי</Badge>
                       )}
                     </span>
                     {!compact && (
@@ -85,16 +85,16 @@ export function Leaderboard({ entries, highlightId, compact, showPodium, limit, 
                         <span className="whitespace-nowrap" dir="ltr">{Math.round(e.accuracy)}%</span>
                         {e.finished && (
                           <span className="hidden items-center gap-1 whitespace-nowrap text-violet-700 sm:inline-flex">
-                            <Flag className="size-4" aria-hidden /> סיים/ה
+                            <Flag className="size-4" aria-hidden /> סִיֵּים/ה
                           </span>
                         )}
                       </span>
                     )}
                   </span>
                   {!e.connected && (
-                    <span className="inline-flex items-center gap-1 text-xs text-slate-400" title="לא מחובר/ת">
+                    <span className="inline-flex items-center gap-1 text-xs text-slate-400" title="לֹא מְחוּבָּר/ת">
                       <WifiOff className="size-4" aria-hidden />
-                      <span className="sr-only">לא מחובר/ת</span>
+                      <span className="sr-only">לֹא מְחוּבָּר/ת</span>
                     </span>
                   )}
                   <span className={cn('shrink-0 font-black tabular-nums text-violet-700', compact ? 'text-lg' : 'text-xl sm:text-2xl')}>
@@ -108,7 +108,7 @@ export function Leaderboard({ entries, highlightId, compact, showPodium, limit, 
         </ol>
       )}
       {sorted.length === 0 && (
-        <p className="rounded-2xl bg-white/70 p-4 text-center text-slate-500">עדיין אין נתונים בטבלה</p>
+        <p className="rounded-2xl bg-white/70 p-4 text-center text-slate-500">עֲדַיִין אֵין נְתוּנִים בַּטַּבְלָה</p>
       )}
     </div>
   );
@@ -131,7 +131,7 @@ const PODIUM_STYLE: Record<1 | 2 | 3, PodiumStyle> = {
     top: 'from-yellow-100 to-yellow-300',
     side: 'from-amber-600 to-amber-800',
     delay: 0.5,
-    label: 'מקום ראשון',
+    label: 'מָקוֹם רִאשׁוֹן',
     glow: 'shadow-[0_26px_50px_-20px_rgba(245,158,11,0.75)]',
   },
   2: {
@@ -140,7 +140,7 @@ const PODIUM_STYLE: Record<1 | 2 | 3, PodiumStyle> = {
     top: 'from-white to-slate-200',
     side: 'from-slate-400 to-slate-600',
     delay: 0.25,
-    label: 'מקום שני',
+    label: 'מָקוֹם שֵׁנִי',
     glow: 'shadow-[0_26px_50px_-20px_rgba(100,116,139,0.6)]',
   },
   3: {
@@ -149,7 +149,7 @@ const PODIUM_STYLE: Record<1 | 2 | 3, PodiumStyle> = {
     top: 'from-orange-100 to-orange-300',
     side: 'from-orange-600 to-orange-800',
     delay: 0.05,
-    label: 'מקום שלישי',
+    label: 'מָקוֹם שְׁלִישִׁי',
     glow: 'shadow-[0_26px_50px_-20px_rgba(194,65,12,0.6)]',
   },
 };
@@ -160,8 +160,8 @@ export function Podium({ entries, highlightId }: { entries: LeaderboardEntry[]; 
   const byRank = new Map<number, LeaderboardEntry>();
   entries.forEach((e) => byRank.set(e.rank, e));
   return (
-    <div className="relative flex items-end justify-center gap-3 px-2 pt-6 sm:gap-6 sm:px-4" aria-label="פודיום" role="list">
-      {/* רצפת הבמה */}
+    <div className="relative flex items-end justify-center gap-3 px-2 pt-6 sm:gap-6 sm:px-4" aria-label="פּוֹדְיוּם" role="list">
+      {/* רִצְפַּת הַבָּמָה */}
       <div aria-hidden className="absolute inset-x-4 bottom-0 h-3 rounded-[50%] bg-gradient-to-b from-slate-300/70 to-slate-400/40 blur-[2px] sm:inset-x-10" />
       {PODIUM_ORDER.map((rank) => {
         const e = byRank.get(rank);
@@ -173,7 +173,7 @@ export function Podium({ entries, highlightId }: { entries: LeaderboardEntry[]; 
           <motion.div
             key={e.participantId}
             role="listitem"
-            aria-label={`${style.label}: ${e.displayName}, ${formatNumber(e.score)} נקודות`}
+            aria-label={`${style.label}: ${e.displayName}, ${formatNumber(e.score)} נְקוּדּוֹת`}
             layout={!reduce}
             initial={reduce ? false : { opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -190,7 +190,7 @@ export function Podium({ entries, highlightId }: { entries: LeaderboardEntry[]; 
                 <LightRays color="rgb(254 240 138)" intensity={0.8} className="w-[300%]" />
                 <LazyImage
                   src={UI_IMAGES.trophy}
-                  alt="גביע האלופים"
+                  alt="גְּבִיעַ הָאַלּוּפִים"
                   eager
                   skeleton={false}
                   wrapperClassName="relative size-14 sm:size-20 lg:size-24 drop-shadow-[0_10px_16px_rgba(245,158,11,0.5)] animate-float"
@@ -208,10 +208,10 @@ export function Podium({ entries, highlightId }: { entries: LeaderboardEntry[]; 
             <p className={cn('mt-3 w-full truncate text-center font-black text-brand-navy', rank === 1 ? 'text-lg sm:text-xl' : 'text-base')} title={e.displayName}>
               {e.displayName}
             </p>
-            {me && <Badge color="yellow" size="sm" solid>אני</Badge>}
+            {me && <Badge color="yellow" size="sm" solid>אֲנִי</Badge>}
             <p className="text-sm font-bold text-violet-700 tabular-nums">{formatNumber(e.score)} נק׳</p>
 
-            {/* בלוק תלת־ממדי */}
+            {/* בְּלוֹק תְּלַת־מְמַדִּי */}
             <motion.div
               initial={reduce ? false : { scaleY: 0 }}
               animate={{ scaleY: 1 }}
@@ -220,17 +220,17 @@ export function Podium({ entries, highlightId }: { entries: LeaderboardEntry[]; 
               className={cn('relative mt-3 w-full', style.h)}
               aria-hidden
             >
-              {/* צד (כהה) */}
+              {/* צַד (כֵּהֶה) */}
               <span
                 className={cn('absolute -start-2.5 top-0 bottom-0 w-2.5 bg-gradient-to-b sm:-start-3 sm:w-3', style.side)}
                 style={{ transform: 'skewY(45deg)', transformOrigin: 'top right' }}
               />
-              {/* פאה עליונה (בהירה) */}
+              {/* פֵּאָה עֶלְיוֹנָה (בְּהִירָה) */}
               <span
                 className={cn('absolute inset-x-0 -top-2.5 h-2.5 bg-gradient-to-b sm:-top-3 sm:h-3', style.top)}
                 style={{ transform: 'skewX(-45deg)', transformOrigin: 'bottom left' }}
               />
-              {/* פאה קדמית */}
+              {/* פֵּאָה קִדְמִית */}
               <div
                 className={cn(
                   'relative grid size-full place-items-center overflow-hidden bg-gradient-to-b text-white',
