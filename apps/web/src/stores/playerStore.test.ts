@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type * as ApiModule from '@/services/api';
 import { GameState, GameMode, type JoinRoomResponse, type PlayerSession, type QuestionView, type RoomPublicView } from '@oc/shared';
 
 // ===== socket mock =====
@@ -32,7 +33,7 @@ vi.mock('@/services/socket', () => ({
 }));
 
 vi.mock('@/services/api', async () => {
-  const actual = await vi.importActual<typeof import('@/services/api')>('@/services/api');
+  const actual = await vi.importActual<typeof ApiModule>('@/services/api');
   return { ...actual, apiClient: { get: vi.fn(), post: vi.fn(), patch: vi.fn(), delete: vi.fn(), put: vi.fn(), url: actual.apiClient.url } };
 });
 
@@ -117,7 +118,7 @@ describe('playerStore', () => {
   });
 
   it('restoreSession clears token on 401', async () => {
-    const { ApiError } = await vi.importActual<typeof import('@/services/api')>('@/services/api');
+    const { ApiError } = await vi.importActual<typeof ApiModule>('@/services/api');
     usePlayerStore.setState({ token: 'tok-dead' });
     vi.mocked(apiClient.get).mockRejectedValueOnce(new ApiError(401, 'לא מחובר'));
     await usePlayerStore.getState().restoreSession();

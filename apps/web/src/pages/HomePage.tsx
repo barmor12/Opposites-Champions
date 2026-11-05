@@ -42,10 +42,12 @@ export function HomePage() {
   const [resumable, setResumable] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
 
-  // קוד מה־URL (/join/:code)
-  useEffect(() => {
+  // קוד מה־URL (/join/:code) – מתעדכן אם הפרמטר משתנה
+  const [prevParamCode, setPrevParamCode] = useState(params.code);
+  if (params.code !== prevParamCode) {
+    setPrevParamCode(params.code);
     if (params.code) setCode(sanitizeCode(params.code));
-  }, [params.code]);
+  }
 
   // הודעת הסרה ע"י המורה
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { AVATAR_LABELS, type AvatarId } from '@oc/shared';
 import { cn } from '@/lib/cn';
 import { AVATAR_EMOJI, AVATAR_TINT } from '@/lib/avatarEmoji';
+import { avatarSrc } from '@/lib/assets';
 import { LazyImage } from './LazyImage';
 
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
@@ -22,10 +23,6 @@ const SIZES: Record<AvatarSize, { box: string; emoji: string }> = {
   xl: { box: 'size-28', emoji: 'text-6xl' },
   '2xl': { box: 'size-36', emoji: 'text-7xl' },
 };
-
-export function avatarSrc(id: AvatarId): string {
-  return `/avatars/${id}.svg`;
-}
 
 /** דמות משתמש – SVG מתוך /avatars עם אימוג׳י גיבוי */
 export function Avatar({ id, size = 'md', ring, className, alt }: AvatarProps) {

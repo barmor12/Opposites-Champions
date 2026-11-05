@@ -20,7 +20,9 @@ export function TimerRing({ endsAt, totalMs, serverOffsetMs, onExpire, paused, s
   const [remaining, setRemaining] = useState<number>(() => (endsAt ? endsAt - (Date.now() + serverOffsetMs) : totalMs));
   const expiredFor = useRef<number | null>(null);
   const onExpireRef = useRef(onExpire);
-  onExpireRef.current = onExpire;
+  useEffect(() => {
+    onExpireRef.current = onExpire;
+  }, [onExpire]);
 
   useEffect(() => {
     if (!endsAt || paused) return;

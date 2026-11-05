@@ -1,4 +1,4 @@
-import { useEffect, useState, type ComponentPropsWithoutRef, type ReactNode } from 'react';
+import { useState, type ComponentPropsWithoutRef, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
 export interface LazyImageProps extends Omit<ComponentPropsWithoutRef<'img'>, 'src' | 'alt' | 'loading'> {
@@ -15,10 +15,12 @@ export interface LazyImageProps extends Omit<ComponentPropsWithoutRef<'img'>, 's
 /** תמונה בטעינה עצלה עם שלד (skeleton) וגיבוי חינני אם הקובץ חסר */
 export function LazyImage({ src, alt, fallback, wrapperClassName, className, eager, skeleton = true, ...rest }: LazyImageProps) {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
-
-  useEffect(() => {
+  const [prevSrc, setPrevSrc] = useState(src);
+  if (prevSrc !== src) {
+    // מקור חדש – מאפסים מצב (דפוס "derived state" מומלץ של React)
+    setPrevSrc(src);
     setStatus('loading');
-  }, [src]);
+  }
 
   if (status === 'error') {
     return (

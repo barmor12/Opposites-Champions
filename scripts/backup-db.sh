@@ -42,7 +42,7 @@ out="${BACKUP_DIR}/opposites-${ts}.dump"
 tmp="${out}.part"
 
 log "מגבה את ${POSTGRES_DB} → ${out}"
-service_running COMPOSE db || die "קונטיינר db לא רץ / db container is not running"
+service_running db || die "קונטיינר db לא רץ / db container is not running"
 
 "${COMPOSE[@]}" exec -T db pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc > "$tmp"
 mv "$tmp" "$out"

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="איטי"><title>איטי</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#DCFCE7"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 150 H196" stroke-width="4"/>
+<circle cx="24" cy="140" r="3" fill="#94A3B8" stroke="none"/><circle cx="38" cy="142" r="3" fill="#94A3B8" stroke="none"/><circle cx="52" cy="140" r="3" fill="#94A3B8" stroke="none"/>
+<path d="M40 128 L52 120 L54 134 Z" fill="#86EFAC"/>
+<ellipse cx="72" cy="140" rx="15" ry="10" fill="#86EFAC"/>
+<ellipse cx="132" cy="140" rx="15" ry="10" fill="#86EFAC"/>
+<circle cx="160" cy="120" r="17" fill="#86EFAC"/>
+<path d="M52 136 A50 50 0 0 1 152 136 Z" fill="#4ADE80"/>
+<path d="M90 96 L112 96 L120 112 L112 128 L90 128 L82 112 Z M68 110 L82 112 M120 112 L136 110 M90 96 L80 84 M112 96 L122 84 M90 128 L84 136 M112 128 L118 136" fill="#86EFAC" stroke-width="3"/>
+<circle cx="166" cy="116" r="5" fill="#fff" stroke-width="3"/><circle cx="167" cy="116" r="2.5" fill="#2D3748" stroke="none"/>
+<path d="M164 126 Q170 130 176 126" fill="none" stroke-width="3"/>
+<path d="M4 150 H196" stroke-width="4"/>
+</g></svg>

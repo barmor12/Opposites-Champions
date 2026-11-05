@@ -2,8 +2,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/cn';
 import { LazyImage } from './LazyImage';
 
-export type CharacterName = 'sun' | 'moon';
-export type CharacterMood = 'happy' | 'cheer' | 'think';
+import { characterSrc, type CharacterMood, type CharacterName } from '@/lib/assets';
 
 export interface CharacterProps {
   name: CharacterName;
@@ -18,12 +17,6 @@ export interface CharacterProps {
 const SIZES = { sm: 'size-20', md: 'size-28 sm:size-32', lg: 'size-36 sm:size-44', xl: 'size-44 sm:size-56' };
 const EMOJI: Record<CharacterName, string> = { sun: '☀️', moon: '🌙' };
 const LABEL: Record<CharacterName, string> = { sun: 'שמש', moon: 'ירח' };
-
-export function characterSrc(name: CharacterName, mood: CharacterMood): string {
-  if (name === 'sun' && mood === 'cheer') return '/images/characters/sun-cheer.svg';
-  if (name === 'moon' && mood === 'think') return '/images/characters/moon-think.svg';
-  return `/images/characters/${name}.svg`;
-}
 
 /** דמויות המשחק – שמש וירח (הפכים!) עם אנימציית ריחוף */
 export function Character({ name, mood = 'happy', size = 'md', animate = 'float', className, delay = 0 }: CharacterProps) {

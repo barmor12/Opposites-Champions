@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מהיר"><title>מהיר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M12 96 H52 M6 114 H44 M12 132 H52" stroke-width="5"/>
+<ellipse cx="128" cy="66" rx="9" ry="26" fill="#fff" transform="rotate(-50 128 66)"/>
+<ellipse cx="128" cy="66" rx="4" ry="18" fill="#F9A8D4" stroke="none" transform="rotate(-50 128 66)"/>
+<ellipse cx="116" cy="80" rx="9" ry="26" fill="#fff" transform="rotate(-62 116 80)"/>
+<circle cx="66" cy="110" r="10" fill="#fff"/>
+<ellipse cx="78" cy="140" rx="20" ry="10" fill="#fff"/>
+<ellipse cx="104" cy="118" rx="42" ry="24" fill="#fff"/>
+<ellipse cx="140" cy="138" rx="18" ry="9" fill="#fff"/>
+<circle cx="148" cy="98" r="22" fill="#fff"/>
+<circle cx="154" cy="94" r="6" fill="#fff" stroke-width="3"/><circle cx="155" cy="94" r="3" fill="#2D3748" stroke="none"/>
+<circle cx="169" cy="102" r="3" fill="#F9A8D4"/>
+<path d="M160 110 Q164 114 170 110" fill="none" stroke-width="3"/>
+<path d="M30 160 q8 -8 16 0 q8 8 16 0" fill="none" stroke="#CBD5E1" stroke-width="5"/>
+</g></svg>

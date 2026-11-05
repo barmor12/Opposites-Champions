@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nest start --watch",
+    "dev": "NODE_OPTIONS=\"--require ./scripts/register-aliases.cjs\" nest start --watch",
     "build": "nest build && node scripts/fix-aliases.mjs",
     "start": "node dist/apps/server/src/main.js",
     "start:prod": "node dist/apps/server/src/main.js",

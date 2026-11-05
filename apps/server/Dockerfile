@@ -29,7 +29,7 @@ FROM ${NODE_IMAGE} AS builder
 ARG PNPM_VERSION
 
 # כלי בנייה ל-native modules (argon2 בונה מהמקור אם אין prebuilt ל-musl), openssl ל-Prisma engines
-RUN apk add --no-cache python3 make g++ openssl libc6-compat
+RUN apk add --no-cache python3 make g++ openssl
 
 # pnpm דרך corepack, מוצמד לגרסה שב-package.json ("packageManager")
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
@@ -94,7 +94,7 @@ RUN cd /out/apps/server && /opt/tools/node_modules/.bin/prisma generate
 FROM ${NODE_IMAGE} AS runtime
 
 # openssl נדרש ל-Prisma engines ב-Alpine; wget (busybox) משמש ל-HEALTHCHECK
-RUN apk add --no-cache openssl libc6-compat \
+RUN apk add --no-cache openssl \
     && mkdir -p /app/apps/server && chown -R node:node /app
 
 ENV NODE_ENV=production \

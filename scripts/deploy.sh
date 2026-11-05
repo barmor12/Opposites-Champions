@@ -47,7 +47,7 @@ fi
 log "גרסה: $(git rev-parse --short HEAD) ($(git log -1 --pretty=%s))"
 
 if [[ "$DO_BACKUP" == "1" ]]; then
-  if service_running COMPOSE db; then
+  if service_running db; then
     log "גיבוי לפני עדכון…"
     "${ROOT_DIR}/scripts/backup-db.sh"
   else

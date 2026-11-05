@@ -33,10 +33,13 @@ mkdir -p "$CERT_DIR" "$WWW_DIR"
 domain_args=(-d "$DOMAIN")
 for d in ${EXTRA_DOMAINS:-}; do domain_args+=(-d "$d"); done
 
-staging_args=()
+extra_args=()
 if [[ "${STAGING:-0}" == "1" ]]; then
-  staging_args=(--staging)
+  extra_args+=(--staging)
   warn "מצב STAGING – התעודה לא תהיה מהימנה בדפדפן (לבדיקה בלבד)"
+fi
+if [[ "${FORCE:-0}" == "1" ]]; then
+  extra_args+=(--force-renewal)
 fi
 
 if [[ -d "${CERT_DIR}/live/${DOMAIN}" && "${FORCE:-0}" != "1" ]]; then
@@ -64,8 +67,7 @@ log "שלב 2/3: מבקש תעודה מ-Let's Encrypt עבור: ${domain_args[*]
   --agree-tos --no-eff-email \
   --rsa-key-size 4096 \
   --non-interactive \
-  ${FORCE:+--force-renewal} \
-  "${staging_args[@]}"
+  "${extra_args[@]}"
 
 [[ -f "${CERT_DIR}/live/${DOMAIN}/fullchain.pem" ]] || die "התעודה לא נוצרה – בדקו DNS (A/AAAA ל-${DOMAIN}) ושפורט 80 פתוח מהאינטרנט"
 

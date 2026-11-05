@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="רועש"><title>רועש</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FDF2F8"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M20 70 q-10 14 0 28 M12 56 q-20 28 0 56 M180 70 q10 14 0 28 M188 56 q20 28 0 56" fill="none" stroke="#F59E0B" stroke-width="5"/>
+<path d="M44 24 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z M156 24 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z M100 14 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z" fill="#FDE047" stroke-width="3"/>
+<path d="M56 44 L92 94 M144 44 L108 94" stroke-width="12"/>
+<path d="M56 44 L92 94 M144 44 L108 94" stroke="#B45309" stroke-width="6"/>
+<circle cx="56" cy="42" r="7" fill="#FDE1C8" stroke-width="4"/><circle cx="144" cy="42" r="7" fill="#FDE1C8" stroke-width="4"/>
+<path d="M44 100 V158 A56 18 0 0 0 156 158 V100 Z" fill="#F87171"/>
+<path d="M44 130 L72 108 L100 130 L128 108 L156 130" fill="none" stroke="#FDE047" stroke-width="5"/>
+<ellipse cx="100" cy="100" rx="56" ry="18" fill="#fff"/>
+</g></svg>

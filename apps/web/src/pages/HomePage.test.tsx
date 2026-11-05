@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type * as ApiModule from '@/services/api';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
@@ -10,7 +11,7 @@ vi.mock('@/animations', () => ({
   Confetti: () => null,
 }));
 vi.mock('@/services/api', async () => {
-  const actual = await vi.importActual<typeof import('@/services/api')>('@/services/api');
+  const actual = await vi.importActual<typeof ApiModule>('@/services/api');
   return { ...actual, apiClient: { get: vi.fn(), post: vi.fn(), patch: vi.fn(), delete: vi.fn(), put: vi.fn(), url: actual.apiClient.url } };
 });
 

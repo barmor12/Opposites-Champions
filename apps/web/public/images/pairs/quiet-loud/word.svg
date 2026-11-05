@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="שקט"><title>שקט</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M76 190 L70 150 L130 150 L124 190 Z" fill="#A78BFA"/>
+<circle cx="100" cy="96" r="50" fill="#FDE1C8"/>
+<path d="M50 90 Q54 46 100 46 Q146 46 150 90 Q130 70 100 72 Q70 70 50 90 Z" fill="#B45309"/>
+<path d="M78 98 Q86 106 94 98 M106 98 Q114 106 122 98" fill="none" stroke-width="4"/>
+<circle cx="66" cy="112" r="7" fill="#F9A8D4" stroke="none"/><circle cx="134" cy="112" r="7" fill="#F9A8D4" stroke="none"/>
+<ellipse cx="100" cy="124" rx="7" ry="4" fill="#DC2626" stroke-width="3"/>
+<ellipse cx="112" cy="162" rx="24" ry="16" fill="#FDE1C8"/>
+<rect x="94" y="100" width="13" height="52" rx="6.5" fill="#FDE1C8"/>
+<path d="M98 114 H103" stroke-width="2.5"/>
+<path d="M30 60 q-8 8 0 16 M170 60 q8 8 0 16" fill="none" stroke="#A78BFA" stroke-width="4" opacity="0.6"/>
+</g></svg>
