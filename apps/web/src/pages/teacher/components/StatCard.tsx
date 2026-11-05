@@ -4,7 +4,8 @@ import { motion, useReducedMotion } from 'motion/react';
 import { Card } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import { CountUp } from './CountUp';
-import { SpotlightOverlay, spotlightHandlers } from './Spotlight';
+import { SpotlightOverlay } from './Spotlight';
+import { spotlightHandlers } from './spotlight';
 
 const TONES = {
   sky: { circle: 'from-sky-400 to-cyan-500 shadow-sky-500/40', spark: '#38bdf8', ring: 'ring-sky-100' },

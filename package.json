@@ -10,7 +10,7 @@
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test",
+    "test": "pnpm -r --filter '!@oc/e2e' test",
     "test:e2e": "pnpm --filter @oc/e2e test",
     "db:migrate": "pnpm --filter @oc/server prisma:migrate",
     "db:seed": "pnpm --filter @oc/server prisma:seed",

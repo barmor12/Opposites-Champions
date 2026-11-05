@@ -1,18 +1,7 @@
 import { Ban, BarChart3, CheckCircle2, Clock, Hourglass, Pause, Play, SkipForward, Sparkles, Timer, Trophy, type LucideIcon } from 'lucide-react';
 import type { GameState } from '@oc/shared';
 import { cn } from '@/lib/cn';
-import { STATE_LABELS, type BadgeTone } from '../labels';
-
-export const TONE_CLASSES: Record<BadgeTone, string> = {
-  gray: 'bg-slate-100 text-slate-600 ring-slate-200/80',
-  sky: 'bg-sky-50 text-sky-700 ring-sky-200/80',
-  green: 'bg-emerald-50 text-emerald-700 ring-emerald-200/80',
-  yellow: 'bg-amber-50 text-amber-700 ring-amber-200/80',
-  violet: 'bg-violet-50 text-violet-700 ring-violet-200/80',
-  pink: 'bg-pink-50 text-pink-700 ring-pink-200/80',
-  orange: 'bg-orange-50 text-orange-700 ring-orange-200/80',
-  navy: 'bg-indigo-50 text-indigo-800 ring-indigo-200/80',
-};
+import { STATE_LABELS, TONE_CLASSES, type BadgeTone } from '../labels';
 
 const STATE_ICONS: Record<GameState, LucideIcon> = {
   CREATED: Sparkles,

@@ -10,6 +10,7 @@ export * from './CountUp';
 export * from './useCountUp';
 export * from './FloatingBlobs';
 export * from './Spotlight';
+export * from './spotlight';
 export * from './MagicButton';
 export * from './SegmentedTabs';
 export * from './chrome';

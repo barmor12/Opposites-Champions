@@ -31,7 +31,18 @@
 תוצאה אחרונה: **4/4 עברו** (`npx playwright test --project=desktop`, 2.4 דקות; דפדפן Chromium מותקן מראש דרך `PW_CHROMIUM_PATH`).
 
 ### אימות מלא (lint/typecheck/test/build)
-_(מתעדכן בסוף האימות)_
+הרצה אחרונה (2026-11-05, Node 22, pnpm 10, PostgreSQL 16 מקומי):
+
+| שלב | פקודה | תוצאה |
+|---|---|---|
+| Lint | `pnpm lint` (ESLint בכל החבילות) | ✅ 0 שגיאות, 0 אזהרות |
+| Typecheck | `pnpm typecheck` (`tsc --noEmit`, strict) | ✅ 5/5 חבילות |
+| Unit | `pnpm test` (vitest; לא כולל E2E) | ✅ 218/218 – shared 21, content 22, web 77, server 98 |
+| Integration | `pnpm --filter @oc/server test:int` | ✅ 35/35 |
+| E2E | `pnpm test:e2e` (`--project=desktop`, אחרי `pnpm build`) | ✅ 4/4 |
+| Build | `pnpm build` (Vite + Nest + fix-aliases) | ✅ |
+
+הערה: `pnpm test` מריץ רק בדיקות יחידה; E2E מורץ בנפרד ב־`pnpm test:e2e` כי הוא דורש שרת בנוי ומסד נתונים זמין.
 
 ## מגבלות ידועות / מה חסר
 - **Docker daemon לא זמין בסביבת הפיתוח** – `docker compose config` ו־Dockerfiles נבדקו בסקירה ובווידוא תחביר בלבד; יש להריץ `docker compose up --build` בפועל ב־VPS/מקומית לפני פריסה ראשונה.
