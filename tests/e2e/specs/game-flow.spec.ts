@@ -8,7 +8,7 @@ test.describe('זרימת משחק מלאה', () => {
     expect(code).toMatch(/^\d{6}$/);
 
     await page.goto(`/teacher/rooms/${roomId}`);
-    await expect(page.getByText(code)).toBeVisible();
+    await expect(page.getByText(code, { exact: true }).first()).toBeVisible();
 
     const student1 = await joinAsStudent(browser, code, 'נועה');
     const student2 = await joinAsStudent(browser, code, 'יואב');
