@@ -1,3 +1,4 @@
+// Option tiles adapted from 21st.dev — Pop Button by tom_ui: thick bottom border (deck) that collapses on press.
 import { motion, useReducedMotion } from 'motion/react';
 import { Check, X } from 'lucide-react';
 import { useEffect } from 'react';
@@ -17,33 +18,33 @@ export interface ChoiceQuestionProps {
   onSelect: (option: QuestionOptionView) => void;
 }
 
-/** ארבעה צבעי פסטל – אחד לכל אפשרות */
+/** ארבעה צבעי סוכריה – אחד לכל אפשרות (פאה בהירה + סיפון רווי, טקסט כהה ל־AA) */
 const OPTION_STYLES = [
-  { idle: 'border-sky-300 bg-sky-100 text-sky-900 hover:bg-sky-200', key: 'bg-sky-400 text-white' },
-  { idle: 'border-violet-300 bg-violet-100 text-violet-900 hover:bg-violet-200', key: 'bg-violet-400 text-white' },
-  { idle: 'border-yellow-300 bg-yellow-100 text-yellow-900 hover:bg-yellow-200', key: 'bg-yellow-400 text-yellow-900' },
-  { idle: 'border-pink-300 bg-pink-100 text-pink-900 hover:bg-pink-200', key: 'bg-pink-400 text-white' },
+  { idle: 'from-sky-100 via-sky-200 to-sky-300 border-sky-600 text-sky-950 hover:from-sky-50 hover:to-sky-200', key: 'from-sky-400 to-sky-600 text-white', glow: 'shadow-[0_16px_30px_-12px_rgba(2,132,199,0.55)]' },
+  { idle: 'from-violet-100 via-violet-200 to-violet-300 border-violet-700 text-violet-950 hover:from-violet-50 hover:to-violet-200', key: 'from-violet-400 to-violet-700 text-white', glow: 'shadow-[0_16px_30px_-12px_rgba(109,40,217,0.55)]' },
+  { idle: 'from-yellow-100 via-yellow-200 to-amber-300 border-amber-600 text-amber-950 hover:from-yellow-50 hover:to-amber-200', key: 'from-yellow-300 to-amber-500 text-amber-950', glow: 'shadow-[0_16px_30px_-12px_rgba(202,138,4,0.55)]' },
+  { idle: 'from-pink-100 via-pink-200 to-pink-300 border-pink-600 text-pink-950 hover:from-pink-50 hover:to-pink-200', key: 'from-pink-400 to-pink-600 text-white', glow: 'shadow-[0_16px_30px_-12px_rgba(219,39,119,0.55)]' },
 ] as const;
 
 const STATE_CLASSES: Record<Exclude<OptionState, 'idle'>, string> = {
-  pending: 'border-slate-400 bg-white text-slate-800 ring-4 ring-slate-300 scale-[1.02]',
-  correct: 'border-green-600 bg-green-500 text-white shadow-[0_0_0_6px_rgba(34,197,94,0.3)]',
-  wrong: 'border-red-500 bg-red-400 text-white',
-  reveal: 'border-green-500 bg-green-100 text-green-800 ring-4 ring-green-300',
-  dim: 'border-slate-200 bg-slate-100 text-slate-400 opacity-70',
+  pending: 'from-white to-slate-100 border-slate-500 text-slate-800 ring-4 ring-violet-300 shadow-[0_16px_30px_-12px_rgba(109,40,217,0.45)]',
+  correct: 'from-green-400 via-green-500 to-green-700 border-green-900 text-white shadow-[0_0_0_6px_rgba(34,197,94,0.3),0_18px_36px_-12px_rgba(21,128,61,0.7)]',
+  wrong: 'from-rose-400 via-rose-500 to-rose-600 border-rose-800 text-white shadow-[0_14px_28px_-12px_rgba(190,18,60,0.6)]',
+  reveal: 'from-green-100 to-green-200 border-green-600 text-green-900 ring-4 ring-green-400 shadow-[0_14px_28px_-12px_rgba(21,128,61,0.45)]',
+  dim: 'from-slate-100 to-slate-200 border-slate-300 text-slate-400 opacity-80 shadow-none',
 };
 
 function StateIcon({ state }: { state: OptionState }) {
   if (state === 'correct' || state === 'reveal') {
     return (
-      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-green-600 shadow" aria-hidden="true">
+      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-b from-white to-green-50 text-green-600 shadow-[0_4px_10px_-2px_rgba(21,128,61,0.5),inset_0_1px_0_#fff] ring-2 ring-green-200" aria-hidden="true">
         <Check className="h-6 w-6" strokeWidth={4} />
       </span>
     );
   }
   if (state === 'wrong') {
     return (
-      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-red-500 shadow" aria-hidden="true">
+      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-b from-white to-rose-50 text-rose-500 shadow-[0_4px_10px_-2px_rgba(190,18,60,0.5),inset_0_1px_0_#fff] ring-2 ring-rose-200" aria-hidden="true">
         <X className="h-6 w-6" strokeWidth={4} />
       </span>
     );
@@ -101,7 +102,8 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, expired
         const state = optionState(opt, selectedId, result, showCorrectAnswers, expired);
         const isWrong = state === 'wrong';
         const isCorrect = state === 'correct';
-        const classes = state === 'idle' ? style.idle : STATE_CLASSES[state];
+        const interactive = !disabled && !reduced;
+        const classes = state === 'idle' ? cn(style.idle, style.glow) : STATE_CLASSES[state];
         return (
           <Shake key={opt.id} active={isWrong}>
             <motion.button
@@ -109,8 +111,7 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, expired
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0, scale: isCorrect && !reduced ? [1, 1.06, 1] : 1 }}
               transition={{ delay: result ? 0 : 0.08 * i, type: 'spring', stiffness: 300, damping: 22, scale: { type: 'tween', duration: 0.45, ease: 'easeInOut' } }}
-              whileHover={!disabled && !reduced ? { scale: 1.03 } : undefined}
-              whileTap={!disabled && !reduced ? { scale: 0.96 } : undefined}
+              whileHover={interactive ? { y: -4 } : undefined}
               onClick={() => !disabled && onSelect(opt)}
               disabled={disabled && !result}
               aria-disabled={disabled}
@@ -119,24 +120,29 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, expired
               data-testid={`option-${i + 1}`}
               data-state={state}
               className={cn(
-                'relative flex w-full items-center justify-center rounded-3xl border-4 font-black transition-colors',
+                'group relative flex w-full items-center justify-center overflow-hidden rounded-3xl border-b-[7px] bg-gradient-to-b font-black',
+                'transition-[background-color,border-color,box-shadow,transform] duration-150',
+                !disabled && 'active:translate-y-[4px] active:border-b-[3px]',
                 'focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-500 focus-visible:ring-offset-2',
                 'disabled:cursor-not-allowed',
-                isImage ? 'min-h-40 flex-col gap-2 p-3 sm:min-h-52' : 'min-h-16 px-14 py-4 text-2xl sm:min-h-20 sm:text-3xl',
+                isImage ? 'min-h-40 flex-col gap-2 p-3 sm:min-h-52 lg:min-h-56' : 'min-h-[4.25rem] px-14 py-4 text-fluid-option sm:min-h-[5.5rem]',
                 classes,
               )}
             >
+              {/* גלוס עליון */}
+              <span aria-hidden="true" className="pointer-events-none absolute inset-x-3 top-0 h-[42%] rounded-full bg-gradient-to-b from-white/60 to-transparent" />
               {/* מספר מקש */}
               <span
                 aria-hidden="true"
                 className={cn(
-                  'absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-base font-black shadow',
-                  state === 'idle' || state === 'pending' ? style.key : 'bg-white/80 text-slate-700',
+                  'absolute start-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-b text-base font-black ring-2 ring-white/80',
+                  'shadow-[0_4px_8px_-2px_rgba(30,41,59,0.4),inset_0_1px_0_rgba(255,255,255,0.5)]',
+                  state === 'idle' || state === 'pending' ? style.key : 'from-white to-slate-100 text-slate-700',
                 )}
               >
                 {i + 1}
               </span>
-              <span className="absolute left-3 top-3">
+              <span className="absolute end-3 top-3">
                 <StateIcon state={state} />
               </span>
 
@@ -144,11 +150,12 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, expired
                 <LazyImage
                   src={opt.image}
                   alt={opt.text}
-                  className="h-24 w-24 rounded-2xl bg-white/70 sm:h-32 sm:w-32"
-                  imgClassName="p-1"
+                  glossy
+                  className="h-24 w-24 sm:h-32 sm:w-32 lg:h-36 lg:w-36"
+                  imgClassName="p-2"
                 />
               )}
-              <span className={cn(isImage && 'text-xl sm:text-2xl')}>
+              <span className={cn('relative text-shadow-[0_1px_0_rgba(255,255,255,0.5)]', isImage && 'text-xl sm:text-2xl', (isCorrect || isWrong) && 'drop-shadow-[0_1px_0_rgba(0,0,0,0.25)]')}>
                 {opt.text}
                 <span className="sr-only">{srStateText(state)}</span>
               </span>
