@@ -61,6 +61,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
         status = HttpStatus.NOT_FOUND;
         message = HE.notFound;
       }
+    } else if (isClientHttpError(exception)) {
+      // body-parser / http-errors (413 entity.too.large, 400 entity.parse.failed, …) – never expose the raw message
+      status = exception.status;
+      message = hebrewMessageForStatus(status);
     }
     error ??= STATUS_CODES[status] ?? 'Error';
 

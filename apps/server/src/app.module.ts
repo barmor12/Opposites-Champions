@@ -18,23 +18,7 @@ import { GameFeatureModule } from './games/game-feature.module';
     PrismaModule,
     LoggerModule.forRootAsync({
       inject: [AppConfigService],
-      useFactory: (config: AppConfigService) => ({
-        pinoHttp: {
-          level: config.logLevel,
-          transport: config.isProd ? undefined : { target: 'pino-pretty', options: { colorize: true, singleLine: true, translateTime: 'HH:MM:ss' } },
-          redact: {
-            paths: ['req.headers.cookie', 'req.headers.authorization', 'req.headers["x-player-token"]', 'res.headers["set-cookie"]', 'req.body.password'],
-            censor: '[redacted]',
-          },
-          // Minimal serializers – no IPs, headers or bodies (no PII).
-          serializers: {
-            req: (req: IncomingMessage & { id?: unknown }) => ({ id: req.id, method: req.method, url: req.url }),
-            res: (res: { statusCode?: number }) => ({ statusCode: res.statusCode }),
-          },
-          autoLogging: { ignore: (req: IncomingMessage) => req.url === '/api/health' },
-          customProps: () => ({ app: 'oc-server' }),
-        },
-      }),
+      useFactory: (config: AppConfigService) => ({ pinoHttp: buildPinoHttpOptions(config) }),
     }),
     ThrottlerModule.forRoot({ throttlers: [{ name: 'default', ttl: 60_000, limit: 100 }] }),
     AuthModule,
