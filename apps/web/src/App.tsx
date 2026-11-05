@@ -7,6 +7,8 @@ import { ResultsPage } from '@/pages/ResultsPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
 const TeacherRoutes = lazy(() => import('@/pages/teacher').then((m) => ({ default: m.TeacherRoutes })));
+// עמוד דמו למשחקים – בפיתוח בלבד
+const GamesDemo = import.meta.env.DEV ? lazy(() => import('@/games/demo/GamesDemo').then((m) => ({ default: m.GamesDemo }))) : null;
 
 function PageFallback() {
   return (
@@ -57,6 +59,16 @@ export default function App() {
             </Suspense>
           }
         />
+        {GamesDemo && (
+          <Route
+            path="/dev/games"
+            element={
+              <Suspense fallback={<PageFallback />}>
+                <GamesDemo />
+              </Suspense>
+            }
+          />
+        )}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Toaster />

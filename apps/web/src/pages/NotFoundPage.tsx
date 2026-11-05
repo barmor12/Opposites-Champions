@@ -4,11 +4,12 @@ import { Button, Card, Character, PageBackground } from '@/components/ui';
 
 export function NotFoundPage() {
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center p-4">
+    <main className="flex min-h-dvh flex-col items-center justify-center safe-x safe-bottom p-4">
       <PageBackground variant="sunset" rainbow={false} />
-      <Card variant="glass" className="flex max-w-md flex-col items-center gap-4 text-center">
+      <Card variant="glass" className="flex w-full max-w-md flex-col items-center gap-4 text-center shadow-float">
         <Character name="moon" mood="think" size="md" animate="wiggle" />
-        <h1 className="text-3xl font-black">אופס! הדף הזה הלך לאיבוד</h1>
+        <p className="text-fluid-hero font-black leading-none text-gradient-candy" aria-hidden>404</p>
+        <h1 className="text-2xl font-black sm:text-3xl">אופס! הדף הזה הלך לאיבוד</h1>
         <p className="text-lg text-slate-600">
           כמו ההפך של "נמצא"… הדף שחיפשתם לא קיים. בואו נחזור למשחק!
         </p>
