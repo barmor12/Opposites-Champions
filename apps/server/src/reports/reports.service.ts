@@ -154,7 +154,7 @@ export class ReportsService {
     lines.push('');
     lines.push(QUESTION_HEADERS.map(esc).join(','));
     for (const q of results.questionStats) lines.push(questionRow(q).map(esc).join(','));
-    return `﻿${lines.join('\r\n')}\r\n`;
+    return `\uFEFF${lines.join('\r\n')}\r\n`;
   }
 
   private async toXlsx(results: GameResults): Promise<Buffer> {

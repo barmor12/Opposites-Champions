@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Prisma, QuestionType, type SessionQuestion } from '@prisma/client';
+import { QuestionType, type Prisma, type SessionQuestion } from '@prisma/client';
 import {
   MATCH_PAIRS_PER_QUESTION, TREASURE_QUESTIONS,
   type AnswerPayload, type GameSettings, type MatchCardView, type QuestionOptionView, type QuestionView,

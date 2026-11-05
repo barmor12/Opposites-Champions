@@ -29,17 +29,16 @@ function isRecord(v: unknown): v is Record<string, unknown> {
 export function parseQuestionPayload(json: Prisma.JsonValue): QuestionPayload {
   if (!isRecord(json)) return { kind: 'choice', pairId: '', word: '', opposite: '' };
   if (json.kind === 'match') {
-    const cards = Array.isArray(json.cards)
-      ? json.cards.filter(isRecord).map((c): MatchCardView => ({
+    const rawCards: unknown[] = Array.isArray(json.cards) ? json.cards : [];
+    const rawPairs: unknown[] = Array.isArray(json.pairs) ? json.pairs : [];
+    const rawIds: unknown[] = Array.isArray(json.pairIds) ? json.pairIds : [];
+    const cards = rawCards.filter(isRecord).map((c): MatchCardView => ({
           id: String(c.id ?? ''),
           text: String(c.text ?? ''),
           ...(typeof c.image === 'string' ? { image: c.image } : {}),
-        }))
-      : [];
-    const pairs = Array.isArray(json.pairs)
-      ? json.pairs.filter(isRecord).map((p): MatchPair => ({ cardA: String(p.cardA ?? ''), cardB: String(p.cardB ?? '') }))
-      : [];
-    const pairIds = Array.isArray(json.pairIds) ? json.pairIds.map(String) : [];
+        }));
+    const pairs = rawPairs.filter(isRecord).map((p): MatchPair => ({ cardA: String(p.cardA ?? ''), cardB: String(p.cardB ?? '') }));
+    const pairIds = rawIds.map(String);
     return { kind: 'match', cards, pairs, pairIds };
   }
   return {
