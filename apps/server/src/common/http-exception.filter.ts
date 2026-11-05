@@ -1,5 +1,6 @@
 import { type ArgumentsHost, Catch, type ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import type { Request, Response } from 'express';
+import { STATUS_CODES } from 'node:http';
 import { HE, hebrewMessageForStatus, isEnglishDefaultMessage } from './hebrew-messages';
 
 export interface ErrorBody {
@@ -37,7 +38,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message: string = HE.internal;
-    let error = 'Internal Server Error';
+    let error: string | undefined;
 
     if (exception instanceof HttpException) {
       status = exception.getStatus();
@@ -49,19 +50,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
         message = normaliseMessage(status, b.message ?? exception.message);
         if (typeof b.error === 'string') error = b.error;
       }
-      if (error === 'Internal Server Error' || status < 500) error = HttpStatus[status] ?? error;
     } else if (isPrismaKnownError(exception)) {
       // Unique constraint → 409; record not found → 404
       if (exception.code === 'P2002') {
         status = HttpStatus.CONFLICT;
         message = HE.conflict;
-        error = 'Conflict';
       } else if (exception.code === 'P2025') {
         status = HttpStatus.NOT_FOUND;
         message = HE.notFound;
-        error = 'Not Found';
       }
     }
+    error ??= STATUS_CODES[status] ?? 'Error';
 
     if (status >= 500) {
       const err = exception instanceof Error ? exception : new Error(String(exception));

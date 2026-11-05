@@ -6,6 +6,11 @@ import { AuthService } from './auth.service';
 import type { PrismaService } from '../prisma/prisma.service';
 import type { TeacherJwtPayload } from './teacher-auth.guard';
 
+vi.mock('argon2', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('argon2')>();
+  return { ...actual, verify: vi.fn(actual.verify) };
+});
+
 const findFirst = vi.fn();
 const prisma = { teacher: { findFirst } } as unknown as PrismaService;
 const jwt = new JwtService({ secret: 'unit-test-secret-at-least-32-chars-long!!', signOptions: { expiresIn: '12h' } });
@@ -43,10 +48,10 @@ describe('AuthService', () => {
 
   it('rejects an unknown email with the same error and still runs a hash verification', async () => {
     findFirst.mockResolvedValue(null);
-    const verifySpy = vi.spyOn(argon2, 'verify');
+    const verifySpy = vi.mocked(argon2.verify);
+    verifySpy.mockClear();
     await expect(service.login('nobody@example.com', 'whatever')).rejects.toThrow('אימייל או סיסמה שגויים');
     expect(verifySpy).toHaveBeenCalledTimes(1);
-    verifySpy.mockRestore();
   });
 
   it('does not match soft-deleted teachers (query filters deletedAt)', async () => {
