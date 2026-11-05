@@ -67,7 +67,8 @@ export async function joinAsStudent(browser: Browser, code: string, name: string
 /** עונה על כל השאלות (בוחר תמיד את האפשרות הראשונה) עד למסך הסיום */
 export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise<void> {
   for (let i = 0; i < maxQuestions; i++) {
-    const finished = page.getByText(/סיימת|תוצאות|מקום/).first();
+    // מסך "סיימת" (ממתינים לשאר הכיתה) או מעבר למסך התוצאות
+    const finished = page.getByText(/סיימת/).first();
     const option = page.getByTestId('option-1');
     const matchCheck = page.getByTestId('check-button');
     const matchCard = page.locator('[data-testid^="card-"]');
@@ -77,6 +78,7 @@ export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise
       finished.waitFor({ state: 'visible', timeout: 20_000 }).catch(() => undefined),
     ]);
     if (await finished.isVisible().catch(() => false)) return;
+    if (/\/results/.test(page.url())) return;
     if (await matchCard.first().isVisible().catch(() => false)) {
       const cards = await matchCard.all();
       for (let c = 0; c + 1 < cards.length; c += 2) {

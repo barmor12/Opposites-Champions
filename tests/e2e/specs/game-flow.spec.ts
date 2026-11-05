@@ -40,8 +40,10 @@ test.describe('זרימת משחק מלאה', () => {
 
     await page.getByRole('button', { name: /סיים משחק/ }).click();
 
-    await expect(student1.getByText(/מקום|אלוף/).first()).toBeVisible({ timeout: 20_000 });
-    await expect(student1.getByAltText(/מדליית זהב|זהב/).first()).toBeVisible();
+    // כל התלמידים עוברים למסך התוצאות עם מדליות
+    await student1.waitForURL(/\/results/, { timeout: 20_000 });
+    await student2.waitForURL(/\/results/, { timeout: 20_000 });
+    await expect(student1.getByAltText(/זהב/).first()).toBeVisible({ timeout: 15_000 });
 
     await page.goto(`/teacher/rooms/${roomId}/results`);
     await expect(page.getByText(/ממוצע/)).toBeVisible();
