@@ -20,6 +20,10 @@ export default defineConfig({
     locale: 'he-IL',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
+    // אפשרות להשתמש בדפדפן מותקן מראש (למשל בסביבות ענן) במקום ההורדה של Playwright
+    ...(process.env.PW_CHROMIUM_PATH
+      ? { launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } }
+      : {}),
   },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
