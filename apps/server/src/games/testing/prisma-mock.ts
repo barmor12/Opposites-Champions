@@ -8,13 +8,13 @@ export type MockModel = Record<string, Mock<AnyFn>>;
  * Prisma mock מינימלי לבדיקות יחידה: כל מודל הוא אובייקט של vi.fn(),
  * ו־$transaction מריץ callback עם ה־mock עצמו (או מחזיר Promise.all על מערך).
  */
-export function mockPrisma(models: Record<string, MockModel>): PrismaService & Record<string, MockModel> {
+export function mockPrisma<M extends Record<string, MockModel>>(models: M): PrismaService & M {
   const base: Record<string, unknown> = { ...models };
   base.$transaction = vi.fn(async (arg: unknown) => {
     if (typeof arg === 'function') return (arg as (tx: unknown) => Promise<unknown>)(base);
     return Promise.all(arg as Promise<unknown>[]);
   });
-  return base as unknown as PrismaService & Record<string, MockModel>;
+  return base as unknown as PrismaService & M;
 }
 
 export const p2002 = (): Error & { code: string } => {
