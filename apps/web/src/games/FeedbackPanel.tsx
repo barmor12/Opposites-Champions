@@ -115,6 +115,115 @@ export function FeedbackPanel({ kind, result, correctText, correctImage, explana
   );
 }
 
+interface PictureFeedbackProps {
+  kind: FeedbackKind | null;
+  result?: AnswerResult | null;
+  correctText?: string | null;
+  correctImage?: string | null;
+  onNext: () => void;
+  nextLabel: string;
+  seed: string;
+}
+
+/** משוב "ללא קריאה": אייקון ענק, ניקוד, איור התשובה הנכונה (אם מותר) וחץ המשך גדול */
+function PictureFeedback({ kind, result, correctText, correctImage, onNext, nextLabel, seed }: PictureFeedbackProps) {
+  return (
+    <AnimatePresence>
+      {kind && (
+        <motion.section
+          key={kind}
+          role="status"
+          aria-live="polite"
+          data-testid="feedback-panel"
+          data-kind={kind}
+          data-variant="picture"
+          initial={{ y: 24, opacity: 0, scale: 0.96 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+          className={cn('relative rounded-[2rem] bg-gradient-to-b px-4 py-4 text-center ring-4 sm:px-6 sm:py-5', 'shadow-[inset_0_2px_0_#fff]', PANEL[kind])}
+        >
+          {kind === 'correct' && <CelebrationBurst />}
+          <div className="relative flex flex-col items-center gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+              <BigStateIcon kind={kind} />
+              <div className="flex flex-col items-center gap-2">
+                {kind === 'correct' && <Praise text={pick(PRAISE_SHORT, seed)} />}
+                {kind === 'wrong' && (
+                  <p className="text-2xl font-black text-orange-700 text-shadow-pop sm:text-3xl">{pick(ENCOURAGE_WRONG_SHORT, seed)}</p>
+                )}
+                {kind === 'timeout' && <p className="text-2xl font-black text-sky-700 text-shadow-pop sm:text-3xl">נגמר הזמן</p>}
+                {result && (kind === 'correct' || result.scoreAwarded > 0) && <ScoreBadge points={result.scoreAwarded} />}
+                {kind === 'correct' && result && result.streak >= 2 && (
+                  <p className="flex items-center gap-1 rounded-full bg-gradient-to-b from-orange-100 to-orange-200 px-3 py-1 text-lg font-bold text-orange-800 ring-1 ring-orange-300 shadow-[inset_0_1px_0_#fff]">
+                    <Flame className="h-5 w-5 fill-orange-400 text-orange-600" aria-hidden="true" />
+                    {result.streak} ברצף!
+                  </p>
+                )}
+              </div>
+              {kind !== 'correct' && correctImage && (
+                <figure
+                  data-testid="correct-answer-image"
+                  className="flex flex-col items-center gap-1 rounded-2xl bg-white/90 p-2 ring-2 ring-green-300 shadow-[0_10px_24px_-12px_rgba(21,128,61,0.5),inset_0_1px_0_#fff]"
+                >
+                  <span aria-hidden="true" className="absolute -top-2 -end-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-b from-green-400 to-green-600 text-white shadow ring-2 ring-white">
+                    <Check className="h-5 w-5" strokeWidth={4} />
+                  </span>
+                  <LazyImage src={correctImage} alt={correctText ?? 'התשובה הנכונה'} glossy className="h-20 w-20 sm:h-24 sm:w-24" imgClassName="p-1" />
+                  {correctText && (
+                    <figcaption className="text-sm font-black text-green-800" data-testid="correct-answer-text">
+                      {correctText}
+                    </figcaption>
+                  )}
+                </figure>
+              )}
+            </div>
+            <Button
+              variant={kind === 'correct' ? 'success' : 'primary'}
+              size="xl"
+              glow
+              onClick={onNext}
+              className="mt-1 w-full sm:w-auto sm:min-w-72"
+              icon={<ArrowLeft className="h-10 w-10" strokeWidth={3.5} aria-hidden="true" />}
+              data-testid="next-button"
+            >
+              {nextLabel}
+            </Button>
+          </div>
+        </motion.section>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/** ✓ / ✗ / ⏰ ענק – עיגול חימר קופץ */
+function BigStateIcon({ kind }: { kind: FeedbackKind }) {
+  const reduced = useReducedMotion();
+  const styles: Record<FeedbackKind, string> = {
+    correct: 'from-green-300 via-green-400 to-green-600 border-green-800 text-white shadow-[0_16px_30px_-10px_rgba(21,128,61,0.7)]',
+    wrong: 'from-orange-200 via-orange-300 to-orange-500 border-orange-700 text-white shadow-[0_16px_30px_-10px_rgba(194,65,12,0.6)]',
+    timeout: 'from-sky-200 via-sky-300 to-sky-500 border-sky-700 text-white shadow-[0_16px_30px_-10px_rgba(2,132,199,0.6)]',
+  };
+  return (
+    <motion.span
+      initial={reduced ? false : { scale: 0.3, rotate: -20, opacity: 0 }}
+      animate={reduced ? { opacity: 1 } : { scale: [0.3, 1.15, 1], rotate: [-20, 4, 0], opacity: 1 }}
+      transition={{ duration: 0.55, ease: [0.34, 1.56, 0.64, 1] }}
+      aria-hidden="true"
+      data-testid="feedback-icon"
+      className={cn(
+        'relative flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-b-[6px] bg-gradient-to-b ring-4 ring-white sm:h-24 sm:w-24',
+        styles[kind],
+      )}
+    >
+      <span aria-hidden="true" className="pointer-events-none absolute inset-x-3 top-1 h-[40%] rounded-full bg-gradient-to-b from-white/70 to-transparent" />
+      {kind === 'correct' && <Check className="relative h-12 w-12 drop-shadow sm:h-14 sm:w-14" strokeWidth={4.5} />}
+      {kind === 'wrong' && <X className="relative h-12 w-12 drop-shadow sm:h-14 sm:w-14" strokeWidth={4.5} />}
+      {kind === 'timeout' && <Clock className="relative h-12 w-12 drop-shadow sm:h-14 sm:w-14" strokeWidth={3} />}
+    </motion.span>
+  );
+}
+
 /** "כל הכבוד!" – גרדיאנט שמש קופץ ומתנדנד */
 function Praise({ text }: { text: string }) {
   const reduced = useReducedMotion();

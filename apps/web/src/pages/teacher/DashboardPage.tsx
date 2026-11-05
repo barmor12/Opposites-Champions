@@ -128,8 +128,8 @@ export function DashboardPage() {
       >
         <div className="relative overflow-hidden rounded-[1.75rem] bg-linear-to-l from-violet-600 via-violet-700 to-brand-navy p-6 text-white shadow-[0_30px_60px_-28px_rgba(88,28,135,.8)] ring-1 ring-white/10 sm:p-8">
           <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:18px_18px] opacity-40" aria-hidden />
-          <div className="pointer-events-none absolute -left-10 -top-16 size-64 rounded-full bg-brand-yellow/15 blur-3xl" aria-hidden />
-          <div className="pointer-events-none absolute -bottom-24 right-1/3 size-56 rounded-full bg-brand-pink/15 blur-3xl" aria-hidden />
+          <div className="pointer-events-none absolute -top-16 -end-10 size-64 rounded-full bg-brand-yellow/15 blur-3xl" aria-hidden />
+          <div className="pointer-events-none absolute -bottom-24 start-1/3 size-56 rounded-full bg-brand-pink/15 blur-3xl" aria-hidden />
           <div className="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-4 sm:items-center">
               <motion.img

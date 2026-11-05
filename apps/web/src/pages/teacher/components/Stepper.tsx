@@ -1,5 +1,5 @@
 // מבוסס על 21st.dev — Animated Progress Stepper (shadcnspace): קו התקדמות קפיצי, טבעת פועמת על השלב הפעיל,
-// ומעבר אייקון→✓ עם AnimatePresence. מותאם ל־RTL (origin-right) ולמובייל (תוויות מתחת לאייקונים).
+// ומעבר אייקון→✓ עם AnimatePresence. מותאם ל־RTL (rtl:origin-right) ולמובייל (תוויות מתחת לאייקונים).
 import type { LucideIcon } from 'lucide-react';
 import { Check } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
@@ -45,7 +45,7 @@ export function Stepper({ steps, current, muted, onSelect, tone = 'violet', clas
       <div className="absolute top-5 h-1 rounded-full bg-slate-200/90 sm:top-6" style={{ left: inset, right: inset }} aria-hidden />
       <motion.div
         aria-hidden
-        className="absolute top-5 h-1 origin-right rounded-full bg-linear-to-l from-brand-green to-emerald-400 sm:top-6"
+        className="absolute top-5 h-1 origin-left rounded-full rtl:origin-right bg-linear-to-l from-brand-green to-emerald-400 sm:top-6"
         style={{ left: inset, right: inset }}
         initial={false}
         animate={{ scaleX: progress }}

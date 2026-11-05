@@ -13,10 +13,13 @@ import { Confetti, FloatingStars, StarBurst } from '@/animations';
 import { ChoiceQuestion } from './ChoiceQuestion';
 import { FeedbackPanel, type FeedbackKind } from './FeedbackPanel';
 import { MatchPairsQuestion } from './MatchPairsQuestion';
+import { PictureQuestion } from './PictureQuestion';
 import { PromptCard } from './PromptCard';
+import { useSound } from '@/hooks/useSound';
 import { TreasureOverlay } from './TreasureOverlay';
 import { TreasurePath } from './TreasurePath';
 import { useGameSound } from './useGameSound';
+import { cn } from './utils';
 
 export interface QuestionRendererProps {
   question: QuestionView;
@@ -44,6 +47,8 @@ export function QuestionRenderer(props: QuestionRendererProps) {
 
 function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEnabled, showCorrectAnswers, serverOffsetMs }: QuestionRendererProps) {
   const play = useGameSound(soundsEnabled);
+  // הקראה אוטומטית (מצב תמונות) מכבדת גם את הגדרת החדר וגם את מתג הצלילים של התלמיד
+  const { enabled: studentSounds } = useSound();
 
   const [localResult, setLocalResult] = useState<AnswerResult | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -168,12 +173,14 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
 
   // ----- נגזרות לתצוגה -----
   const isMatch = question.type === QuestionType.MATCH_PAIRS;
+  const isPicture = question.type === QuestionType.PICTURE_TO_PICTURE;
   const inputDisabled = submitting || !!result || expired;
   const feedbackKind: FeedbackKind | null = result ? (result.correct ? 'correct' : 'wrong') : expired ? 'timeout' : null;
 
   const selectedOption = question.options.find((o) => o.id === selectedId) ?? null;
   const correctOption = result?.correctOptionId ? (question.options.find((o) => o.id === result.correctOptionId) ?? null) : null;
   const correctText = !isMatch && result && !result.correct && showCorrectAnswers ? correctOption?.text ?? null : null;
+  const correctImage = isPicture && result && !result.correct && showCorrectAnswers ? correctOption?.image ?? null : null;
   const explanation = result ? (result.explanation ?? (!result.correct ? question.explanationHint : undefined) ?? null) : null;
 
   const sentenceFill =
@@ -186,7 +193,13 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
       : null;
 
   return (
-    <div dir="rtl" lang="he" data-testid="question-renderer" data-type={question.type} className="relative mx-auto w-full max-w-3xl px-4 py-3 sm:py-5">
+    <div
+      dir="rtl"
+      lang="he"
+      data-testid="question-renderer"
+      data-type={question.type}
+      className={cn('relative mx-auto w-full px-4 py-3 sm:py-5', isPicture ? 'max-w-3xl lg:max-w-5xl' : 'max-w-3xl')}
+    >
       <FloatingStars count={10} className="-z-10 opacity-70" />
       <StarBurst trigger={celebrate ? 1 : 0} />
       <Confetti active={celebrate} durationMs={2200} />
@@ -196,9 +209,20 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
           <TreasurePath step={question.treasureStep ?? 1} total={question.treasureTotal ?? 5} completed={!!result?.treasureCompleted} />
         )}
 
-        <PromptCard question={question} filled={sentenceFill} />
+        {!isPicture && <PromptCard question={question} filled={sentenceFill} />}
 
-        {isMatch ? (
+        {isPicture ? (
+          <PictureQuestion
+            question={question}
+            result={result}
+            selectedId={selectedId}
+            disabled={inputDisabled}
+            expired={expired}
+            showCorrectAnswers={showCorrectAnswers}
+            onSelect={handleSelect}
+            autoSpeak={soundsEnabled && studentSounds}
+          />
+        ) : isMatch ? (
           <MatchPairsQuestion
             question={question}
             result={result}
@@ -240,7 +264,15 @@ function QuestionBody({ question, result: resultProp, onAnswer, onNext, soundsEn
           </p>
         )}
 
-        <FeedbackPanel kind={feedbackKind} result={result} correctText={correctText} explanation={explanation} onNext={goNext} />
+        <FeedbackPanel
+          kind={feedbackKind}
+          result={result}
+          correctText={correctText}
+          correctImage={correctImage}
+          explanation={explanation}
+          onNext={goNext}
+          variant={isPicture ? 'picture' : 'default'}
+        />
       </div>
 
       <AnimatePresence>
