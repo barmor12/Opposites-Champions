@@ -94,7 +94,7 @@ export const MagicButton = forwardRef<HTMLButtonElement, MagicButtonProps>(funct
         {/* ברק */}
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 -start-1/2 w-1/2 -skew-x-12 bg-linear-to-r from-transparent via-white/60 to-transparent opacity-0 transition-[opacity,transform] duration-700 ease-out group-hover:translate-x-[-300%] group-hover:opacity-100 rtl:group-hover:translate-x-[300%]"
+          className="pointer-events-none absolute inset-y-0 -start-1/2 w-1/2 -skew-x-12 bg-linear-to-r from-transparent via-white/60 to-transparent opacity-0 transition-[opacity,transform] duration-700 ease-out group-hover:translate-x-[300%] group-hover:opacity-100 rtl:group-hover:-translate-x-[300%]"
         />
         {icon && (
           <span className="relative inline-flex shrink-0" aria-hidden>

@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { Card } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import { CountUp } from './CountUp';
+import { SpotlightOverlay, spotlightHandlers } from './Spotlight';
 
 const TONES = {
   sky: { circle: 'from-sky-400 to-cyan-500 shadow-sky-500/40', spark: '#38bdf8', ring: 'ring-sky-100' },
@@ -56,8 +57,9 @@ export function StatCard({ label, value, format, icon: Icon, tone = 'violet', hi
       whileHover={reduce ? undefined : { y: -3 }}
       className="h-full"
     >
-      <Card variant="glass" padding="none" className={cn('relative h-full overflow-hidden p-5 ring-1', t.ring)}>
-        <div className="relative z-10 flex items-start gap-4">
+      <Card variant="glass" padding="none" className={cn('group relative h-full overflow-hidden p-4 ring-1 sm:p-5', t.ring)} {...spotlightHandlers()}>
+        <SpotlightOverlay color={`${t.spark}2e`} />
+        <div className="relative z-10 flex items-start gap-3 sm:gap-4">
           <div
             className={cn(
               'relative grid size-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br text-white shadow-lg',
