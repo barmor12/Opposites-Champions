@@ -68,3 +68,30 @@ test.describe('זרימת משחק מלאה', () => {
     expect(ok).toBeTruthy();
   });
 });
+
+test.describe('רמה קלה – תמונות בלבד', () => {
+  test('תלמיד משחק משחק של תמונות בלבד ומגיע לתוצאות', async ({ page, browser }) => {
+    test.setTimeout(240_000);
+    await teacherLogin(page);
+    const { roomId, code } = await createGameViaApi(page, {
+      className: 'כיתה א׳ תמונות',
+      questionTypes: ['PICTURE_TO_PICTURE'],
+      difficulty: 'EASY',
+      timePerQuestionSec: 0,
+      treasureChallenge: false,
+    });
+    const student = await joinAsStudent(browser, code, 'איתן');
+    await page.goto(`/teacher/rooms/${roomId}`);
+    await page.getByRole('button', { name: /התחל משחק/ }).click();
+
+    // האפשרויות הן תמונות בלבד – לכל כרטיס יש תמונה ואין טקסט גלוי של המילה
+    const firstTile = student.locator('[data-testid="option-1"]:not([aria-disabled="true"])');
+    await firstTile.waitFor({ state: 'visible', timeout: 30_000 });
+    await expect(firstTile.locator('img')).toHaveCount(1);
+
+    await answerAllQuestions(student);
+    await page.getByRole('button', { name: /סיים משחק/ }).click();
+    await student.waitForURL(/\/results/, { timeout: 20_000 });
+    await expect(student.getByTestId('results-page')).toBeVisible();
+  });
+});
