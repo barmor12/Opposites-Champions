@@ -1,7 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ימין">
 <title>ימין</title>
-<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
-<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<polygon transform="translate(26 100) rotate(0)" points="0,-18 104,-18 104,-40 148,0 104,40 104,18 0,18" fill="#A78BFA"/>
-</g>
+<defs><linearGradient id="right-left-word-g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0F9FF"/><stop offset="1" stop-color="#BFDBFE"/></linearGradient><linearGradient id="right-left-word-g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef1f6"/><stop offset=".5" stop-color="#E2E8F0"/><stop offset="1" stop-color="#bbc2cb"/></linearGradient><linearGradient id="right-left-word-g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ae8df9"/><stop offset=".5" stop-color="#8B5CF6"/><stop offset="1" stop-color="#6d4ec1"/></linearGradient><filter id="right-left-word-blur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="url(#right-left-word-g0)"/><ellipse cx="100" cy="160" rx="76" ry="9" fill="url(#right-left-word-g1)"/><ellipse cx="100" cy="160" rx="57" ry="5" fill="#1E293B" opacity="0.18" filter="url(#right-left-word-blur)"/><g transform="translate(26 100) rotate(0)"><polygon points="0,-18 104,-18 104,-40 148,0 104,40 104,18 0,18" fill="#654ab3" transform="translate(3 5)" opacity=".5"/><polygon points="0,-18 104,-18 104,-40 148,0 104,40 104,18 0,18" fill="url(#right-left-word-g2)"/><polygon points="4,-14 102,-14 102,-32 134,-4 104,-3.6 4,-3.6" fill="#fff" opacity=".3"/></g><path d="M40 36 Q40 44 48 44 Q40 44 40 52 Q40 44 32 44 Q40 44 40 36Z" fill="#fff" opacity="0.9"/><path d="M150 144 Q150 150 156 150 Q150 150 150 156 Q150 150 144 150 Q150 150 150 144Z" fill="#fff" opacity="0.9"/>
 </svg>

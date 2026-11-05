@@ -1,28 +1,37 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
+import { motion, useReducedMotion } from 'motion/react';
 import {
   Activity,
   BarChart3,
   BookOpenText,
+  CalendarClock,
   Eye,
   Layers,
+  ListChecks,
   PlusCircle,
+  Radio,
   RefreshCw,
+  Repeat,
   Target,
   Trash2,
   Users,
 } from 'lucide-react';
 import { GameState, type GameSummary } from '@oc/shared';
 import { Button, Card, EmptyState, Spinner, toast } from '@/components/ui';
+import { cn } from '@/lib/cn';
 import { useTeacherStore } from '@/stores/teacherStore';
 import { teacherApi, type StatsOverview } from '@/services/teacherApi';
-import { ConfirmModal, PageHeader, StatCard, StateBadge } from './components';
-import { ACTIVE_STATES, ENDED_STATES, MODE_LABELS, formatDateTime, formatNumber, formatPercent, friendlyError, teacherPath } from './labels';
+import { ConfirmModal, MagicButton, PageHeader, SegmentedTabs, SpotlightOverlay, StatCard, StateBadge, spotlightHandlers } from './components';
+import { ACTIVE_STATES, ENDED_STATES, MODE_LABELS, formatDateTime, formatNumber, friendlyError, teacherPath } from './labels';
 
 type Filter = 'all' | 'active' | 'ended';
 
+const percent = (n: number) => `${Math.round(n)}%`;
+
 export function DashboardPage() {
   const navigate = useNavigate();
+  const reduce = useReducedMotion();
   const games = useTeacherStore((s) => s.games);
   const gamesLoading = useTeacherStore((s) => s.gamesLoading);
   const gamesError = useTeacherStore((s) => s.gamesError);
@@ -56,6 +65,8 @@ export function DashboardPage() {
     void fetchStats();
   };
 
+  const activeCount = games.filter((g) => !ENDED_STATES.includes(g.state)).length;
+  const endedCount = games.length - activeCount;
   const filtered = games.filter((g) => {
     if (filter === 'active') return !ENDED_STATES.includes(g.state);
     if (filter === 'ended') return ENDED_STATES.includes(g.state);
@@ -74,22 +85,26 @@ export function DashboardPage() {
     }
   };
 
-  const greeting = profile?.name ? `שלום, ${profile.name.split(' ')[0]}` : 'שלום';
+  const firstName = profile?.name?.trim().split(/\s+/)[0];
+  const hour = new Date().getHours();
+  const dayPart = hour < 12 ? 'בוקר טוב' : hour < 17 ? 'צהריים טובים' : 'ערב טוב';
 
   return (
     <div>
       <PageHeader
-        title={greeting}
+        eyebrow={dayPart}
+        title={firstName ? `שלום, ${firstName}` : 'שלום'}
         subtitle="כאן מנהלים משחקים, עוקבים אחרי הכיתה בזמן אמת וצופים בתוצאות."
+        crumbs={[{ label: 'לוח בקרה' }]}
         actions={
           <>
-            <Button variant="ghost" onClick={refresh} disabled={gamesLoading}>
-              <RefreshCw className={`h-4 w-4 ${gamesLoading ? 'animate-spin' : ''}`} aria-hidden />
-              רענון
+            <Button variant="ghost" size="md" onClick={refresh} disabled={gamesLoading} aria-label="רענון הנתונים">
+              <RefreshCw className={cn('size-4', gamesLoading && 'animate-spin')} aria-hidden />
+              <span className="hidden sm:inline">רענון</span>
             </Button>
-            <Link to={teacherPath('content')}>
-              <Button variant="secondary">
-                <BookOpenText className="h-4 w-4" aria-hidden />
+            <Link to={teacherPath('content')} className="rounded-2xl">
+              <Button variant="secondary" size="md" tabIndex={-1}>
+                <BookOpenText className="size-4" aria-hidden />
                 מאגר ההפכים
               </Button>
             </Link>
@@ -98,84 +113,104 @@ export function DashboardPage() {
       />
 
       {/* כרטיסי סטטיסטיקה */}
-      <section aria-label="סטטיסטיקות" className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard label="חדרים פעילים" value={formatNumber(stats?.activeRooms)} icon={Activity} tone="green" loading={statsLoading} />
-        <StatCard label="סבבי משחק" value={formatNumber(stats?.totalSessions)} icon={Layers} tone="violet" loading={statsLoading} />
-        <StatCard label="תלמידים שהשתתפו" value={formatNumber(stats?.totalParticipants)} icon={Users} tone="sky" loading={statsLoading} />
-        <StatCard label="דיוק ממוצע" value={formatPercent(stats?.averageAccuracy)} icon={Target} tone="orange" loading={statsLoading} />
+      <section aria-label="סטטיסטיקות" className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        <StatCard label="חדרים פעילים" value={stats?.activeRooms} icon={Activity} tone="green" loading={statsLoading} delay={0} />
+        <StatCard label="סבבי משחק" value={stats?.totalSessions} icon={Layers} tone="violet" loading={statsLoading} delay={0.06} />
+        <StatCard label="תלמידים שהשתתפו" value={stats?.totalParticipants} icon={Users} tone="sky" loading={statsLoading} delay={0.12} />
+        <StatCard label="דיוק ממוצע" value={stats?.averageAccuracy} format={percent} icon={Target} tone="orange" loading={statsLoading} delay={0.18} />
       </section>
 
       {/* CTA */}
-      <section className="mt-6">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-l from-brand-violet to-brand-navy p-6 text-white shadow-lg sm:p-8">
-          <div className="relative z-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-2xl font-bold">מתחילים משחק חדש?</h2>
-              <p className="mt-1 max-w-xl text-sm text-white/80">
-                בוחרים קטגוריות, רמת קושי וסוגי שאלות – ותוך דקה הכיתה מצטרפת עם קוד בן 6 ספרות.
-              </p>
+      <motion.section
+        className="mt-5 sm:mt-6"
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 220, damping: 26, delay: 0.2 }}
+      >
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-linear-to-l from-violet-600 via-violet-700 to-brand-navy p-6 text-white shadow-[0_30px_60px_-28px_rgba(88,28,135,.8)] ring-1 ring-white/10 sm:p-8">
+          <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:18px_18px] opacity-40" aria-hidden />
+          <div className="pointer-events-none absolute -left-10 -top-16 size-64 rounded-full bg-brand-yellow/25 blur-3xl" aria-hidden />
+          <div className="pointer-events-none absolute -bottom-24 right-1/3 size-56 rounded-full bg-brand-pink/30 blur-3xl" aria-hidden />
+          <div className="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-4 sm:items-center">
+              <motion.img
+                src="/images/characters/sun.svg"
+                alt=""
+                className="size-20 shrink-0 drop-shadow-[0_12px_20px_rgba(0,0,0,.35)] sm:size-28"
+                animate={reduce ? undefined : { y: [0, -8, 0], rotate: [0, 4, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-yellow-200">מתחילים?</div>
+                <h2 className="mt-1 text-2xl font-black tracking-tight sm:text-3xl">משחק חדש לכיתה</h2>
+                <p className="mt-1.5 max-w-xl text-sm leading-6 text-white/80">בוחרים קטגוריות, רמת קושי וסוגי שאלות – ותוך דקה הכיתה מצטרפת עם קוד בן 6 ספרות או סריקת QR.</p>
+              </div>
             </div>
-            <Button variant="success" size="xl" onClick={() => navigate(teacherPath('new'))}>
-              <PlusCircle className="h-6 w-6" aria-hidden />
+            <MagicButton tone="yellow" size="xl" glow fullWidth className="sm:w-auto" icon={<PlusCircle className="size-6" aria-hidden />} onClick={() => navigate(teacherPath('new'))}>
               משחק חדש
-            </Button>
+            </MagicButton>
           </div>
-          <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-brand-yellow/20 blur-2xl" />
-          <div className="pointer-events-none absolute -bottom-16 right-1/3 h-40 w-40 rounded-full bg-brand-pink/30 blur-2xl" />
         </div>
-      </section>
+      </motion.section>
 
       {/* רשימת חדרים */}
-      <section className="mt-8" aria-label="החדרים שלי">
+      <section className="mt-7 sm:mt-8" aria-label="החדרים שלי">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-bold text-brand-navy">החדרים שלי</h2>
-          <div role="tablist" aria-label="סינון חדרים" className="flex rounded-full bg-slate-100 p-1 text-sm">
-            {(
-              [
-                ['all', 'הכול'],
-                ['active', 'פעילים'],
-                ['ended', 'הסתיימו'],
-              ] as const
-            ).map(([key, label]) => (
-              <button
-                key={key}
-                role="tab"
-                type="button"
-                aria-selected={filter === key}
-                onClick={() => setFilter(key)}
-                className={`rounded-full px-3 py-1 font-medium transition-colors ${
-                  filter === key ? 'bg-white text-brand-navy shadow-sm' : 'text-slate-500 hover:text-brand-navy'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <h2 className="inline-flex items-center gap-2 text-lg font-extrabold tracking-tight text-brand-navy">
+            <Radio className="size-5 text-brand-violet" aria-hidden />
+            החדרים שלי
+            {games.length > 0 && <span className="rounded-full bg-slate-200/80 px-2 py-0.5 text-xs font-bold text-slate-600 tabular-nums">{games.length}</span>}
+          </h2>
+          <SegmentedTabs
+            label="סינון חדרים"
+            value={filter}
+            onChange={setFilter}
+            options={[
+              { value: 'all', label: 'הכול' },
+              { value: 'active', label: 'פעילים', count: activeCount },
+              { value: 'ended', label: 'הסתיימו', count: endedCount },
+            ]}
+          />
         </div>
 
         {gamesError && (
-          <div role="alert" className="mb-3 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700 ring-1 ring-red-100">
+          <div role="alert" className="mb-3 rounded-2xl bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 ring-1 ring-rose-100">
             {gamesError}
           </div>
         )}
 
         {gamesLoading && games.length === 0 ? (
           <div className="flex justify-center py-16">
-            <Spinner />
+            <Spinner className="text-brand-violet" />
           </div>
         ) : filtered.length === 0 ? (
-          <Card padding="none" className="p-8">
+          <Card variant="glass" padding="none" className="p-4 sm:p-8">
             <EmptyState
               title={games.length === 0 ? 'עדיין אין חדרים' : 'אין חדרים בסינון הזה'}
-              description={games.length === 0 ? 'צרו את המשחק הראשון שלכם והזמינו את הכיתה להצטרף.' : 'נסו סינון אחר.'}
+              description={games.length === 0 ? 'צרו את המשחק הראשון שלכם והזמינו את הכיתה להצטרף.' : 'נסו סינון אחר, או צרו משחק חדש.'}
+              className="bg-transparent"
+              action={
+                games.length === 0 ? (
+                  <Button variant="primary" size="md" onClick={() => navigate(teacherPath('new'))}>
+                    <PlusCircle className="size-5" aria-hidden />
+                    יצירת משחק ראשון
+                  </Button>
+                ) : undefined
+              }
             />
           </Card>
         ) : (
           <ul className="grid gap-3">
-            {filtered.map((g) => (
-              <li key={g.roomId}>
+            {filtered.map((g, i) => (
+              <motion.li
+                key={g.roomId}
+                layout={!reduce}
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 26, delay: Math.min(i, 6) * 0.04 }}
+              >
                 <RoomRow game={g} onDelete={() => setToDelete(g)} />
-              </li>
+              </motion.li>
             ))}
           </ul>
         )}
@@ -187,8 +222,7 @@ export function DashboardPage() {
         title="מחיקת חדר"
         description={
           <>
-            למחוק את החדר <b dir="ltr">{toDelete?.code}</b> של כיתה <b>{toDelete?.className}</b>? כל נתוני התלמידים והתוצאות של
-            החדר יימחקו לצמיתות.
+            למחוק את החדר <b dir="ltr">{toDelete?.code}</b> של כיתה <b>{toDelete?.className}</b>? כל נתוני התלמידים והתוצאות של החדר יימחקו לצמיתות.
           </>
         }
         confirmLabel="מחיקה"
@@ -199,58 +233,85 @@ export function DashboardPage() {
 }
 
 function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }) {
+  const reduce = useReducedMotion();
   const isLive = ACTIVE_STATES.includes(game.state) || game.state === GameState.WAITING_FOR_PLAYERS;
   const hasResults = game.sessionCount > 0 && game.state !== GameState.WAITING_FOR_PLAYERS && game.state !== GameState.CREATED;
   return (
-    <Card padding="none" className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex min-w-0 items-center gap-4">
-        <div
-          dir="ltr"
-          className={`shrink-0 rounded-2xl px-3 py-2 font-mono text-xl font-bold tracking-[0.2em] ${
-            isLive ? 'bg-brand-violet/10 text-brand-violet' : 'bg-slate-100 text-slate-500'
-          }`}
-        >
-          {game.code}
-        </div>
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="truncate text-base font-bold text-brand-navy">{game.className}</h3>
-            <StateBadge state={game.state} />
+    <motion.div whileHover={reduce ? undefined : { y: -3 }} transition={{ type: 'spring', stiffness: 300, damping: 24 }}>
+      <Card
+        variant="glass"
+        padding="none"
+        className={cn(
+          'group relative flex flex-col gap-4 overflow-hidden p-4 transition-shadow hover:shadow-[0_24px_40px_-24px_rgba(30,41,59,.4)] sm:flex-row sm:items-center sm:justify-between sm:p-5',
+          isLive && 'ring-1 ring-violet-200/70',
+        )}
+        {...spotlightHandlers()}
+      >
+        <SpotlightOverlay />
+        {isLive && <span className="absolute inset-y-0 right-0 w-1 bg-linear-to-b from-violet-500 to-fuchsia-500" aria-hidden />}
+        <div className="relative flex min-w-0 items-center gap-4">
+          <div
+            dir="ltr"
+            className={cn(
+              'relative grid shrink-0 place-items-center rounded-2xl px-3 py-2 font-mono text-lg font-black tracking-[0.18em] shadow-inner sm:text-xl',
+              isLive ? 'bg-linear-to-br from-violet-500/15 to-fuchsia-500/10 text-brand-violet ring-1 ring-violet-200' : 'bg-slate-100 text-slate-500 ring-1 ring-slate-200/70',
+            )}
+            aria-label={`קוד ${game.code}`}
+          >
+            {game.code}
           </div>
-          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
-            <span className="inline-flex items-center gap-1">
-              <Users className="h-3.5 w-3.5" aria-hidden />
-              {formatNumber(game.participantCount)} משתתפים
-            </span>
-            <span>{MODE_LABELS[game.mode].label}</span>
-            <span>{game.settings.questionCount} שאלות</span>
-            <span>
-              {game.sessionCount} {game.sessionCount === 1 ? 'סבב' : 'סבבים'}
-            </span>
-            <span>נוצר {formatDateTime(game.createdAt)}</span>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="truncate text-base font-extrabold tracking-tight text-brand-navy">{game.className}</h3>
+              <StateBadge state={game.state} />
+            </div>
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+              <span className="inline-flex items-center gap-1">
+                <Users className="size-3.5" aria-hidden />
+                {formatNumber(game.participantCount)} משתתפים
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <Repeat className="size-3.5" aria-hidden />
+                {MODE_LABELS[game.mode].label}
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <ListChecks className="size-3.5" aria-hidden />
+                {game.settings.questionCount} שאלות · {game.sessionCount} {game.sessionCount === 1 ? 'סבב' : 'סבבים'}
+              </span>
+              <span className="hidden items-center gap-1 sm:inline-flex">
+                <CalendarClock className="size-3.5" aria-hidden />
+                {formatDateTime(game.createdAt)}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-wrap items-center gap-2 sm:justify-end">
-        <Link to={teacherPath(`rooms/${game.roomId}`)}>
-          <Button variant={isLive ? 'primary' : 'secondary'} size="md">
-            <Eye className="h-4 w-4" aria-hidden />
-            {isLive ? 'חדר חי' : 'פתיחה'}
-          </Button>
-        </Link>
-        {hasResults && (
-          <Link to={teacherPath(`rooms/${game.roomId}/results`)}>
-            <Button variant="ghost" size="md">
-              <BarChart3 className="h-4 w-4" aria-hidden />
-              תוצאות
+        <div className="relative flex flex-wrap items-center gap-2 sm:justify-end">
+          <Link to={teacherPath(`rooms/${game.roomId}`)} className="flex-1 rounded-2xl sm:flex-none">
+            <Button variant={isLive ? 'primary' : 'secondary'} size="md" fullWidth tabIndex={-1}>
+              <Eye className="size-4" aria-hidden />
+              {isLive ? 'חדר חי' : 'פתיחה'}
             </Button>
           </Link>
-        )}
-        <Button variant="ghost" size="md" onClick={onDelete} aria-label={`מחיקת חדר ${game.code}`}>
-          <Trash2 className="h-4 w-4 text-red-500" aria-hidden />
-        </Button>
-      </div>
-    </Card>
+          {hasResults && (
+            <Link to={teacherPath(`rooms/${game.roomId}/results`)} className="rounded-2xl">
+              <Button variant="ghost" size="md" tabIndex={-1}>
+                <BarChart3 className="size-4" aria-hidden />
+                תוצאות
+              </Button>
+            </Link>
+          )}
+          <button
+            type="button"
+            onClick={onDelete}
+            aria-label={`מחיקת חדר ${game.code}`}
+            title="מחיקת החדר"
+            className="grid size-11 min-h-0 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-600"
+          >
+            <Trash2 className="size-[18px]" aria-hidden />
+          </button>
+        </div>
+      </Card>
+    </motion.div>
   );
 }
 

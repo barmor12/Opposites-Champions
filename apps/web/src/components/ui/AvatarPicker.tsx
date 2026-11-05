@@ -12,7 +12,7 @@ export interface AvatarPickerProps {
   className?: string;
 }
 
-/** רשת 16 דמויות לבחירה, עם טבעת סביב הנבחרת */
+/** רשת 16 דמויות לבחירה – אריחים תלת־ממדיים (pop-button) עם טבעת זוהרת סביב הנבחרת */
 export function AvatarPicker({ value, onChange, label = 'בחרו דמות', error, className }: AvatarPickerProps) {
   const reduce = useReducedMotion();
   return (
@@ -29,25 +29,32 @@ export function AvatarPicker({ value, onChange, label = 'בחרו דמות', err
               aria-checked={selected}
               aria-label={AVATAR_LABELS[id]}
               onClick={() => onChange(id)}
-              whileHover={reduce ? undefined : { scale: 1.06 }}
-              whileTap={reduce ? undefined : { scale: 0.93 }}
+              whileHover={reduce ? undefined : { y: -3 }}
+              whileTap={reduce ? undefined : { y: 2, scale: 0.97 }}
               transition={{ type: 'spring', stiffness: 500, damping: 24 }}
               className={cn(
-                'relative flex min-h-12 flex-col items-center gap-1 rounded-2xl p-2 sm:p-3 transition-colors border-[3px]',
-                selected ? 'border-brand-violet bg-violet-50 shadow-pop' : 'border-transparent bg-white/70 hover:bg-white',
+                'group relative flex min-h-14 flex-col items-center gap-1 rounded-2xl border-b-[5px] px-1 py-2 sm:py-3 transition-[background-color,border-color,box-shadow] duration-200',
+                'active:border-b-[2px] active:translate-y-[3px]',
+                selected
+                  ? 'border-violet-800 bg-gradient-to-b from-violet-400 to-violet-600 text-white shadow-[0_14px_28px_-10px_rgba(109,40,217,0.65)]'
+                  : 'border-slate-300/90 bg-gradient-to-b from-white to-slate-50 text-slate-600 shadow-[0_8px_18px_-10px_rgba(30,41,59,0.35)] hover:from-white hover:to-sky-50 hover:border-sky-300',
               )}
             >
-              <Avatar id={id} size="md" className={cn(selected && 'ring-4 ring-brand-violet')} />
-              <span className={cn('text-xs sm:text-sm font-bold', selected ? 'text-violet-800' : 'text-slate-600')}>
+              <span aria-hidden className="pointer-events-none absolute inset-x-2 top-0 h-1/3 rounded-full bg-gradient-to-b from-white/60 to-transparent" />
+              <Avatar id={id} size="md" ring ringColor={selected ? 'gold' : 'white'} />
+              <span className={cn('text-xs sm:text-sm font-bold', selected ? 'text-white drop-shadow-[0_1px_0_rgba(0,0,0,0.25)]' : 'text-slate-600')}>
                 {AVATAR_LABELS[id]}
               </span>
               {selected && (
-                <span
+                <motion.span
                   aria-hidden
-                  className="absolute -top-1.5 -end-1.5 grid size-7 place-items-center rounded-full bg-brand-violet text-white shadow"
+                  initial={reduce ? false : { scale: 0, rotate: -30 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 18 }}
+                  className="absolute -top-2 -end-2 grid size-7 place-items-center rounded-full bg-gradient-to-b from-green-400 to-green-600 text-white shadow-[0_4px_10px_-2px_rgba(21,128,61,0.6),inset_0_1px_0_rgba(255,255,255,0.5)] ring-2 ring-white"
                 >
                   <Check className="size-4" strokeWidth={3.5} />
-                </span>
+                </motion.span>
               )}
             </motion.button>
           );

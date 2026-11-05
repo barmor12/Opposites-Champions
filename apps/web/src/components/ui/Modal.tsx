@@ -18,7 +18,7 @@ export interface ModalProps {
 
 const SIZES = { sm: 'max-w-sm', md: 'max-w-lg', lg: 'max-w-2xl' };
 
-/** חלון קופץ נגיש (role=dialog, Esc, פוקוס ראשוני) */
+/** חלון קופץ נגיש (role=dialog, Esc, פוקוס ראשוני) – לוח זכוכית על רקע מטושטש */
 export function Modal({ open, onClose, title, children, footer, size = 'md', dismissible = true, className }: ModalProps) {
   const reduce = useReducedMotion();
   const titleId = useId();
@@ -49,7 +49,7 @@ export function Modal({ open, onClose, title, children, footer, size = 'md', dis
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-brand-navy/50 p-3 backdrop-blur-sm sm:items-center sm:p-6"
+          className="fixed inset-0 z-50 flex items-end justify-center bg-gradient-to-b from-brand-navy/55 to-indigo-950/65 p-3 backdrop-blur-md sm:items-center sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -66,8 +66,14 @@ export function Modal({ open, onClose, title, children, footer, size = 'md', dis
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 30, scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-            className={cn('w-full rounded-bubble bg-white p-5 shadow-pop sm:p-7 outline-none', SIZES[size], className)}
+            className={cn(
+              'relative w-full rounded-bubble glass-strong p-5 outline-none ring-1 ring-white/80 sm:p-7 safe-bottom',
+              'max-h-[calc(100dvh-1.5rem)] overflow-y-auto scrollbar-thin',
+              SIZES[size],
+              className,
+            )}
           >
+            <span aria-hidden className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
             {(title || dismissible) && (
               <div className="mb-4 flex items-start justify-between gap-3">
                 {title && <h2 id={titleId} className="text-2xl font-bold">{title}</h2>}
@@ -76,7 +82,7 @@ export function Modal({ open, onClose, title, children, footer, size = 'md', dis
                     type="button"
                     onClick={onClose}
                     aria-label="סגירה"
-                    className="-me-2 -mt-2 grid size-12 place-items-center rounded-full text-slate-500 hover:bg-slate-100"
+                    className="-me-2 -mt-2 grid size-12 place-items-center rounded-full text-slate-500 transition-colors hover:bg-slate-100"
                   >
                     <X className="size-6" />
                   </button>
