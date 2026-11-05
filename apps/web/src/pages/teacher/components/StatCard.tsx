@@ -62,7 +62,7 @@ export function StatCard({ label, value, format, icon: Icon, tone = 'violet', hi
         <div className="relative z-10 flex items-start gap-3 sm:gap-4">
           <div
             className={cn(
-              'relative grid size-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br text-white shadow-lg',
+              'relative grid size-11 shrink-0 place-items-center rounded-2xl bg-linear-to-br text-white shadow-lg sm:size-12',
               'before:absolute before:inset-x-1.5 before:top-1 before:h-3 before:rounded-full before:bg-white/35 before:blur-[2px]',
               t.circle,
             )}
@@ -70,11 +70,11 @@ export function StatCard({ label, value, format, icon: Icon, tone = 'violet', hi
             <Icon className="relative size-6" aria-hidden />
           </div>
           <div className="min-w-0 flex-1">
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</div>
+            <div className="truncate text-[11px] font-bold tracking-wide text-slate-500 sm:text-xs">{label}</div>
             {loading ? (
               <div className="mt-1.5 h-8 w-20 animate-pulse rounded-lg bg-slate-200/70" />
             ) : (
-              <div className="mt-0.5 text-3xl font-extrabold leading-tight tracking-tight text-brand-navy tabular-nums">
+              <div className="mt-0.5 text-2xl font-extrabold leading-tight tracking-tight text-brand-navy tabular-nums sm:text-3xl">
                 <CountUp value={value} format={format} />
               </div>
             )}
