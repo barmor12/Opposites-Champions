@@ -15,7 +15,8 @@ export class PlayerAuthGuard implements CanActivate {
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
     const req = ctx.switchToHttp().getRequest<RequestWithPlayer>();
     const token = req.header(SESSION_TOKEN_HEADER);
-    if (!token || token.length > 128) throw new UnauthorizedException('אין הרשאה');
+    // Syntactic check first (length + base64url alphabet) – garbage never reaches the hash lookup.
+    if (!isSessionTokenFormat(token)) throw new UnauthorizedException('אין הרשאה');
     const participant = await this.prisma.gameParticipant.findFirst({
       where: { sessionTokenHash: hashSessionToken(token), removedAt: null },
       select: { id: true, roomId: true, studentId: true },
