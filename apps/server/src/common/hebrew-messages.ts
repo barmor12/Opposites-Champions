@@ -12,6 +12,7 @@ export const HE = {
   routeNotFound: 'הנתיב המבוקש לא קיים',
   conflict: 'הפעולה מתנגשת עם נתונים קיימים',
   tooManyRequests: 'יותר מדי בקשות, נסו שוב בעוד רגע',
+  payloadTooLarge: 'הבקשה גדולה מדי',
   internal: 'אירעה שגיאה, נסו שוב מאוחר יותר',
   serviceUnavailable: 'השירות אינו זמין כרגע',
   wordPairNotFound: 'זוג המילים לא נמצא',
@@ -33,6 +34,8 @@ export function hebrewMessageForStatus(status: number): string {
       return HE.notFound;
     case 409:
       return HE.conflict;
+    case 413:
+      return HE.payloadTooLarge;
     case 429:
       return HE.tooManyRequests;
     case 503:
