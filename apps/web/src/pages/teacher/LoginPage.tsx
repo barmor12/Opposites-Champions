@@ -152,7 +152,7 @@ export function LoginPage() {
                 <LogIn className="size-5" aria-hidden />
                 התחברות
               </Button>
-              <p className="flex items-center justify-center gap-1.5 text-center text-xs text-slate-500">
+              <p className="flex items-center justify-center gap-1.5 text-center text-xs text-slate-600">
                 <ShieldCheck className="size-3.5" aria-hidden />
                 הגישה מיועדת לצוות ההוראה בלבד. התלמידים מצטרפים עם קוד חדר.
               </p>

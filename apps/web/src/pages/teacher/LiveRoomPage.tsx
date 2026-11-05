@@ -381,7 +381,7 @@ export function LiveRoomPage() {
                 {copied === 'link' ? <Check className="size-4 text-brand-green" aria-hidden /> : <Copy className="size-4" aria-hidden />}
               </button>
             </div>
-            <p className="relative text-center text-xs leading-5 text-slate-500">התלמידים סורקים את ה־QR מהטאבלט או מקלידים את הקוד במסך ההצטרפות.</p>
+            <p className="relative text-center text-xs leading-5 text-slate-600">התלמידים סורקים את ה־QR מהטאבלט או מקלידים את הקוד במסך ההצטרפות.</p>
           </Card>
         </div>
 

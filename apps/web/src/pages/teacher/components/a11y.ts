@@ -27,7 +27,9 @@ export const HIT_AREA = {
  * כפתור ה־UI המשותף (`Button`) מגדיר `outline-none` ובכך מבטל את טבעת הפוקוס הגלובלית.
  * המחלקה הזו, על עטיפה של העמוד, מחזירה טבעת פוקוס נראית לכל `button.isolate` (Button/MagicButton) בתוכה.
  */
-export const BUTTON_FOCUS_RING = '[&_button.isolate:focus-visible]:outline-4 [&_button.isolate:focus-visible]:outline-offset-[3px] [&_button.isolate:focus-visible]:outline-brand-violet';
+// outline-solid נדרש: `outline-none` של Tailwind v4 מגדיר גם --tw-outline-style:none, ש־outline-4 יורש דרך var()
+export const BUTTON_FOCUS_RING =
+  '[&_button.isolate:focus-visible]:outline-solid [&_button.isolate:focus-visible]:outline-4 [&_button.isolate:focus-visible]:outline-offset-[3px] [&_button.isolate:focus-visible]:outline-brand-violet';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 

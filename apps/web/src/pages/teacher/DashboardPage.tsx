@@ -140,7 +140,7 @@ export function DashboardPage() {
                 transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               />
               <div>
-                <div className="text-xs font-bold uppercase tracking-[0.18em] text-yellow-200">מתחילים?</div>
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-yellow-100">מתחילים?</div>
                 <h2 className="mt-1 text-2xl font-black tracking-tight sm:text-3xl">משחק חדש לכיתה</h2>
                 <p className="mt-1.5 max-w-xl text-sm leading-6 text-white/90">בוחרים קטגוריות, רמת קושי וסוגי שאלות – ותוך דקה הכיתה מצטרפת עם קוד בן 6 ספרות או סריקת QR.</p>
               </div>

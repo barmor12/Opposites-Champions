@@ -226,7 +226,7 @@ export function ResultsPage() {
                             <span className="font-bold text-brand-navy">{q.prompt}</span>
                             <span className="ms-1.5 text-xs text-slate-500">({QUESTION_TYPE_LABELS[q.type]})</span>
                           </span>
-                          <span className={cn('shrink-0 text-base font-black tabular-nums', q.accuracy < 50 ? 'text-rose-600' : 'text-amber-700')}>{formatPercent(q.accuracy)}</span>
+                          <span className={cn('shrink-0 text-base font-black tabular-nums', q.accuracy < 50 ? 'text-rose-700' : 'text-amber-700')}>{formatPercent(q.accuracy)}</span>
                         </div>
                         <AccuracyBar value={q.accuracy} label={`דיוק בשאלה ${q.index + 1}`} />
                         <div className="text-xs text-slate-600">
@@ -361,7 +361,7 @@ function QuestionAccordion({ stat }: { stat: QuestionStat }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const total = Math.max(stat.answered, 1);
-  const toneText = stat.accuracy < 50 ? 'text-rose-600' : stat.accuracy < 75 ? 'text-amber-700' : 'text-emerald-700';
+  const toneText = stat.accuracy < 50 ? 'text-rose-700' : stat.accuracy < 75 ? 'text-amber-700' : 'text-emerald-700';
   return (
     <div className={cn('overflow-hidden rounded-2xl border bg-white/70 transition-colors', open ? 'border-violet-200 shadow-[0_12px_28px_-20px_rgba(139,92,246,.6)]' : 'border-slate-200/80 hover:border-violet-200')}>
       <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-controls={panelId} className="flex min-h-0 w-full items-center gap-3 px-3 py-3 text-start sm:px-4">
