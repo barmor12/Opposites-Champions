@@ -3,6 +3,7 @@
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
 <path d="M16 166 H184" fill="none" stroke-width="4"/>
+<path d="M22 104 h14 M16 124 h18 M24 144 h12" fill="none" stroke-width="4"/>
 <g transform="translate(76 64) scale(1.1)">
 <path d="M-6 26 L-24 48" fill="none" stroke-width="14"/><path d="M-6 26 L-24 48" fill="none" stroke="#FFE0B2" stroke-width="9"/>
 <path d="M-4 62 L-20 88" fill="none" stroke-width="17"/><path d="M-4 62 L-20 88" fill="none" stroke="#A78BFA" stroke-width="12"/><path d="M4 62 L20 88" fill="none" stroke-width="17"/><path d="M4 62 L20 88" fill="none" stroke="#A78BFA" stroke-width="12"/><ellipse cx="-19" cy="90" rx="9" ry="5" fill="#2D3748"/><ellipse cx="23" cy="90" rx="9" ry="5" fill="#2D3748"/>

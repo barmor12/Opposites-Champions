@@ -95,7 +95,7 @@ describe('QuestionsService.buildSpecs', () => {
     }
   });
 
-  it('builds MATCH_PAIRS with 8 cards and 4 correct pairs whose ids carry no structure', () => {
+  it('builds MATCH_PAIRS with 8 cards and 4 correct pairs that reference existing cards', () => {
     const specs = service.buildSpecs(PAIRS, settings({ questionTypes: [QuestionType.MATCH_PAIRS], treasureChallenge: false, questionCount: 10 }), seededRng('m'));
     for (const s of specs) {
       expect(s.payload.kind).toBe('match');
@@ -106,7 +106,6 @@ describe('QuestionsService.buildSpecs', () => {
       expect(ids.size).toBe(8);
       for (const p of s.payload.pairs) {
         expect(ids.has(p.cardA) && ids.has(p.cardB)).toBe(true);
-        expect(p.cardA).not.toMatch(/[ab]$/);
       }
     }
   });

@@ -9,9 +9,10 @@
 <path d="M82 138 L52 152" fill="none" stroke-width="15"/><path d="M82 138 L52 152" fill="none" stroke="#fff" stroke-width="10"/>
 <ellipse cx="108" cy="122" rx="42" ry="26" fill="#fff"/>
 <path d="M128 140 L156 150" fill="none" stroke-width="15"/><path d="M128 140 L156 150" fill="none" stroke="#fff" stroke-width="10"/>
-<ellipse cx="124" cy="74" rx="24" ry="9" fill="#fff" transform="rotate(-28 124 74)"/>
-<ellipse cx="124" cy="74" rx="16" ry="4" fill="#F9A8D4" stroke="none" transform="rotate(-28 124 74)"/>
-<ellipse cx="130" cy="86" rx="24" ry="9" fill="#fff" transform="rotate(-10 130 86)"/>
+<ellipse cx="122" cy="70" rx="24" ry="9" fill="#fff" transform="rotate(-42 122 70)"/>
+<ellipse cx="122" cy="70" rx="16" ry="4" fill="#F9A8D4" stroke="none" transform="rotate(-42 122 70)"/>
+<ellipse cx="128" cy="84" rx="24" ry="9" fill="#fff" transform="rotate(-12 128 84)"/>
+<ellipse cx="128" cy="84" rx="16" ry="4" fill="#F9A8D4" stroke="none" transform="rotate(-12 128 84)"/>
 <circle cx="146" cy="100" r="22" fill="#fff"/>
 <circle cx="152" cy="96" r="6" fill="#fff" stroke-width="3"/><circle cx="152.9" cy="96.9" r="3" fill="#2D3748" stroke="none"/><circle cx="151.8" cy="95.8" r="1" fill="#fff" stroke="none"/>
 <circle cx="166" cy="106" r="3.5" fill="#F9A8D4" stroke-width="2"/>

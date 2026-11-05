@@ -2,18 +2,19 @@
 <title>בוקר</title>
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M88 140 L72 140" fill="none" stroke-width="12"/><path d="M88 140 L72 140" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M92.8 122 L79 114" fill="none" stroke-width="12"/><path d="M92.8 122 L79 114" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M106 108.8 L98 95" fill="none" stroke-width="12"/><path d="M106 108.8 L98 95" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M124 104 L124 88" fill="none" stroke-width="12"/><path d="M124 104 L124 88" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M142 108.8 L150 95" fill="none" stroke-width="12"/><path d="M142 108.8 L150 95" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M155.2 122 L169 114" fill="none" stroke-width="12"/><path d="M155.2 122 L169 114" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M160 140 L176 140" fill="none" stroke-width="12"/><path d="M160 140 L176 140" fill="none" stroke="#FDE047" stroke-width="7"/>
-<circle cx="124" cy="140" r="30" fill="#FDE047"/>
+<path d="M104 140 L88 140" fill="none" stroke-width="12"/><path d="M104 140 L88 140" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M108.8 122 L95 114" fill="none" stroke-width="12"/><path d="M108.8 122 L95 114" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M122 108.8 L114 95" fill="none" stroke-width="12"/><path d="M122 108.8 L114 95" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M140 104 L140 88" fill="none" stroke-width="12"/><path d="M140 104 L140 88" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M158 108.8 L166 95" fill="none" stroke-width="12"/><path d="M158 108.8 L166 95" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M171.2 122 L185 114" fill="none" stroke-width="12"/><path d="M171.2 122 L185 114" fill="none" stroke="#FDE047" stroke-width="7"/><path d="M176 140 L192 140" fill="none" stroke-width="12"/><path d="M176 140 L192 140" fill="none" stroke="#FDE047" stroke-width="7"/>
+<circle cx="140" cy="140" r="30" fill="#FDE047"/>
 <path d="M4 142 Q50 110 100 140 Q150 120 196 142 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#86EFAC"/>
-<path d="M38 120 Q14 100 22 84" fill="none" stroke-width="12"/><path d="M38 120 Q14 100 22 84" fill="none" stroke="#86EFAC" stroke-width="7"/><path d="M40 124 Q10 118 16 100" fill="none" stroke-width="12"/><path d="M40 124 Q10 118 16 100" fill="none" stroke="#7DD3FC" stroke-width="7"/><path d="M42 128 Q14 134 18 118" fill="none" stroke-width="12"/><path d="M42 128 Q14 134 18 118" fill="none" stroke="#F87171" stroke-width="7"/>
-<path d="M52 142 V158" fill="none" stroke-width="9"/><path d="M52 142 V158" fill="none" stroke="#FDBA74" stroke-width="4"/><path d="M66 142 V158" fill="none" stroke-width="9"/><path d="M66 142 V158" fill="none" stroke="#FDBA74" stroke-width="4"/>
-<ellipse cx="58" cy="128" rx="24" ry="18" fill="#fff"/>
-<path d="M46 126 Q60 118 70 136" fill="none" stroke-width="3"/>
-<path d="M68 92 Q64 78 74 86 Q76 74 84 84 Q90 78 90 92Z" fill="#F87171" stroke-width="3"/>
-<circle cx="78" cy="102" r="13" fill="#fff"/>
-<circle cx="84" cy="114" r="4" fill="#F87171" stroke-width="2"/>
-<polygon points="90,100 104,105 90,110" fill="#FDE047" stroke-width="3"/>
-<circle cx="82" cy="99" r="3" fill="#2D3748" stroke="none"/>
-<path d="M108 92 L118 84 M112 100 L124 98 M106 84 L112 72" fill="none" stroke-width="3"/>
+<path d="M40 124 Q18 112 22 88" fill="none" stroke-width="13"/><path d="M40 124 Q18 112 22 88" fill="none" stroke="#86EFAC" stroke-width="8"/><path d="M40 128 Q10 122 12 102" fill="none" stroke-width="13"/><path d="M40 128 Q10 122 12 102" fill="none" stroke="#7DD3FC" stroke-width="8"/><path d="M42 134 Q14 138 16 120" fill="none" stroke-width="13"/><path d="M42 134 Q14 138 16 120" fill="none" stroke="#F87171" stroke-width="8"/>
+<path d="M54 148 V162" fill="none" stroke-width="9"/><path d="M54 148 V162" fill="none" stroke="#FDBA74" stroke-width="4"/><path d="M68 148 V162" fill="none" stroke-width="9"/><path d="M68 148 V162" fill="none" stroke="#FDBA74" stroke-width="4"/>
+<ellipse cx="62" cy="132" rx="26" ry="19" fill="#fff"/>
+<ellipse cx="60" cy="136" rx="13" ry="8" fill="#FDE047" stroke-width="3"/>
+<path d="M78 124 L84 102" fill="none" stroke="#fff" stroke-width="16"/>
+<path d="M74 92 Q70 76 80 84 Q82 70 90 82 Q96 76 96 90Z" fill="#F87171" stroke-width="3"/>
+<circle cx="84" cy="104" r="14" fill="#fff"/>
+<circle cx="90" cy="118" r="4.5" fill="#F87171" stroke-width="2"/>
+<polygon points="96,102 112,107 96,112" fill="#FDE047" stroke-width="3"/>
+<circle cx="88" cy="101" r="3" fill="#2D3748" stroke="none"/>
+<path d="M114 92 L124 84 M118 100 L130 98 M110 82 L114 70" fill="none" stroke-width="3"/>
 </g>
 </svg>

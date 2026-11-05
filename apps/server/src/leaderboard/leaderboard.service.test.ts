@@ -76,7 +76,7 @@ describe('LeaderboardService.awardAchievements', () => {
       { participantId: 'acc', studentId: 's-acc', score: 1000, correctAnswers: 9, answeredCount: 10, totalResponseMs: 60_000, bestStreak: 4, finished: true, prevBest: 1200 },
       // לא סיים, 4/5 (80%), ללא סבב קודם
       { participantId: 'mid', studentId: 's-mid', score: 400, correctAnswers: 4, answeredCount: 5, totalResponseMs: 10_000, bestStreak: 5, finished: false },
-      // אפס
+      // אפס נכונות אבל ענה על הכל – רק התמדה
       { participantId: 'zero', studentId: 's-zero', score: 0, correctAnswers: 0, answeredCount: 10, totalResponseMs: 100_000, bestStreak: 0, finished: true },
     ]);
     const awards = await service.awardAchievements('s1');
@@ -87,15 +87,15 @@ describe('LeaderboardService.awardAchievements', () => {
     ].sort());
     expect(byP('acc')).toEqual([AchievementType.ACCURACY_CHAMPION, AchievementType.PERSISTENCE_CHAMPION].sort());
     expect(byP('mid')).toEqual([AchievementType.FIVE_STREAK]);
-    expect(byP('zero')).toEqual([]);
+    expect(byP('zero')).toEqual([AchievementType.PERSISTENCE_CHAMPION]);
     expect(prisma.studentAchievement.upsert).toHaveBeenCalledTimes(awards.length);
   });
 
   it('does not crown a rank-1 player with zero correct answers', async () => {
     const { service } = build([
-      { participantId: 'only', studentId: 's1', score: 0, correctAnswers: 0, answeredCount: 3, totalResponseMs: 1000, bestStreak: 0, finished: true },
+      { participantId: 'only', studentId: 's1', score: 0, correctAnswers: 0, answeredCount: 3, totalResponseMs: 1000, bestStreak: 0, finished: false },
     ]);
     const awards = await service.awardAchievements('s1');
-    expect(awards.map((a) => a.type)).toEqual([AchievementType.PERSISTENCE_CHAMPION]);
+    expect(awards).toEqual([]);
   });
 });

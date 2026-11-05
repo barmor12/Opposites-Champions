@@ -5,9 +5,12 @@
 <circle cx="100" cy="98" r="54" fill="#FFE0B2"/>
 <path d="M46 81.8 A54 54 0 0 1 154 81.8 Q129.7 60.2 110.8 71 Q91.9 54.8 73 71 Q56.8 76.4 46 81.8Z" fill="#B45309"/>
 <circle cx="82" cy="94" r="9" fill="#fff" stroke-width="3"/><circle cx="83.3" cy="95.3" r="4.5" fill="#2D3748" stroke="none"/><circle cx="81.7" cy="93.7" r="1.5" fill="#fff" stroke="none"/><circle cx="118" cy="94" r="9" fill="#fff" stroke-width="3"/><circle cx="119.3" cy="95.3" r="4.5" fill="#2D3748" stroke="none"/><circle cx="117.7" cy="93.7" r="1.5" fill="#fff" stroke="none"/><circle cx="63" cy="114" r="6" fill="#F9A8D4" stroke="none"/><circle cx="137" cy="114" r="6" fill="#F9A8D4" stroke="none"/>
-<path d="M92 128 Q100 134 108 128" fill="none" stroke-width="4"/>
-<ellipse cx="104" cy="176" rx="24" ry="14" fill="#FFE0B2"/>
-<rect x="92" y="108" width="16" height="66" rx="8" fill="#FFE0B2"/>
+<path d="M94 128 Q102 134 110 128" fill="none" stroke-width="4"/>
+<g transform="rotate(-10 104 150)">
+<rect x="96" y="108" width="17" height="54" rx="8.5" fill="#FFE0B2"/>
+<rect x="92" y="150" width="46" height="38" rx="16" fill="#FFE0B2"/>
+<path d="M104 152 v34 M118 152 v34" fill="none" stroke-width="2.5"/>
+</g>
 <path d="M60 134 q-8 6 -2 14 M140 134 q8 6 2 14" fill="none" stroke-width="3"/>
 </g>
 </svg>

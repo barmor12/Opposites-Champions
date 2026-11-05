@@ -13,8 +13,8 @@
 <path d="M4 148 H196 V164 Q196 196 164 196 H36 Q4 196 4 164Z" fill="#B45309"/>
 <ellipse cx="100" cy="164" rx="42" ry="12" fill="#fff"/><ellipse cx="100" cy="164" rx="26" ry="7" fill="#E0F2FE" stroke-width="2"/>
 <path d="M48 150 V178 M46 150 v8 M52 150 v8 M152 150 V178" fill="none" stroke-width="4"/>
-<circle cx="154" cy="46" r="22" fill="#fff"/><circle cx="130" cy="68" r="5" fill="#fff" stroke-width="3"/><circle cx="121" cy="80" r="3" fill="#fff" stroke-width="2"/>
-<ellipse cx="158" cy="42" rx="12" ry="9" fill="#FDBA74" stroke-width="3" transform="rotate(-35 158 42)"/>
-<path d="M150 50 L142 58" fill="none" stroke-width="10"/><path d="M150 50 L142 58" fill="none" stroke="#fff" stroke-width="5"/>
+<circle cx="152" cy="44" r="28" fill="#fff"/><circle cx="128" cy="72" r="6" fill="#fff" stroke-width="3"/><circle cx="118" cy="84" r="3.5" fill="#fff" stroke-width="2"/>
+<ellipse cx="158" cy="38" rx="15" ry="11" fill="#FDBA74" stroke-width="3" transform="rotate(-40 158 38)"/>
+<path d="M148 48 L138 60" fill="none" stroke-width="11"/><path d="M148 48 L138 60" fill="none" stroke="#fff" stroke-width="6"/><circle cx="136" cy="62" r="3.5" fill="#fff" stroke-width="2"/>
 </g>
 </svg>

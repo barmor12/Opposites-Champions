@@ -116,29 +116,28 @@ export function HomePage() {
       <section className="mt-4 flex w-full max-w-5xl flex-col items-center gap-6 lg:mt-10 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
         {/* Hero */}
         <div className="flex w-full flex-col items-center text-center lg:sticky lg:top-8 lg:w-1/2 lg:pt-6">
-          <div className="flex w-full items-end justify-center gap-2 sm:gap-6">
+          <motion.h1
+            initial={reduce ? false : { y: -30, opacity: 0, scale: 0.9 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+            className="text-shadow-pop whitespace-nowrap text-4xl font-black leading-tight text-brand-navy sm:text-5xl lg:text-6xl"
+          >
+            <span aria-hidden>🌈 </span>
+            אלופי ההפכים
+            <span aria-hidden> 🏆</span>
+          </motion.h1>
+          <div className="mt-2 flex w-full items-center justify-center gap-3 sm:gap-6">
             <Character name="sun" mood="cheer" size="md" delay={0.2} />
-            <motion.h1
-              initial={reduce ? false : { y: -30, opacity: 0, scale: 0.9 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 18 }}
-              className="text-shadow-pop text-4xl font-black leading-tight text-brand-navy sm:text-6xl lg:text-7xl"
+            <motion.p
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="max-w-[12rem] text-xl font-bold text-violet-800 sm:max-w-xs sm:text-2xl"
             >
-              <span aria-hidden>🌈 </span>
-              אלופי
-              <br className="sm:hidden" /> ההפכים
-              <span aria-hidden> 🏆</span>
-            </motion.h1>
+              מי יהיה אלוף ההפכים של הכיתה?
+            </motion.p>
             <Character name="moon" mood="happy" size="md" animate="bounce" delay={0.6} />
           </div>
-          <motion.p
-            initial={reduce ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mt-3 max-w-md text-xl font-bold text-violet-800 sm:text-2xl"
-          >
-            מי יהיה אלוף ההפכים של הכיתה?
-          </motion.p>
           <ul className="mt-4 flex flex-wrap justify-center gap-2 text-sm font-bold text-slate-700" aria-label="מה במשחק">
             {['גדול ↔ קטן', 'חם ↔ קר', 'יום ↔ לילה', 'מהר ↔ לאט'].map((t, i) => (
               <motion.li

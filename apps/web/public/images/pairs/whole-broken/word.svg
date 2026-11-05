@@ -5,7 +5,7 @@
 <circle cx="100" cy="100" r="72" fill="#fff"/>
 <circle cx="100" cy="100" r="58" fill="none" stroke="#7DD3FC" stroke-width="4"/>
 <circle cx="100" cy="100" r="48" fill="#E0F2FE" stroke-width="3"/>
-<path d="M82 100 Q100 84 118 100 Q100 116 82 100Z" fill="#7DD3FC" stroke-width="3"/>
+<circle cx="100" cy="100" r="40" fill="none" stroke="#7DD3FC" stroke-width="4" stroke-dasharray="1 9"/>
 <path d="M152 35 Q152 46 163 46 Q152 46 152 57 Q152 46 141 46 Q152 46 152 35Z" fill="#fff" stroke-width="3"/><path d="M40 55 Q40 62 47 62 Q40 62 40 69 Q40 62 33 62 Q40 62 40 55Z" fill="#fff" stroke-width="3"/>
 </g>
 </svg>
