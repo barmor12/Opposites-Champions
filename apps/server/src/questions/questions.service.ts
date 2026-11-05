@@ -209,7 +209,10 @@ export class QuestionsService {
       if (t !== QuestionType.PICTURE_TO_PICTURE && pairs.length < MIN_POOL) return false;
       return poolFor(t).length > 0;
     });
-    if (active.length === 0) active = [QuestionType.CHOOSE_OPPOSITE];
+    if (active.length === 0) {
+      if (pairs.length < MIN_POOL) throw GameError.badRequest('NOT_ENOUGH_PAIRS', 'אין מספיק זוגות מילים להגדרות שנבחרו');
+      active = [QuestionType.CHOOSE_OPPOSITE];
+    }
 
     const total = settings.questionCount;
     const treasureCount = this.treasureCount(settings);

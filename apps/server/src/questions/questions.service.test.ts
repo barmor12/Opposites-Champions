@@ -22,7 +22,7 @@ function pair(i: number, imageable: boolean): PlayablePair {
     wordImageId: imageable ? `m-${i}-word` : null, oppositeImageId: imageable ? `m-${i}-opposite` : null,
     wordImage: imageable ? img('word') : null, oppositeImage: imageable ? img('opposite') : null,
     supportedTypes: imageable
-      ? [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE]
+      ? [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE, QuestionType.PICTURE_TO_PICTURE]
       : [QuestionType.CHOOSE_OPPOSITE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE],
     active: true, createdAt: new Date(), updatedAt: new Date(), deletedAt: null,
   };
@@ -33,7 +33,7 @@ function settings(over: Partial<GameSettings> = {}): GameSettings {
   return { ...DEFAULT_SETTINGS, className: 'ג1', questionCount: 20, treasureChallenge: true, ...over };
 }
 
-function buildService() {
+function buildService(pairs: PlayablePair[] = PAIRS, fallback: PlayablePair[] = pairs) {
   let counter = 0;
   const prisma = mockPrisma({
     question: { create: vi.fn(async ({ data }: { data: Record<string, unknown> }) => ({ id: `q${counter++}`, ...data })) },
@@ -46,8 +46,16 @@ function buildService() {
       }),
     },
   });
-  const content = { getPlayablePairs: vi.fn(async () => PAIRS) } as unknown as ContentService;
-  return { service: new QuestionsService(prisma, content), prisma, content };
+  const getPlayablePairs = vi.fn(async (filter: { categories?: string[] } = {}) => (filter.categories ? pairs : fallback));
+  const content = { getPlayablePairs } as unknown as ContentService;
+  return { service: new QuestionsService(prisma, content), prisma, content, getPlayablePairs };
+}
+
+/** מיפוי url של איור → הזוג והצד שלו (לבדיקת מקור האיורים) */
+const IMAGE_OWNER = new Map<string, { pair: PlayablePair; side: 'word' | 'opposite' }>();
+for (const p of PAIRS) {
+  if (p.wordImage) IMAGE_OWNER.set(p.wordImage.url, { pair: p, side: 'word' });
+  if (p.oppositeImage) IMAGE_OWNER.set(p.oppositeImage.url, { pair: p, side: 'opposite' });
 }
 
 describe('evenTypeMix', () => {
@@ -95,6 +103,85 @@ describe('QuestionsService.buildSpecs', () => {
     }
   });
 
+  describe('PICTURE_TO_PICTURE', () => {
+    const pictureSettings = (over: Partial<GameSettings> = {}) =>
+      settings({ questionTypes: [QuestionType.PICTURE_TO_PICTURE], treasureChallenge: false, questionCount: 20, difficulty: 'EASY', ...over });
+
+    it('builds picture-only questions from imageable pairs: prompt image + 4 distinct image options, exactly one correct', () => {
+      const specs = service.buildSpecs(PAIRS, pictureSettings(), seededRng('pic'));
+      expect(specs).toHaveLength(20);
+      for (const s of specs) {
+        expect(s.type).toBe(QuestionType.PICTURE_TO_PICTURE);
+        const source = PAIRS.find((p) => p.id === s.wordPairId);
+        if (!source || !source.wordImage || !source.oppositeImage) throw new Error('question built from a non-imageable pair');
+        expect(s.prompt).toBe(source.word); // המילה נשמרת להקראה/דוחות
+        expect(s.promptImage).toBe(source.wordImage.url);
+        expect(s.payload).toEqual({ kind: 'choice', pairId: source.id, word: source.word, opposite: source.opposite });
+        expect(s.options).toHaveLength(4);
+        expect(s.options.every((o) => typeof o.image === 'string' && o.image.length > 0)).toBe(true);
+        const correct = s.options.filter((o) => o.isCorrect);
+        expect(correct).toHaveLength(1);
+        expect(correct[0]).toMatchObject({ text: source.opposite, image: source.oppositeImage.url });
+        // איורים ייחודיים, ללא איור המילה עצמה ולא מהזוג של השאלה
+        const images = s.options.map((o) => o.image as string);
+        expect(new Set(images).size).toBe(4);
+        expect(images).not.toContain(s.promptImage);
+        expect(new Set(s.options.map((o) => o.text)).size).toBe(4);
+        for (const o of s.options.filter((x) => !x.isCorrect)) {
+          const owner = IMAGE_OWNER.get(o.image as string);
+          expect(owner, `unknown image ${o.image}`).toBeDefined();
+          expect(owner?.pair.id).not.toBe(source.id);
+          expect(owner?.pair[owner.side]).toBe(o.text); // text = alt של אותו איור
+          expect([source.word, source.opposite]).not.toContain(o.text);
+        }
+      }
+    });
+
+    it('prefers distractor images from the same category', () => {
+      const specs = service.buildSpecs(PAIRS, pictureSettings(), seededRng('cat'));
+      for (const s of specs) {
+        const source = PAIRS.find((p) => p.id === s.wordPairId) as PlayablePair;
+        for (const o of s.options.filter((x) => !x.isCorrect)) {
+          expect(IMAGE_OWNER.get(o.image as string)?.pair.category).toBe(source.category);
+        }
+      }
+    });
+
+    it('never uses non-imageable pairs even when they match the filters', () => {
+      const specs = service.buildSpecs(PAIRS, pictureSettings({ questionTypes: [QuestionType.PICTURE_TO_PICTURE, QuestionType.CHOOSE_OPPOSITE] }), seededRng('mix'));
+      const picture = specs.filter((s) => s.type === QuestionType.PICTURE_TO_PICTURE);
+      expect(picture.length).toBeGreaterThan(0);
+      expect(specs.some((s) => s.type === QuestionType.CHOOSE_OPPOSITE)).toBe(true);
+      for (const s of picture) expect(PAIRS.find((p) => p.id === s.wordPairId)?.imageable).toBe(true);
+    });
+
+    it('is allowed in the treasure questions', () => {
+      const specs = service.buildSpecs(PAIRS, pictureSettings({ treasureChallenge: true }), seededRng('tr'));
+      expect(specs.slice(-TREASURE_QUESTIONS).every((s) => s.type === QuestionType.PICTURE_TO_PICTURE)).toBe(true);
+    });
+
+    it('falls back to the extra imageable pool only when the filtered pool has fewer than 4 imageable pairs', () => {
+      const few = PAIRS.slice(0, 5); // p0, p2, p4 imageable – רק 3
+      expect(() => service.buildSpecs(few, pictureSettings(), seededRng('nf'))).toThrowError(/זוגות/);
+      const specs = service.buildSpecs(few, pictureSettings(), seededRng('fb'), PAIRS);
+      expect(specs).toHaveLength(20);
+      expect(specs.every((s) => s.type === QuestionType.PICTURE_TO_PICTURE)).toBe(true);
+      const usedIds = new Set(specs.map((s) => s.wordPairId));
+      expect([...usedIds].some((id) => !few.some((p) => p.id === id))).toBe(true);
+      // כשהמאגר המסונן מספיק – המאגר החלופי אינו בשימוש
+      const enough = PAIRS.slice(0, 8); // p0,p2,p4,p6 imageable
+      const own = service.buildSpecs(enough, pictureSettings(), seededRng('own'), PAIRS);
+      expect(own.every((s) => enough.some((p) => p.id === s.wordPairId))).toBe(true);
+      expect(own.every((s) => s.options.every((o) => enough.some((p) => p.wordImage?.url === o.image || p.oppositeImage?.url === o.image)))).toBe(true);
+    });
+
+    it('is deterministic for the same seed', () => {
+      const a = service.buildSpecs(PAIRS, pictureSettings(), seededRng('d'));
+      const b = service.buildSpecs(PAIRS, pictureSettings(), seededRng('d'));
+      expect(JSON.stringify(a)).toBe(JSON.stringify(b));
+    });
+  });
+
   it('builds MATCH_PAIRS with 8 cards and 4 correct pairs that reference existing cards', () => {
     const specs = service.buildSpecs(PAIRS, settings({ questionTypes: [QuestionType.MATCH_PAIRS], treasureChallenge: false, questionCount: 10 }), seededRng('m'));
     for (const s of specs) {
@@ -128,6 +215,23 @@ describe('QuestionsService.buildSpecs', () => {
 });
 
 describe('QuestionsService.generateSessionQuestions', () => {
+  it('fetches the imageable fallback pool for PICTURE_TO_PICTURE when the filtered pool is too small', async () => {
+    const few = PAIRS.slice(0, 5);
+    const { service, getPlayablePairs } = buildService(few, PAIRS);
+    const created = await service.generateSessionQuestions('s1', settings({ questionTypes: [QuestionType.PICTURE_TO_PICTURE], treasureChallenge: false, categories: [Category.ANIMALS_NATURE] }), 'seed');
+    expect(created).toHaveLength(20);
+    expect(created.every((sq) => sq.question.type === QuestionType.PICTURE_TO_PICTURE)).toBe(true);
+    expect(getPlayablePairs).toHaveBeenCalledTimes(2);
+    expect(getPlayablePairs.mock.calls[1]?.[0]).toMatchObject({ types: [QuestionType.PICTURE_TO_PICTURE], requireImages: true });
+    expect(getPlayablePairs.mock.calls[1]?.[0]).not.toHaveProperty('categories');
+  });
+
+  it('does not fetch the fallback pool when the filtered pool is sufficient', async () => {
+    const { service, getPlayablePairs } = buildService();
+    await service.generateSessionQuestions('s1', settings({ questionTypes: [QuestionType.PICTURE_TO_PICTURE], treasureChallenge: false }), 'seed');
+    expect(getPlayablePairs).toHaveBeenCalledTimes(1);
+  });
+
   it('marks the last 5 questions as treasure with steps 1..5 and sets the time limit', async () => {
     const { service } = buildService();
     const created = await service.generateSessionQuestions('s1', settings({ timePerQuestionSec: 20 }), 'seed');
@@ -147,7 +251,7 @@ describe('QuestionsService.toQuestionView / checkAnswer', () => {
   }
 
   it('never leaks correctness information in QuestionView', async () => {
-    for (const type of [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE]) {
+    for (const type of [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE, QuestionType.MATCH_PAIRS, QuestionType.COMPLETE_SENTENCE, QuestionType.PICTURE_TO_PICTURE]) {
       const { service, sq } = await firstOf(type);
       const view = service.toQuestionView(sq, 1_000, 10, 1_500);
       const json = JSON.stringify(view);
@@ -164,9 +268,29 @@ describe('QuestionsService.toQuestionView / checkAnswer', () => {
         expect(view.options).toEqual([]);
       } else {
         expect(view.options).toHaveLength(4);
-        expect(Object.keys(view.options[0] as object).sort()).toEqual(type === QuestionType.CHOOSE_IMAGE ? ['id', 'image', 'text'] : ['id', 'text']);
+        const withImages = type === QuestionType.CHOOSE_IMAGE || type === QuestionType.PICTURE_TO_PICTURE;
+        expect(Object.keys(view.options[0] as object).sort()).toEqual(withImages ? ['id', 'image', 'text'] : ['id', 'text']);
+      }
+      if (type === QuestionType.PICTURE_TO_PICTURE) {
+        expect(view.type).toBe(QuestionType.PICTURE_TO_PICTURE);
+        expect(view.promptImage).toMatch(/word\.svg$/);
+        expect(view.options.every((o) => typeof o.image === 'string')).toBe(true);
+        expect(view.options.map((o) => o.image)).not.toContain(view.promptImage);
       }
     }
+  });
+
+  it('checks PICTURE_TO_PICTURE answers exactly like CHOOSE_IMAGE and reports the opposite word for reports', async () => {
+    const { service, sq } = await firstOf(QuestionType.PICTURE_TO_PICTURE);
+    const correct = sq.question.options.find((o) => o.isCorrect);
+    const wrong = sq.question.options.find((o) => !o.isCorrect);
+    if (!correct || !wrong) throw new Error('bad fixture');
+    expect(service.checkAnswer(sq, { sessionQuestionId: sq.id, optionId: correct.id })).toMatchObject({ correct: true, correctOptionId: correct.id, matchedCount: 1, totalPairs: 1, mistakes: 0 });
+    expect(service.checkAnswer(sq, { sessionQuestionId: sq.id, optionId: wrong.id })).toMatchObject({ correct: false, correctOptionId: correct.id, mistakes: 1 });
+    expect(service.correctInfo(sq)).toMatchObject({ correctOptionId: correct.id });
+    const source = PAIRS.find((p) => p.id === sq.question.wordPairId);
+    expect(service.correctAnswerText(sq)).toBe(source?.opposite);
+    expect(service.isMatch(sq)).toBe(false);
   });
 
   it('checks choice answers and reports the correct option', async () => {
