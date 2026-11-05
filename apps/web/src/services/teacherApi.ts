@@ -54,16 +54,6 @@ export type ExportFormat = 'csv' | 'xlsx';
 
 const BASE = '';
 
-function qs(params: Record<string, string | number | boolean | undefined | ''>): string {
-  const search = new URLSearchParams();
-  for (const [key, value] of Object.entries(params)) {
-    if (value === undefined || value === '') continue;
-    search.set(key, String(value));
-  }
-  const str = search.toString();
-  return str ? `?${str}` : '';
-}
-
 function roomPath(roomId: string, suffix = ''): string {
   return `${BASE}/games/${encodeURIComponent(roomId)}${suffix}`;
 }
@@ -133,7 +123,7 @@ export function removeParticipant(roomId: string, participantId: string): Promis
 }
 
 export function getResults(roomId: string, sessionId?: string): Promise<GameResults> {
-  return apiClient.get<GameResults>(roomPath(roomId, `/results${qs({ sessionId })}`));
+  return apiClient.get<GameResults>(roomPath(roomId, '/results'), { query: { sessionId } });
 }
 
 export function deleteGame(roomId: string): Promise<{ ok: true }> {
@@ -199,7 +189,7 @@ function triggerDownload(blob: Blob, filename: string): void {
 
 // ===== Content =====
 export function listWordPairs(query: WordPairListQuery = {}): Promise<WordPairListResponse> {
-  return apiClient.get<WordPairListResponse>(`${BASE}/word-pairs${qs(query)}`);
+  return apiClient.get<WordPairListResponse>(`${BASE}/word-pairs`, { query: { ...query } });
 }
 
 export function createWordPair(input: WordPairInput): Promise<WordPairContent> {

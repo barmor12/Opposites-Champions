@@ -106,7 +106,7 @@ export function ChoiceQuestion({ question, result, selectedId, disabled, showCor
               type="button"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0, scale: isCorrect && !reduced ? [1, 1.06, 1] : 1 }}
-              transition={{ delay: result ? 0 : 0.08 * i, type: 'spring', stiffness: 300, damping: 22 }}
+              transition={{ delay: result ? 0 : 0.08 * i, type: 'spring', stiffness: 300, damping: 22, scale: { type: 'tween', duration: 0.45, ease: 'easeInOut' } }}
               whileHover={!disabled && !reduced ? { scale: 1.03 } : undefined}
               whileTap={!disabled && !reduced ? { scale: 0.96 } : undefined}
               onClick={() => !disabled && onSelect(opt)}

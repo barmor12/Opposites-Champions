@@ -19,26 +19,37 @@ const $transaction = vi.fn(async (ops: Promise<unknown>[]) => Promise.all(ops));
 const prisma = { wordPair, mediaAsset, $transaction } as unknown as PrismaService;
 
 const ROW_ID = '22222222-2222-4222-8222-222222222222';
+const asset = (id: string, url: string, deletedAt: Date | null) => ({
+  id,
+  key: `pair:big-small:${id}`,
+  kind: 'WORD_IMAGE' as const,
+  url,
+  alt: 'alt',
+  width: null,
+  height: null,
+  createdAt: new Date(),
+  deletedAt,
+});
 const baseRow = {
   id: ROW_ID,
   slug: 'big-small',
   word: 'גדול',
   opposite: 'קטן',
-  category: Category.SIZES,
-  difficulty: Difficulty.EASY,
+  category: Category.SIZES as 'SIZES',
+  difficulty: Difficulty.EASY as 'EASY',
   sentence: 'הפיל ____ והעכבר קטן',
   sentenceAnswer: 'word',
   explanation: null,
   imageable: true,
   wordImageId: 'a',
   oppositeImageId: 'b',
-  supportedTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE],
+  supportedTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE] as Array<'CHOOSE_OPPOSITE' | 'CHOOSE_IMAGE'>,
   active: true,
   createdAt: new Date(),
   updatedAt: new Date(),
   deletedAt: null,
-  wordImage: { id: 'a', url: '/img/big.png', deletedAt: null },
-  oppositeImage: { id: 'b', url: '/img/small.png', deletedAt: new Date() },
+  wordImage: asset('a', '/img/big.png', null),
+  oppositeImage: asset('b', '/img/small.png', new Date()),
 };
 
 describe('ContentService', () => {

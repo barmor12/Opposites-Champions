@@ -1,10 +1,11 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import type { AnswerPayload, AnswerResult } from '@oc/shared';
 import { QuestionRenderer } from '../QuestionRenderer';
 import { choiceQuestion, resultFor, stubCanvas } from './fixtures';
 
 beforeAll(() => stubCanvas());
+afterEach(() => cleanup());
 
 function setup(opts: { result?: AnswerResult | null; answer?: (p: AnswerPayload) => Promise<AnswerResult>; show?: boolean; q?: ReturnType<typeof choiceQuestion> } = {}) {
   const q = opts.q ?? choiceQuestion();

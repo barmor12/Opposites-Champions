@@ -1,10 +1,11 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import type { AnswerPayload, AnswerResult, MatchAnswerPayload } from '@oc/shared';
 import { QuestionRenderer } from '../QuestionRenderer';
 import { matchQuestion, resultFor, stubCanvas } from './fixtures';
 
 beforeAll(() => stubCanvas());
+afterEach(() => cleanup());
 
 const CORRECT = [
   { cardA: 'c-big', cardB: 'c-small' },
