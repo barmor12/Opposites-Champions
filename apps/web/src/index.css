@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* ===== Rubik (OFL) – variable font, Hebrew + Latin subsets ===== */
+@font-face {
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/Rubik-Variable.woff2") format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/Rubik-Variable-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ===== Design tokens ===== */
+@theme {
+  --font-sans: "Rubik", "Heebo", "Segoe UI", Arial, sans-serif;
+  --font-display: "Rubik", "Heebo", "Segoe UI", Arial, sans-serif;
+
+  --color-brand-sky: #38bdf8;
+  --color-brand-violet: #8b5cf6;
+  --color-brand-yellow: #facc15;
+  --color-brand-pink: #f9a8d4;
+  --color-brand-green: #22c55e;
+  --color-brand-orange: #fb923c;
+  --color-brand-navy: #1e293b;
+
+  --radius-bubble: 1.75rem;
+
+  --shadow-card: 0 10px 30px -10px rgb(30 41 59 / 0.18), 0 2px 6px -2px rgb(30 41 59 / 0.08);
+  --shadow-pop: 0 18px 40px -14px rgb(139 92 246 / 0.45);
+  --shadow-glow: 0 0 0 6px rgb(255 255 255 / 0.6);
+
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-float-slow: float 7s ease-in-out infinite;
+  --animate-bounce-soft: bounce-soft 1.8s ease-in-out infinite;
+  --animate-twinkle: twinkle 2.6s ease-in-out infinite;
+  --animate-drift: drift 60s linear infinite;
+  --animate-wiggle: wiggle 1.2s ease-in-out infinite;
+  --animate-pop: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(2deg); }
+  }
+  @keyframes bounce-soft {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.04); }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.35; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+  @keyframes drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-4deg); }
+    50% { transform: rotate(4deg); }
+  }
+  @keyframes pop {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+}
+
+/* ===== Base ===== */
+@layer base {
+  html {
+    font-size: 18px;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-sky-50 text-brand-navy font-sans antialiased min-h-dvh;
+    font-feature-settings: "kern";
+    overflow-x: hidden;
+  }
+  #root {
+    @apply min-h-dvh flex flex-col;
+  }
+  h1, h2, h3 {
+    @apply font-bold tracking-tight text-balance;
+  }
+  button, [role="button"], a.btn, input, select, textarea {
+    min-height: 48px;
+  }
+  button, [role="button"] {
+    @apply cursor-pointer touch-manipulation select-none;
+  }
+  :focus-visible {
+    outline: 4px solid var(--color-brand-violet);
+    outline-offset: 3px;
+    border-radius: 0.75rem;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--color-brand-yellow) 60%, white);
+  }
+  img, svg { @apply max-w-full; }
+}
+
+@layer utilities {
+  .text-shadow-pop {
+    text-shadow: 0 3px 0 rgb(255 255 255 / 0.9), 0 8px 24px rgb(30 41 59 / 0.18);
+  }
+  .text-outline-white {
+    -webkit-text-stroke: 1px rgb(255 255 255 / 0.9);
+    paint-order: stroke fill;
+  }
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
