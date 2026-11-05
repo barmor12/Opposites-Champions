@@ -15,6 +15,7 @@ import {
   type QuestionView,
 } from '@oc/shared';
 import { useSound } from '@/hooks/useSound';
+import { PageBackground } from '@/components/ui';
 import { QuestionRenderer } from '../QuestionRenderer';
 import { cn } from '../utils';
 
@@ -258,8 +259,9 @@ export function GamesDemo() {
   if (!current) return null;
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gradient-to-b from-sky-100 via-violet-50 to-pink-100 pb-10">
-      <header className="sticky top-0 z-40 border-b-2 border-white/60 bg-white/80 px-3 py-2 backdrop-blur">
+    <div dir="rtl" className="relative min-h-dvh overflow-x-clip pb-10">
+      <PageBackground variant="day" rainbow={false} balloons={false} />
+      <header className="z-40 border-b border-white/70 glass px-3 py-2 sm:sticky sm:top-0">
         <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-2">
           <h1 className="me-2 text-lg font-black text-violet-700">🎮 דמו משחקים</h1>
           <div className="flex flex-wrap gap-1" role="tablist" aria-label="סוגי שאלות">
@@ -271,7 +273,9 @@ export function GamesDemo() {
                 onClick={() => goTo(i)}
                 className={cn(
                   'rounded-full px-3 py-1 text-sm font-bold transition-colors',
-                  i === index ? 'bg-violet-600 text-white' : 'bg-violet-100 text-violet-800 hover:bg-violet-200',
+                  i === index
+                    ? 'bg-gradient-to-b from-violet-500 to-violet-700 text-white shadow-[0_6px_12px_-6px_rgba(109,40,217,0.7),inset_0_1px_0_rgba(255,255,255,0.4)]'
+                    : 'bg-white/80 text-violet-800 ring-1 ring-violet-200 hover:bg-violet-50',
                 )}
               >
                 {q.label}

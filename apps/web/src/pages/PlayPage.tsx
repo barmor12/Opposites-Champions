@@ -161,7 +161,7 @@ export function PlayPage() {
   const wide = screen === 'question';
 
   return (
-    <main className="relative flex min-h-dvh flex-col safe-x safe-bottom pt-2 sm:pt-4">
+    <main className="relative flex min-h-dvh flex-col overflow-x-clip safe-x safe-bottom pt-2 sm:pt-4">
       <PageBackground variant="day" rainbow={screen === 'waiting'} balloons={screen !== 'question'} />
 
       {/* סרגל עליון */}

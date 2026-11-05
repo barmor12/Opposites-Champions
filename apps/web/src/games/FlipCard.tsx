@@ -49,8 +49,8 @@ export function FlipCard({ front, back, flipped, className, tilt = true, faceCla
 
   return (
     <div ref={cardRef} onPointerMove={onMove} onPointerLeave={reset} className={cn('[perspective:1000px]', className)}>
-      <div className={cn('relative h-full w-full transition-transform duration-500 ease-in-out [transform-style:preserve-3d]', flipped && '[transform:rotateY(180deg)]')}>
-        <div ref={frontRef} className={cn('absolute inset-0 transition-transform duration-200 ease-out [backface-visibility:hidden]', faceClassName)}>
+      <div className={cn('relative w-full transition-transform duration-500 ease-in-out [transform-style:preserve-3d]', flipped && '[transform:rotateY(180deg)]')}>
+        <div ref={frontRef} className={cn('relative transition-transform duration-200 ease-out [backface-visibility:hidden]', faceClassName)}>
           {front}
         </div>
         <div ref={backRef} className={cn('absolute inset-0 transition-transform duration-200 ease-out [backface-visibility:hidden] [transform:rotateY(180deg)]', faceClassName)}>

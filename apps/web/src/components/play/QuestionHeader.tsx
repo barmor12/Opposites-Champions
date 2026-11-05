@@ -24,18 +24,15 @@ export function QuestionHeader({ question, score, streak, serverOffsetMs, answer
   return (
     <header className="relative flex flex-col gap-3 rounded-bubble glass px-3 py-3 ring-1 ring-white/70 sm:px-5 sm:py-4">
       <div className="flex items-center gap-2.5 sm:gap-4">
-        <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-base font-black text-brand-navy sm:text-lg">
-              שאלה {n} <span className="font-bold text-slate-500">מתוך {question.total}</span>
-            </span>
-            {question.isTreasure && (
-              <Badge color="yellow" icon={<span aria-hidden>💎</span>}>
-                אוצר {question.treasureStep}/{question.treasureTotal ?? 5}
-              </Badge>
-            )}
-          </div>
-          <ProgressBar value={n} max={question.total} size="sm" color="rainbow" label={undefined} />
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="whitespace-nowrap text-base font-black text-brand-navy sm:text-lg">
+            שאלה {n} <span className="font-bold text-slate-500">מתוך {question.total}</span>
+          </span>
+          {question.isTreasure && (
+            <Badge color="yellow" icon={<span aria-hidden>💎</span>}>
+              אוצר {question.treasureStep}/{question.treasureTotal ?? 5}
+            </Badge>
+          )}
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
@@ -90,6 +87,7 @@ export function QuestionHeader({ question, score, streak, serverOffsetMs, answer
           />
         </div>
       </div>
+      <ProgressBar value={n} max={question.total} size="sm" color="rainbow" label={undefined} />
     </header>
   );
 }

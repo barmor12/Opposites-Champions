@@ -177,7 +177,7 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
                 whileHover={interactive && !reduced ? { y: -4 } : undefined}
                 whileTap={interactive && !reduced ? { scale: 0.96 } : undefined}
                 className={cn(
-                  'group relative block min-h-24 w-full rounded-3xl text-xl font-black sm:min-h-32 sm:text-2xl lg:min-h-36',
+                  'group relative block w-full rounded-3xl text-xl font-black sm:text-2xl',
                   'focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-500 focus-visible:ring-offset-2',
                   'disabled:cursor-not-allowed',
                 )}
@@ -185,11 +185,11 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
                 <FlipCard
                   flipped={!!link && !reduced}
                   tilt={interactive}
-                  className="h-full min-h-[inherit] w-full"
+                  className="w-full"
                   front={
                     <span
                       className={cn(
-                        'relative flex h-full min-h-[inherit] w-full flex-col items-center justify-center gap-1 overflow-hidden rounded-3xl border-b-[6px] bg-gradient-to-b px-2 py-3 transition-[border-color,box-shadow] duration-200',
+                        'relative flex min-h-24 w-full flex-col items-center justify-center gap-1 overflow-hidden rounded-3xl border-b-[6px] bg-gradient-to-b px-2 py-3 transition-[border-color,box-shadow] duration-200 sm:min-h-32 lg:min-h-36',
                         !isSelected && 'from-white to-slate-100 border-slate-300 text-slate-800 shadow-[0_12px_26px_-12px_rgba(30,41,59,0.4),inset_0_2px_0_#fff] group-hover:border-violet-300',
                         isSelected && 'from-violet-50 to-violet-200 border-violet-600 text-violet-900 ring-4 ring-violet-300 shadow-[0_16px_30px_-12px_rgba(109,40,217,0.55),inset_0_2px_0_#fff]',
                         // כשההפחתה פעילה אין היפוך – מציגים צבע זוג/תוצאה גם בפאה הקדמית
@@ -210,7 +210,7 @@ export function MatchPairsQuestion({ question, result, disabled, showCorrectAnsw
                   back={
                     <span
                       className={cn(
-                        'relative flex h-full min-h-[inherit] w-full flex-col items-center justify-center gap-1 overflow-hidden rounded-3xl border-b-[6px] bg-gradient-to-b px-2 py-3',
+                        'relative flex h-full w-full flex-col items-center justify-center gap-1 overflow-hidden rounded-3xl border-b-[6px] bg-gradient-to-b px-2 py-3',
                         'shadow-[0_14px_28px_-12px_rgba(30,41,59,0.45),inset_0_2px_0_rgba(255,255,255,0.5)]',
                         ok === null && (color?.face ?? PAIR_COLORS[0].face),
                         ok === true && 'from-green-400 via-green-500 to-green-700 border-green-900 text-white',

@@ -107,7 +107,7 @@ export function HomePage() {
   };
 
   return (
-    <main className="relative flex min-h-dvh flex-col items-center safe-x safe-bottom pt-3 sm:pt-5">
+    <main className="relative flex min-h-dvh flex-col overflow-x-clip items-center safe-x safe-bottom pt-3 sm:pt-5">
       <PageBackground variant="day" rainbow />
       <FloatingStars count={reduce ? 0 : 10} />
 

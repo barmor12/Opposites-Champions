@@ -4,7 +4,7 @@ import { Button, Card, Character, PageBackground } from '@/components/ui';
 
 export function NotFoundPage() {
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center safe-x safe-bottom p-4">
+    <main className="flex min-h-dvh flex-col overflow-x-clip items-center justify-center safe-x safe-bottom p-4">
       <PageBackground variant="sunset" rainbow={false} />
       <Card variant="glass" className="flex w-full max-w-md flex-col items-center gap-4 text-center shadow-float">
         <Character name="moon" mood="think" size="md" animate="wiggle" />

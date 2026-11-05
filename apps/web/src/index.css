@@ -178,11 +178,13 @@
     font-size: clamp(16px, 15px + 0.3vw, 19px);
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* אפקטים (קרניים, קונפטי) חורגים לרוחב – חותכים בלי ליצור גלילה אופקית */
+    overflow-x: clip;
   }
   body {
     @apply bg-sky-50 text-brand-navy font-sans antialiased min-h-dvh;
     font-feature-settings: "kern";
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-tap-highlight-color: transparent;
   }
   #root {
