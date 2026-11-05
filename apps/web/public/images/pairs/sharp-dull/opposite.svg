@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="קהה"><title>קהה</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="84" y="174" width="32" height="14" rx="5" fill="#F9A8D4"/>
+<rect x="84" y="162" width="32" height="14" fill="#CBD5E1"/>
+<rect x="84" y="96" width="32" height="68" fill="#FDE047"/>
+<path d="M100 98 V162" stroke="#EAB308" stroke-width="3"/>
+<path d="M84 96 L116 96 L110 76 L90 76 Z" fill="#FCD9B6"/><rect x="90" y="66" width="20" height="12" rx="6" fill="#2D3748"/><path d="M62 50 q6 -6 12 0 t12 0 M118 44 q6 -6 12 0 t12 0" fill="none" stroke="#94A3B8" stroke-width="4"/>
+</g></svg>

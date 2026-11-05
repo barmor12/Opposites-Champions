@@ -1,6 +1,4 @@
-import {
-  Body, Controller, Delete, Get, HttpCode, Param, ParseUUIDPipe, Post, UseGuards, UsePipes, ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseUUIDPipe, Post, UseGuards } from '@nestjs/common';
 import type { GameSummary, TeacherProfile, TeacherRoomLive } from '@oc/shared';
 import { TeacherAuthGuard } from '../auth/teacher-auth.guard';
 import { CurrentTeacher } from '../auth/current-teacher.decorator';
@@ -11,7 +9,6 @@ const uuid = new ParseUUIDPipe({ errorHttpStatusCode: 404 });
 
 @Controller('games')
 @UseGuards(TeacherAuthGuard)
-@UsePipes(new ValidationPipe({ whitelist: true, transform: true, forbidUnknownValues: false }))
 export class GamesController {
   constructor(private readonly games: GamesService) {}
 

@@ -1,13 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ישן"><title>ישן</title>
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-<path d="M30 150 Q26 172 44 172 L170 172 Q186 172 184 156 L178 148 Z" fill="#CBD5E1"/>
-<path d="M30 152 Q20 176 40 184 L60 174" fill="#CBD5E1" stroke-width="4"/>
+<path d="M40 150 Q36 172 54 172 L170 172 Q186 172 184 156 L178 148 Z" fill="#CBD5E1"/>
+<path d="M40 150 Q24 164 30 184 Q44 180 56 170" fill="#CBD5E1" stroke-width="4"/>
 <path d="M34 148 C30 120 50 96 86 96 L110 96 C130 96 140 112 150 124 C160 134 178 138 178 148 Z" fill="#B08968"/>
-<path d="M44 128 L54 120 L52 110 L66 116 L74 108 L72 122 L82 128 L66 132 L62 142 L54 134 Z" fill="#2D3748" stroke-width="3"/>
+<ellipse cx="58" cy="126" rx="16" ry="12" fill="#2D3748"/>
+<circle cx="48" cy="128" r="9" fill="#FDE1C8" stroke-width="3"/>
 <path d="M88 102 L114 110 M90 114 L116 120" stroke="#CBD5E1" stroke-width="4"/>
-<path d="M92 124 Q70 140 84 160" fill="none" stroke="#CBD5E1" stroke-width="4"/>
-<rect x="122" y="112" width="30" height="24" rx="3" fill="#FDBA74" stroke-width="3" transform="rotate(-12 137 124)"/>
-<path d="M126 118 L130 114 M130 128 L134 124 M142 132 L146 128 M146 116 L150 112" stroke-width="2.5" transform="rotate(-12 137 124)"/>
-<path d="M100 96 L106 86 L112 96 L120 88 L124 98" fill="none" stroke-width="3"/>
+<path d="M98 122 Q78 140 90 162" fill="none" stroke="#CBD5E1" stroke-width="4"/>
+<rect x="124" y="112" width="30" height="24" rx="3" fill="#FDBA74" stroke-width="3" transform="rotate(-12 139 124)"/>
+<path d="M128 118 L132 114 M132 128 L136 124 M144 132 L148 128 M148 116 L152 112" stroke-width="2.5" transform="rotate(-12 139 124)"/>
+<path d="M20 60 l5 -4 M34 44 l2 -6 M176 96 l6 -2 M168 72 l5 4" stroke-width="3" opacity="0.5"/>
 </g></svg>

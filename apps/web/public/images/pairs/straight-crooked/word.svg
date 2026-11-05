@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ישר"><title>ישר</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<path d="M4 164H196C196 182 182 196 164 196H36C18 196 4 182 4 164Z" fill="#86EFAC"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 164 H196" stroke-width="4"/>
+<rect x="90" y="90" width="20" height="76" fill="#B45309"/>
+<circle cx="66" cy="84" r="26" fill="#86EFAC"/>
+<circle cx="134" cy="84" r="26" fill="#86EFAC"/>
+<circle cx="100" cy="62" r="36" fill="#86EFAC"/>
+<circle cx="84" cy="78" r="6" fill="#F87171" stroke-width="3"/><circle cx="120" cy="66" r="6" fill="#F87171" stroke-width="3"/><circle cx="104" cy="94" r="6" fill="#F87171" stroke-width="3"/>
+</g></svg>

@@ -128,7 +128,6 @@ export class GamesService implements OnModuleInit {
     const now = Date.now();
     const pausedFor = session.pausedAt ? Math.max(0, now - session.pausedAt.getTime()) : 0;
     const phase = await this.pausedPhase(session);
-    const settings = parseSettings(session.settings);
 
     if (phase === 'countdown') {
       const remaining = session.pausedRemainingMs ?? COUNTDOWN_MS;
@@ -168,7 +167,6 @@ export class GamesService implements OnModuleInit {
       }
       this.events.toTeacher(roomId, 'game:resumed', { serverNow: now });
     }
-    void settings;
     await this.rooms.emitRoomUpdated(roomId);
     return this.buildLive(room);
   }

@@ -1,5 +1,5 @@
-import { Body, Controller, Get, HttpCode, Param, Post, UseGuards } from '@nestjs/common';
-import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
+import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import type { JoinRoomResponse, RoomPublicView } from '@oc/shared';
 import { RoomsService } from './rooms.service';
 import { JoinRoomDto } from './dto/join-room.dto';
@@ -9,10 +9,9 @@ import { GameError } from '../games/game-error';
 export class RoomsController {
   constructor(private readonly rooms: RoomsService) {}
 
-  /** הצטרפות תלמיד – מוגבל ל־20 בקשות לדקה לכל כתובת IP */
+  /** הצטרפות תלמיד – מוגבל ל־20 בקשות לדקה לכל כתובת IP (נאכף ע"י ה־ThrottlerGuard הגלובלי של האפליקציה) */
   @Post('join')
   @HttpCode(200)
-  @UseGuards(ThrottlerGuard)
   @Throttle({ default: { limit: 20, ttl: 60_000 } })
   join(@Body() dto: JoinRoomDto): Promise<JoinRoomResponse> {
     return this.rooms.join(dto.code, dto.displayName, dto.avatar);

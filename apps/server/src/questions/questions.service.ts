@@ -7,7 +7,8 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { ContentService } from '../content/content.service';
 import { GameError } from '../games/game-error';
-import { pickDistractors } from './distractors';
+import { pickDistractors } from '@oc/content';
+import { toWordPairRecord } from '../content/content.service';
 import { pairKey, parseQuestionPayload, payloadToJson, type MatchPair, type QuestionPayload } from './question-payload';
 import { pick, randomId, seededRng, shuffle, type Rng } from './rng';
 
@@ -193,23 +194,17 @@ export class QuestionsService {
     return settings.treasureChallenge ? Math.min(TREASURE_QUESTIONS, settings.questionCount) : 0;
   }
 
+  /** מסיחים טקסטואליים דרך @oc/content (מודע למילים נרדפות ולהפכים חלופיים) עם השלמה מהמאגר במקרה קצה */
   private distractorTexts(pair: PlayablePair, all: readonly PlayablePair[], forbidden: Set<string>, rng: Rng): string[] {
-    const texts: string[] = [];
     const seen = new Set(forbidden);
-    for (const d of pickDistractors(pair, all, DISTRACTOR_COUNT + 2, rng)) {
-      const sides = rng() < 0.5 ? [d.opposite, d.word] : [d.word, d.opposite];
-      for (const text of sides) {
-        if (texts.length >= DISTRACTOR_COUNT) break;
-        if (!seen.has(text)) {
-          seen.add(text);
-          texts.push(text);
-          break;
-        }
-      }
+    const texts: string[] = [];
+    for (const text of pickDistractors(toWordPairRecord(pair), all.map(toWordPairRecord), DISTRACTOR_COUNT, rng)) {
       if (texts.length >= DISTRACTOR_COUNT) break;
+      if (seen.has(text)) continue;
+      seen.add(text);
+      texts.push(text);
     }
     if (texts.length < DISTRACTOR_COUNT) {
-      // השלמה מכל המאגר במקרה קצה (מאגר קטן)
       for (const p of shuffle(all, rng)) {
         for (const text of [p.opposite, p.word]) {
           if (texts.length >= DISTRACTOR_COUNT) break;
@@ -243,21 +238,26 @@ export class QuestionsService {
 
   private chooseImageSpec(pair: PlayablePair, imageable: readonly PlayablePair[], rng: Rng): QuestionSpec {
     if (!hasImages(pair)) return this.chooseOppositeSpec(pair, imageable, rng);
-    const others = pickDistractors(pair, imageable, DISTRACTOR_COUNT + 2, rng).filter(hasImages);
+    // מיפוי טקסט → תמונה עבור כל המילים הניתנות להמחשה
+    const imageByText = new Map<string, string>();
+    for (const p of imageable) {
+      if (!hasImages(p)) continue;
+      if (!imageByText.has(p.word)) imageByText.set(p.word, p.wordImage.url);
+      if (!imageByText.has(p.opposite)) imageByText.set(p.opposite, p.oppositeImage.url);
+    }
     const seen = new Set([pair.word, pair.opposite]);
     const distractors: OptionSpec[] = [];
-    for (const d of others) {
+    for (const text of pickDistractors(toWordPairRecord(pair), imageable.map(toWordPairRecord), DISTRACTOR_COUNT + 2, rng)) {
       if (distractors.length >= DISTRACTOR_COUNT) break;
-      const useWord = rng() < 0.5;
-      const text = useWord ? d.word : d.opposite;
-      if (seen.has(text)) continue;
+      const image = imageByText.get(text);
+      if (!image || seen.has(text)) continue;
       seen.add(text);
-      distractors.push({ text, image: useWord ? d.wordImage.url : d.oppositeImage.url, isCorrect: false });
+      distractors.push({ text, image, isCorrect: false });
     }
     if (distractors.length < DISTRACTOR_COUNT) {
       for (const d of shuffle(imageable, rng)) {
         if (distractors.length >= DISTRACTOR_COUNT) break;
-        if (d.id === pair.id || seen.has(d.word)) continue;
+        if (d.id === pair.id || !hasImages(d) || seen.has(d.word)) continue;
         seen.add(d.word);
         distractors.push({ text: d.word, image: d.wordImage.url, isCorrect: false });
       }

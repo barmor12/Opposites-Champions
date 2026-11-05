@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="עקום"><title>עקום</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<path d="M4 164H196C196 182 182 196 164 196H36C18 196 4 182 4 164Z" fill="#86EFAC"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 164 H196" stroke-width="4"/>
+<path d="M104 166 Q104 146 78 134 Q52 120 84 104 Q110 92 94 70" fill="none" stroke-width="28"/>
+<path d="M104 166 Q104 146 78 134 Q52 120 84 104 Q110 92 94 70" fill="none" stroke="#B45309" stroke-width="18"/>
+<circle cx="64" cy="70" r="24" fill="#86EFAC"/>
+<circle cx="128" cy="56" r="24" fill="#86EFAC"/>
+<circle cx="96" cy="46" r="34" fill="#86EFAC"/>
+<circle cx="78" cy="60" r="6" fill="#F87171" stroke-width="3"/><circle cx="116" cy="50" r="6" fill="#F87171" stroke-width="3"/><circle cx="100" cy="74" r="6" fill="#F87171" stroke-width="3"/>
+</g></svg>

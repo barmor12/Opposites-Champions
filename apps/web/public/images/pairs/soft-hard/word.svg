@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="רך"><title>רך</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FDF2F8"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M100 20 V34 M70 34 L78 42 M130 34 L122 42" stroke="#F59E0B" stroke-width="4" opacity="0.7"/>
+<circle cx="100" cy="92" r="20" fill="#FDE047"/>
+<path d="M28 76 Q60 86 78 88 Q100 120 122 88 Q140 86 172 76 Q164 116 172 156 Q100 144 28 156 Q36 116 28 76 Z" fill="#F9A8D4"/>
+<path d="M78 88 Q100 120 122 88" fill="none" stroke-width="4"/>
+<path d="M44 130 Q54 124 64 130 M136 130 Q146 124 156 130 M90 136 Q100 130 110 136" fill="none" stroke="#fff" stroke-width="4"/>
+<circle cx="34" cy="80" r="5" fill="#F9A8D4" stroke-width="4"/><circle cx="166" cy="80" r="5" fill="#F9A8D4" stroke-width="4"/>
+<circle cx="34" cy="152" r="5" fill="#F9A8D4" stroke-width="4"/><circle cx="166" cy="152" r="5" fill="#F9A8D4" stroke-width="4"/>
+</g></svg>

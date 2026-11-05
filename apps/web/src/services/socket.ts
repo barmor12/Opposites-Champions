@@ -1,4 +1,4 @@
-import { io, type Socket } from 'socket.io-client';
+import { io, type ManagerOptions, type Socket, type SocketOptions } from 'socket.io-client';
 import type { ClientToServerEvents, ServerToClientEvents, SocketAck } from '@oc/shared';
 
 export type AppSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -21,7 +21,7 @@ let currentRole: 'player' | 'teacher' | null = null;
 let serverOffsetMs = 0;
 const offsetListeners = new Set<(offset: number) => void>();
 
-function baseOptions() {
+function baseOptions(): Partial<ManagerOptions & SocketOptions> {
   return {
     path: SOCKET_PATH,
     withCredentials: true,
@@ -33,7 +33,7 @@ function baseOptions() {
     randomizationFactor: 0.4,
     timeout: 10_000,
     autoConnect: true,
-  } as const;
+  };
 }
 
 function create(auth: Record<string, string>, role: 'player' | 'teacher'): AppSocket {
@@ -82,12 +82,12 @@ export function disconnectSocket(): void {
 }
 
 // ===== Ack helper =====
-type AckEvents = {
-  [K in keyof ClientToServerEvents]: Parameters<ClientToServerEvents[K]>[1] extends (r: SocketAck<unknown>) => void ? K : never;
+type AckArgOf<F> = F extends (p: never, ack: (r: infer R) => void) => void ? R : never;
+export type AckEvents = {
+  [K in keyof ClientToServerEvents]: AckArgOf<ClientToServerEvents[K]> extends SocketAck<unknown> ? K : never;
 }[keyof ClientToServerEvents];
 type PayloadOf<E extends AckEvents> = Parameters<ClientToServerEvents[E]>[0];
-type AckArg<E extends AckEvents> = Parameters<Parameters<ClientToServerEvents[E]>[1]>[0];
-export type AckData<E extends AckEvents> = AckArg<E> extends SocketAck<infer T> ? T : never;
+export type AckData<E extends AckEvents> = AckArgOf<ClientToServerEvents[E]> extends SocketAck<infer T> ? T : never;
 
 /** שולח אירוע עם ack ומחזיר Promise; דוחה ב־SocketError על ok:false או timeout */
 export function emitWithAck<E extends AckEvents>(

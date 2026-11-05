@@ -97,7 +97,25 @@ describe('auth (integration)', () => {
     expect(validated.body.statusCode).toBe(400);
 
     // GET is allowed without the header.
-    await request(app.getHttpServer()).get('/api/categories').set('Cookie', cookie).expect(200);
+    const cats = await request(app.getHttpServer()).get('/api/categories').set('Cookie', cookie).expect(200);
+    expect(cats.body).toHaveLength(10);
+    const search = await request(app.getHttpServer())
+      .get('/api/word-pairs')
+      .query({ search: 'גדול', limit: 5 })
+      .set('Cookie', cookie)
+      .expect(200);
+    expect(search.body).toEqual({ items: expect.any(Array), total: expect.any(Number) });
+    for (const item of search.body.items as Array<{ word: string; opposite: string; id: string; slug: string }>) {
+      expect(`${item.word} ${item.opposite}`).toContain('גדול');
+      expect(item.id).toMatch(/^[0-9a-f-]{36}$/);
+      expect(typeof item.slug).toBe('string');
+    }
+    await request(app.getHttpServer()).get('/api/word-pairs').query({ page: 0 }).set('Cookie', cookie).expect(400);
+  });
+
+  it('returns Hebrew messages for unknown routes', async () => {
+    const res = await request(app.getHttpServer()).get('/api/does-not-exist').expect(404);
+    expect(res.body).toEqual({ statusCode: 404, message: 'הנתיב המבוקש לא קיים', error: 'Not Found' });
   });
 
   it('POST /api/auth/logout requires the CSRF header and clears the cookie', async () => {

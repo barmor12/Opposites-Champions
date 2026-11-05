@@ -1,4 +1,4 @@
-type ClassValue = string | number | null | false | undefined | Record<string, boolean | null | undefined> | ClassValue[];
+type ClassValue = string | number | bigint | null | false | undefined | Record<string, boolean | null | undefined> | ClassValue[];
 
 /** מאחד מחלקות CSS בצורה בטוחה (clsx מינימלי ללא תלות) */
 export function cn(...inputs: ClassValue[]): string {

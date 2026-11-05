@@ -10,6 +10,7 @@ export interface ErrorBody {
 }
 
 const UNKNOWN_FIELD_RE = /^property (\S+) should not exist$/;
+const ROUTE_NOT_FOUND_RE = /^Cannot [A-Z]+ \//;
 
 /** Normalises Nest/class-validator messages into one short Hebrew string. */
 export function normaliseMessage(status: number, raw: unknown): string {
@@ -19,6 +20,7 @@ export function normaliseMessage(status: number, raw: unknown): string {
     .map((m) => {
       const unknown = UNKNOWN_FIELD_RE.exec(m);
       if (unknown?.[1]) return HE.unknownField(unknown[1]);
+      if (ROUTE_NOT_FOUND_RE.test(m)) return HE.routeNotFound;
       return m;
     })
     .filter((m) => !isEnglishDefaultMessage(m));

@@ -49,7 +49,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             'w-full bg-white text-brand-navy placeholder:text-slate-400 border-[3px] transition-colors',
             'border-slate-200 hover:border-sky-300 focus:border-brand-violet focus:outline-none shadow-sm',
             error && 'border-rose-400 focus:border-rose-500 bg-rose-50/40',
-            icon && 'pe-12',
+            Boolean(icon) && 'pe-12',
             SIZES[size],
             className,
           )}

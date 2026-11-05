@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="קשה"><title>קשה</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F1F5F9"/>
+<path d="M4 160H196C196 180 180 196 160 196H40C20 196 4 180 4 160Z" fill="#86EFAC"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M4 160 H196" stroke-width="4"/>
+<path d="M36 160 Q24 110 64 92 Q100 76 140 92 Q180 108 166 160 Z" fill="#94A3B8"/>
+<path d="M60 120 L72 112 L74 126 Z M120 112 L134 106 L136 122 Z" fill="#64748B" stroke-width="3"/>
+<path d="M90 130 L100 140 L92 150" fill="none" stroke-width="3"/>
+<path d="M78 82 L70 70 M100 76 V62 M122 82 L130 70 M86 90 L74 86 M114 90 L126 86" stroke="#F59E0B" stroke-width="5"/>
+<circle cx="100" cy="46" r="18" fill="#FDE047"/>
+<path d="M124 50 Q150 50 160 28" fill="none" stroke-width="4" stroke-dasharray="7 6"/>
+<path d="M150 26 L162 26 L160 38" fill="none" stroke-width="4"/>
+</g></svg>
