@@ -1,9 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect } from 'react';
-import { ArrowLeft, Flame, Lightbulb, PartyPopper, Smile, Clock } from 'lucide-react';
+import { ArrowLeft, Check, Flame, Lightbulb, PartyPopper, Smile, Clock, X } from 'lucide-react';
 import type { AnswerResult } from '@oc/shared';
 import { useConfettiBursts } from '@/animations';
-import { Button, ScoreBadge } from './_ui';
+import { Button, LazyImage, ScoreBadge } from './_ui';
 import { cn, pick } from './utils';
 
 export type FeedbackKind = 'correct' | 'wrong' | 'timeout';
@@ -13,13 +13,22 @@ export interface FeedbackPanelProps {
   result?: AnswerResult | null;
   /** טקסט התשובה הנכונה (מוצג רק אם showCorrectAnswers) */
   correctText?: string | null;
+  /** איור התשובה הנכונה (מצב תמונות – מוצג רק אם showCorrectAnswers) */
+  correctImage?: string | null;
   explanation?: string | null;
   onNext: () => void;
   nextLabel?: string;
+  /**
+   * `picture` – משוב ללא קריאה: אייקון ✓/✗ ענק, מינימום טקסט, חץ "המשך" גדול.
+   * ההסבר הטקסטואלי מוסתר והתשובה הנכונה מוצגת כאיור.
+   */
+  variant?: 'default' | 'picture';
 }
 
 const ENCOURAGE_WRONG = ['לא נורא, בפעם הבאה!', 'כמעט! ממשיכים קדימה 💪', 'יופי שניסית! עוד מעט זה יצליח'];
+const ENCOURAGE_WRONG_SHORT = ['לא נורא!', 'כמעט!', 'יופי שניסית!'];
 const PRAISE = ['כל הכבוד!', 'מעולה!', 'וואו, אלוף!', 'תשובה מצוינת!'];
+const PRAISE_SHORT = ['כל הכבוד!', 'מעולה!', 'אלוף!', 'יש!'];
 
 const PANEL: Record<FeedbackKind, string> = {
   correct: 'from-green-50 via-emerald-50 to-green-100 ring-green-300/80 shadow-[0_24px_50px_-20px_rgba(21,128,61,0.5)]',
@@ -27,8 +36,11 @@ const PANEL: Record<FeedbackKind, string> = {
   timeout: 'from-sky-50 via-sky-50 to-sky-100 ring-sky-300/80 shadow-[0_24px_50px_-20px_rgba(2,132,199,0.4)]',
 };
 
-export function FeedbackPanel({ kind, result, correctText, explanation, onNext, nextLabel = 'המשך' }: FeedbackPanelProps) {
+export function FeedbackPanel({ kind, result, correctText, correctImage, explanation, onNext, nextLabel = 'המשך', variant = 'default' }: FeedbackPanelProps) {
   const seed = result?.sessionQuestionId ?? 'x';
+  if (variant === 'picture') {
+    return <PictureFeedback kind={kind} result={result} correctText={correctText} correctImage={correctImage} onNext={onNext} nextLabel={nextLabel} seed={seed} />;
+  }
   return (
     <AnimatePresence>
       {kind && (
