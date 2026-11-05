@@ -349,23 +349,24 @@ export class QuestionsService {
       candidates.push({ pairId: p.id, text: p.word, image: p.wordImage.url, sameCategory });
       candidates.push({ pairId: p.id, text: p.opposite, image: p.oppositeImage.url, sameCategory });
     }
-    // ערבוב ואז מיון יציב: אותה קטגוריה קודם
-    const ordered = shuffle(candidates, rng).sort((a, b) => Number(b.sameCategory) - Number(a.sameCategory));
+    const ordered = shuffle(candidates, rng);
     const distractors: OptionSpec[] = [];
     const usedPairs = new Set<string>();
-    const take = (c: ImageCandidate): void => {
-      usedImages.add(c.image);
-      forbiddenTexts.add(c.text);
-      usedPairs.add(c.pairId);
-      distractors.push({ text: c.text, image: c.image, isCorrect: false });
-    };
-    // מעבר ראשון: איור אחד לכל זוג (מגוון), מעבר שני: משלים גם מזוגות שכבר שימשו
-    for (const allowUsedPair of [false, true]) {
+    // סדר עדיפויות: אותה קטגוריה (איור אחד לכל זוג) → אותה קטגוריה (כל איור) → קטגוריות אחרות (איור אחד לכל זוג) → כל השאר
+    const passes: Array<{ sameCategoryOnly: boolean; allowUsedPair: boolean }> = [
+      { sameCategoryOnly: true, allowUsedPair: false }, { sameCategoryOnly: true, allowUsedPair: true },
+      { sameCategoryOnly: false, allowUsedPair: false }, { sameCategoryOnly: false, allowUsedPair: true },
+    ];
+    for (const pass of passes) {
       for (const c of ordered) {
         if (distractors.length >= DISTRACTOR_COUNT) break;
+        if (pass.sameCategoryOnly && !c.sameCategory) continue;
+        if (!pass.allowUsedPair && usedPairs.has(c.pairId)) continue;
         if (usedImages.has(c.image) || forbiddenTexts.has(c.text)) continue;
-        if (!allowUsedPair && usedPairs.has(c.pairId)) continue;
-        take(c);
+        usedImages.add(c.image);
+        forbiddenTexts.add(c.text);
+        usedPairs.add(c.pairId);
+        distractors.push({ text: c.text, image: c.image, isCorrect: false });
       }
     }
     const options = shuffle([{ text: pair.opposite, image: pair.oppositeImage.url, isCorrect: true }, ...distractors], rng);

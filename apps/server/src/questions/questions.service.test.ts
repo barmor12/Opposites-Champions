@@ -162,7 +162,12 @@ describe('QuestionsService.buildSpecs', () => {
 
     it('falls back to the extra imageable pool only when the filtered pool has fewer than 4 imageable pairs', () => {
       const few = PAIRS.slice(0, 5); // p0, p2, p4 imageable – רק 3
-      expect(() => service.buildSpecs(few, pictureSettings(), seededRng('nf'))).toThrowError(/זוגות/);
+      // בלי מאגר חלופי: פחות מ־4 זוגות בכלל → שגיאה; 5 זוגות אך רק 3 עם איורים → נסיגה ל־CHOOSE_OPPOSITE (כמו CHOOSE_IMAGE)
+      expect(() => service.buildSpecs(PAIRS.slice(0, 3), pictureSettings(), seededRng('nf'))).toThrowError(/זוגות/);
+      expect(() => service.buildSpecs(PAIRS.slice(0, 3), pictureSettings(), seededRng('nf'), PAIRS.slice(0, 3))).toThrowError(/זוגות/);
+      expect(service.buildSpecs(few, pictureSettings(), seededRng('nf')).every((s) => s.type === QuestionType.CHOOSE_OPPOSITE)).toBe(true);
+      // עם מאגר חלופי: גם 3 זוגות בלבד במאגר המסונן מספיקים כדי למלא את המשחק בשאלות תמונה
+      expect(service.buildSpecs(PAIRS.slice(0, 3), pictureSettings(), seededRng('fb3'), PAIRS).every((s) => s.type === QuestionType.PICTURE_TO_PICTURE)).toBe(true);
       const specs = service.buildSpecs(few, pictureSettings(), seededRng('fb'), PAIRS);
       expect(specs).toHaveLength(20);
       expect(specs.every((s) => s.type === QuestionType.PICTURE_TO_PICTURE)).toBe(true);
