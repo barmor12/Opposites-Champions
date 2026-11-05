@@ -1,4 +1,4 @@
-import { Injectable, Logger, type OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger, type OnModuleDestroy, type OnModuleInit } from '@nestjs/common';
 import { GameMode, GameState, type GameRoom, type GameSession, type Prisma } from '@prisma/client';
 import { canTransition, COUNTDOWN_SECONDS, type GameSettings, type GameSummary, type TeacherRoomLive } from '@oc/shared';
 import { PrismaService } from '../prisma/prisma.service';
@@ -10,8 +10,9 @@ import { RoomsService } from '../rooms/rooms.service';
 import { GameError } from './game-error';
 import { parseSettings, settingsToJson } from './settings';
 import { TimerRegistry } from './timer-registry';
-import { ANSWER_GRACE_MS, COUNTDOWN_MS } from './game-constants';
+import { ANSWER_GRACE_MS, COUNTDOWN_MS, ROOM_EXPIRY_SWEEP_MS } from './game-constants';
 import { toGameSummary } from '../rooms/room-views';
+import { nextRoomExpiry } from '../rooms/room-expiry';
 
 export interface StatsOverview {
   activeRooms: number;
@@ -28,8 +29,9 @@ const ACTIVE_ROOM_STATES: GameState[] = [
 type PausedPhase = 'countdown' | 'question' | 'results';
 
 @Injectable()
-export class GamesService implements OnModuleInit {
+export class GamesService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(GamesService.name);
+  private expirySweep: NodeJS.Timeout | null = null;
 
   constructor(
     private readonly prisma: PrismaService,
@@ -43,10 +45,27 @@ export class GamesService implements OnModuleInit {
 
   async onModuleInit(): Promise<void> {
     try {
+      await this.sweepExpiredRooms();
       await this.rearmTimers();
     } catch (err) {
       this.logger.warn(`timer re-arm skipped: ${String(err)}`);
     }
+    this.expirySweep = setInterval(() => {
+      this.sweepExpiredRooms().catch((err: unknown) => this.logger.warn(`expiry sweep failed: ${String(err)}`));
+    }, ROOM_EXPIRY_SWEEP_MS);
+    this.expirySweep.unref?.();
+  }
+
+  onModuleDestroy(): void {
+    if (this.expirySweep) clearInterval(this.expirySweep);
+    this.expirySweep = null;
+  }
+
+  /** סריקה תקופתית: חדרים בני 24 שעות ומעלה → EXPIRED, וניקוי הטיימרים של הסבבים שלהם */
+  async sweepExpiredRooms(): Promise<number> {
+    const expired = await this.rooms.expireStaleRooms();
+    for (const sessionId of expired.sessionIds) this.timers.clear(sessionId);
+    return expired.roomIds.length;
   }
 
   // ===== מכונת מצבים =====
@@ -239,6 +258,9 @@ export class GamesService implements OnModuleInit {
   /** סבב חדש באותו חדר עם אותם משתתפים (ניקוד מאופס לסבב) */
   async newRound(roomId: string, teacherId: string): Promise<GameSummary> {
     const room = await this.roomForTeacher(roomId, teacherId);
+    if (room.state === GameState.EXPIRED || room.state === GameState.CANCELLED) {
+      throw GameError.conflict('ROOM_CLOSED', 'החדר נסגר, יש ליצור משחק חדש');
+    }
     if (ACTIVE_ROOM_STATES.includes(room.state) && room.state !== GameState.WAITING_FOR_PLAYERS) {
       throw GameError.conflict('ROUND_IN_PROGRESS', 'יש לסיים את הסבב הנוכחי לפני פתיחת סבב חדש');
     }
@@ -249,7 +271,8 @@ export class GamesService implements OnModuleInit {
     const participants = await this.prisma.gameParticipant.findMany({ where: { roomId, removedAt: null }, select: { id: true } });
     await this.prisma.$transaction([
       this.prisma.participantProgress.createMany({ data: participants.map((p) => ({ sessionId: session.id, participantId: p.id })), skipDuplicates: true }),
-      this.prisma.gameRoom.update({ where: { id: roomId }, data: { currentSessionId: session.id, state: GameState.WAITING_FOR_PLAYERS, joinOpen: true } }),
+      // סבב חדש מאריך את תוקף החדר ב־24 שעות נוספות
+      this.prisma.gameRoom.update({ where: { id: roomId }, data: { currentSessionId: session.id, state: GameState.WAITING_FOR_PLAYERS, joinOpen: true, expiresAt: nextRoomExpiry() } }),
       this.prisma.auditLog.create({ data: { teacherId, roomId, action: 'NEW_ROUND', details: { sessionId: session.id, roundNumber } } }),
     ]);
     await this.rooms.emitRoomUpdated(roomId);
@@ -439,11 +462,12 @@ export class GamesService implements OnModuleInit {
 
   // ===== עזר =====
 
+  /** כל פעולת מורה עוברת כאן: קיום + בעלות (teacherId) + תפוגה (24 שעות → EXPIRED) */
   async roomForTeacher(roomId: string, teacherId: string): Promise<GameRoom> {
     const room = await this.prisma.gameRoom.findFirst({ where: { id: roomId, deletedAt: null } });
     if (!room) throw GameError.notFound('ROOM_NOT_FOUND', 'המשחק לא נמצא');
     if (room.teacherId !== teacherId) throw GameError.forbidden('NOT_OWNER', 'אין לך הרשאה למשחק זה');
-    return room;
+    return this.rooms.expireIfStale(room);
   }
 
   async requireSession(sessionId: string): Promise<GameSession> {

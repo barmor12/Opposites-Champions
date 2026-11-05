@@ -9,6 +9,9 @@ import { GamesService } from '../games/games.service';
 import { GameError } from '../games/game-error';
 import { parseSettings } from '../games/settings';
 import { ANSWER_GRACE_MS } from '../games/game-constants';
+import { isRoomStale } from '../rooms/room-expiry';
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export interface PlayContext {
   participant: GameParticipant & { room: GameRoom };
@@ -47,7 +50,8 @@ export class ScoringService {
     const selfPaced = session.mode === GameMode.SELF_PACED;
     const index = selfPaced ? progress.currentIndex : session.currentQuestionIndex;
     const sq = index === null ? null : await this.questions.getSessionQuestion(session.id, index);
-    if (!sq || sq.id !== payload.sessionQuestionId) throw GameError.badRequest('WRONG_QUESTION', 'זו אינה השאלה הנוכחית');
+    if (!sq || sq.id !== payload.sessionQuestionId) await this.rejectForeignOrStaleQuestion(session.id, payload.sessionQuestionId);
+    if (!sq) throw GameError.badRequest('WRONG_QUESTION', 'זו אינה השאלה הנוכחית');
 
     const startedAt = selfPaced ? progress.questionStartedAt : sq.startedAt;
     if (!startedAt) throw GameError.conflict('NOT_STARTED', 'השאלה עדיין לא התחילה');
