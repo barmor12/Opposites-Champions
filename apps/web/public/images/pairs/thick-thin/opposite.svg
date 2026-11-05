@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="דק"><title>דק</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FDF2F8"/>
+<g stroke="#2D3748" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<path d="M66 34 L118 34 L136 52 L136 166 L66 166 Z" fill="#fff"/>
+<path d="M118 34 L118 52 L136 52" fill="#E2E8F0"/>
+<path d="M78 72 H124 M78 86 H124 M78 100 H124 M78 114 H124 M78 128 H124 M78 142 H110" stroke="#CBD5E1" stroke-width="3"/>
+<path d="M20 100 q6 -6 12 0 t12 0 M156 120 q6 -6 12 0 t12 0" fill="none" stroke="#A78BFA" stroke-width="4"/>
+</g></svg>

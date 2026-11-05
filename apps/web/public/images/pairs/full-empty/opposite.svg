@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ריק"><title>ריק</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M58 48 L142 48 L130 172 L70 172 Z" fill="#F8FAFC"/>
+<path d="M74 70 L70 140" stroke="#CBD5E1" stroke-width="4"/>
+<path d="M126 70 L130 140" stroke="#CBD5E1" stroke-width="4"/>
+<ellipse cx="100" cy="166" rx="26" ry="3" fill="#E2E8F0" stroke="none"/>
+</g></svg>

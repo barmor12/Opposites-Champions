@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="עמוק"><title>עמוק</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="26" y="52" width="148" height="134" rx="4" fill="#7DD3FC"/>
+<path d="M4 52 H26 M174 52 H196" stroke-width="5"/>
+<path d="M26 166 H174 M30 176 H170" stroke="#38BDF8" stroke-width="4" stroke-dasharray="10 8"/>
+<path d="M34 64 q8 -6 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#fff" stroke-width="3"/>
+<path d="M152 42 V112 M166 42 V112 M152 56 H166 M152 72 H166 M152 88 H166 M152 104 H166" stroke-width="4"/>
+<path d="M46 76 V168 M38 160 L46 170 L54 160" stroke-width="4"/>
+<ellipse cx="120" cy="154" rx="14" ry="9" fill="#FDBA74"/>
+<path d="M132 154 L144 144 L144 164 Z" fill="#FDBA74"/>
+<circle cx="114" cy="152" r="2.5" fill="#2D3748" stroke="none"/>
+<ellipse cx="88" cy="92" rx="24" ry="10" fill="#F87171"/>
+<path d="M66 92 Q88 96 110 92" stroke="#fff" stroke-width="4" fill="none"/>
+<circle cx="88" cy="74" r="14" fill="#FDE1C8"/>
+<path d="M74 72 Q80 58 94 60 Q102 62 102 72 Q94 66 88 68 Q80 66 74 72 Z" fill="#B45309"/>
+<circle cx="83" cy="75" r="4" fill="#fff" stroke-width="2.5"/><circle cx="83" cy="75" r="2" fill="#2D3748" stroke="none"/>
+<circle cx="93" cy="75" r="4" fill="#fff" stroke-width="2.5"/><circle cx="93" cy="75" r="2" fill="#2D3748" stroke="none"/>
+<path d="M84 82 Q88 86 92 82" fill="none" stroke-width="3"/>
+</g></svg>

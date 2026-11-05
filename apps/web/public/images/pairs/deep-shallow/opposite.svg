@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="רדוד"><title>רדוד</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
+<path d="M4 156H196C196 178 178 196 156 196H44C22 196 4 178 4 156Z" fill="#86EFAC"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="100" cy="160" rx="72" ry="12" fill="#7DD3FC"/>
+<path d="M50 158 q8 -4 16 0 M130 158 q8 -4 16 0" fill="none" stroke="#fff" stroke-width="3"/>
+<path d="M80 104 L62 124 M120 104 L138 124" stroke-width="6"/>
+<path d="M80 100 L120 100 L124 134 L76 134 Z" fill="#FDE047"/>
+<rect x="78" y="132" width="44" height="14" rx="3" fill="#A78BFA"/>
+<rect x="84" y="144" width="11" height="12" fill="#FDE1C8"/>
+<rect x="105" y="144" width="11" height="12" fill="#FDE1C8"/>
+<rect x="78" y="152" width="20" height="12" rx="4" fill="#F87171"/>
+<rect x="102" y="152" width="20" height="12" rx="4" fill="#F87171"/>
+<ellipse cx="66" cy="148" rx="4" ry="6" fill="#7DD3FC" stroke-width="3"/>
+<ellipse cx="134" cy="146" rx="4" ry="6" fill="#7DD3FC" stroke-width="3"/>
+<circle cx="100" cy="78" r="18" fill="#FDE1C8"/>
+<path d="M82 76 Q86 56 100 58 Q116 56 118 76 Q110 68 100 70 Q90 68 82 76 Z" fill="#B45309"/>
+<circle cx="93" cy="79" r="4.5" fill="#fff" stroke-width="2.5"/><circle cx="93" cy="79" r="2.2" fill="#2D3748" stroke="none"/>
+<circle cx="107" cy="79" r="4.5" fill="#fff" stroke-width="2.5"/><circle cx="107" cy="79" r="2.2" fill="#2D3748" stroke="none"/>
+<path d="M94 88 Q100 93 106 88" fill="none" stroke-width="3"/>
+</g></svg>

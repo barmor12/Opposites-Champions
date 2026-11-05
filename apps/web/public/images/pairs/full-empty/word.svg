@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="מלא"><title>מלא</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FEF9C3"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M58 48 L142 48 L130 172 L70 172 Z" fill="#F8FAFC"/>
+<path d="M60 56 L140 56 L130 168 L70 168 Z" fill="#FDBA74" stroke="none"/>
+<path d="M60 56 L140 56" stroke="#FB923C" stroke-width="4"/>
+<path d="M58 48 L142 48 L130 172 L70 172 Z" fill="none"/>
+<path d="M126 14 L108 100" stroke-width="14"/>
+<path d="M126 14 L108 100" stroke="#F9A8D4" stroke-width="8"/>
+<path d="M120 42 L130 44 M116 62 L126 64" stroke="#fff" stroke-width="4"/>
+<circle cx="146" cy="52" r="14" fill="#FDBA74"/>
+<path d="M146 38 V66 M132 52 H160 M136 42 L156 62 M156 42 L136 62" stroke="#fff" stroke-width="2.5"/>
+<path d="M74 70 L70 140" stroke="#fff" stroke-width="4" opacity="0.7"/>
+</g></svg>

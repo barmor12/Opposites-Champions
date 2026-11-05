@@ -2,7 +2,7 @@
 <rect x="4" y="4" width="192" height="192" rx="32" fill="#F0F9FF"/>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
 <path d="M58 172 C36 126 60 56 128 28 C144 86 112 150 58 172 Z" fill="#fff"/>
-<path d="M58 172 C84 124 108 76 128 28" fill="none" stroke-width="4"/>
+<path d="M48 192 L58 172 C84 124 108 76 128 28" fill="none" stroke-width="4"/>
 <path d="M74 140 L60 132 M84 122 L68 114 M94 104 L82 94 M104 86 L96 72 M78 134 L94 138 M88 116 L106 118 M98 98 L116 98 M108 80 L122 74" fill="none" stroke-width="3"/>
 <path d="M24 150 q6 -6 12 0 t12 0 M150 120 q6 -6 12 0 t12 0 M140 160 q6 -6 12 0 t12 0" fill="none" stroke="#7DD3FC" stroke-width="4"/>
 <path d="M40 60 l0 16 M32 68 l16 0 M160 70 l0 12 M154 76 l12 0" stroke="#FDE047" stroke-width="4"/>

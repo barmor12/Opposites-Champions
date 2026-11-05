@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="עבה"><title>עבה</title>
+<rect x="4" y="4" width="192" height="192" rx="32" fill="#FDF2F8"/>
+<g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M126 44 L172 28 L172 156 L126 172 Z" fill="#fff"/>
+<path d="M132 60 L166 48 M132 74 L166 62 M132 88 L166 76 M132 102 L166 90 M132 116 L166 104 M132 130 L166 118 M132 144 L166 132 M132 158 L166 146" stroke="#94A3B8" stroke-width="2.5"/>
+<path d="M36 44 L82 28 L172 28 L126 44 Z" fill="#8B5CF6"/>
+<rect x="36" y="44" width="90" height="128" rx="3" fill="#A78BFA"/>
+<rect x="36" y="44" width="14" height="128" fill="#8B5CF6"/>
+<path d="M88 78 L94 92 L109 93 L97 103 L101 118 L88 110 L75 118 L79 103 L67 93 L82 92 Z" fill="#FDE047" stroke-width="4"/>
+<path d="M62 136 H114 M62 148 H114" stroke="#FDE047" stroke-width="4"/>
+</g></svg>
