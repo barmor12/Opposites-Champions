@@ -18,7 +18,7 @@ import {
   Trash2,
   Users,
 } from 'lucide-react';
-import { GameState, isPictureOnlySettings, type GameSummary } from '@oc/shared';
+import { CONTENT_MODE_LABELS, ContentMode, GameState, contentModeOf, type GameSummary } from '@oc/shared';
 import { Button, Card, EmptyState, Spinner, toast } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import { useTeacherStore } from '@/stores/teacherStore';
@@ -264,11 +264,14 @@ function RoomRow({ game, onDelete }: { game: GameSummary; onDelete: () => void }
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="truncate text-base font-extrabold tracking-tight text-brand-navy">{game.className}</h3>
               <StateBadge state={game.state} />
-              {isPictureOnlySettings(game.settings) && (
-                <TonePill tone="pink" icon={<Images className="size-3" aria-hidden />}>
-                  ללא קריאה
-                </TonePill>
-              )}
+              {(() => {
+                const mode = contentModeOf(game.settings);
+                return mode ? (
+                  <TonePill tone={mode === ContentMode.PICTURES ? 'pink' : mode === ContentMode.WORDS ? 'sky' : 'violet'} icon={<Images className="size-3" aria-hidden />}>
+                    {CONTENT_MODE_LABELS[mode].label}
+                  </TonePill>
+                ) : null;
+              })()}
             </div>
             <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600">
               <span className="inline-flex items-center gap-1">

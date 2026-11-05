@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { QuestionType, QUESTION_TYPE_DESCRIPTIONS, QUESTION_TYPE_LABELS } from '../enums';
-import { EASY_PICTURE_PRESET, EASY_PICTURE_PRESET_LABEL, isPictureOnlySettings } from '../presets';
+import { CONTENT_MODE_LABELS, CONTENT_MODE_PRESETS, ContentMode, EASY_PICTURE_PRESET, EASY_PICTURE_PRESET_LABEL, contentModeOf, isPictureOnlySettings } from '../presets';
 
 describe('QuestionType – PICTURE_TO_PICTURE', () => {
   it('exists with a Hebrew label and description', () => {
@@ -35,5 +35,30 @@ describe('EASY_PICTURE_PRESET', () => {
     expect(isPictureOnlySettings({ questionTypes: [QuestionType.PICTURE_TO_PICTURE, QuestionType.CHOOSE_IMAGE] })).toBe(false);
     expect(isPictureOnlySettings({ questionTypes: [QuestionType.CHOOSE_OPPOSITE] })).toBe(false);
     expect(isPictureOnlySettings({ questionTypes: [] })).toBe(false);
+  });
+});
+
+describe('ContentMode', () => {
+  it('contentModeOf derives the mode from the question types (treasure ignored)', () => {
+    expect(contentModeOf({ questionTypes: [QuestionType.PICTURE_TO_PICTURE] })).toBe(ContentMode.PICTURES);
+    expect(contentModeOf({ questionTypes: [QuestionType.PICTURE_TO_PICTURE, QuestionType.TREASURE_CHALLENGE] })).toBe(ContentMode.PICTURES);
+    expect(contentModeOf({ questionTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.COMPLETE_SENTENCE] })).toBe(ContentMode.WORDS);
+    expect(contentModeOf({ questionTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.CHOOSE_IMAGE] })).toBe(ContentMode.MIXED);
+    expect(contentModeOf({ questionTypes: [QuestionType.CHOOSE_OPPOSITE, QuestionType.PICTURE_TO_PICTURE] })).toBe(ContentMode.MIXED);
+    expect(contentModeOf({ questionTypes: [QuestionType.TREASURE_CHALLENGE] })).toBeNull();
+    expect(contentModeOf({ questionTypes: [] })).toBeNull();
+  });
+
+  it('every preset maps back to its own mode and has a label', () => {
+    for (const mode of Object.values(ContentMode)) {
+      const preset = CONTENT_MODE_PRESETS[mode];
+      expect(preset.questionTypes?.length).toBeGreaterThan(0);
+      expect(contentModeOf({ questionTypes: preset.questionTypes! })).toBe(mode);
+      expect(CONTENT_MODE_LABELS[mode].label.length).toBeGreaterThan(0);
+      expect(CONTENT_MODE_LABELS[mode].ages.length).toBeGreaterThan(0);
+    }
+    expect(CONTENT_MODE_PRESETS.PICTURES).toBe(EASY_PICTURE_PRESET);
+    expect(CONTENT_MODE_PRESETS.WORDS.questionTypes).not.toContain(QuestionType.CHOOSE_IMAGE);
+    expect(CONTENT_MODE_PRESETS.WORDS.questionTypes).not.toContain(QuestionType.PICTURE_TO_PICTURE);
   });
 });

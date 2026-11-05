@@ -42,6 +42,7 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
 # קוד מקור
 COPY tsconfig.base.json ./
 COPY packages/shared    packages/shared
+COPY packages/content   packages/content
 COPY apps/web           apps/web
 
 # משתני VITE_* חייבים להיות זמינים בזמן build (נאפים לתוך ה-bundle)

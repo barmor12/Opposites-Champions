@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { EASY_PICTURE_PRESET, EASY_PICTURE_PRESET_LABEL, GameMode, isPictureOnlySettings, type GameSettings } from '@oc/shared';
+import { CONTENT_MODE_PRESETS, GameMode, isPictureOnlySettings, type GameSettings } from '@oc/shared';
 import { CreateGamePage } from '../CreateGamePage';
 import { DEFAULT_SETTINGS } from '../gameSettingsForm';
 import { teacherApi } from '@/services/teacherApi';
@@ -73,21 +73,23 @@ describe('CreateGamePage', () => {
     await waitFor(() => expect(screen.getByTestId('marker-room')).toBeTruthy());
   });
 
-  it('פריסט "רמה קלה – תמונות בלבד" מחיל את EASY_PICTURE_PRESET על הטופס', async () => {
+  it('בחירת "תמונות בלבד" מחילה את פריסט התמונות על הטופס', async () => {
     api.games.create.mockResolvedValue(makeSummary({ roomId: 'room-pic' }));
     renderAt('new', <CreateGamePage />);
 
     fireEvent.change(screen.getByLabelText('שם הכיתה'), { target: { value: 'כיתה א׳1' } });
+    // ברירת המחדל (כל הסוגים) = מילים ותמונות
+    expect(screen.getByRole('radio', { name: /מילים ותמונות/ }).getAttribute('aria-checked')).toBe('true');
     // משנים הגדרות שהפריסט אמור לדרוס
     fireEvent.click(screen.getByRole('radio', { name: 'קשה' }));
     fireEvent.click(screen.getByRole('radio', { name: '20 שניות' }));
     fireEvent.click(screen.getByRole('switch', { name: /אתגר האוצר/ }));
     fireEvent.click(screen.getByRole('switch', { name: 'הצגת התשובה הנכונה' }));
 
-    const preset = screen.getByRole('button', { name: new RegExp(EASY_PICTURE_PRESET_LABEL) });
-    expect(preset.getAttribute('aria-pressed')).toBe('false');
-    fireEvent.click(preset);
-    expect(preset.getAttribute('aria-pressed')).toBe('true');
+    const pictures = screen.getByRole('radio', { name: /תמונות בלבד/ });
+    expect(pictures.getAttribute('aria-checked')).toBe('false');
+    fireEvent.click(pictures);
+    expect(pictures.getAttribute('aria-checked')).toBe('true');
     expect(screen.getByRole('checkbox', { name: 'תמונה מול תמונה (ללא קריאה)' }).getAttribute('aria-checked')).toBe('true');
     expect(screen.getByRole('checkbox', { name: 'בחירת ההפך' }).getAttribute('aria-checked')).toBe('false');
 
@@ -97,7 +99,7 @@ describe('CreateGamePage', () => {
     expect(payload).toEqual({
       ...DEFAULT_SETTINGS,
       className: 'כיתה א׳1',
-      ...EASY_PICTURE_PRESET,
+      ...CONTENT_MODE_PRESETS.PICTURES,
     });
     expect(payload.questionTypes).toEqual(['PICTURE_TO_PICTURE']);
     expect(payload.difficulty).toBe('EASY');
@@ -106,6 +108,20 @@ describe('CreateGamePage', () => {
     expect(payload.treasureChallenge).toBe(false);
     expect(isPictureOnlySettings(payload)).toBe(true);
     await waitFor(() => expect(screen.getByTestId('marker-room')).toBeTruthy());
+  });
+
+  it('בחירת "מילים בלבד" מסירה את סוגי התמונה, ושינוי ידני של הסוגים מעדכן את הבחירה', () => {
+    renderAt('new', <CreateGamePage />);
+    const words = screen.getByRole('radio', { name: /מילים בלבד/ });
+    fireEvent.click(words);
+    expect(words.getAttribute('aria-checked')).toBe('true');
+    expect(screen.getByRole('checkbox', { name: 'בחירת תמונה' }).getAttribute('aria-checked')).toBe('false');
+    expect(screen.getByRole('checkbox', { name: 'תמונה מול תמונה (ללא קריאה)' }).getAttribute('aria-checked')).toBe('false');
+    expect(screen.getByRole('checkbox', { name: 'השלמת משפטים' }).getAttribute('aria-checked')).toBe('true');
+    // הוספת סוג תמונה ידנית → המצב הופך ל"מילים ותמונות"
+    fireEvent.click(screen.getByRole('checkbox', { name: 'בחירת תמונה' }));
+    expect(words.getAttribute('aria-checked')).toBe('false');
+    expect(screen.getByRole('radio', { name: /מילים ותמונות/ }).getAttribute('aria-checked')).toBe('true');
   });
 
   it('לא שולח כשחסר שם כיתה או קטגוריות', async () => {

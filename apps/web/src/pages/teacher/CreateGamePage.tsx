@@ -1,19 +1,20 @@
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 import { motion, useReducedMotion } from 'motion/react';
-import { BookOpenText, CheckCircle2, Gem, Images, Info, ListOrdered, Rocket, Settings2, SlidersHorizontal, Timer, Trophy, Users, Volume2 } from 'lucide-react';
+import { BookOpenText, CheckCircle2, Gem, Images, Info, ListOrdered, Rocket, Settings2, SlidersHorizontal, Sparkles, Timer, Trophy, Users, Volume2 } from 'lucide-react';
 import {
   CATEGORY_LABELS,
+  CONTENT_MODE_LABELS,
+  CONTENT_MODE_PRESETS,
+  ContentMode,
   DIFFICULTY_LABELS,
-  EASY_PICTURE_PRESET,
-  EASY_PICTURE_PRESET_LABEL,
   GameMode,
   QUESTION_COUNT_OPTIONS,
   QUESTION_TYPE_DESCRIPTIONS,
   QUESTION_TYPE_LABELS,
   QuestionType,
   TIME_PER_QUESTION_OPTIONS,
-  isPictureOnlySettings,
+  contentModeOf,
   type GameSettings,
 } from '@oc/shared';
 import { Button, Input, toast } from '@/components/ui';
@@ -75,15 +76,13 @@ export function CreateGamePage() {
   // hint = תיאור הסוג (מוצג כ־tooltip על הצ׳יפ; לסוג "תמונה מול תמונה" גם כטקסט עזר גלוי)
   const typeOptions = useMemo(() => REGULAR_TYPES.map((t) => ({ value: t, label: QUESTION_TYPE_LABELS[t], hint: QUESTION_TYPE_DESCRIPTIONS[t] })), []);
 
-  const pictureOnly = isPictureOnlySettings(settings);
-  const presetActive = (Object.keys(EASY_PICTURE_PRESET) as Array<keyof GameSettings>).every((k) => {
-    const v = EASY_PICTURE_PRESET[k];
-    return Array.isArray(v) ? pictureOnly : settings[k] === v;
-  });
-  const applyPreset = () => {
-    setSettings((prev) => ({ ...prev, ...EASY_PICTURE_PRESET }));
+  // מצב התוכן נגזר מסוגי השאלות – כך שגם שינוי ידני של הסוגים מעדכן את הבחירה
+  const contentMode = contentModeOf(settings);
+  const pictureOnly = contentMode === ContentMode.PICTURES;
+  const applyContentMode = (mode: ContentMode) => {
+    setSettings((prev) => ({ ...prev, ...CONTENT_MODE_PRESETS[mode] }));
     setErrors((prev) => ({ ...prev, questionTypes: undefined }));
-    toast.success(`הוחל: ${EASY_PICTURE_PRESET_LABEL}`);
+    toast.success(`נבחר: ${CONTENT_MODE_LABELS[mode].label} (${CONTENT_MODE_LABELS[mode].ages})`);
   };
 
   // מעקב אחרי הקטע הנראה – מעדכן את ה־Stepper
@@ -259,14 +258,19 @@ export function CreateGamePage() {
           <Panel
             step={2}
             title="תוכן"
-            description="מאילו קטגוריות ובאילו סוגי שאלות ישחקו."
+            description="למי מיועד המשחק, מאילו קטגוריות ובאילו סוגי שאלות ישחקו."
           >
             <div className="flex flex-col gap-6">
-              <PresetCard active={presetActive} onApply={applyPreset} />
+              <Field
+                title="למי מיועד המשחק?"
+                description="בחירת שכבת הגיל קובעת אם השאלות יוצגו בתמונות, במילים או בשילוב. אפשר לדייק אחר כך בסוגי השאלות למטה."
+              >
+                {() => <ContentModeCards value={contentMode} onSelect={applyContentMode} />}
+              </Field>
               <Field title="קטגוריות" description="השאלות ייבחרו מתוך הקטגוריות המסומנות." error={errors.categories}>
                 {(a) => <MultiChips name="קטגוריות" allLabel="בחירת הכול" options={categoryOptions} value={settings.categories} onChange={(v) => patch('categories', v)} {...a} />}
               </Field>
-              <Field title="סוגי שאלות" error={errors.questionTypes}>
+              <Field title="סוגי שאלות" description="התאמה אישית – מסומנים לפי שכבת הגיל שנבחרה." error={errors.questionTypes}>
                 {(a) => (
                 <>
                 <MultiChips name="סוגי שאלות" options={typeOptions} value={settings.questionTypes} onChange={(v) => patch('questionTypes', v)} {...a} />
@@ -353,7 +357,7 @@ export function CreateGamePage() {
               <div className="min-w-0 flex-1 xl:hidden">
                 <div className="truncate text-sm font-extrabold text-brand-navy">{settings.className.trim() || 'כיתה ללא שם'}</div>
                 <div className="truncate text-xs text-slate-600">
-                  {pictureOnly && 'ללא קריאה · '}
+                  {contentMode && `${CONTENT_MODE_LABELS[contentMode].label} · `}
                   {settings.questionCount} שאלות · {DIFFICULTY_LABELS[settings.difficulty]} · {timeLabel(settings.timePerQuestionSec)} · {categoriesLabel}
                 </div>
               </div>
@@ -372,6 +376,8 @@ export function CreateGamePage() {
                   <dd className="text-end font-bold text-brand-navy tabular-nums">{settings.questionCount}</dd>
                   <dt className="text-slate-600">קושי</dt>
                   <dd className="text-end font-bold text-brand-navy">{DIFFICULTY_LABELS[settings.difficulty]}</dd>
+                  <dt className="text-slate-600">תוכן</dt>
+                  <dd className="text-end font-bold text-brand-navy">{contentMode ? CONTENT_MODE_LABELS[contentMode].label : '—'}</dd>
                   <dt className="text-slate-600">קטגוריות</dt>
                   <dd className="text-end font-bold text-brand-navy">{categoriesLabel}</dd>
                   <dt className="text-slate-600">סוגי שאלות</dt>
@@ -417,43 +423,61 @@ export function CreateGamePage() {
   );
 }
 
-/** פריסט "רמה קלה – תמונות בלבד": כפתור־כרטיס בולט שמחיל את EASY_PICTURE_PRESET על הטופס. */
-function PresetCard({ active, onApply }: { active: boolean; onApply: () => void }) {
+const CONTENT_MODE_ART: Record<ContentMode, { icon: typeof Images; tile: string; active: string; tone: 'pink' | 'violet' | 'sky' }> = {
+  [ContentMode.PICTURES]: { icon: Images, tile: 'from-pink-400 to-rose-500 shadow-[0_8px_18px_-8px_rgba(236,72,153,.9)]', active: 'border-pink-300 bg-linear-to-l from-pink-50 via-white to-amber-50 shadow-[0_18px_30px_-18px_rgba(236,72,153,.55),0_0_0_3px_rgba(236,72,153,.15)]', tone: 'pink' },
+  [ContentMode.MIXED]: { icon: Sparkles, tile: 'from-violet-400 to-indigo-500 shadow-[0_8px_18px_-8px_rgba(139,92,246,.9)]', active: 'border-violet-300 bg-linear-to-l from-violet-50 via-white to-sky-50 shadow-[0_18px_30px_-18px_rgba(139,92,246,.55),0_0_0_3px_rgba(139,92,246,.15)]', tone: 'violet' },
+  [ContentMode.WORDS]: { icon: BookOpenText, tile: 'from-sky-400 to-cyan-500 shadow-[0_8px_18px_-8px_rgba(14,165,233,.9)]', active: 'border-sky-300 bg-linear-to-l from-sky-50 via-white to-emerald-50 shadow-[0_18px_30px_-18px_rgba(14,165,233,.55),0_0_0_3px_rgba(14,165,233,.15)]', tone: 'sky' },
+};
+
+/** בורר "למי מיועד המשחק" – 3 כרטיסי רדיו (תמונות בלבד / מילים ותמונות / מילים בלבד). בחירה מחילה את הפריסט המתאים. */
+function ContentModeCards({ value, onSelect }: { value: ContentMode | null; onSelect: (mode: ContentMode) => void }) {
   const reduce = useReducedMotion();
   return (
-    <motion.button
-      type="button"
-      onClick={onApply}
-      aria-pressed={active}
-      whileTap={reduce ? undefined : { scale: 0.99 }}
-      className={cn(
-        'group relative flex min-h-0 w-full items-center gap-3 overflow-hidden rounded-2xl border p-3 text-start transition-[border-color,box-shadow] duration-200 sm:gap-4 sm:p-4',
-        'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
-        active
-          ? 'border-pink-300 bg-linear-to-l from-pink-50 via-white to-amber-50 shadow-[0_18px_30px_-18px_rgba(236,72,153,.55),0_0_0_3px_rgba(236,72,153,.15)]'
-          : 'border-slate-200/90 bg-white/80 hover:border-pink-300 hover:shadow-[0_12px_24px_-16px_rgba(30,41,59,.35)]',
-      )}
-    >
-      <span className="relative grid size-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br from-pink-400 to-rose-500 text-white shadow-[0_8px_18px_-8px_rgba(236,72,153,.9)] sm:size-14">
-        <Images className="size-6" aria-hidden />
-      </span>
-      <span className="relative min-w-0 flex-1">
-        <span className="flex flex-wrap items-center gap-2">
-          <span className="font-extrabold text-brand-navy">{EASY_PICTURE_PRESET_LABEL}</span>
-          <TonePill tone="pink">ללא קריאה</TonePill>
-          {active && <TonePill tone="green">פעיל</TonePill>}
-        </span>
-        <span className="mt-1 block text-xs leading-5 text-slate-600">
-          {QUESTION_TYPE_DESCRIPTIONS[QuestionType.PICTURE_TO_PICTURE]}. רמת קושי קלה, ללא הגבלת זמן, עם הצגת התשובה הנכונה.
-        </span>
-      </span>
-      <span
-        className={cn('relative grid size-6 shrink-0 place-items-center self-start rounded-full transition-colors', active ? 'bg-brand-pink-shade text-white' : 'bg-slate-100 text-transparent')}
-        aria-hidden
-      >
-        <CheckCircle2 className="size-4" />
-      </span>
-    </motion.button>
+    <div role="radiogroup" aria-label="למי מיועד המשחק" onKeyDown={radioGroupKeyDown} className="grid gap-3 md:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
+      {(Object.values(ContentMode) as ContentMode[]).map((mode) => {
+        const info = CONTENT_MODE_LABELS[mode];
+        const art = CONTENT_MODE_ART[mode];
+        const Icon = art.icon;
+        const selected = value === mode;
+        return (
+          <motion.button
+            key={mode}
+            type="button"
+            role="radio"
+            aria-checked={selected}
+            aria-label={`${info.label} – ${info.ages}`}
+            tabIndex={selected || (value === null && mode === ContentMode.MIXED) ? 0 : -1}
+            onClick={() => onSelect(mode)}
+            whileTap={reduce ? undefined : { scale: 0.985 }}
+            className={cn(
+              'group relative flex min-h-0 w-full items-start gap-3 overflow-hidden rounded-2xl border p-3 text-start transition-[border-color,box-shadow] duration-200 sm:p-4 md:flex-col md:items-stretch xl:flex-row xl:items-start 2xl:flex-col 2xl:items-stretch',
+              'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet/30',
+              selected ? art.active : 'border-slate-200/90 bg-white/80 hover:border-violet-300 hover:shadow-[0_12px_24px_-16px_rgba(30,41,59,.35)]',
+            )}
+          >
+            <span className="flex items-center gap-3">
+              <span className={cn('relative grid size-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br text-white sm:size-14', art.tile)}>
+                <Icon className="size-6" aria-hidden />
+              </span>
+              <span
+                className={cn('relative grid size-6 shrink-0 place-items-center rounded-full transition-colors md:absolute md:end-3 md:top-3 xl:static 2xl:absolute', selected ? 'bg-brand-violet text-white' : 'bg-slate-100 text-transparent')}
+                aria-hidden
+              >
+                <CheckCircle2 className="size-4" />
+              </span>
+            </span>
+            <span className="relative min-w-0 flex-1">
+              <span className="flex flex-wrap items-center gap-2">
+                <span className="font-extrabold text-brand-navy">{info.label}</span>
+                <TonePill tone={art.tone}>{info.ages}</TonePill>
+                {mode === ContentMode.PICTURES && <TonePill tone="green">ללא קריאה</TonePill>}
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-slate-600">{info.description}</span>
+            </span>
+          </motion.button>
+        );
+      })}
+    </div>
   );
 }
 
