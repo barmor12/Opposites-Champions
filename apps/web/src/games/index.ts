@@ -3,3 +3,5 @@ export type { QuestionRendererProps } from './QuestionRenderer';
 export { GamesDemo } from './demo/GamesDemo';
 export { TreasurePath } from './TreasurePath';
 export { TreasureOverlay } from './TreasureOverlay';
+export { PictureQuestion } from './PictureQuestion';
+export type { PictureQuestionProps } from './PictureQuestion';

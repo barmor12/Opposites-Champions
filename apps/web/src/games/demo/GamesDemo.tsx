@@ -31,7 +31,7 @@ interface DemoQuestion {
 const now = () => Date.now();
 
 function makeDemoQuestions(): DemoQuestion[] {
-  const base = { startedAt: now(), serverNow: now(), timeLimitMs: 0, endsAt: null, isTreasure: false, total: 7 };
+  const base = { startedAt: now(), serverNow: now(), timeLimitMs: 0, endsAt: null, isTreasure: false, total: 8 };
   return [
     {
       label: 'בחירת ההפך',
@@ -85,6 +85,24 @@ function makeDemoQuestions(): DemoQuestion[] {
           { id: 'o-sad', text: 'עצוב', image: '/images/pairs/happy-sad/opposite.svg' },
           { id: 'o-full', text: 'מלא', image: '/images/pairs/full-empty/word.svg' },
           { id: 'o-cold2', text: 'קר', image: '/images/pairs/hot-cold/opposite.svg' },
+        ],
+      },
+    },
+    {
+      label: 'תמונה מול תמונה',
+      correctOptionId: 'p-small',
+      view: {
+        ...base,
+        sessionQuestionId: 'q8',
+        index: 7,
+        type: QuestionType.PICTURE_TO_PICTURE,
+        prompt: 'גדול',
+        promptImage: '/images/pairs/big-small/word.svg',
+        options: [
+          { id: 'p-cold', text: 'קר', image: '/images/pairs/hot-cold/opposite.svg' },
+          { id: 'p-small', text: 'קטן', image: '/images/pairs/big-small/opposite.svg' },
+          { id: 'p-fast', text: 'מהיר', image: '/images/pairs/fast-slow/word.svg' },
+          { id: 'p-night', text: 'לילה', image: '/images/pairs/day-night/opposite.svg' },
         ],
       },
     },
@@ -245,8 +263,9 @@ export function GamesDemo() {
   const goTo = useCallback(
     (i: number) => {
       setResult(null);
-      setQuestions(makeDemoQuestions());
-      setIndex(((i % 7) + 7) % 7);
+      const next = makeDemoQuestions();
+      setQuestions(next);
+      setIndex(((i % next.length) + next.length) % next.length);
       setRound((r) => r + 1);
     },
     [],

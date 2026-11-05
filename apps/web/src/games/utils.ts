@@ -16,6 +16,7 @@ const TYPE_INSTRUCTION: Record<string, string> = {
   [QuestionType.CHOOSE_IMAGE]: 'איזו תמונה מראה את ההפך?',
   [QuestionType.COMPLETE_SENTENCE]: 'איזו מילה משלימה את המשפט?',
   [QuestionType.MATCH_PAIRS]: 'חברו כל מילה להפך שלה',
+  [QuestionType.PICTURE_TO_PICTURE]: 'מצאו את התמונה ההפוכה',
   [QuestionType.TREASURE_CHALLENGE]: 'מה ההפך של המילה?',
 };
 

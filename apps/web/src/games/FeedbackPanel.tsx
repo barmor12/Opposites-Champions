@@ -164,7 +164,7 @@ function PictureFeedback({ kind, result, correctText, correctImage, onNext, next
               {kind !== 'correct' && correctImage && (
                 <figure
                   data-testid="correct-answer-image"
-                  className="flex flex-col items-center gap-1 rounded-2xl bg-white/90 p-2 ring-2 ring-green-300 shadow-[0_10px_24px_-12px_rgba(21,128,61,0.5),inset_0_1px_0_#fff]"
+                  className="relative flex flex-col items-center gap-1 rounded-2xl bg-white/90 p-2 ring-2 ring-green-300 shadow-[0_10px_24px_-12px_rgba(21,128,61,0.5),inset_0_1px_0_#fff]"
                 >
                   <span aria-hidden="true" className="absolute -top-2 -end-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-b from-green-400 to-green-600 text-white shadow ring-2 ring-white">
                     <Check className="h-5 w-5" strokeWidth={4} />
