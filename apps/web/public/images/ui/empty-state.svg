@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">חתול ישן</title>
 <g stroke="#2D3748" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
 <ellipse cx="100" cy="166" rx="84" ry="14" fill="#E0F2FE" stroke="none"/>
-<path d="M150 150Q186 150 184 120Q182 100 164 104Q152 108 158 126Q162 138 150 138Z" fill="#CBD5E1"/>
+<path d="M150 146Q190 150 188 118Q186 102 170 108" fill="none" stroke-width="22"/>
+<path d="M150 146Q190 150 188 118Q186 102 170 108" fill="none" stroke="#CBD5E1" stroke-width="12"/>
 <path d="M40 150Q30 110 60 96Q96 82 140 98Q168 112 160 150Z" fill="#CBD5E1"/>
 <path d="M84 110Q100 100 118 112M74 126Q96 118 120 130" fill="none" stroke="#94A3B8" stroke-width="4"/>
 <path d="M44 108L38 70L68 86Z" fill="#CBD5E1"/><path d="M110 108L116 70L86 86Z" fill="#CBD5E1"/>

@@ -12,7 +12,7 @@ export interface LoginResult {
 }
 
 /** Password hashing options shared with the seed (argon2id defaults are fine). */
-export const ARGON2_OPTIONS: argon2.Options = { type: argon2.argon2id };
+export const ARGON2_OPTIONS: argon2.HashOptions = { type: argon2.argon2id };
 
 @Injectable()
 export class AuthService {
@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   private getDummyHash(): Promise<string> {
-    this.dummyHash ??= argon2.hash('dummy-password-for-constant-time', ARGON2_OPTIONS);
+    if (!this.dummyHash) this.dummyHash = argon2.hash('dummy-password-for-constant-time', ARGON2_OPTIONS);
     return this.dummyHash;
   }
 }

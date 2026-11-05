@@ -10,7 +10,9 @@
 <circle cx="70" cy="110" r="7" fill="#F9A8D4" stroke="none"/><circle cx="130" cy="110" r="7" fill="#F9A8D4" stroke="none"/>
 <circle cx="82" cy="90" r="7" fill="#2D3748" stroke="none"/><circle cx="118" cy="90" r="7" fill="#2D3748" stroke="none"/>
 <circle cx="85" cy="87" r="2.5" fill="#fff" stroke="none"/><circle cx="121" cy="87" r="2.5" fill="#fff" stroke="none"/>
-<path d="M70 150Q80 136 100 140Q120 136 130 150" fill="none" stroke="#F87171" stroke-width="7"/>
+<path d="M58 142Q100 126 142 142L140 158Q100 142 60 158Z" fill="#F87171"/>
+<path d="M122 150L140 186L162 178L144 146Z" fill="#F87171"/>
+<path d="M70 148Q100 136 130 148" fill="none" stroke="#FDE047" stroke-width="4"/>
 </g>
 <circle cx="100" cy="100" r="96" fill="none" stroke="#2D3748" stroke-width="5"/>
 </svg>
