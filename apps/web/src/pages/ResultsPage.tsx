@@ -100,7 +100,7 @@ export function ResultsPage() {
           >
             אלופי ההפכים
           </span>
-          <span className="col-start-1 row-start-1 text-gradient-brand">אלופי ההפכים</span>
+          <span className="relative z-10 col-start-1 row-start-1 text-gradient-brand">אלופי ההפכים</span>
         </h1>
         {room && <p className="relative mt-1 text-lg font-black text-violet-900 text-shadow-pop sm:text-xl">{room.className}</p>}
       </motion.header>

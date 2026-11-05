@@ -253,13 +253,13 @@ function GameLogo() {
       {/* שכבת קו־מתאר + צל (מאחור) */}
       <span
         aria-hidden
-        className="col-start-1 row-start-1 text-transparent [paint-order:stroke_fill] [-webkit-text-stroke:0.22em_white] drop-shadow-[0_6px_0_rgba(109,40,217,0.35)]"
-        style={{ filter: 'drop-shadow(0 6px 0 rgb(109 40 217 / 0.35)) drop-shadow(0 16px 24px rgb(30 41 59 / 0.3))' }}
+        className="col-start-1 row-start-1 text-transparent [paint-order:stroke_fill] [-webkit-text-stroke:0.2em_white]"
+        style={{ filter: 'drop-shadow(0 5px 0 rgb(109 40 217 / 0.4)) drop-shadow(0 14px 22px rgb(30 41 59 / 0.3))' }}
       >
         {text}
       </span>
       {/* שכבת גרדיאנט (מלפנים) */}
-      <span className="col-start-1 row-start-1 text-gradient-brand">{text}</span>
+      <span className="relative z-10 col-start-1 row-start-1 text-gradient-brand">{text}</span>
     </motion.h1>
   );
 }

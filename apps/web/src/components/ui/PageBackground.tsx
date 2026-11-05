@@ -18,10 +18,11 @@ const SKY: Record<NonNullable<PageBackgroundProps['variant']>, string> = {
   night: 'linear-gradient(180deg, #1e1b4b 0%, #312e81 35%, #5b21b6 70%, #7c3aed 100%)',
 };
 
+/* כתמי צבע – radial-gradient במקום filter:blur (זול בהרבה לרינדור) */
 const BLOBS: Record<NonNullable<PageBackgroundProps['variant']>, string[]> = {
-  day: ['from-sky-300 to-violet-300', 'from-pink-300 to-orange-200', 'from-emerald-200 to-cyan-200'],
-  sunset: ['from-fuchsia-300 to-violet-400', 'from-orange-200 to-pink-300', 'from-amber-200 to-rose-200'],
-  night: ['from-indigo-500 to-violet-500', 'from-fuchsia-500 to-purple-600', 'from-sky-500 to-indigo-600'],
+  day: ['#a5b4fc', '#f9a8d4', '#99f6e4'],
+  sunset: ['#d8b4fe', '#fdba74', '#fda4af'],
+  night: ['#6366f1', '#d946ef', '#38bdf8'],
 };
 
 function Cloud({ className, style, depth = 1, dark = false }: { className?: string; style?: React.CSSProperties; depth?: number; dark?: boolean }) {
@@ -69,7 +70,7 @@ function Star({ className, delay = 0, depth = 0.4 }: { className?: string; delay
     <svg
       viewBox="0 0 24 24"
       aria-hidden
-      className={cn('parallax-layer absolute animate-twinkle drop-shadow-[0_0_8px_rgba(250,204,21,0.9)]', className)}
+      className={cn('parallax-layer absolute animate-twinkle', className)}
       style={{ animationDelay: `${delay}s`, ['--depth' as string]: depth }}
     >
       <defs>
@@ -78,6 +79,7 @@ function Star({ className, delay = 0, depth = 0.4 }: { className?: string; delay
           <stop offset="1" stopColor="#f59e0b" />
         </radialGradient>
       </defs>
+      <circle cx="12" cy="12" r="12" fill="#fde68a" opacity="0.35" />
       <path fill="url(#star-fill)" d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z" />
     </svg>
   );
@@ -179,10 +181,11 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
   return (
     <div ref={ref} aria-hidden className={cn('pointer-events-none fixed inset-0 -z-10 overflow-hidden', className)} style={{ background: SKY[variant] }}>
       {/* שמש / ירח + קרניים */}
-      <div className={cn('parallax-layer absolute -top-[14%] -start-[10%] aspect-square w-[70vw] max-w-[760px] sm:-top-[22%] sm:w-[52vw]')} style={{ ['--depth' as string]: 0.3 }}>
+      <div className="parallax-layer absolute -top-[12%] -start-[12%] aspect-square w-[64vw] max-w-[560px] sm:-top-[18%] sm:w-[44vw]" style={{ ['--depth' as string]: 0.3 }}>
         <div
-          className={cn('absolute inset-0 rounded-full', !reduce && 'animate-rays')}
+          className={cn('absolute inset-0 rounded-full will-change-transform', !reduce && 'animate-rays')}
           style={{
+            animationDuration: '48s',
             backgroundImage: night
               ? 'conic-gradient(from 0deg, transparent 0deg, rgb(255 255 255 / 0.08) 10deg, transparent 20deg, transparent 40deg, rgb(255 255 255 / 0.08) 50deg, transparent 60deg, transparent 80deg, rgb(255 255 255 / 0.08) 90deg, transparent 100deg, transparent 120deg, rgb(255 255 255 / 0.08) 130deg, transparent 140deg, transparent 160deg, rgb(255 255 255 / 0.08) 170deg, transparent 180deg, transparent 200deg, rgb(255 255 255 / 0.08) 210deg, transparent 220deg, transparent 240deg, rgb(255 255 255 / 0.08) 250deg, transparent 260deg, transparent 280deg, rgb(255 255 255 / 0.08) 290deg, transparent 300deg, transparent 320deg, rgb(255 255 255 / 0.08) 330deg, transparent 340deg, transparent 360deg)'
               : 'conic-gradient(from 0deg, transparent 0deg, rgb(255 251 214 / 0.55) 12deg, transparent 24deg, transparent 45deg, rgb(255 251 214 / 0.5) 57deg, transparent 69deg, transparent 90deg, rgb(255 251 214 / 0.55) 102deg, transparent 114deg, transparent 135deg, rgb(255 251 214 / 0.5) 147deg, transparent 159deg, transparent 180deg, rgb(255 251 214 / 0.55) 192deg, transparent 204deg, transparent 225deg, rgb(255 251 214 / 0.5) 237deg, transparent 249deg, transparent 270deg, rgb(255 251 214 / 0.55) 282deg, transparent 294deg, transparent 315deg, rgb(255 251 214 / 0.5) 327deg, transparent 339deg, transparent 360deg)',
@@ -191,8 +194,8 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
           }}
         />
         <div
-          className="absolute inset-[22%] rounded-full blur-2xl"
-          style={{ background: night ? 'radial-gradient(circle, rgb(255 255 255 / 0.55), rgb(199 210 254 / 0.25) 45%, transparent 70%)' : 'radial-gradient(circle, rgb(255 250 205 / 0.95), rgb(254 240 138 / 0.55) 40%, transparent 70%)' }}
+          className="absolute inset-[16%] rounded-full"
+          style={{ background: night ? 'radial-gradient(circle, rgb(255 255 255 / 0.6), rgb(199 210 254 / 0.25) 35%, transparent 62%)' : 'radial-gradient(circle, rgb(255 251 220) 0%, rgb(255 246 170 / 0.8) 22%, rgb(254 240 138 / 0.35) 42%, transparent 64%)' }}
         />
       </div>
 
@@ -200,8 +203,11 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
       {blobs.map((b, i) => (
         <motion.div
           key={b}
-          className={cn('absolute aspect-square w-[60vw] max-w-[520px] rounded-full bg-gradient-to-r blur-3xl will-change-transform', b, night ? 'opacity-40' : 'opacity-30')}
-          style={i === 0 ? { top: '8%', right: '-10%' } : i === 1 ? { bottom: '6%', left: '-12%' } : { top: '46%', left: '38%' }}
+          className="absolute aspect-square w-[70vw] max-w-[640px] rounded-full will-change-transform"
+          style={{
+            ...(i === 0 ? { top: '4%', right: '-14%' } : i === 1 ? { bottom: '2%', left: '-16%' } : { top: '42%', left: '34%' }),
+            background: `radial-gradient(circle, ${b}${night ? 'aa' : '80'} 0%, ${b}33 38%, transparent 68%)`,
+          }}
           animate={reduce ? undefined : { x: [0, i === 1 ? -70 : 70, 0], y: [0, i === 2 ? -80 : 50, 0], scale: [1, 1.18, 1] }}
           transition={{ duration: 9 + i * 2.5, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -210,9 +216,9 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
       {/* עננים נפחיים (אחוריים – מטושטשים, קדמיים – חדים) */}
       {!night && (
         <>
-          <Cloud className="top-[7%] -start-16 w-56 opacity-70 blur-[1.5px] sm:w-72" depth={0.5} dark />
-          <Cloud className="top-[24%] -end-14 w-44 opacity-80 blur-[1px] sm:w-64" depth={0.7} dark />
-          <Cloud className="top-[12%] end-[18%] w-28 opacity-60 blur-[2px] sm:w-40" depth={0.35} dark />
+          <Cloud className="top-[7%] -start-16 w-56 opacity-70 sm:w-72" depth={0.5} dark />
+          <Cloud className="top-[24%] -end-14 w-44 opacity-80 sm:w-64" depth={0.7} dark />
+          <Cloud className="top-[12%] end-[18%] w-28 opacity-60 sm:w-40" depth={0.35} dark />
           <Cloud className="bottom-[28%] -start-10 w-48 sm:w-64" depth={1.2} />
           <Cloud className="bottom-[10%] end-[6%] w-52 sm:w-80" depth={1.5} />
         </>
@@ -226,10 +232,10 @@ export function PageBackground({ variant = 'day', rainbow = true, className, bal
       {/* בלונים */}
       {balloons && !night && !reduce && (
         <>
-          <Balloon color="pink" className="top-[30%] -start-2 w-12 sm:start-[3%] sm:w-16 lg:w-20" delay={0} />
-          <Balloon color="sky" className="top-[48%] end-[2%] hidden w-14 sm:block lg:w-[4.5rem]" delay={-5} depth={1.3} />
-          <Balloon color="yellow" className="top-[18%] end-[30%] hidden w-10 lg:block" delay={-9} depth={0.9} />
-          <Balloon color="violet" className="bottom-[22%] start-[22%] hidden w-12 lg:block" delay={-3} depth={1.8} />
+          <Balloon color="pink" className="top-[34%] -start-3 w-12 sm:start-[1%] sm:w-16 lg:w-20" delay={0} />
+          <Balloon color="sky" className="top-[56%] -end-2 hidden w-14 sm:block lg:end-[1%] lg:w-[4.5rem]" delay={-5} depth={1.3} />
+          <Balloon color="yellow" className="bottom-[14%] start-[3%] hidden w-10 xl:block" delay={-9} depth={0.9} />
+          <Balloon color="violet" className="top-[12%] end-[2%] hidden w-12 xl:block" delay={-3} depth={1.8} />
         </>
       )}
 
