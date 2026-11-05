@@ -20,12 +20,6 @@ export interface LeaderboardProps {
   className?: string;
 }
 
-const RANK_BADGE: Record<number, string> = {
-  1: 'from-yellow-200 via-amber-400 to-amber-600 text-amber-950 ring-amber-700/40',
-  2: 'from-slate-100 via-slate-300 to-slate-500 text-slate-900 ring-slate-600/40',
-  3: 'from-orange-200 via-orange-400 to-orange-700 text-orange-950 ring-orange-800/40',
-};
-
 /** טבלת דירוג חיה – שורות זכוכית עם תגי דירוג ואנימציית שינוי מיקום */
 export function Leaderboard({ entries, highlightId, compact, showPodium, limit, className }: LeaderboardProps) {
   const reduce = useReducedMotion();

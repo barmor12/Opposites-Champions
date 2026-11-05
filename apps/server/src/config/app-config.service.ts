@@ -15,6 +15,7 @@ export class AppConfigService implements AppConfig {
   readonly teacherInitial: TeacherInitialConfig;
   readonly logLevel: string;
   readonly isProd: boolean;
+  readonly trustProxyHops: number;
 
   constructor(config: AppConfig = loadAppConfig(process.env)) {
     this.nodeEnv = config.nodeEnv;
@@ -28,5 +29,6 @@ export class AppConfigService implements AppConfig {
     this.teacherInitial = { ...config.teacherInitial };
     this.logLevel = config.logLevel;
     this.isProd = config.isProd;
+    this.trustProxyHops = config.trustProxyHops;
   }
 }
