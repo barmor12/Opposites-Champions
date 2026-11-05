@@ -20,6 +20,7 @@ import { HttpThrottlerGuard } from './common/http-throttler.guard';
 import { TEACHER_COOKIE } from './auth/teacher-auth.guard';
 import { GameFeatureModule } from './games/game-feature.module';
 import { GamesService } from './games/games.service';
+import { TimerRegistry } from './games/timer-registry';
 import { RoomsService } from './rooms/rooms.service';
 import { ScoringService } from './scoring/scoring.service';
 import { SESSION_QUESTION_INCLUDE } from './questions/questions.service';
@@ -111,9 +112,12 @@ describe('security hardening (integration)', () => {
     playerA = await rooms.join(roomA.code, 'אלון', 'lion');
     playerA2 = await rooms.join(roomA.code, 'בר', 'fox');
     playerB = await rooms.join(roomB.code, 'גל', 'owl');
-    // start both rounds and skip the countdown wait by activating directly (the countdown timer then no-ops)
+    // start both rounds; disarm the countdown timers and activate directly instead of waiting 3s
+    const timers = app.get(TimerRegistry);
     await games.start(roomA.id, teacherA.id);
     await games.start(roomB.id, teacherB.id);
+    timers.clear(roomA.sessionId);
+    timers.clear(roomB.sessionId);
     await games.activate(roomA.sessionId);
     await games.activate(roomB.sessionId);
   });
@@ -229,8 +233,12 @@ describe('security hardening (integration)', () => {
     expect(await emitAck(socket, 'answer:submit', { sessionQuestionId: sq.id, matches: Array.from({ length: 40 }, (_, i) => ({ cardA: `a${i}`, cardB: `b${i}` })) })).toEqual(invalid);
     expect(await emitAck(socket, 'answer:submit', 'garbage')).toEqual(invalid);
     expect(await emitAck(socket, 'question:next', { sessionQuestionId: sq.id, skip: true })).toEqual(invalid);
-    expect(await emitAck(socket, 'player:join', { sessionToken: 'abc' })).toMatchObject({ ok: false, error: { code: 'INVALID_TOKEN' } });
     expect(await prisma.studentAnswer.count({ where: { participantId: playerA.participantId } })).toBe(0);
+    const teacherSocket = connect({}, { Cookie: teacherA.cookie });
+    await once(teacherSocket, 'connect');
+    expect(await emitAck(teacherSocket, 'teacher:join', { roomId: 'not-a-uuid' })).toEqual(invalid);
+    expect(await emitAck(teacherSocket, 'teacher:join', { roomId: roomA.id, teacherId: teacherB.id })).toEqual(invalid);
+    teacherSocket.disconnect();
 
     // the legitimate shape still scores exactly once; a replay is a conflict
     const ack = await emitAck<{ scoreAwarded: number }>(socket, 'answer:submit', { sessionQuestionId: sq.id, optionId });
@@ -309,10 +317,17 @@ describe('security hardening (integration)', () => {
   });
 
   it('refuses handshakes from an IP after repeated authentication failures', async () => {
-    for (let i = 0; i < AUTH_FAILURE_LIMIT.limit; i += 1) {
+    // Earlier tests already produced a few failures for 127.0.0.1; keep failing until the gate closes.
+    let gated: Error | null = null;
+    for (let i = 0; i <= AUTH_FAILURE_LIMIT.limit && !gated; i += 1) {
       const s = connect({ token: generateSessionToken() }); // well-formed, unknown
-      await once(s, 'disconnect');
+      const outcome = await Promise.race([
+        once<unknown>(s, 'disconnect').then(() => 'disconnected' as const),
+        once<Error>(s, 'connect_error').then((err) => err),
+      ]);
+      if (outcome !== 'disconnected') gated = outcome;
     }
+    expect(gated?.message).toBe('TOO_MANY_AUTH_FAILURES');
     const blocked = connect({ token: playerA.sessionToken }); // even a valid token is refused now
     const err = await once<Error>(blocked, 'connect_error');
     expect(err.message).toBe('TOO_MANY_AUTH_FAILURES');

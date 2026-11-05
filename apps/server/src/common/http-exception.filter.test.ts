@@ -1,7 +1,11 @@
-import { describe, expect, it, vi } from 'vitest';
-import type { ArgumentsHost } from '@nestjs/common';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { BadRequestException, Logger, type ArgumentsHost } from '@nestjs/common';
 import { clientHttpStatus, HttpExceptionFilter, normaliseMessage } from './http-exception.filter';
 import { GameError } from '../games/game-error';
+
+beforeAll(() => {
+  vi.spyOn(Logger.prototype, 'error').mockImplementation(() => undefined);
+});
 
 function run(exception: unknown): { status: number; body: unknown } {
   const result = { status: 0, body: undefined as unknown };
@@ -57,5 +61,14 @@ describe('HttpExceptionFilter', () => {
     expect(normaliseMessage(400, 'property score should not exist')).toBe('שדה לא מוכר: score');
     expect(normaliseMessage(404, 'Cannot GET /api/nope')).toBe('הנתיב המבוקש לא קיים');
     expect(normaliseMessage(429, 'ThrottlerException: Too Many Requests')).toBe('יותר מדי בקשות, נסו שוב בעוד רגע');
+    expect(normaliseMessage(400, ['יש להזין שם', 'competitionEnabled must be a boolean value'])).toBe('יש להזין שם');
+  });
+
+  it('never echoes non-Hebrew (library/parser) text – e.g. Nest-wrapped body-parser SyntaxError', () => {
+    const out = run(new BadRequestException('Unexpected end of JSON input'));
+    expect(out.status).toBe(400);
+    expect(out.body).toEqual({ statusCode: 400, message: 'הבקשה אינה תקינה', error: 'Bad Request' });
+    expect(normaliseMessage(400, 'Unexpected token } in JSON at position 12')).toBe('הבקשה אינה תקינה');
+    expect(normaliseMessage(500, 'connect ECONNREFUSED 10.0.0.5:5432')).toBe('אירעה שגיאה, נסו שוב מאוחר יותר');
   });
 });

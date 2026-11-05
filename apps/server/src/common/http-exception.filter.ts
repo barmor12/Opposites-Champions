@@ -11,19 +11,25 @@ export interface ErrorBody {
 
 const UNKNOWN_FIELD_RE = /^property (\S+) should not exist$/;
 const ROUTE_NOT_FOUND_RE = /^Cannot [A-Z]+ \//;
+const HEBREW_RE = /[֐-׿]/;
 
-/** Normalises Nest/class-validator messages into one short Hebrew string. */
+/**
+ * Normalises Nest/class-validator messages into one short Hebrew string.
+ * Policy: only messages written for users (Hebrew) are returned verbatim. Anything else – parser errors
+ * ("Unexpected token … in JSON"), library defaults, driver text – collapses to the generic Hebrew message
+ * for the status, so internals never reach the client.
+ */
 export function normaliseMessage(status: number, raw: unknown): string {
   const list = Array.isArray(raw) ? raw : [raw];
   const parts = list
     .filter((m): m is string => typeof m === 'string' && m.trim().length > 0)
     .map((m) => {
       const unknown = UNKNOWN_FIELD_RE.exec(m);
-      if (unknown?.[1]) return HE.unknownField(unknown[1]);
+      if (unknown?.[1]) return HE.unknownField(unknown[1].slice(0, 64));
       if (ROUTE_NOT_FOUND_RE.test(m)) return HE.routeNotFound;
       return m;
     })
-    .filter((m) => !isEnglishDefaultMessage(m));
+    .filter((m) => !isEnglishDefaultMessage(m) && HEBREW_RE.test(m));
   if (parts.length === 0) return hebrewMessageForStatus(status);
   return parts.join(', ');
 }

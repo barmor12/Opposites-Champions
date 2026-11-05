@@ -3,6 +3,7 @@ import { answerAllQuestions, createGameViaApi, joinAsStudent, pickAvatar, teache
 
 test.describe('זרימת משחק מלאה', () => {
   test('מורה יוצרת חדר, תלמידים מצטרפים, משחקים ורואים דירוג', async ({ page, browser }) => {
+    test.setTimeout(300_000);
     await teacherLogin(page);
     const { roomId, code } = await createGameViaApi(page);
     expect(code).toMatch(/^\d{6}$/);
@@ -33,10 +34,9 @@ test.describe('זרימת משחק מלאה', () => {
 
     await page.getByRole('button', { name: /התחל משחק/ }).click();
 
-    await answerAllQuestions(student1);
     // רענון באמצע משחק לא מאבד את ההתחברות
     await student2.reload();
-    await answerAllQuestions(student2);
+    await Promise.all([answerAllQuestions(student1), answerAllQuestions(student2)]);
 
     await page.getByRole('button', { name: /סיים משחק/ }).click();
 

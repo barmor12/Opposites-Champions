@@ -20,10 +20,17 @@ import { FixedWindowRateLimiter, socketClientIp } from './socket-rate-limiter';
 
 export type GameSocket = Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
 
+interface LiveParticipant {
+  id: string;
+  roomId: string;
+  displayName: string;
+}
+
 const ok = <T>(data: T): SocketAck<T> => ({ ok: true, data });
 const fail = <T>(err: unknown): SocketAck<T> => ({ ok: false, error: toSocketError(err) });
 const UNAUTHORIZED_ACK = { ok: false as const, error: { code: 'UNAUTHORIZED', message: 'נדרשת הצטרפות לחדר' } };
 const RATE_LIMITED_ACK = { ok: false as const, error: { code: 'RATE_LIMITED', message: 'יותר מדי פעולות, נסו שוב בעוד רגע' } };
+const PLAYER_NOT_FOUND = 'ההתחברות לא נמצאה, הצטרפו מחדש';
 
 /** Largest legitimate socket message is an answer with a few matches (<1KB); 16KB leaves generous slack. */
 export const SOCKET_MAX_PAYLOAD_BYTES = 16 * 1024;
@@ -43,7 +50,10 @@ export class GameGateway implements OnGatewayInit<GameServer>, OnGatewayConnecti
   private readonly logger = new Logger(GameGateway.name);
   private readonly handshakes = new FixedWindowRateLimiter(HANDSHAKE_LIMIT);
   private readonly authFailures = new FixedWindowRateLimiter(AUTH_FAILURE_LIMIT);
-  private readonly events_ = new FixedWindowRateLimiter({ ...SOCKET_EVENT_LIMIT, maxKeys: 50_000 });
+  private readonly eventBudget = new FixedWindowRateLimiter({ ...SOCKET_EVENT_LIMIT, maxKeys: 50_000 });
+  /** Set by the handshake middleware; consumed once in handleConnection. WeakMap → nothing to clean up. */
+  private readonly rejected = new WeakMap<Socket, string>();
+  private readonly pendingAnnounce = new WeakMap<Socket, LiveParticipant>();
 
   @WebSocketServer()
   server!: GameServer;
@@ -59,40 +69,38 @@ export class GameGateway implements OnGatewayInit<GameServer>, OnGatewayConnecti
 
   afterInit(server: GameServer): void {
     this.events.setServer(server);
-    // Handshake-level protection: runs before `connection`, so a reconnect storm never reaches the DB.
+    /**
+     * Authentication runs as a Socket.IO middleware: it completes BEFORE the CONNECT packet is sent,
+     * so `socket.data.role` is always settled when the first event arrives (no race with handleConnection).
+     * Invalid credentials are not refused here (the client would only see connect_error); the socket is
+     * accepted, told why, and disconnected in handleConnection. Rate limits are enforced here, before any DB work.
+     */
     server.use((socket, next) => {
-      const ip = this.clientIp(socket);
-      if (!this.handshakes.hit(ip)) return next(new Error('RATE_LIMITED'));
-      if (this.authFailures.count(ip) >= AUTH_FAILURE_LIMIT.limit) return next(new Error('TOO_MANY_AUTH_FAILURES'));
-      return next();
+      this.authenticate(socket)
+        .then(() => next())
+        .catch((err: unknown) => next(err instanceof Error ? err : new Error('UNAUTHORIZED')));
     });
   }
 
   async handleConnection(socket: GameSocket): Promise<void> {
+    const reason = this.rejected.get(socket);
+    if (reason) {
+      this.rejected.delete(socket);
+      this.rejectConnection(socket, reason);
+      return;
+    }
+    const participant = this.pendingAnnounce.get(socket);
+    if (!participant) return; // teacher – joins rooms explicitly via teacher:join
+    this.pendingAnnounce.delete(socket);
     try {
-      const auth = socket.handshake.auth as { token?: unknown };
-      if (auth.token !== undefined) {
-        // A token was presented: it must be well-formed and resolve to a live participant.
-        const attached = isSessionTokenFormat(auth.token) && (await this.attachPlayer(socket, auth.token));
-        if (!attached) this.rejectConnection(socket, 'ההתחברות לא נמצאה, הצטרפו מחדש');
-        return;
-      }
-      const teacher = await extractTeacherFromCookieHeader(socket.handshake.headers.cookie, this.jwt);
-      if (teacher) {
-        socket.data.role = 'teacher';
-        socket.data.teacherId = teacher.sub;
-        return;
-      }
-      this.rejectConnection(socket, 'נדרשת התחברות');
+      await this.announcePlayer(participant);
     } catch (err) {
-      // Never log the handshake itself (it carries the token/cookie); the error text is enough.
-      this.logger.warn(`connection rejected: ${errorSummary(err)}`);
-      socket.disconnect(true);
+      this.logger.warn(`player connect bookkeeping failed: ${errorSummary(err)}`);
     }
   }
 
   async handleDisconnect(socket: GameSocket): Promise<void> {
-    this.events_.forget(socket.id);
+    this.eventBudget.forget(socket.id);
     const { participantId, roomId } = socket.data;
     if (socket.data.role !== 'player' || !participantId || !roomId) return;
     try {
@@ -113,11 +121,13 @@ export class GameGateway implements OnGatewayInit<GameServer>, OnGatewayConnecti
       if (socket.data.role === 'player' && socket.data.participantId) return ok({ ok: true });
       if (socket.data.role === 'teacher') return { ok: false, error: { code: 'FORBIDDEN', message: 'חיבור מורה אינו יכול להצטרף כתלמיד' } };
       const token = parseSessionTokenPayload(body);
-      const attached = await this.attachPlayer(socket, token);
-      if (!attached) {
+      const participant = await this.findParticipant(token);
+      if (!participant) {
         this.authFailures.hit(this.clientIp(socket));
-        return { ok: false, error: { code: 'UNAUTHORIZED', message: 'ההתחברות לא נמצאה, הצטרפו מחדש' } };
+        return { ok: false, error: { code: 'UNAUTHORIZED', message: PLAYER_NOT_FOUND } };
       }
+      await this.bindPlayer(socket, participant);
+      await this.announcePlayer(participant);
       return ok({ ok: true });
     } catch (err) {
       return fail(err);
@@ -182,6 +192,34 @@ export class GameGateway implements OnGatewayInit<GameServer>, OnGatewayConnecti
     }
   }
 
+  // ===== אימות בזמן handshake =====
+
+  private async authenticate(socket: GameSocket): Promise<void> {
+    const ip = this.clientIp(socket);
+    if (!this.handshakes.hit(ip)) throw new Error('RATE_LIMITED');
+    if (this.authFailures.count(ip) >= AUTH_FAILURE_LIMIT.limit) throw new Error('TOO_MANY_AUTH_FAILURES');
+
+    const auth = socket.handshake.auth as { token?: unknown };
+    if (auth.token !== undefined) {
+      // A token was presented: it must be well-formed and resolve to a live participant of a live room.
+      const participant = isSessionTokenFormat(auth.token) ? await this.findParticipant(auth.token) : null;
+      if (!participant) {
+        this.rejected.set(socket, PLAYER_NOT_FOUND);
+        return;
+      }
+      await this.bindPlayer(socket, participant);
+      this.pendingAnnounce.set(socket, participant);
+      return;
+    }
+    const teacher = await extractTeacherFromCookieHeader(socket.handshake.headers.cookie, this.jwt);
+    if (teacher) {
+      socket.data.role = 'teacher';
+      socket.data.teacherId = teacher.sub;
+      return;
+    }
+    this.rejected.set(socket, 'נדרשת התחברות');
+  }
+
   // ===== עזר =====
 
   private requirePlayer(socket: GameSocket): string | null {
@@ -189,7 +227,7 @@ export class GameGateway implements OnGatewayInit<GameServer>, OnGatewayConnecti
   }
 
   private allowEvent(socket: GameSocket): boolean {
-    return this.events_.hit(socket.id);
+    return this.eventBudget.hit(socket.id);
   }
 
   private clientIp(socket: Socket): string {
@@ -202,29 +240,36 @@ export class GameGateway implements OnGatewayInit<GameServer>, OnGatewayConnecti
     socket.disconnect(true);
   }
 
-  /** מצמיד socket למשתתף לפי session token (hash), מסמן מחובר ומצרף לחדרים */
-  private async attachPlayer(socket: GameSocket, token: string): Promise<boolean> {
+  /** משתתף חי לפי session token (hash בלבד) – לא הוסר, והחדר לא נמחק */
+  private async findParticipant(token: string): Promise<LiveParticipant | null> {
     const participant = await this.prisma.gameParticipant.findFirst({
       where: { sessionTokenHash: hashSessionToken(token), removedAt: null, room: { deletedAt: null } },
-      include: { student: { select: { displayName: true } } },
+      select: { id: true, roomId: true, student: { select: { displayName: true } } },
     });
-    if (!participant) return false;
+    return participant ? { id: participant.id, roomId: participant.roomId, displayName: participant.student.displayName } : null;
+  }
+
+  /** מצמיד socket למשתתף ומצרף לערוצי החדר/המשתתף (סינכרוני מבחינת socket.data) */
+  private async bindPlayer(socket: GameSocket, participant: LiveParticipant): Promise<void> {
     socket.data.role = 'player';
     socket.data.participantId = participant.id;
     socket.data.roomId = participant.roomId;
     await socket.join([roomChannel(participant.roomId), participantChannel(participant.id)]);
+  }
+
+  /** מסמן מחובר ומשדר לחדר (player:connected + room:updated) */
+  private async announcePlayer(participant: LiveParticipant): Promise<void> {
     await this.prisma.gameParticipant.update({ where: { id: participant.id }, data: { connected: true, lastSeenAt: new Date() } });
     const snap = await this.rooms.emitRoomUpdated(participant.roomId);
     this.events.toRoom(participant.roomId, 'player:connected', {
       participantId: participant.id,
-      displayName: participant.student.displayName,
+      displayName: participant.displayName,
       participantCount: snap?.participants.length ?? 0,
     });
-    return true;
   }
 }
 
-/** Error text for logs – class name + message only, never the stack of a handshake error (could include headers). */
+/** Error text for logs – class name + message only, never a stack that could carry handshake headers. */
 function errorSummary(err: unknown): string {
   if (err instanceof Error) return `${err.name}: ${err.message}`;
   return typeof err === 'string' ? err : 'unknown error';

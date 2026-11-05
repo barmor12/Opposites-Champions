@@ -85,6 +85,8 @@ export async function answerAllQuestions(page: Page, maxQuestions = 25): Promise
       }
       await matchCheck.click();
     } else if (await option.isVisible().catch(() => false)) {
+      // ממתינים שהשאלה החדשה תיטען (הכפתור של השאלה הקודמת נשאר מושבת לרגע)
+      await expect(option).toBeEnabled({ timeout: 15_000 });
       await option.click();
     }
     const next = page.getByTestId('next-button');
