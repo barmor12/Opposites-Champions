@@ -18,6 +18,13 @@ const SOCKET_PATH = '/socket.io';
 
 let socket: AppSocket | null = null;
 let currentRole: 'player' | 'teacher' | null = null;
+
+/** יצרן socket חלופי (גרסת דמו ללא שרת מחליפה אותו ב־socket מדומה שרץ בדפדפן) */
+export type SocketFactory = (auth: Record<string, string>, options: Partial<ManagerOptions & SocketOptions>) => AppSocket;
+let socketFactory: SocketFactory | null = null;
+export function setSocketFactory(factory: SocketFactory | null): void {
+  socketFactory = factory;
+}
 let serverOffsetMs = 0;
 const offsetListeners = new Set<(offset: number) => void>();
 
@@ -42,7 +49,11 @@ function create(auth: Record<string, string>, role: 'player' | 'teacher'): AppSo
     socket.disconnect();
     socket = null;
   }
-  const s: AppSocket = SOCKET_URL ? io(SOCKET_URL, { ...baseOptions(), auth }) : io({ ...baseOptions(), auth });
+  const s: AppSocket = socketFactory
+    ? socketFactory(auth, baseOptions())
+    : SOCKET_URL
+      ? io(SOCKET_URL, { ...baseOptions(), auth })
+      : io({ ...baseOptions(), auth });
   currentRole = role;
   s.on('connect', () => {
     void syncClock(s);

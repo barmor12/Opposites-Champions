@@ -147,6 +147,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@oc/content':
+        specifier: workspace:*
+        version: link:../../packages/content
       '@oc/shared':
         specifier: workspace:*
         version: link:../../packages/shared

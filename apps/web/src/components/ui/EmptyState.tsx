@@ -1,3 +1,4 @@
+import { UI_IMAGES } from '@/lib/assets';
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 import { LazyImage } from './LazyImage';
@@ -12,7 +13,7 @@ export interface EmptyStateProps {
 }
 
 /** מצב ריק ידידותי */
-export function EmptyState({ title, description, action, emoji = '🔍', image = '/images/ui/empty-state.svg', className }: EmptyStateProps) {
+export function EmptyState({ title, description, action, emoji = '🔍', image = UI_IMAGES.emptyState, className }: EmptyStateProps) {
   return (
     <div className={cn('flex flex-col items-center gap-3 rounded-bubble bg-white/70 px-6 py-10 text-center', className)}>
       <LazyImage

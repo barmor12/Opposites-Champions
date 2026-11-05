@@ -1,3 +1,4 @@
+import { UI_IMAGES } from '@/lib/assets';
 import { LazyImage } from './_ui';
 
 /** איור SVG מובנה של תיבת אוצר – משמש כגיבוי כשקובץ ה־SVG החיצוני אינו זמין */
@@ -32,7 +33,7 @@ export function ChestSvg({ open, className }: { open: boolean; className?: strin
 }
 
 export function TreasureChestImage({ open, className }: { open: boolean; className?: string }) {
-  const src = open ? '/images/ui/treasure-open.svg' : '/images/ui/treasure-closed.svg';
+  const src = open ? UI_IMAGES.treasureOpen : UI_IMAGES.treasureClosed;
   return (
     <LazyImage
       src={src}

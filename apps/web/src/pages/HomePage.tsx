@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { GraduationCap, Hash, Rocket, User, Play, Sparkles } from 'lucide-react';
@@ -12,6 +12,9 @@ import { errorMessage } from '@/services/api';
 import { cn } from '@/lib/cn';
 
 const GREETING_MS = 1700;
+// גרסת דמו (ללא שרת): חדרים מוגדרים מראש במקום כניסת מורה
+const IS_DEMO = Boolean(import.meta.env.VITE_DEMO);
+const DemoCodes = IS_DEMO ? lazy(() => import('@/demo/DemoCodes').then((m) => ({ default: m.DemoCodes }))) : null;
 
 interface FormErrors {
   displayName?: string;
@@ -113,12 +116,18 @@ export function HomePage() {
 
       {/* סרגל עליון */}
       <div className="flex w-full max-w-6xl items-center justify-between gap-2 xl:max-w-7xl">
-        <Link
-          to="/teacher"
-          className="inline-flex min-h-12 items-center gap-2 rounded-full glass px-4 text-sm font-bold text-slate-600 transition-transform hover:-translate-y-0.5"
-        >
-          <GraduationCap className="size-5" aria-hidden /> כניסת מורה
-        </Link>
+        {IS_DEMO ? (
+          <span className="inline-flex min-h-12 items-center gap-2 rounded-full glass px-4 text-sm font-bold text-violet-700">
+            <Sparkles className="size-5" aria-hidden /> גרסת דמו – המשחק רץ כולו בדפדפן
+          </span>
+        ) : (
+          <Link
+            to="/teacher"
+            className="inline-flex min-h-12 items-center gap-2 rounded-full glass px-4 text-sm font-bold text-slate-600 transition-transform hover:-translate-y-0.5"
+          >
+            <GraduationCap className="size-5" aria-hidden /> כניסת מורה
+          </Link>
+        )}
         <SoundToggle />
       </div>
 
@@ -213,6 +222,18 @@ export function HomePage() {
                   if (errors.code) setErrors((p) => ({ ...p, code: undefined }));
                 }}
               />
+              {DemoCodes && (
+                <Suspense fallback={null}>
+                  <DemoCodes
+                    value={code}
+                    onPick={(c) => {
+                      setCode(c);
+                      play('click');
+                      if (errors.code) setErrors((p) => ({ ...p, code: undefined }));
+                    }}
+                  />
+                </Suspense>
+              )}
               <AvatarPicker
                 value={avatar}
                 onChange={(id) => {

@@ -1,4 +1,5 @@
 // Podium ordering/a11y pattern adapted from 21st.dev — Leaderboard Podium by trophy.so (2nd | 1st | 3rd, heights 1 > 2 > 3).
+import { UI_IMAGES } from '@/lib/assets';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { WifiOff, CircleCheck, Flag } from 'lucide-react';
 import type { LeaderboardEntry } from '@oc/shared';
@@ -188,7 +189,7 @@ export function Podium({ entries, highlightId }: { entries: LeaderboardEntry[]; 
               >
                 <LightRays color="rgb(254 240 138)" intensity={0.8} className="w-[300%]" />
                 <LazyImage
-                  src="/images/ui/trophy.svg"
+                  src={UI_IMAGES.trophy}
                   alt="גביע האלופים"
                   eager
                   skeleton={false}
