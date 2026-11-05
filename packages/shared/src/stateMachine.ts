@@ -26,6 +26,18 @@ export const ACTIVE_PLAY_STATES: readonly GameState[] = [
   GameState.NEXT_QUESTION,
 ];
 
+/** מצבים שבהם תלמיד יכול להצטרף לחדר (כל עוד המורה לא סגרה את ההצטרפות ידנית) – כולל באמצע משחק */
+export const JOINABLE_STATES: readonly GameState[] = [
+  GameState.CREATED,
+  GameState.WAITING_FOR_PLAYERS,
+  ...ACTIVE_PLAY_STATES,
+  GameState.PAUSED,
+];
+
+/**
+ * האם אפשר להצטרף לחדר. הצטרפות מאוחרת (אחרי "התחל משחק") מותרת: המצטרף מקבל
+ * את השאלה הנוכחית (קצב המורה) או מתחיל מהשאלה הראשונה (קצב אישי).
+ */
 export function isJoinable(state: GameState, joinOpen: boolean): boolean {
-  return joinOpen && (state === GameState.WAITING_FOR_PLAYERS || state === GameState.CREATED);
+  return joinOpen && JOINABLE_STATES.includes(state);
 }

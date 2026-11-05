@@ -14,6 +14,7 @@ import {
   type QuestionView,
   type RoomPublicView,
   type ServerToClientEvents,
+  ACTIVE_PLAY_STATES,
 } from '@oc/shared';
 import { apiClient, ApiError } from '@/services/api';
 import {
@@ -180,6 +181,10 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
         achievements: [],
         countdown: null,
       });
+      // הצטרפות באמצע משחק פעיל – מושכים מיד את השאלה הנוכחית/הראשונה (כמו אחרי רענון)
+      if (ACTIVE_PLAY_STATES.includes(res.room.state) || res.room.state === GameState.PAUSED) {
+        await get().restoreSession({ silent: true });
+      }
       return res;
     } catch (err) {
       set({ status: 'error', error: err instanceof ApiError ? err.message : 'הַהִצְטָרְפוּת נִכְשְׁלָה. נַסּוּ שׁוּב' });
