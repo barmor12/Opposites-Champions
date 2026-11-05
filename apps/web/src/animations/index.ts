@@ -6,3 +6,7 @@ export { StarBurst } from './StarBurst';
 export type { StarBurstProps } from './StarBurst';
 export { Shake } from './Shake';
 export type { ShakeProps } from './Shake';
+export { ConfettiBurst, useConfettiBursts } from './ConfettiBurst';
+export type { ConfettiBurstProps, ConfettiBurstOptions } from './ConfettiBurst';
+export { LightRays } from './LightRays';
+export type { LightRaysProps } from './LightRays';
