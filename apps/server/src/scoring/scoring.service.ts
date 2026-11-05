@@ -159,9 +159,23 @@ export class ScoringService {
     return { question: this.questions.toQuestionView(next, now, total, now.getTime()), finished: false };
   }
 
+  /**
+   * sessionQuestionId שאינו השאלה הנוכחית: אם הוא שייך לסבב אחר (חדר אחר) או לא קיים → 404
+   * (לא חושפים קיום שאלות של חדרים אחרים); אם הוא מהסבב הזה אך אינו הנוכחי → 400 WRONG_QUESTION.
+   */
+  private async rejectForeignOrStaleQuestion(sessionId: string, sessionQuestionId: string): Promise<never> {
+    if (UUID_RE.test(sessionQuestionId)) {
+      const owner = await this.prisma.sessionQuestion.findUnique({ where: { id: sessionQuestionId }, select: { sessionId: true } });
+      if (!owner || owner.sessionId !== sessionId) throw GameError.notFound('QUESTION_NOT_FOUND', 'השאלה לא נמצאה בחדר שלך');
+    }
+    throw GameError.badRequest('WRONG_QUESTION', 'זו אינה השאלה הנוכחית');
+  }
+
   async loadContext(participantId: string): Promise<PlayContext> {
     const participant = await this.prisma.gameParticipant.findFirst({ where: { id: participantId, removedAt: null }, include: { room: true } });
     if (!participant || participant.room.deletedAt) throw GameError.forbidden('NOT_IN_ROOM', 'אינך משתתף/ת בחדר זה');
+    // חדר שפג תוקפו (24 שעות) – גם אם הסריקה התקופתית עוד לא סימנה אותו EXPIRED במסד
+    if (isRoomStale(participant.room)) throw GameError.conflict('ROOM_EXPIRED', 'תוקף החדר פג, יש לפתוח משחק חדש');
     if (!participant.room.currentSessionId) throw GameError.conflict('NO_SESSION', 'אין סבב פעיל בחדר');
     const session = await this.prisma.gameSession.findUnique({ where: { id: participant.room.currentSessionId } });
     if (!session) throw GameError.notFound('SESSION_NOT_FOUND', 'הסבב לא נמצא');
