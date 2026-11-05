@@ -61,10 +61,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
         status = HttpStatus.NOT_FOUND;
         message = HE.notFound;
       }
-    } else if (isClientHttpError(exception)) {
+    } else {
       // body-parser / http-errors (413 entity.too.large, 400 entity.parse.failed, …) – never expose the raw message
-      status = exception.status;
-      message = hebrewMessageForStatus(status);
+      const clientStatus = clientHttpStatus(exception);
+      if (clientStatus !== null) {
+        status = clientStatus;
+        message = hebrewMessageForStatus(status);
+      }
     }
     error ??= STATUS_CODES[status] ?? 'Error';
 
@@ -78,6 +81,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
     if (res.headersSent) return;
     res.status(status).json(payload);
   }
+}
+
+/** Errors raised by express middleware (body-parser via `http-errors`) carry a numeric 4xx `status`. */
+export function clientHttpStatus(e: unknown): number | null {
+  if (typeof e !== 'object' || e === null) return null;
+  const { status, statusCode } = e as { status?: unknown; statusCode?: unknown };
+  const value = typeof status === 'number' ? status : statusCode;
+  return typeof value === 'number' && Number.isInteger(value) && value >= 400 && value < 500 ? value : null;
 }
 
 function isPrismaKnownError(e: unknown): e is { code: string; message: string } {

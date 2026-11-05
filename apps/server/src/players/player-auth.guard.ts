@@ -2,7 +2,7 @@ import { type CanActivate, type ExecutionContext, Injectable, UnauthorizedExcept
 import type { Request } from 'express';
 import { SESSION_TOKEN_HEADER } from '@oc/shared';
 import { PrismaService } from '../prisma/prisma.service';
-import { hashSessionToken } from './player-token';
+import { hashSessionToken, isSessionTokenFormat } from './player-token';
 
 export interface PlayerContext { participantId: string; roomId: string; studentId: string }
 export type RequestWithPlayer = Request & { player?: PlayerContext };
